@@ -76,13 +76,18 @@ label,
   height: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 580px) {
   .color-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-@media (min-width: 1024px) {
+@media (min-width: 900px) {
   .color-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 1220px) {
+  .color-grid {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
