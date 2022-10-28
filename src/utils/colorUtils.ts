@@ -44,17 +44,43 @@ export function getNeutralVariantHex(
   const baseColorHct = Hct.fromInt(
     isValidHexColor(baseColor) ? argbFromHex(baseColor) : 0
   );
-  const neutralVariantHct = Hct.from(
+  const resultHct = Hct.from(
     baseColorHct.hue,
     Math.min(baseColorHct.chroma / 6, 8),
     baseColorHct.tone
   );
-  const neutralVariantArgb = neutralVariantHct.toInt();
+  const resultArgb = resultHct.toInt();
   return format === 'argb'
-    ? neutralVariantArgb
+    ? resultArgb
     : format === 'rgb'
-    ? argbToRgb(neutralVariantArgb)
-    : hexFromArgb(neutralVariantArgb);
+    ? argbToRgb(resultArgb)
+    : hexFromArgb(resultArgb);
+}
+
+export function getSecondaryColorHex(baseColor: string, format?: 'hex'): string;
+export function getSecondaryColorHex(
+  baseColor: string,
+  format?: 'argb'
+): number;
+export function getSecondaryColorHex(baseColor: string, format?: 'rgb'): Rgb;
+export function getSecondaryColorHex(
+  baseColor: string,
+  format: 'hex' | 'rgb' | 'argb' = 'hex'
+) {
+  const baseColorHct = Hct.fromInt(
+    isValidHexColor(baseColor) ? argbFromHex(baseColor) : 0
+  );
+  const resultHct = Hct.from(
+    baseColorHct.hue + 180,
+    baseColorHct.chroma,
+    baseColorHct.tone
+  );
+  const resultArgb = resultHct.toInt();
+  return format === 'argb'
+    ? resultArgb
+    : format === 'rgb'
+    ? argbToRgb(resultArgb)
+    : hexFromArgb(resultArgb);
 }
 
 export const hexInverseBw = (hex: string) => {

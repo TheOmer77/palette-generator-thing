@@ -3,7 +3,11 @@ import { useMemo, useState } from 'react';
 import ColorGrid from './components/ColorGrid';
 import Color from './components/Color';
 import useTonalPalette from './hooks/useTonalPalette';
-import { getNeutralVariantHex, randomHexColor } from './utils/colorUtils';
+import {
+  getNeutralVariantHex,
+  getSecondaryColorHex,
+  randomHexColor,
+} from './utils/colorUtils';
 import generateVariablesCss from './utils/generateVariablesCss';
 import { initialBaseColor, tones } from './constants';
 
@@ -11,21 +15,27 @@ const App = () => {
   const [baseColor, setBaseColor] = useState(initialBaseColor);
   const [sliderTone, setSliderTone] = useState(40);
 
-  const neutralVariant = useMemo(
-    () => getNeutralVariantHex(baseColor),
-    [baseColor]
-  );
+  const neutralVariantColor = useMemo(
+      () => getNeutralVariantHex(baseColor),
+      [baseColor]
+    ),
+    secondaryColor = useMemo(
+      () => getSecondaryColorHex(baseColor),
+      [baseColor]
+    );
 
   const [getTone] = useTonalPalette(baseColor),
-    [getNeutralTone] = useTonalPalette(neutralVariant);
+    [getNeutralTone] = useTonalPalette(neutralVariantColor),
+    [getSecondaryTone] = useTonalPalette(secondaryColor);
 
   const themeCss = useMemo(
     () =>
       generateVariablesCss({
         primary: baseColor,
-        'primary-neutral': neutralVariant,
+        'primary-neutral': neutralVariantColor,
+        secondary: secondaryColor,
       }),
-    [baseColor, neutralVariant]
+    [baseColor, neutralVariantColor, secondaryColor]
   );
 
   return (
@@ -59,11 +69,18 @@ const App = () => {
           <Color key={tone} value={getNeutralTone(tone) as string} />
         ))}
       </ColorGrid>
+      <h3>Secondary</h3>
+      <ColorGrid>
+        {tones.map(tone => (
+          <Color key={tone} value={getSecondaryTone(tone) as string} />
+        ))}
+      </ColorGrid>
 
       <h2>Can I have any custom tone?</h2>
       <ColorGrid>
         <Color value={getTone(sliderTone) as string} />
         <Color value={getNeutralTone(sliderTone) as string} />
+        <Color value={getSecondaryTone(sliderTone) as string} />
         <div>
           <label htmlFor='tone-slider'>Tone: {sliderTone}</label>
           <input
