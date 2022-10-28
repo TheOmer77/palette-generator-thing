@@ -8,7 +8,7 @@ import {
   greenFromArgb,
   blueFromArgb,
 } from '@material/material-color-utilities';
-import { isValidHexColor } from '../utils/colorUtils';
+import { isValidHexColor, Rgb } from '../utils/colorUtils';
 
 const useTonalPalette = (
   color: string | [red: number, green: number, blue: number]
@@ -40,7 +40,7 @@ const useTonalPalette = (
             redFromArgb(result),
             greenFromArgb(result),
             blueFromArgb(result),
-          ] as [red: number, green: number, blue: number])
+          ] as Rgb)
         : result;
     },
     [tonalPalette]
