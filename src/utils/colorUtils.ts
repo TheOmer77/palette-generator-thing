@@ -41,7 +41,9 @@ export function getNeutralVariantHex(
   baseColor: string,
   format: 'hex' | 'rgb' | 'argb' = 'hex'
 ) {
-  const baseColorHct = Hct.fromInt(argbFromHex(baseColor));
+  const baseColorHct = Hct.fromInt(
+    isValidHexColor(baseColor) ? argbFromHex(baseColor) : 0
+  );
   const neutralVariantHct = Hct.from(
     baseColorHct.hue,
     Math.min(baseColorHct.chroma / 6, 8),
