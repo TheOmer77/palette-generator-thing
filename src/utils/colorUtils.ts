@@ -1,6 +1,9 @@
 import {
+  argbFromHex,
   blueFromArgb,
   greenFromArgb,
+  Hct,
+  hexFromArgb,
   redFromArgb,
 } from '@material/material-color-utilities';
 
@@ -27,6 +30,30 @@ const argbToRgb = (argb: number): Rgb => [
   greenFromArgb(argb),
   blueFromArgb(argb),
 ];
+
+export function getNeutralVariantHex(baseColor: string, format?: 'hex'): string;
+export function getNeutralVariantHex(
+  baseColor: string,
+  format?: 'argb'
+): number;
+export function getNeutralVariantHex(baseColor: string, format?: 'rgb'): Rgb;
+export function getNeutralVariantHex(
+  baseColor: string,
+  format: 'hex' | 'rgb' | 'argb' = 'hex'
+) {
+  const baseColorHct = Hct.fromInt(argbFromHex(baseColor));
+  const neutralVariantHct = Hct.from(
+    baseColorHct.hue,
+    Math.min(baseColorHct.chroma / 6, 8),
+    baseColorHct.tone
+  );
+  const neutralVariantArgb = neutralVariantHct.toInt();
+  return format === 'argb'
+    ? neutralVariantArgb
+    : format === 'rgb'
+    ? argbToRgb(neutralVariantArgb)
+    : hexFromArgb(neutralVariantArgb);
+}
 
 export const hexInverseBw = (hex: string) => {
   const rgb = hexToRgb(hex);

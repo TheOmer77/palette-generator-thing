@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import ColorGrid from './components/ColorGrid';
 import Color from './components/Color';
 import useTonalPalette from './hooks/useTonalPalette';
-import { randomHexColor } from './utils/colorUtils';
+import { getNeutralVariantHex, randomHexColor } from './utils/colorUtils';
 import { initialBaseColor, tones } from './constants';
 
 const App = () => {
   const [baseColor, setBaseColor] = useState(initialBaseColor);
   const [sliderTone, setSliderTone] = useState(40);
-  const [getTone] = useTonalPalette(baseColor);
+
+  const neutralVariant = useMemo(
+    () => getNeutralVariantHex(baseColor),
+    [baseColor]
+  );
+
+  const [getTone] = useTonalPalette(baseColor),
+    [getNeutralTone] = useTonalPalette(neutralVariant);
 
   return (
     <>
@@ -30,15 +37,21 @@ const App = () => {
       </ColorGrid>
 
       <h2>Tones</h2>
-      <ColorGrid>
+      <ColorGrid marginBottom>
         {tones.map(tone => (
           <Color key={tone} value={getTone(tone) as string} />
+        ))}
+      </ColorGrid>
+      <ColorGrid>
+        {tones.map(tone => (
+          <Color key={tone} value={getNeutralTone(tone) as string} />
         ))}
       </ColorGrid>
 
       <h2>Can I have any custom tone?</h2>
       <ColorGrid>
         <Color value={getTone(sliderTone) as string} />
+        <Color value={getNeutralTone(sliderTone) as string} />
         <div>
           <label htmlFor='tone-slider'>Tone: {sliderTone}</label>
           <input
