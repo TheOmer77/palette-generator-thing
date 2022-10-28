@@ -4,6 +4,7 @@ import ColorGrid from './components/ColorGrid';
 import Color from './components/Color';
 import useTonalPalette from './hooks/useTonalPalette';
 import { getNeutralVariantHex, randomHexColor } from './utils/colorUtils';
+import generateVariablesCss from './utils/generateVariablesCss';
 import { initialBaseColor, tones } from './constants';
 
 const App = () => {
@@ -17,6 +18,15 @@ const App = () => {
 
   const [getTone] = useTonalPalette(baseColor),
     [getNeutralTone] = useTonalPalette(neutralVariant);
+
+  const themeCss = useMemo(
+    () =>
+      generateVariablesCss({
+        primary: baseColor,
+        'primary-neutral': neutralVariant,
+      }),
+    [baseColor, neutralVariant]
+  );
 
   return (
     <>
@@ -65,6 +75,9 @@ const App = () => {
           />
         </div>
       </ColorGrid>
+
+      <h2>Theme CSS variables</h2>
+      <pre>{themeCss}</pre>
     </>
   );
 };
