@@ -47,11 +47,13 @@ const App = () => {
       </ColorGrid>
 
       <h2>Tones</h2>
-      <ColorGrid marginBottom>
+      <h3>Primary (base color)</h3>
+      <ColorGrid>
         {tones.map(tone => (
           <Color key={tone} value={getTone(tone) as string} />
         ))}
       </ColorGrid>
+      <h3>Primary neutral</h3>
       <ColorGrid>
         {tones.map(tone => (
           <Color key={tone} value={getNeutralTone(tone) as string} />
