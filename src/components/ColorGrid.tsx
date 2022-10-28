@@ -1,7 +1,18 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
+import classNames from 'classnames';
 
-const ColorGrid = ({ children }: { children: ReactNode }) => {
-  return <div className='color-grid'>{children}</div>;
+const ColorGrid = ({
+  marginBottom = false,
+  children,
+}: {
+  marginBottom?: boolean;
+  children: ReactNode;
+}) => {
+  return (
+    <div className={classNames('color-grid', marginBottom && 'margin-bottom')}>
+      {children}
+    </div>
+  );
 };
 
 export default ColorGrid;
