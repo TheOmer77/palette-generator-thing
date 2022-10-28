@@ -27,6 +27,13 @@ label,
   user-select: none;
 }
 
+pre {
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
 .error {
   color: #b4271f;
   position: absolute;
@@ -34,11 +41,6 @@ label,
   left: 0;
   right: 0;
   text-align: center;
-}
-@media (prefers-color-scheme: dark) {
-  .error {
-    color: #ffb4aa;
-  }
 }
 
 .color-grid {
@@ -75,6 +77,15 @@ label,
 .color-input-container .color {
   width: 100%;
   height: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  pre {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .error {
+    color: #ffb4aa;
+  }
 }
 
 @media (min-width: 580px) {
