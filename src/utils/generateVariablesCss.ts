@@ -23,8 +23,7 @@ const generateVariablesCss = (
       {}
     );
 
-  return `
-:root {
+  return `:root {
 ${Object.keys(baseColors)
   .map(
     baseColorName => `  /* ${baseColorName} */
