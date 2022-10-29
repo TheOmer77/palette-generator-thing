@@ -8,8 +8,10 @@ import { tones as defaultTones } from '../constants';
 
 const generateVariablesCss = (
   baseColors: { [colorName: string]: string },
-  tones = defaultTones,
-  format: 'hex' | 'rgb' | 'rgbValues' = 'hex'
+  {
+    tones = defaultTones,
+    format = 'hex',
+  }: { tones?: number[]; format?: 'hex' | 'rgb' | 'rgbValues' } = {}
 ) => {
   const tonalPalettes: { [color: keyof typeof baseColors]: TonalPalette } =
     Object.keys(baseColors).reduce(

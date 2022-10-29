@@ -36,8 +36,7 @@ const App = () => {
           'primary-neutral': neutralVariantColor,
           secondary: secondaryColor,
         },
-        tones,
-        'rgbValues'
+        { format: 'rgbValues' }
       ),
 
     [baseColor, neutralVariantColor, secondaryColor]
