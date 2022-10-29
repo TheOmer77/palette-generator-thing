@@ -9,7 +9,7 @@ import {
 
 export type Rgb = [red: number, green: number, blue: number];
 
-export const hexToRgb = (hex: string): Rgb => {
+export const rgbFromHex = (hex: string): Rgb => {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 
@@ -25,7 +25,7 @@ export const hexToRgb = (hex: string): Rgb => {
   ];
 };
 
-export const argbToRgb = (argb: number): Rgb => [
+export const rgbFromArgb = (argb: number): Rgb => [
   redFromArgb(argb),
   greenFromArgb(argb),
   blueFromArgb(argb),
@@ -56,7 +56,7 @@ export function getNeutralVariantHex(
   return format === 'argb'
     ? resultArgb
     : format === 'rgb'
-    ? argbToRgb(resultArgb)
+    ? rgbFromArgb(resultArgb)
     : hexFromArgb(resultArgb);
 }
 
@@ -82,12 +82,12 @@ export function getSecondaryColorHex(
   return format === 'argb'
     ? resultArgb
     : format === 'rgb'
-    ? argbToRgb(resultArgb)
+    ? rgbFromArgb(resultArgb)
     : hexFromArgb(resultArgb);
 }
 
 export const hexInverseBw = (hex: string) => {
-  const rgb = hexToRgb(hex);
+  const rgb = rgbFromHex(hex);
   const luminance = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
   return luminance < 140 ? '#ffffff' : '#000000';
 };
@@ -98,7 +98,7 @@ export const getMainTone = (argb: number) =>
   getRoundedTone(Hct.fromInt(argb).tone);
 
 export const getContrastTone = (argb: number) => {
-  const rgb = argbToRgb(argb);
+  const rgb = rgbFromArgb(argb);
   const luminance = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
   return luminance < 140 ? 95 : 5;
 };

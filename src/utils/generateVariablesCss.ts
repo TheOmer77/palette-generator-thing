@@ -5,7 +5,7 @@ import {
   TonalPalette,
 } from '@material/material-color-utilities';
 import {
-  argbToRgb,
+  rgbFromArgb,
   getContrastTone,
   getRoundedTone,
   isValidHexColor,
@@ -17,9 +17,9 @@ const getColorValue = (
   format: 'hex' | 'rgb' | 'rgbValues' = 'hex'
 ) =>
   format === 'rgb'
-    ? `rgb(${argbToRgb(argb).join(', ')})`
+    ? `rgb(${rgbFromArgb(argb).join(', ')})`
     : format === 'rgbValues'
-    ? argbToRgb(argb).join(', ')
+    ? rgbFromArgb(argb).join(', ')
     : hexFromArgb(argb);
 
 const generateVariablesCss = (
