@@ -3,12 +3,13 @@ import {
   hexFromArgb,
   TonalPalette,
 } from '@material/material-color-utilities';
-import { isValidHexColor } from './colorUtils';
+import { argbToRgb, isValidHexColor } from './colorUtils';
 import { tones as defaultTones } from '../constants';
 
 const generateVariablesCss = (
   baseColors: { [colorName: string]: string },
-  tones = defaultTones
+  tones = defaultTones,
+  format: 'hex' | 'rgb' | 'rgbValues' = 'hex'
 ) => {
   const tonalPalettes: { [color: keyof typeof baseColors]: TonalPalette } =
     Object.keys(baseColors).reduce(
@@ -30,9 +31,15 @@ ${Object.keys(baseColors)
 ${tones
   .map(
     tone =>
-      `  --color-${baseColorName}-${tone}: ${hexFromArgb(
-        tonalPalettes[baseColorName].tone(tone)
-      )};`
+      `  --color-${baseColorName}-${tone}: ${
+        format === 'rgb'
+          ? `rgb(${argbToRgb(tonalPalettes[baseColorName].tone(tone)).join(
+              ', '
+            )})`
+          : format === 'rgbValues'
+          ? argbToRgb(tonalPalettes[baseColorName].tone(tone)).join(', ')
+          : hexFromArgb(tonalPalettes[baseColorName].tone(tone))
+      };`
   )
   .join('\n')}
 `

@@ -30,11 +30,16 @@ const App = () => {
 
   const themeCss = useMemo(
     () =>
-      generateVariablesCss({
-        primary: baseColor,
-        'primary-neutral': neutralVariantColor,
-        secondary: secondaryColor,
-      }),
+      generateVariablesCss(
+        {
+          primary: baseColor,
+          'primary-neutral': neutralVariantColor,
+          secondary: secondaryColor,
+        },
+        tones,
+        'rgbValues'
+      ),
+
     [baseColor, neutralVariantColor, secondaryColor]
   );
 
