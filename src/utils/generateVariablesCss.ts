@@ -10,7 +10,7 @@ import {
   getRoundedTone,
   isValidHexColor,
 } from './colorUtils';
-import { tones as defaultTones } from '../constants';
+import { tones } from '../constants';
 
 const getColorValue = (
   argb: number,
@@ -25,7 +25,6 @@ const getColorValue = (
 const generateVariablesCss = (
   baseColors: { [colorName: string]: string },
   {
-    tones = defaultTones,
     format = 'hex',
   }: { tones?: number[]; format?: 'hex' | 'rgb' | 'rgbValues' } = {}
 ) => {
