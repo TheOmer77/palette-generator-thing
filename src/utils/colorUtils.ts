@@ -31,6 +31,9 @@ export const argbToRgb = (argb: number): Rgb => [
   blueFromArgb(argb),
 ];
 
+export const isValidHexColor = (hex: string) =>
+  /^#([0-9A-F]{3}){1,2}$/i.test(hex);
+
 export function getNeutralVariantHex(baseColor: string, format?: 'hex'): string;
 export function getNeutralVariantHex(
   baseColor: string,
@@ -89,8 +92,16 @@ export const hexInverseBw = (hex: string) => {
   return luminance < 140 ? '#ffffff' : '#000000';
 };
 
-export const isValidHexColor = (hex: string) =>
-  /^#([0-9A-F]{3}){1,2}$/i.test(hex);
+export const getRoundedTone = (tone: number) => tone - (tone % 5);
+
+export const getMainTone = (argb: number) =>
+  getRoundedTone(Hct.fromInt(argb).tone);
+
+export const getContrastTone = (argb: number) => {
+  const rgb = argbToRgb(argb);
+  const luminance = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+  return luminance < 140 ? 95 : 5;
+};
 
 export const randomHexColor = () =>
   `#${Math.floor(Math.random() * 16777215)

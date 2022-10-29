@@ -1,10 +1,26 @@
 import {
   argbFromHex,
+  Hct,
   hexFromArgb,
   TonalPalette,
 } from '@material/material-color-utilities';
-import { argbToRgb, isValidHexColor } from './colorUtils';
+import {
+  argbToRgb,
+  getContrastTone,
+  getRoundedTone,
+  isValidHexColor,
+} from './colorUtils';
 import { tones as defaultTones } from '../constants';
+
+const getColorValue = (
+  argb: number,
+  format: 'hex' | 'rgb' | 'rgbValues' = 'hex'
+) =>
+  format === 'rgb'
+    ? `rgb(${argbToRgb(argb).join(', ')})`
+    : format === 'rgbValues'
+    ? argbToRgb(argb).join(', ')
+    : hexFromArgb(argb);
 
 const generateVariablesCss = (
   baseColors: { [colorName: string]: string },
@@ -13,14 +29,39 @@ const generateVariablesCss = (
     format = 'hex',
   }: { tones?: number[]; format?: 'hex' | 'rgb' | 'rgbValues' } = {}
 ) => {
+  const baseColorArgbs: { [color: keyof typeof baseColors]: number } =
+    Object.keys(baseColors).reduce(
+      (obj, color) => ({
+        ...obj,
+        [color]: isValidHexColor(baseColors[color])
+          ? argbFromHex(baseColors[color])
+          : 0,
+      }),
+      {}
+    );
+
   const tonalPalettes: { [color: keyof typeof baseColors]: TonalPalette } =
     Object.keys(baseColors).reduce(
       (obj, color) => ({
         ...obj,
-        [color]: TonalPalette.fromInt(
-          isValidHexColor(baseColors[color])
-            ? argbFromHex(baseColors[color])
-            : 0
+        [color]: TonalPalette.fromInt(baseColorArgbs[color]),
+      }),
+      {}
+    );
+  const baseColorMainTones: { [color: keyof typeof baseColors]: number } =
+    Object.keys(baseColors).reduce(
+      (obj, color) => ({
+        ...obj,
+        [color]: getRoundedTone(Hct.fromInt(baseColorArgbs[color]).tone),
+      }),
+      {}
+    );
+  const baseColorContrastTones: { [color: keyof typeof baseColors]: number } =
+    Object.keys(baseColors).reduce(
+      (obj, color) => ({
+        ...obj,
+        [color]: getContrastTone(
+          tonalPalettes[color].tone(baseColorMainTones[color])
         ),
       }),
       {}
@@ -33,17 +74,25 @@ ${Object.keys(baseColors)
 ${tones
   .map(
     tone =>
-      `  --color-${baseColorName}-${tone}: ${
-        format === 'rgb'
-          ? `rgb(${argbToRgb(tonalPalettes[baseColorName].tone(tone)).join(
-              ', '
-            )})`
-          : format === 'rgbValues'
-          ? argbToRgb(tonalPalettes[baseColorName].tone(tone)).join(', ')
-          : hexFromArgb(tonalPalettes[baseColorName].tone(tone))
-      };`
+      `  --color-${baseColorName}-${tone}: ${getColorValue(
+        tonalPalettes[baseColorName].tone(tone),
+        format
+      )};`
   )
   .join('\n')}
+
+  --color-${baseColorName}-main: var(--color-${baseColorName}-${
+      baseColorMainTones[baseColorName]
+    });
+  --color-${baseColorName}-light: var(--color-${baseColorName}-${
+      baseColorMainTones[baseColorName] + 15
+    });
+  --color-${baseColorName}-dark: var(--color-${baseColorName}-${
+      baseColorMainTones[baseColorName] - 15
+    });
+  --color-${baseColorName}-contrast: var(--color-${baseColorName}-${
+      baseColorContrastTones[baseColorName]
+    });
 `
   )
   .join('\n')}}
