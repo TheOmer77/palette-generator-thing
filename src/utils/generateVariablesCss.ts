@@ -32,7 +32,7 @@ ${tones
     tone =>
       `  --color-${baseColorName}-${tone}: ${hexFromArgb(
         tonalPalettes[baseColorName].tone(tone)
-      )}`
+      )};`
   )
   .join('\n')}
 `
