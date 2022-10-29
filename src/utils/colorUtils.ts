@@ -9,7 +9,7 @@ import {
 
 export type Rgb = [red: number, green: number, blue: number];
 
-const hexToRgb = (hex: string) => {
+export const hexToRgb = (hex: string): Rgb => {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 
@@ -25,7 +25,7 @@ const hexToRgb = (hex: string) => {
   ];
 };
 
-const argbToRgb = (argb: number): Rgb => [
+export const argbToRgb = (argb: number): Rgb => [
   redFromArgb(argb),
   greenFromArgb(argb),
   blueFromArgb(argb),
