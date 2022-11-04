@@ -100,7 +100,7 @@ const App = () => {
       </ColorGrid>
 
       <h2>Theme CSS variables</h2>
-      <pre>{themeCss}</pre>
+      <pre className='generated-css'>{themeCss}</pre>
     </>
   );
 };

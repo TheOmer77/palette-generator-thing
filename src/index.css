@@ -2,6 +2,10 @@
   font-family: 'FigtreeVariable', sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -25,13 +29,6 @@ label,
 label,
 .error {
   user-select: none;
-}
-
-pre {
-  margin: 0;
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 1rem;
-  padding: 1rem;
 }
 
 .error {
@@ -79,8 +76,17 @@ pre {
   height: 100%;
 }
 
+.generated-css {
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 1rem;
+  max-height: calc(100vh - 4rem);
+  overflow: auto;
+}
+
 @media (prefers-color-scheme: dark) {
-  pre {
+  .generated-css {
     background-color: rgba(255, 255, 255, 0.1);
   }
   .error {
