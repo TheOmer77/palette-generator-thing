@@ -6,6 +6,7 @@ import {
   hexFromArgb,
   redFromArgb,
 } from '@material/material-color-utilities';
+import { defaultErrorHue } from '../constants';
 
 export type Rgb = [red: number, green: number, blue: number];
 
@@ -75,6 +76,29 @@ export function getSecondaryColorHex(
   );
   const resultHct = Hct.from(
     baseColorHct.hue + 180,
+    baseColorHct.chroma,
+    baseColorHct.tone
+  );
+  const resultArgb = resultHct.toInt();
+  return format === 'argb'
+    ? resultArgb
+    : format === 'rgb'
+    ? rgbFromArgb(resultArgb)
+    : hexFromArgb(resultArgb);
+}
+
+export function getErrorColorHex(baseColor: string, format?: 'hex'): string;
+export function getErrorColorHex(baseColor: string, format?: 'argb'): number;
+export function getErrorColorHex(baseColor: string, format?: 'rgb'): Rgb;
+export function getErrorColorHex(
+  baseColor: string,
+  format: 'hex' | 'rgb' | 'argb' = 'hex'
+) {
+  const baseColorHct = Hct.fromInt(
+    isValidHexColor(baseColor) ? argbFromHex(baseColor) : 0
+  );
+  const resultHct = Hct.from(
+    defaultErrorHue,
     baseColorHct.chroma,
     baseColorHct.tone
   );

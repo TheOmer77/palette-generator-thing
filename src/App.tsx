@@ -4,6 +4,7 @@ import ColorGrid from './components/ColorGrid';
 import Color from './components/Color';
 import useTonalPalette from './hooks/useTonalPalette';
 import {
+  getErrorColorHex,
   getNeutralVariantHex,
   getSecondaryColorHex,
   randomHexColor,
@@ -22,11 +23,13 @@ const App = () => {
     secondaryColor = useMemo(
       () => getSecondaryColorHex(baseColor),
       [baseColor]
-    );
+    ),
+    errorColor = useMemo(() => getErrorColorHex(baseColor), [baseColor]);
 
   const [getTone] = useTonalPalette(baseColor),
     [getNeutralTone] = useTonalPalette(neutralVariantColor),
-    [getSecondaryTone] = useTonalPalette(secondaryColor);
+    [getSecondaryTone] = useTonalPalette(secondaryColor),
+    [getErrorTone] = useTonalPalette(errorColor);
 
   const themeCss = useMemo(
     () =>
@@ -35,11 +38,12 @@ const App = () => {
           primary: baseColor,
           'primary-neutral': neutralVariantColor,
           secondary: secondaryColor,
+          error: errorColor,
         },
         { format: 'rgbValues' }
       ),
 
-    [baseColor, neutralVariantColor, secondaryColor]
+    [baseColor, errorColor, neutralVariantColor, secondaryColor]
   );
 
   return (
@@ -79,12 +83,19 @@ const App = () => {
           <Color key={tone} value={getSecondaryTone(tone) as string} />
         ))}
       </ColorGrid>
+      <h3>Error</h3>
+      <ColorGrid>
+        {tones.map(tone => (
+          <Color key={tone} value={getErrorTone(tone) as string} />
+        ))}
+      </ColorGrid>
 
       <h2>Can I have any custom tone?</h2>
       <ColorGrid>
         <Color value={getTone(sliderTone) as string} />
         <Color value={getNeutralTone(sliderTone) as string} />
         <Color value={getSecondaryTone(sliderTone) as string} />
+        <Color value={getErrorTone(sliderTone) as string} />
         <div>
           <label htmlFor='tone-slider'>Tone: {sliderTone}</label>
           <input
