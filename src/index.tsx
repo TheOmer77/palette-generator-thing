@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
-import '@fontsource/figtree/variable.css';
+import '@fontsource-variable/figtree';
 import './index.css';
 
 createRoot(document.getElementById('root') as HTMLElement).render(
