@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import ColorGrid from './components/ColorGrid';
 import Color from './components/Color';
@@ -44,6 +44,11 @@ const App = () => {
       ),
 
     [baseColor, errorColor, neutralVariantColor, secondaryColor]
+  );
+
+  const copyThemeCss = useCallback(
+    () => navigator.clipboard.writeText(themeCss),
+    [themeCss]
   );
 
   return (
@@ -110,7 +115,12 @@ const App = () => {
         </div>
       </ColorGrid>
 
-      <h2>Theme CSS variables</h2>
+      <h2 className='with-action'>
+        Theme CSS variables
+        <button id='btn-copy-css-vars' onClick={copyThemeCss}>
+          Copy
+        </button>
+      </h2>
       <pre className='generated-css'>{themeCss}</pre>
     </>
   );

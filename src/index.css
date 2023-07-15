@@ -12,8 +12,9 @@ body {
   padding: 1rem;
 }
 
-button {
-  font-size: inherit;
+button,
+h2 > button {
+  font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
   padding: 0.25rem;
@@ -24,6 +25,13 @@ h3,
 label,
 .error {
   font-weight: 500;
+}
+
+h2.with-action {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 label,
