@@ -90,7 +90,7 @@ const App = () => {
         ))}
       </ColorGrid>
 
-      <h2>Can I have any custom tone?</h2>
+      <h2>Custom tone</h2>
       <ColorGrid>
         <Color value={getTone(sliderTone) as string} />
         <Color value={getNeutralTone(sliderTone) as string} />
