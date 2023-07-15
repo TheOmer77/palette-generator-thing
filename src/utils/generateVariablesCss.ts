@@ -81,17 +81,17 @@ ${tones
   .join('\n')}
 
   --color-${baseColorName}-main: var(--color-${baseColorName}-${
-      baseColorMainTones[baseColorName]
-    });
+    baseColorMainTones[baseColorName]
+  });
   --color-${baseColorName}-light: var(--color-${baseColorName}-${
-      baseColorMainTones[baseColorName] + 15
-    });
+    baseColorMainTones[baseColorName] + 15
+  });
   --color-${baseColorName}-dark: var(--color-${baseColorName}-${
-      baseColorMainTones[baseColorName] - 15
-    });
+    baseColorMainTones[baseColorName] - 15
+  });
   --color-${baseColorName}-contrast: var(--color-${baseColorName}-${
-      baseColorContrastTones[baseColorName]
-    });
+    baseColorContrastTones[baseColorName]
+  });
 `
   )
   .join('\n')}}
