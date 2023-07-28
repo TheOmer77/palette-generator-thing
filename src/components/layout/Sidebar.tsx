@@ -1,3 +1,4 @@
+import Header from './Header';
 import { IconButton, Input } from 'components/general';
 import useGlobalState from 'hooks/useGlobalState';
 import { randomHexColor } from 'utils/colorUtils';
@@ -8,17 +9,10 @@ const Sidebar = () => {
 
   return (
     <aside
-      className='flex h-screen w-[25rem] flex-col gap-4 bg-slate-200 p-2
-    dark:bg-slate-900'
+      className='fixed bottom-0 z-10 flex w-screen flex-col gap-4 bg-slate-200
+      p-2 dark:bg-slate-900 md:static md:h-screen md:w-[25rem]'
     >
-      <section>
-        <h1
-          className='select-none text-6xl font-bold uppercase leading-[3.25rem]
-          tracking-tighter text-blue-600 dark:text-blue-300'
-        >
-          Palette generator thing
-        </h1>
-      </section>
+      <Header />
       <section>
         <Input
           id='input-base-color'
