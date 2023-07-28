@@ -8,8 +8,8 @@ const Sidebar = () => {
 
   return (
     <aside
-      className='flex h-screen w-[25rem] flex-col gap-4 border-e border-slate-300
-    bg-slate-100 p-2 dark:border-slate-700 dark:bg-slate-900'
+      className='flex h-screen w-[25rem] flex-col gap-4 bg-slate-200 p-2
+    dark:bg-slate-900'
     >
       <section>
         <h1
