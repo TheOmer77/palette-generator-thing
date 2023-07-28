@@ -32,12 +32,13 @@ const ColorBlock = forwardRef<HTMLDivElement, ColorBlockProps>(
             : {}),
           ...style,
         }}
-        className='relative flex flex-col items-start justify-center rounded-lg p-2 [&>button]:hover:flex'
+        className='relative flex flex-col items-start justify-center rounded-lg p-2'
       >
         <IconButton
           title='Copy color value'
-          className='absolute end-2 top-1 hidden text-inherit dark:text-inherit'
+          className='absolute end-2 top-1'
           onClick={copyValue}
+          style={isValidHexColor(value) ? { color: hexInverseBw(value) } : {}}
         >
           {justCopied ? <DoneIcon /> : <CopyIcon />}
         </IconButton>
