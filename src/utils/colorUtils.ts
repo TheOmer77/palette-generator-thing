@@ -113,7 +113,9 @@ export function getErrorColorHex(
 export const hexInverseBw = (hex: string) => {
   const rgb = rgbFromHex(hex);
   const luminance = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
-  return luminance < 140 ? '#ffffff' : '#000000';
+  return `rgba(${
+    luminance < 140 ? '255,255,255' : '0,0,0'
+  },var(--tw-text-opacity, 1)`;
 };
 
 export const getRoundedTone = (tone: number) => tone - (tone % 5);
