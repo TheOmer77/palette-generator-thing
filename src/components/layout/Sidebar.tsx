@@ -1,4 +1,4 @@
-import Input from 'components/general/Input';
+import { Input } from 'components/general';
 import useGlobalState from 'hooks/useGlobalState';
 
 const Sidebar = () => {
