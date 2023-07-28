@@ -36,7 +36,7 @@ const ColorBlock = forwardRef<HTMLDivElement, ColorBlockProps>(
       >
         <IconButton
           title='Copy color value'
-          className='absolute end-2 top-1'
+          className='absolute end-2 top-1 [--tw-text-opacity:0.5] dark:[--tw-text-opacity:0.5]'
           onClick={copyValue}
           style={isValidHexColor(value) ? { color: hexInverseBw(value) } : {}}
         >
