@@ -48,7 +48,7 @@ const Main = () => {
 
   return (
     <main
-      className='max-h-screen w-screen flex-grow p-4 pb-24 md:pb-0
+      className='w-screen flex-grow p-4 pb-24 md:pb-4
       md:ps-[26rem]'
     >
       <Header className='mb-6 block md:hidden' />
