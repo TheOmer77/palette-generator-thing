@@ -5,7 +5,8 @@ import GlobalStateProvider from 'components/providers/GlobalStateProvider';
 import App from './App';
 
 import '@fontsource-variable/figtree';
-import './index.css';
+import '@fontsource-variable/fira-code';
+import 'styles/index.css';
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
