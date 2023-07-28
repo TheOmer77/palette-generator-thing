@@ -12,10 +12,11 @@ interface InputProps
   > {
   label?: string;
   startAdornment?: ReactNode;
+  endAdornment?: ReactNode;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ id, label, startAdornment, ...props }, ref) => (
+  ({ id, label, startAdornment, endAdornment, ...props }, ref) => (
     <div
       className='relative mt-6 flex h-12 items-center gap-2 rounded-lg
     bg-slate-50 px-2 ring-1 ring-slate-300 focus-within:ring-2
@@ -34,8 +35,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         id={id}
         className='flex-grow bg-transparent text-slate-900
-      focus-visible:outline-none'
+        focus-visible:outline-none'
       />
+      {endAdornment}
     </div>
   )
 );
