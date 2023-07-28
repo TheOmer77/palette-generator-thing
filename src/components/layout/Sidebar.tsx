@@ -12,7 +12,7 @@ const Sidebar = () => {
       className='fixed bottom-0 z-10 flex w-screen flex-col gap-4 bg-slate-200
       p-2 dark:bg-slate-900 md:static md:h-screen md:w-[25rem]'
     >
-      <Header />
+      <Header className='hidden md:block' />
       <section>
         <Input
           id='input-base-color'
