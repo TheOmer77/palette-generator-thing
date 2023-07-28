@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { H2, H3 } from 'components/general';
+import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
 import useTonalPalette from 'hooks/useTonalPalette';
 import useGlobalState from 'hooks/useGlobalState';
@@ -10,6 +10,7 @@ import {
   getSecondaryColorHex,
 } from 'utils/colorUtils';
 import { tones } from 'constants';
+import generateVariablesCss from 'utils/generateVariablesCss';
 
 const Main = () => {
   const [{ baseColor }] = useGlobalState();
@@ -28,6 +29,21 @@ const Main = () => {
     [getNeutralTone] = useTonalPalette(neutralVariantColor),
     [getSecondaryTone] = useTonalPalette(secondaryColor),
     [getErrorTone] = useTonalPalette(errorColor);
+
+  const themeCss = useMemo(
+    () =>
+      generateVariablesCss(
+        {
+          primary: baseColor,
+          'primary-neutral': neutralVariantColor,
+          secondary: secondaryColor,
+          error: errorColor,
+        },
+        { format: 'rgbValues' }
+      ),
+
+    [baseColor, errorColor, neutralVariantColor, secondaryColor]
+  );
 
   return (
     <main className='max-h-screen flex-grow overflow-y-auto p-4'>
@@ -56,6 +72,9 @@ const Main = () => {
           <ColorBlock key={tone} value={getErrorTone(tone) as string} />
         ))}
       </ColorGrid>
+
+      <H2>Theme CSS variables</H2>
+      <CodeBlock>{themeCss}</CodeBlock>
     </main>
   );
 };
