@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Figtree Variable', sans-serif;
+  --font-family: 'Figtree Variable';
 }
