@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     >
       <label
         htmlFor={id}
-        className='absolute top-[-1.5rem] select-none text-sm font-medium
+        className='absolute -top-6 select-none text-sm font-medium
       text-slate-600 dark:text-slate-400'
       >
         {label}
