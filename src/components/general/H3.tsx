@@ -1,13 +1,17 @@
 import { DetailedHTMLProps, HTMLAttributes, forwardRef } from 'react';
+import cn from 'utils/cn';
 
 const H3 = forwardRef<
   HTMLHeadingElement,
   DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>
->(({ children, ...props }, ref) => (
+>(({ children, className, ...props }, ref) => (
   <h3
     {...props}
     ref={ref}
-    className='mb-2 text-xl font-medium text-slate-700 dark:text-slate-400'
+    className={cn(
+      'mb-2 text-xl font-medium text-slate-700 dark:text-slate-400',
+      className
+    )}
   >
     {children}
   </h3>
