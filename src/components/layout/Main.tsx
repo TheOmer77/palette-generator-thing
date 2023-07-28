@@ -46,7 +46,10 @@ const Main = () => {
   );
 
   return (
-    <main className='max-h-screen flex-grow overflow-y-auto p-4'>
+    <main
+      className='max-h-screen flex-grow overflow-y-auto bg-slate-50 p-4
+    dark:bg-slate-950'
+    >
       <H2>Tones</H2>
       <H3>Primary (base color)</H3>
       <ColorGrid>
