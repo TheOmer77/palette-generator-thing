@@ -8,13 +8,13 @@ const Sidebar = () => {
 
   return (
     <aside
-      className='flex h-screen w-[25rem] flex-col gap-4
-      border-e border-slate-300 bg-slate-100 p-2'
+      className='flex h-screen w-[25rem] flex-col gap-4 border-e border-slate-300
+    bg-slate-100 p-2 dark:border-slate-700 dark:bg-slate-900'
     >
       <section>
         <h1
-          className='select-none text-6xl font-bold uppercase
-          leading-[3.25rem] tracking-tighter text-blue-600'
+          className='select-none text-6xl font-bold uppercase leading-[3.25rem]
+          tracking-tighter text-blue-600 dark:text-blue-300'
         >
           Palette generator thing
         </h1>
