@@ -4,6 +4,7 @@ import {
   type InputHTMLAttributes,
   type ReactNode,
 } from 'react';
+import cn from 'utils/cn';
 
 interface InputProps
   extends DetailedHTMLProps<
@@ -16,12 +17,15 @@ interface InputProps
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ id, label, startAdornment, endAdornment, ...props }, ref) => (
+  ({ id, label, startAdornment, endAdornment, className, ...props }, ref) => (
     <div
-      className='relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-slate-50
-      px-2 ring-1 ring-slate-300 focus-within:ring-2 focus-within:ring-blue-600
-    dark:bg-slate-950 dark:ring-slate-700 dark:focus-within:ring-blue-300
-    [&>label]:focus-within:text-blue-600 dark:[&>label]:focus-within:text-blue-300'
+      className={cn(
+        `relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-slate-50
+px-2 ring-1 ring-slate-300 focus-within:ring-2 focus-within:ring-blue-600
+dark:bg-slate-950 dark:ring-slate-700 dark:focus-within:ring-blue-300
+[&>label]:focus-within:text-blue-600 dark:[&>label]:focus-within:text-blue-300`,
+        className
+      )}
     >
       <label
         htmlFor={id}
