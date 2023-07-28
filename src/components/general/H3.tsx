@@ -7,7 +7,7 @@ const H3 = forwardRef<
   <h3
     {...props}
     ref={ref}
-    className='text-xl font-medium text-slate-700 dark:text-slate-400'
+    className='mb-2 text-xl font-medium text-slate-700 dark:text-slate-400'
   >
     {children}
   </h3>
