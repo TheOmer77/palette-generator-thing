@@ -10,7 +10,7 @@ const Sidebar = () => {
   return (
     <aside
       className='fixed bottom-0 z-10 flex w-screen flex-col gap-4 bg-slate-200
-      p-2 dark:bg-slate-900 md:static md:h-screen md:w-[25rem]'
+      p-2 dark:bg-slate-900 md:h-screen md:w-[25rem]'
     >
       <Header className='hidden md:block' />
       <section>
