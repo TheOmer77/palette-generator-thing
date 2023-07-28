@@ -43,7 +43,9 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
         <pre
           {...props}
           ref={ref}
-          className='max-h-[calc(100vh-6.5rem)] overflow-auto p-4 text-sm md:max-h-[calc(100vh-4rem)]'
+          className='max-h-[calc(100vh-6.5rem)] overflow-auto p-4 text-sm
+          scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-700
+          md:max-h-[calc(100vh-4rem)]'
         >
           {children}
         </pre>
