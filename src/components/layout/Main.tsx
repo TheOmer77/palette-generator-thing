@@ -48,8 +48,8 @@ const Main = () => {
 
   return (
     <main
-      className='max-h-screen flex-grow overflow-y-auto bg-slate-50 p-4
-      pb-24 dark:bg-slate-950 md:pb-4'
+      className='max-h-screen flex-grow overflow-y-auto p-4
+      pb-24 md:pb-0'
     >
       <Header className='mb-6 block md:hidden' />
       <H2>Tones</H2>
