@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 const ColorGrid = ({
   marginBottom = false,
@@ -9,7 +9,7 @@ const ColorGrid = ({
   children: ReactNode;
 }) => {
   return (
-    <div className={classNames('color-grid', marginBottom && 'margin-bottom')}>
+    <div className={clsx('color-grid', marginBottom && 'margin-bottom')}>
       {children}
     </div>
   );
