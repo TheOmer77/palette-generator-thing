@@ -1,5 +1,7 @@
-import { Input } from 'components/general';
+import { IconButton, Input } from 'components/general';
 import useGlobalState from 'hooks/useGlobalState';
+import { randomHexColor } from 'utils/colorUtils';
+import { ReactComponent as RandomIcon } from 'assets/icons/random.svg';
 
 const Sidebar = () => {
   const [globalState, setGlobalState] = useGlobalState();
@@ -21,14 +23,22 @@ const Sidebar = () => {
         <Input
           id='input-base-color'
           label='Base color'
+          value={globalState.baseColor}
+          onChange={e => setGlobalState({ baseColor: e.target.value })}
           startAdornment={
             <div
               className='h-7 w-7 rounded-lg'
               style={{ backgroundColor: globalState.baseColor }}
             />
           }
-          value={globalState.baseColor}
-          onChange={e => setGlobalState({ baseColor: e.target.value })}
+          endAdornment={
+            <IconButton
+              title='Generate random color'
+              onClick={() => setGlobalState({ baseColor: randomHexColor() })}
+            >
+              <RandomIcon />
+            </IconButton>
+          }
         />
       </section>
     </aside>
