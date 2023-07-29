@@ -26,10 +26,32 @@ const Main = () => {
     ),
     errorColor = useMemo(() => getErrorColorHex(baseColor), [baseColor]);
 
-  const [getTone] = useTonalPalette(baseColor),
+  const [getPrimaryTone] = useTonalPalette(baseColor),
     [getNeutralTone] = useTonalPalette(neutralVariantColor),
     [getSecondaryTone] = useTonalPalette(secondaryColor),
     [getErrorTone] = useTonalPalette(errorColor);
+
+  const colorGrids = useMemo(
+    () => [
+      {
+        title: 'Primary (base color)',
+        tones: tones.map(tone => getPrimaryTone(tone)),
+      },
+      {
+        title: 'Neutral',
+        tones: tones.map(tone => getNeutralTone(tone)),
+      },
+      {
+        title: 'Secondary',
+        tones: tones.map(tone => getSecondaryTone(tone)),
+      },
+      {
+        title: 'Error',
+        tones: tones.map(tone => getErrorTone(tone)),
+      },
+    ],
+    [getErrorTone, getNeutralTone, getPrimaryTone, getSecondaryTone]
+  );
 
   const themeCss = useMemo(
     () =>
@@ -53,30 +75,16 @@ const Main = () => {
     >
       <Header className='mb-6 block md:hidden' />
       <H2>Tones</H2>
-      <H3>Primary (base color)</H3>
-      <ColorGrid>
-        {tones.map(tone => (
-          <ColorBlock key={tone} value={getTone(tone) as string} />
-        ))}
-      </ColorGrid>
-      <H3>Primary neutral</H3>
-      <ColorGrid>
-        {tones.map(tone => (
-          <ColorBlock key={tone} value={getNeutralTone(tone) as string} />
-        ))}
-      </ColorGrid>
-      <H3>Secondary</H3>
-      <ColorGrid>
-        {tones.map(tone => (
-          <ColorBlock key={tone} value={getSecondaryTone(tone) as string} />
-        ))}
-      </ColorGrid>
-      <H3>Error</H3>
-      <ColorGrid>
-        {tones.map(tone => (
-          <ColorBlock key={tone} value={getErrorTone(tone) as string} />
-        ))}
-      </ColorGrid>
+      {colorGrids.map(({ title, tones }) => (
+        <>
+          <H3>{title}</H3>
+          <ColorGrid>
+            {tones.map(tone => (
+              <ColorBlock key={tone as string} value={tone as string} />
+            ))}
+          </ColorGrid>
+        </>
+      ))}
 
       <H2>Theme CSS variables</H2>
       <CodeBlock language='css'>{themeCss}</CodeBlock>
