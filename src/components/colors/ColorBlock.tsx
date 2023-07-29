@@ -1,14 +1,10 @@
-import { forwardRef, useCallback, useState } from 'react';
+import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { IconButton } from 'components/general';
 import { hexInverseBw, isValidHexColor } from 'utils/colorUtils';
 import { ReactComponent as CopyIcon } from 'assets/icons/copy.svg';
 import { ReactComponent as DoneIcon } from 'assets/icons/done.svg';
 
-interface ColorBlockProps
-  extends React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLDivElement>,
-    HTMLDivElement
-  > {
+interface ColorBlockProps extends ComponentProps<'div'> {
   value: string;
 }
 

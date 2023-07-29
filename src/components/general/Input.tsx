@@ -1,16 +1,7 @@
-import {
-  forwardRef,
-  type DetailedHTMLProps,
-  type InputHTMLAttributes,
-  type ReactNode,
-} from 'react';
+import { forwardRef, ReactNode, ComponentProps } from 'react';
 import cn from 'utils/cn';
 
-interface InputProps
-  extends DetailedHTMLProps<
-    InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  > {
+interface InputProps extends ComponentProps<'input'> {
   label?: string;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;

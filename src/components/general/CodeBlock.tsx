@@ -1,20 +1,10 @@
-import {
-  DetailedHTMLProps,
-  HTMLAttributes,
-  forwardRef,
-  useCallback,
-  useState,
-} from 'react';
+import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 
 import { IconButton } from 'components/general';
 import { ReactComponent as CopyIcon } from 'assets/icons/copy.svg';
 import { ReactComponent as DoneIcon } from 'assets/icons/done.svg';
 
-interface CodeBlockProps
-  extends Omit<
-    DetailedHTMLProps<HTMLAttributes<HTMLPreElement>, HTMLPreElement>,
-    'children'
-  > {
+interface CodeBlockProps extends Omit<ComponentProps<'pre'>, 'children'> {
   children: string;
 }
 
