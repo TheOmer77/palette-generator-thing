@@ -79,7 +79,7 @@ const Main = () => {
       </ColorGrid>
 
       <H2>Theme CSS variables</H2>
-      <CodeBlock>{themeCss}</CodeBlock>
+      <CodeBlock language='css'>{themeCss}</CodeBlock>
     </main>
   );
 };
