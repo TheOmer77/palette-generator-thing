@@ -8,8 +8,8 @@ const IconButton = forwardRef<HTMLButtonElement, ComponentProps<'button'>>(
       ref={ref}
       className={cn(
         `flex h-8 w-8 cursor-default items-center justify-center rounded-lg
-text-xl text-slate-700 hover:bg-slate-400/20 focus-visible:bg-slate-400/20
-focus-visible:outline-none active:bg-slate-400/30 dark:text-slate-400`,
+text-xl text-slate-500 hover:bg-slate-500/20 focus-visible:bg-slate-500/20
+focus-visible:outline-none active:bg-slate-500/30`,
         className
       )}
     >
