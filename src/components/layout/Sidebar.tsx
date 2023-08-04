@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Button } from 'components/general';
 import BottomSheet from 'components/general/BottomSheet';
 import Header from './Header';
 import OptionsSection from './OptionsSection';
@@ -15,15 +16,9 @@ const Sidebar = () => {
       <Header className='hidden md:block' />
       <OptionsSection className='hidden md:block' />
 
-      <button
-        onClick={() => setSheetOpen(true)}
-        className='flex cursor-default items-center justify-center self-center
-rounded-lg px-3 py-1.5 text-base text-slate-700 hover:bg-slate-500/20
-focus-visible:bg-slate-500/20 focus-visible:outline-none active:bg-slate-500/30
-dark:text-slate-300 md:hidden'
-      >
+      <Button onClick={() => setSheetOpen(true)} className='md:hidden'>
         Options
-      </button>
+      </Button>
       <BottomSheet open={sheetOpen} onOpenChange={setSheetOpen} title='Options'>
         <OptionsSection />
       </BottomSheet>
