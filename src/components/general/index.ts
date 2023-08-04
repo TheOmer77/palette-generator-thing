@@ -1,3 +1,4 @@
+export { default as BottomSheet } from './BottomSheet';
 export { default as Button } from './Button';
 export { default as CodeBlock } from './CodeBlock';
 export { default as H2 } from './H2';

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { Button } from 'components/general';
-import BottomSheet from 'components/general/BottomSheet';
+import { BottomSheet, Button } from 'components/general';
 import Header from './Header';
 import OptionsSection from './OptionsSection';
 
