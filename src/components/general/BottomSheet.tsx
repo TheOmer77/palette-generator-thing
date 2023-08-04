@@ -22,14 +22,18 @@ const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogPortal>
-          <DialogOverlay className='fixed inset-0 z-20 bg-slate-950/50' />
+          <DialogOverlay
+            className='fixed inset-0 z-20 bg-slate-950/50
+data-[state=closed]:animate-fadeout data-[state=open]:animate-fadein'
+          />
           <DialogContent
             {...props}
             ref={ref}
             className={cn(
-              `fixed bottom-0 start-1/2 z-20 w-screen max-w-2xl
--translate-x-1/2 rounded-t-lg bg-slate-50 p-4 text-slate-950 shadow
-shadow-slate-900/50 dark:bg-slate-900 dark:text-slate-50`,
+              `fixed bottom-0 z-20 w-screen max-w-2xl rounded-t-lg bg-slate-50
+p-4 text-slate-950 shadow shadow-slate-900/50
+data-[state=closed]:animate-slideout data-[state=open]:animate-slidein
+dark:bg-slate-900 dark:text-slate-50`,
               className
             )}
           >
