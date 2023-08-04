@@ -1,4 +1,5 @@
 import scrollbar from 'tailwind-scrollbar';
+import { screens } from './src/constants';
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -28,6 +29,7 @@ const config = {
         },
       },
     },
+    screens,
   },
   plugins: [scrollbar],
 };
