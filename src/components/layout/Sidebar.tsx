@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { BottomSheet, Button } from 'components/general';
 import Header from './Header';
 import OptionsSection from './OptionsSection';
+import useTailwindBreakpoint from 'hooks/useTailwindBreakpoint';
 
 const Sidebar = () => {
+  const mdBreakpoint = useTailwindBreakpoint('md');
   const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
@@ -13,11 +15,12 @@ const Sidebar = () => {
     p-2 dark:bg-slate-900 md:inset-x-auto md:h-screen md:w-[25rem]'
     >
       <Header className='hidden md:block' />
-      <OptionsSection className='hidden md:block' />
 
-      <Button onClick={() => setSheetOpen(true)} className='md:hidden'>
-        Options
-      </Button>
+      {mdBreakpoint ? (
+        <OptionsSection />
+      ) : (
+        <Button onClick={() => setSheetOpen(true)}>Options</Button>
+      )}
       <BottomSheet open={sheetOpen} onOpenChange={setSheetOpen} title='Options'>
         <OptionsSection />
       </BottomSheet>
