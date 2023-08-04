@@ -29,7 +29,7 @@ const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(
             className={cn(
               `fixed bottom-0 start-1/2 z-20 w-screen max-w-2xl
 -translate-x-1/2 rounded-t-lg bg-slate-50 p-4 text-slate-950 shadow
-shadow-slate-900/50`,
+shadow-slate-900/50 dark:bg-slate-900 dark:text-slate-50`,
               className
             )}
           >
