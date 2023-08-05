@@ -4,6 +4,7 @@ import { BottomSheet, Button } from 'components/general';
 import Header from './Header';
 import OptionsSection from './OptionsSection';
 import useTailwindBreakpoint from 'hooks/useTailwindBreakpoint';
+import { ReactComponent as TuneIcon } from 'assets/icons/tune.svg';
 
 const Sidebar = () => {
   const mdBreakpoint = useTailwindBreakpoint('md');
@@ -20,7 +21,9 @@ md:bottom-0 md:h-screen md:w-[25rem] md:translate-x-0 md:rounded-none'
       {mdBreakpoint ? (
         <OptionsSection />
       ) : (
-        <Button onClick={() => setSheetOpen(true)}>Options</Button>
+        <Button icon={<TuneIcon />} onClick={() => setSheetOpen(true)}>
+          Options
+        </Button>
       )}
       <BottomSheet open={sheetOpen} onOpenChange={setSheetOpen} title='Options'>
         <OptionsSection />
