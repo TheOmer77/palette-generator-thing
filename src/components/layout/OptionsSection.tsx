@@ -3,7 +3,7 @@ import { type ComponentProps, forwardRef } from 'react';
 import { IconButton, Input } from 'components/general';
 import useGlobalState from 'hooks/useGlobalState';
 import { randomHexColor } from 'utils/colorUtils';
-import { ReactComponent as RandomIcon } from 'assets/icons/random.svg';
+import { RandomIcon } from 'assets/icons';
 
 const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
   (props, ref) => {

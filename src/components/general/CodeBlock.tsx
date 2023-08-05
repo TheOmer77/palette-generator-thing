@@ -3,8 +3,7 @@ import { Highlight } from 'prism-react-renderer';
 
 import { IconButton } from 'components/general';
 import useDarkTheme from 'hooks/useDarkTheme';
-import { ReactComponent as CopyIcon } from 'assets/icons/copy.svg';
-import { ReactComponent as DoneIcon } from 'assets/icons/done.svg';
+import { CopyIcon, DoneIcon } from 'assets/icons';
 import cn from 'utils/cn';
 import { prismThemes } from 'constants';
 

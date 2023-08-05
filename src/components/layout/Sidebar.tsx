@@ -4,7 +4,7 @@ import { BottomSheet, Button } from 'components/general';
 import Header from './Header';
 import OptionsSection from './OptionsSection';
 import useTailwindBreakpoint from 'hooks/useTailwindBreakpoint';
-import { ReactComponent as TuneIcon } from 'assets/icons/tune.svg';
+import { TuneIcon } from 'assets/icons';
 
 const Sidebar = () => {
   const mdBreakpoint = useTailwindBreakpoint('md');
