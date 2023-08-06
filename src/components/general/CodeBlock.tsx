@@ -7,7 +7,8 @@ import { CopyIcon, DoneIcon } from 'assets/icons';
 import cn from 'utils/cn';
 import { prismThemes } from 'constants';
 
-interface CodeBlockProps extends Omit<ComponentProps<'pre'>, 'children'> {
+export interface CodeBlockProps
+  extends Omit<ComponentProps<'pre'>, 'children'> {
   children: string;
   language?: string;
 }

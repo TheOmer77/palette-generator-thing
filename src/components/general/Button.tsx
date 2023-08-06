@@ -6,7 +6,7 @@ import {
 } from 'react';
 import cn from 'utils/cn';
 
-interface ButtonProps extends ComponentProps<'button'> {
+export interface ButtonProps extends ComponentProps<'button'> {
   icon?: ReactNode;
   iconPosition?: 'start' | 'end';
 }

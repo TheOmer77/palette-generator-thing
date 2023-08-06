@@ -11,7 +11,7 @@ import {
 import H2 from './H2';
 import cn from 'utils/cn';
 
-interface BottomSheetProps
+export interface BottomSheetProps
   extends ComponentProps<'div'>,
     Pick<DialogProps, 'open' | 'onOpenChange'> {
   title?: string;
