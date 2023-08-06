@@ -25,10 +25,12 @@ bg-slate-200 p-2 dark:bg-slate-900 md:rounded-none'
         icon={<TuneIcon />}
         onClick={() => setSheetOpen(true)}
         className='fixed bottom-4 end-4 z-10 h-12
-bg-slate-200 px-4 shadow shadow-slate-900/50 hover:bg-slate-300
-focus-visible:bg-slate-300 focus-visible:outline-none active:bg-slate-400
-dark:bg-slate-900 dark:shadow-slate-700/50 dark:hover:bg-slate-800
-dark:focus-visible:bg-slate-800 dark:active:bg-slate-700'
+overflow-hidden bg-slate-200 px-4 shadow shadow-slate-500/50 after:absolute
+after:start-0 after:top-0 after:h-full after:w-full after:content-[""]
+hover:bg-slate-200 hover:after:bg-slate-500/10 focus-visible:bg-slate-300
+focus-visible:outline-none active:bg-slate-300 dark:bg-slate-900
+dark:shadow-slate-700/50 hover:dark:bg-slate-900 
+dark:focus-visible:bg-slate-800 dark:active:bg-slate-800'
       >
         Options
       </Button>
