@@ -1,4 +1,5 @@
 import scrollbar from 'tailwind-scrollbar';
+import selectionVariant from 'tailwindcss-selection-variant';
 import { screens } from './src/constants';
 
 /** @type {import('tailwindcss').Config} */
@@ -31,7 +32,7 @@ const config = {
     },
     screens,
   },
-  plugins: [scrollbar],
+  plugins: [scrollbar, selectionVariant],
 };
 
 export default config;
