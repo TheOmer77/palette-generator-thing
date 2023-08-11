@@ -10,7 +10,7 @@ const Options = () => {
 
   return mdBreakpoint ? (
     <Sidebar>
-      <Header className='hidden md:block' />
+      <Header />
       <OptionsSection />
     </Sidebar>
   ) : (
