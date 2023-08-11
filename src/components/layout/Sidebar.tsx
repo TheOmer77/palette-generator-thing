@@ -1,36 +1,24 @@
-import { useState } from 'react';
+import { ComponentProps, forwardRef } from 'react';
+import cn from 'utils/cn';
 
-import { BottomSheet, Fab } from 'components/general';
-import Header from './Header';
-import OptionsSection from './OptionsSection';
-import useTailwindBreakpoint from 'hooks/useTailwindBreakpoint';
-import { TuneIcon } from 'assets/icons';
-
-const Sidebar = () => {
-  const mdBreakpoint = useTailwindBreakpoint('md');
-  const [sheetOpen, setSheetOpen] = useState(false);
-
-  return mdBreakpoint ? (
+const Sidebar = forwardRef<HTMLElement, ComponentProps<'aside'>>(
+  ({ className, children, ...props }, ref) => (
     <>
       <aside
-        className='fixed flex h-screen w-[50vw] max-w-[25rem] flex-col gap-4
-      rounded-lg bg-slate-200 p-2 dark:bg-slate-900 md:rounded-none'
+        {...props}
+        ref={ref}
+        className={cn(
+          `fixed flex h-screen w-[50vw] max-w-[25rem] flex-col gap-4
+rounded-lg bg-slate-200 p-2 dark:bg-slate-900 md:rounded-none`,
+          className
+        )}
       >
-        <Header className='hidden md:block' />
-        <OptionsSection />
+        {children}
       </aside>
       <div className='w-[50vw] max-w-[25rem]' />
     </>
-  ) : (
-    <>
-      <Fab icon={<TuneIcon />} onClick={() => setSheetOpen(true)}>
-        Options
-      </Fab>
-      <BottomSheet open={sheetOpen} onOpenChange={setSheetOpen} title='Options'>
-        <OptionsSection />
-      </BottomSheet>
-    </>
-  );
-};
+  )
+);
+Sidebar.displayName = 'Sidebar';
 
 export default Sidebar;
