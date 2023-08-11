@@ -3,12 +3,12 @@ import { Highlight } from 'prism-react-renderer';
 
 import { IconButton } from 'components/general';
 import useDarkTheme from 'hooks/useDarkTheme';
-import { ReactComponent as CopyIcon } from 'assets/icons/copy.svg';
-import { ReactComponent as DoneIcon } from 'assets/icons/done.svg';
+import { CopyIcon, DoneIcon } from 'assets/icons';
 import cn from 'utils/cn';
 import { prismThemes } from 'constants';
 
-interface CodeBlockProps extends Omit<ComponentProps<'pre'>, 'children'> {
+export interface CodeBlockProps
+  extends Omit<ComponentProps<'pre'>, 'children'> {
   children: string;
   language?: string;
 }
@@ -55,7 +55,7 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
               className={cn(
                 `max-h-[calc(100vh-6.5rem)] overflow-auto p-4 text-sm
 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-700
-md:max-h-[calc(100vh-4rem)]`,
+md:max-h-[calc(100vh-4.5rem)]`,
                 className
               )}
             >

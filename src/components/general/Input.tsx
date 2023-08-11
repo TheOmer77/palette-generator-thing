@@ -1,7 +1,7 @@
 import { forwardRef, ReactNode, ComponentProps } from 'react';
 import cn from 'utils/cn';
 
-interface InputProps extends ComponentProps<'input'> {
+export interface InputProps extends ComponentProps<'input'> {
   label?: string;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;

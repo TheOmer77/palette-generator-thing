@@ -1,42 +1,24 @@
-import Header from './Header';
-import { IconButton, Input } from 'components/general';
-import useGlobalState from 'hooks/useGlobalState';
-import { randomHexColor } from 'utils/colorUtils';
-import { ReactComponent as RandomIcon } from 'assets/icons/random.svg';
+import { ComponentProps, forwardRef } from 'react';
+import cn from 'utils/cn';
 
-const Sidebar = () => {
-  const [globalState, setGlobalState] = useGlobalState();
-
-  return (
-    <aside
-      className='fixed bottom-0 z-10 flex w-screen flex-col gap-4 bg-slate-200
-      p-2 dark:bg-slate-900 md:h-screen md:w-[25rem]'
-    >
-      <Header className='hidden md:block' />
-      <section>
-        <Input
-          id='input-base-color'
-          label='Base color'
-          value={globalState.baseColor}
-          onChange={e => setGlobalState({ baseColor: e.target.value })}
-          startAdornment={
-            <div
-              className='h-7 w-7 rounded-lg'
-              style={{ backgroundColor: globalState.baseColor }}
-            />
-          }
-          endAdornment={
-            <IconButton
-              title='Generate random color'
-              onClick={() => setGlobalState({ baseColor: randomHexColor() })}
-            >
-              <RandomIcon />
-            </IconButton>
-          }
-        />
-      </section>
-    </aside>
-  );
-};
+const Sidebar = forwardRef<HTMLElement, ComponentProps<'aside'>>(
+  ({ className, children, ...props }, ref) => (
+    <>
+      <aside
+        {...props}
+        ref={ref}
+        className={cn(
+          `fixed flex h-screen w-[50vw] max-w-[25rem] flex-col gap-4
+rounded-lg bg-slate-200 p-2 dark:bg-slate-900 md:rounded-none`,
+          className
+        )}
+      >
+        {children}
+      </aside>
+      <div className='w-[50vw] max-w-[25rem]' />
+    </>
+  )
+);
+Sidebar.displayName = 'Sidebar';
 
 export default Sidebar;

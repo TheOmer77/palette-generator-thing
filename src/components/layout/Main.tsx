@@ -73,10 +73,7 @@ const Main = () => {
   );
 
   return (
-    <main
-      className='w-screen flex-grow p-4 pb-24 md:pb-4
-      md:ps-[26rem]'
-    >
+    <main className='p-4 pb-24 md:pb-4'>
       <Header className='mb-6 block md:hidden' />
       <H2>Tones</H2>
       {colorGrids.map(({ id, title, tones }) => (
