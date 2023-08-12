@@ -30,10 +30,10 @@ data-[state=closed]:animate-fadeout data-[state=open]:animate-fadein'
             {...props}
             ref={ref}
             className={cn(
-              `text-neutral-5 bg-neutral-98 dark:text-neutral-98
-shadow-neutral-10/50 dark:bg-neutral-10 fixed inset-x-0 bottom-0 z-20 mx-auto
-flex w-screen max-w-2xl flex-col rounded-t-lg p-4 shadow
-data-[state=closed]:animate-slideout data-[state=open]:animate-slidein`,
+              `text-neutral-5 dark:text-neutral-98 shadow-neutral-10/50 fixed
+inset-x-0 bottom-0 z-20 mx-auto flex w-screen max-w-2xl flex-col rounded-t-lg
+bg-white p-4 shadow data-[state=closed]:animate-slideout
+data-[state=open]:animate-slidein dark:bg-black`,
               className
             )}
           >
