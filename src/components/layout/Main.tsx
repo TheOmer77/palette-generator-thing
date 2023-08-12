@@ -3,28 +3,13 @@ import { Fragment, useMemo } from 'react';
 import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
+import useTheme from 'hooks/useTheme';
 import useTonalPalette from 'hooks/useTonalPalette';
-import useGlobalState from 'hooks/useGlobalState';
-import {
-  getErrorColorHex,
-  getNeutralVariantHex,
-  getSecondaryColorHex,
-} from 'utils/colorUtils';
-import { tones } from 'constants';
 import generateVariablesCss from 'utils/generateVariablesCss';
+import { tones } from 'constants';
 
 const Main = () => {
-  const [{ baseColor }] = useGlobalState();
-
-  const neutralColor = useMemo(
-      () => getNeutralVariantHex(baseColor),
-      [baseColor]
-    ),
-    secondaryColor = useMemo(
-      () => getSecondaryColorHex(baseColor),
-      [baseColor]
-    ),
-    errorColor = useMemo(() => getErrorColorHex(baseColor), [baseColor]);
+  const [baseColor, neutralColor, secondaryColor, errorColor] = useTheme();
 
   const [getPrimaryTone] = useTonalPalette(baseColor),
     [getNeutralTone] = useTonalPalette(neutralColor),
