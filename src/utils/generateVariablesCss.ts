@@ -17,9 +17,9 @@ const getColorValue = (
   format: 'hex' | 'rgb' | 'rgbValues' = 'hex'
 ) =>
   format === 'rgb'
-    ? `rgb(${rgbFromArgb(argb).join(', ')})`
+    ? `rgb(${rgbFromArgb(argb).join(' ')})`
     : format === 'rgbValues'
-    ? rgbFromArgb(argb).join(', ')
+    ? rgbFromArgb(argb).join(' ')
     : hexFromArgb(argb);
 
 const generateVariablesCss = (
