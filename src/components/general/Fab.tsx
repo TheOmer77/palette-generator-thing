@@ -8,13 +8,13 @@ const Fab = forwardRef<HTMLButtonElement, ButtonProps>(
       {...props}
       ref={ref}
       className={cn(
-        `focus-visible:bg-neutral-70 active:bg-neutral-80 dark:text-neutral-70
-text-neutral-30 dark:shadow-neutral-30/50 dark:bg-neutral-10 bg-neutral-90
-dark:focus-visible:bg-neutral-20 dark:active:bg-neutral-20 fixed bottom-4 end-4
-z-10 flex h-14 cursor-default select-none items-center justify-center gap-3
-self-center overflow-hidden rounded-lg text-base font-medium shadow
-shadow-neutral-50/50 after:absolute after:start-0 after:top-0 after:h-full
-after:w-full after:content-[""] hover:after:bg-neutral-50/10
+        `focus-visible:bg-primary-70 active:bg-primary-90 dark:text-primary-80
+text-primary-20 dark:shadow-primary-20/50 dark:bg-primary-10 bg-primary-95
+dark:focus-visible:bg-primary-20 dark:active:bg-primary-20 shadow-primary-50/50
+hover:after:bg-primary-50/10 fixed bottom-4 end-4 z-10 flex h-14 cursor-default
+select-none items-center justify-center gap-3 self-center overflow-hidden
+rounded-lg text-base font-medium shadow after:absolute after:start-0
+after:top-0 after:h-full after:w-full after:content-[""]
 focus-visible:outline-none [&>.icon]:text-2xl`,
         isValidElement(icon) && !children ? 'w-14' : 'px-4',
         className
