@@ -4,3 +4,4 @@ export { default as Options } from './Options';
 export { default as OptionsSection } from './OptionsSection';
 export { default as SheetWithFab } from './SheetWithFab';
 export { default as Sidebar } from './Sidebar';
+export { default as ThemeStyle } from './ThemeStyle';
