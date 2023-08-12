@@ -31,19 +31,23 @@ const config = {
       },
     },
     screens,
-    colors: ['primary', 'neutral', 'secondary', 'error'].reduce(
-      (obj, colorName) => ({
-        ...obj,
-        [colorName]: [...tones, 'main', 'light', 'dark', 'contrast'].reduce(
-          (obj, tone) => ({
-            ...obj,
-            [tone]: `rgb(var(--color-${colorName}-${tone}) / <alpha-value>)`,
-          }),
-          {}
-        ),
-      }),
-      {}
-    ),
+    colors: {
+      white: '#fff',
+      black: '#000',
+      ...['primary', 'neutral', 'secondary', 'error'].reduce(
+        (obj, colorName) => ({
+          ...obj,
+          [colorName]: [...tones, 'main', 'light', 'dark', 'contrast'].reduce(
+            (obj, tone) => ({
+              ...obj,
+              [tone]: `rgb(var(--color-${colorName}-${tone}) / <alpha-value>)`,
+            }),
+            {}
+          ),
+        }),
+        {}
+      ),
+    },
   },
   plugins: [scrollbar, selectionVariant],
 };
