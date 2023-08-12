@@ -16,7 +16,7 @@ import generateVariablesCss from 'utils/generateVariablesCss';
 const Main = () => {
   const [{ baseColor }] = useGlobalState();
 
-  const neutralVariantColor = useMemo(
+  const neutralColor = useMemo(
       () => getNeutralVariantHex(baseColor),
       [baseColor]
     ),
@@ -27,7 +27,7 @@ const Main = () => {
     errorColor = useMemo(() => getErrorColorHex(baseColor), [baseColor]);
 
   const [getPrimaryTone] = useTonalPalette(baseColor),
-    [getNeutralTone] = useTonalPalette(neutralVariantColor),
+    [getNeutralTone] = useTonalPalette(neutralColor),
     [getSecondaryTone] = useTonalPalette(secondaryColor),
     [getErrorTone] = useTonalPalette(errorColor);
 
@@ -62,14 +62,14 @@ const Main = () => {
       generateVariablesCss(
         {
           primary: baseColor,
-          'primary-neutral': neutralVariantColor,
+          neutral: neutralColor,
           secondary: secondaryColor,
           error: errorColor,
         },
         { format: 'rgbValues' }
       ),
 
-    [baseColor, errorColor, neutralVariantColor, secondaryColor]
+    [baseColor, errorColor, neutralColor, secondaryColor]
   );
 
   return (
