@@ -1,7 +1,7 @@
 import { type ComponentProps, forwardRef } from 'react';
 
 import { IconButton, Input } from 'components/general';
-import useGlobalState from 'hooks/useGlobalState';
+import { useGlobalState } from 'hooks';
 import { randomHexColor } from 'utils/colorUtils';
 import { RandomIcon } from 'assets/icons';
 

@@ -3,8 +3,7 @@ import { Fragment, useMemo } from 'react';
 import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
-import useTheme from 'hooks/useTheme';
-import useTonalPalette from 'hooks/useTonalPalette';
+import { useTheme, useTonalPalette } from 'hooks';
 import generateVariablesCss from 'utils/generateVariablesCss';
 import { tones } from 'constants';
 
