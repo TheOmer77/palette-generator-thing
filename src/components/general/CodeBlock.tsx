@@ -53,8 +53,8 @@ rounded-lg'
               style={{ ...prismStyle, ...style }}
               ref={ref}
               className={cn(
-                `scrollbar-thumb-neutral-70 dark:scrollbar-thumb-neutral-30 max-h-[calc(100vh-6.5rem)] overflow-auto
-p-4 text-sm scrollbar-thin
+                `max-h-[calc(100vh-6.5rem)]
+overflow-auto p-4 text-sm scrollbar-thin scrollbar-thumb-neutral-50/30
 md:max-h-[calc(100vh-4.5rem)]`,
                 className
               )}
