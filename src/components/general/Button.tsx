@@ -17,10 +17,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       {...props}
       ref={ref}
       className={cn(
-        `flex h-9 cursor-default select-none items-center justify-center
-gap-2 self-center rounded-lg px-3 text-base font-medium text-slate-700
-hover:bg-slate-500/20 focus-visible:bg-slate-500/20 focus-visible:outline-none
-active:bg-slate-500/30 dark:text-slate-300 [&>.icon]:text-xl`,
+        `hover:bg-neutral-98/20 focus-visible:bg-neutral-98/20
+active:bg-neutral-98/30 dark:text-neutral-70 text-neutral-30 flex h-9
+cursor-default select-none items-center justify-center gap-2 self-center
+rounded-lg px-3 text-base font-medium focus-visible:outline-none
+[&>.icon]:text-xl`,
         className
       )}
     >

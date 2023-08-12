@@ -13,15 +13,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       className={cn(
         `focus-within:ring-primary-40 [&>label]:focus-within:text-primary-40
 dark:focus-within:ring-primary-70 dark:[&>label]:focus-within:text-primary-70
-relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-slate-50 px-2 ring-1
-ring-slate-300 focus-within:ring-2 dark:bg-slate-950 dark:ring-slate-700`,
+dark:bg-neutral-5 bg-neutral-98 ring-neutral-70 dark:ring-neutral-30 relative
+mt-6 flex h-12 items-center gap-2 rounded-lg px-2 ring-1 focus-within:ring-2`,
         className
       )}
     >
       <label
         htmlFor={id}
-        className='absolute -top-6 select-none text-sm font-medium
-      text-slate-600 dark:text-slate-400'
+        className='dark:text-neutral-60 text-neutral-40 absolute -top-6 select-none
+      text-sm font-medium'
       >
         {label}
       </label>
@@ -30,8 +30,8 @@ ring-slate-300 focus-within:ring-2 dark:bg-slate-950 dark:ring-slate-700`,
         {...props}
         ref={ref}
         id={id}
-        className='flex-grow bg-transparent text-slate-900 focus-visible:outline-none
-        dark:text-slate-100'
+        className='text-neutral-10 dark:text-neutral-90 flex-grow bg-transparent
+        focus-visible:outline-none'
       />
       {endAdornment}
     </div>

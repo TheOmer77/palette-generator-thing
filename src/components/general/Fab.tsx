@@ -8,14 +8,14 @@ const Fab = forwardRef<HTMLButtonElement, ButtonProps>(
       {...props}
       ref={ref}
       className={cn(
-        `fixed bottom-4 end-4 z-10 flex h-14 cursor-default select-none
-items-center justify-center gap-3 self-center overflow-hidden rounded-lg
-bg-slate-200 text-base font-medium text-slate-700 shadow
-shadow-slate-500/50 after:absolute after:start-0 after:top-0 after:h-full
-after:w-full after:content-[""] hover:after:bg-slate-500/10
-focus-visible:bg-slate-300 focus-visible:outline-none active:bg-slate-300
-dark:bg-slate-900 dark:text-slate-300 dark:shadow-slate-700/50
-dark:focus-visible:bg-slate-800 dark:active:bg-slate-800 [&>.icon]:text-2xl`,
+        `shadow-neutral-98/50 hover:after:bg-neutral-98/10
+focus-visible:bg-neutral-70 active:bg-neutral-70 dark:text-neutral-70
+text-neutral-30 dark:shadow-neutral-30/50 dark:bg-neutral-10 bg-neutral-80
+dark:focus-visible:bg-neutral-20 dark:active:bg-neutral-20 fixed bottom-4 end-4
+z-10 flex h-14 cursor-default select-none items-center justify-center gap-3
+self-center overflow-hidden rounded-lg text-base font-medium shadow
+after:absolute after:start-0 after:top-0 after:h-full after:w-full
+after:content-[""] focus-visible:outline-none [&>.icon]:text-2xl`,
         isValidElement(icon) && !children ? 'w-14' : 'px-4',
         className
       )}

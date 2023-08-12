@@ -26,8 +26,8 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
 
     return (
       <div
-        className='relative overflow-hidden rounded-lg bg-slate-100
-      dark:bg-slate-900/40'
+        className='dark:bg-neutral-10/40 bg-neutral-90 relative overflow-hidden
+rounded-lg'
       >
         <IconButton
           title='Copy code'
@@ -53,8 +53,8 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
               style={{ ...prismStyle, ...style }}
               ref={ref}
               className={cn(
-                `max-h-[calc(100vh-6.5rem)] overflow-auto p-4 text-sm
-scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-700
+                `scrollbar-thumb-neutral-70 dark:scrollbar-thumb-neutral-30 max-h-[calc(100vh-6.5rem)] overflow-auto
+p-4 text-sm scrollbar-thin
 md:max-h-[calc(100vh-4.5rem)]`,
                 className
               )}
