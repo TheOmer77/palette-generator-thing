@@ -1,5 +1,5 @@
 import { ComponentProps, forwardRef } from 'react';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 
 const Header = forwardRef<HTMLElement, ComponentProps<'header'>>(
   ({ className, ...props }, ref) => (

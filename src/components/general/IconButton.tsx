@@ -1,5 +1,5 @@
 import { Children, ComponentProps, forwardRef } from 'react';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 
 const IconButton = forwardRef<HTMLButtonElement, ComponentProps<'button'>>(
   ({ children, className, ...props }, ref) => (

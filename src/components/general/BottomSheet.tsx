@@ -9,7 +9,7 @@ import {
 } from '@radix-ui/react-dialog';
 
 import H2 from './H2';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 
 export interface BottomSheetProps
   extends ComponentProps<'div'>,

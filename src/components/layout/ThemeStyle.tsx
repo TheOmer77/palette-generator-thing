@@ -1,7 +1,8 @@
-import { createPortal } from 'react-dom';
-import { useTheme } from 'hooks';
-import generateVariablesCss from 'utils/generateVariablesCss';
 import { useMemo } from 'react';
+import { createPortal } from 'react-dom';
+
+import { useTheme } from 'hooks';
+import { generateVariablesCss } from 'utils';
 
 const ThemeStyle = () => {
   const [primary, neutral, secondary, error] = useTheme();

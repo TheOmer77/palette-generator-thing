@@ -4,7 +4,7 @@ import {
   forwardRef,
   isValidElement,
 } from 'react';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 
 export interface ButtonProps extends ComponentProps<'button'> {
   icon?: ReactNode;

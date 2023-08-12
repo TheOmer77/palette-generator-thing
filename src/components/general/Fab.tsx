@@ -1,5 +1,5 @@
 import { forwardRef, isValidElement } from 'react';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 import type { ButtonProps } from './Button';
 
 const Fab = forwardRef<HTMLButtonElement, ButtonProps>(

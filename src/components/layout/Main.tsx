@@ -4,7 +4,7 @@ import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
 import { useTheme, useTonalPalette } from 'hooks';
-import generateVariablesCss from 'utils/generateVariablesCss';
+import { generateVariablesCss } from 'utils';
 import { tones } from 'constants';
 
 const Main = () => {

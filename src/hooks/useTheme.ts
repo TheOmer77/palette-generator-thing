@@ -4,7 +4,7 @@ import {
   getErrorColorHex,
   getNeutralVariantHex,
   getSecondaryColorHex,
-} from 'utils/colorUtils';
+} from 'utils';
 
 const useTheme = () => {
   const [{ baseColor }] = useGlobalState();

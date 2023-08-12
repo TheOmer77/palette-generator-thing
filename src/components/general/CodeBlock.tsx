@@ -4,7 +4,7 @@ import { Highlight } from 'prism-react-renderer';
 import { IconButton } from 'components/general';
 import { useDarkTheme } from 'hooks';
 import { CopyIcon, DoneIcon } from 'assets/icons';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 import { prismThemes } from 'constants';
 
 export interface CodeBlockProps

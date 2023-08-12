@@ -1,5 +1,5 @@
 import { ComponentProps, forwardRef } from 'react';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 
 const H3 = forwardRef<HTMLHeadingElement, ComponentProps<'h3'>>(
   ({ children, className, ...props }, ref) => (

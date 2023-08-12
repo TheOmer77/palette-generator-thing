@@ -1,6 +1,6 @@
 import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { IconButton } from 'components/general';
-import { hexInverseBw, isValidHexColor } from 'utils/colorUtils';
+import { hexInverseBw, isValidHexColor } from 'utils';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 
 interface ColorBlockProps extends ComponentProps<'div'> {
