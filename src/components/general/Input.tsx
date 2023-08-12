@@ -11,10 +11,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ id, label, startAdornment, endAdornment, className, ...props }, ref) => (
     <div
       className={cn(
-        `relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-slate-50
-px-2 ring-1 ring-slate-300 focus-within:ring-2 focus-within:ring-blue-600
-dark:bg-slate-950 dark:ring-slate-700 dark:focus-within:ring-blue-300
-[&>label]:focus-within:text-blue-600 dark:[&>label]:focus-within:text-blue-300`,
+        `focus-within:ring-primary-40 [&>label]:focus-within:text-primary-40
+dark:focus-within:ring-primary-70 dark:[&>label]:focus-within:text-primary-70
+relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-slate-50 px-2 ring-1
+ring-slate-300 focus-within:ring-2 dark:bg-slate-950 dark:ring-slate-700`,
         className
       )}
     >
