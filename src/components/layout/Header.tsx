@@ -7,8 +7,8 @@ const Header = forwardRef<HTMLElement, ComponentProps<'header'>>(
       {...props}
       ref={ref}
       className={cn(
-        `text-primary-40 dark:text-primary-70 select-none text-5xl font-bold
-uppercase leading-[3.25rem] tracking-tighter sm:text-6xl`,
+        `select-none text-5xl font-bold uppercase leading-[3.25rem]
+tracking-tighter text-primary-40 dark:text-primary-70 sm:text-6xl`,
         className
       )}
     >

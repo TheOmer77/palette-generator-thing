@@ -7,8 +7,8 @@ const IconButton = forwardRef<HTMLButtonElement, ComponentProps<'button'>>(
       {...props}
       ref={ref}
       className={cn(
-        `focus-visible:bg-neutral-5/20 flex h-8 w-8 cursor-default items-center
-justify-center rounded-lg text-xl text-neutral-50 hover:bg-neutral-50/20
+        `flex h-8 w-8 cursor-default items-center justify-center rounded-lg
+text-xl text-neutral-50 hover:bg-neutral-50/20 focus-visible:bg-neutral-5/20
 focus-visible:outline-none active:bg-neutral-50/30`,
         className
       )}

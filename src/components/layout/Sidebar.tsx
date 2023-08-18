@@ -8,8 +8,8 @@ const Sidebar = forwardRef<HTMLElement, ComponentProps<'aside'>>(
         {...props}
         ref={ref}
         className={cn(
-          `dark:bg-neutral-10 bg-neutral-95 fixed flex h-screen w-[50vw]
-max-w-[25rem] flex-col gap-4 rounded-lg p-2 md:rounded-none`,
+          `fixed flex h-screen w-[50vw] max-w-[25rem] flex-col gap-4 rounded-lg
+bg-neutral-95 p-2 dark:bg-neutral-10 md:rounded-none`,
           className
         )}
       >

@@ -11,17 +11,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ id, label, startAdornment, endAdornment, className, ...props }, ref) => (
     <div
       className={cn(
-        `focus-within:ring-primary-40 [&>label]:focus-within:text-primary-40
-dark:focus-within:ring-primary-70 dark:[&>label]:focus-within:text-primary-70
-ring-neutral-70 dark:ring-neutral-30 relative mt-6 flex h-12 items-center gap-2
-rounded-lg bg-white px-2 ring-1 focus-within:ring-2 dark:bg-black`,
+        `relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-white px-2
+ring-1 ring-neutral-70 focus-within:ring-2 focus-within:ring-primary-40
+dark:bg-black dark:ring-neutral-30 dark:focus-within:ring-primary-70
+[&>label]:focus-within:text-primary-40
+dark:[&>label]:focus-within:text-primary-70`,
         className
       )}
     >
       <label
         htmlFor={id}
-        className='dark:text-neutral-60 text-neutral-40 absolute -top-6 select-none
-      text-sm font-medium'
+        className='absolute -top-6 select-none text-sm font-medium
+text-neutral-40 dark:text-neutral-60'
       >
         {label}
       </label>
@@ -30,8 +31,8 @@ rounded-lg bg-white px-2 ring-1 focus-within:ring-2 dark:bg-black`,
         {...props}
         ref={ref}
         id={id}
-        className='text-neutral-10 dark:text-neutral-90 flex-grow bg-transparent
-        focus-visible:outline-none'
+        className='flex-grow bg-transparent text-neutral-10
+focus-visible:outline-none dark:text-neutral-90'
       />
       {endAdornment}
     </div>
