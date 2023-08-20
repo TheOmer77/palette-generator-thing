@@ -1,5 +1,5 @@
 import { ComponentProps, forwardRef } from 'react';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 
 const Header = forwardRef<HTMLElement, ComponentProps<'header'>>(
   ({ className, ...props }, ref) => (
@@ -7,8 +7,8 @@ const Header = forwardRef<HTMLElement, ComponentProps<'header'>>(
       {...props}
       ref={ref}
       className={cn(
-        `select-none text-5xl font-bold uppercase leading-[3.25rem] tracking-tighter
-text-blue-600 dark:text-blue-300 sm:text-6xl`,
+        `select-none text-5xl font-bold uppercase leading-[3.25rem]
+tracking-tighter text-primary-50 dark:text-primary-70 sm:text-6xl`,
         className
       )}
     >

@@ -1,13 +1,11 @@
 import { createContext } from 'react';
-import { initialBaseColor } from 'constants';
+import { randomHexColor } from 'utils';
 
 export interface GlobalState {
   baseColor: string;
 }
 
-export const initialState: GlobalState = {
-  baseColor: initialBaseColor,
-};
+export const initialState: GlobalState = { baseColor: randomHexColor() };
 const initialDispatch = () => {
   return;
 };

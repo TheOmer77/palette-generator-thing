@@ -1,5 +1,5 @@
 import { forwardRef, ReactNode, ComponentProps } from 'react';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 
 export interface InputProps extends ComponentProps<'input'> {
   label?: string;
@@ -11,17 +11,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ id, label, startAdornment, endAdornment, className, ...props }, ref) => (
     <div
       className={cn(
-        `relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-slate-50
-px-2 ring-1 ring-slate-300 focus-within:ring-2 focus-within:ring-blue-600
-dark:bg-slate-950 dark:ring-slate-700 dark:focus-within:ring-blue-300
-[&>label]:focus-within:text-blue-600 dark:[&>label]:focus-within:text-blue-300`,
+        `relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-white px-2
+ring-1 ring-neutral-70 focus-within:ring-2 focus-within:ring-primary-50
+dark:bg-black dark:ring-neutral-30 dark:focus-within:ring-primary-70
+[&>label]:focus-within:text-primary-50
+dark:[&>label]:focus-within:text-primary-70`,
         className
       )}
     >
       <label
         htmlFor={id}
         className='absolute -top-6 select-none text-sm font-medium
-      text-slate-600 dark:text-slate-400'
+text-neutral-40 dark:text-neutral-60'
       >
         {label}
       </label>
@@ -30,8 +31,8 @@ dark:bg-slate-950 dark:ring-slate-700 dark:focus-within:ring-blue-300
         {...props}
         ref={ref}
         id={id}
-        className='flex-grow bg-transparent text-slate-900 focus-visible:outline-none
-        dark:text-slate-100'
+        className='flex-grow bg-transparent text-neutral-10
+focus-visible:outline-none dark:text-neutral-90'
       />
       {endAdornment}
     </div>

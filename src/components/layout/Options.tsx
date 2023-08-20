@@ -2,7 +2,7 @@ import Header from './Header';
 import OptionsSection from './OptionsSection';
 import SheetWithFab from './SheetWithFab';
 import Sidebar from './Sidebar';
-import useTailwindBreakpoint from 'hooks/useTailwindBreakpoint';
+import { useTailwindBreakpoint } from 'hooks';
 import { TuneIcon } from 'assets/icons';
 
 const Options = () => {

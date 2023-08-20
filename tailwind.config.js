@@ -1,6 +1,6 @@
 import scrollbar from 'tailwind-scrollbar';
 import selectionVariant from 'tailwindcss-selection-variant';
-import { screens } from './src/constants';
+import { screens, tones } from './src/constants';
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -31,6 +31,24 @@ const config = {
       },
     },
     screens,
+    colors: {
+      white: '#fff',
+      black: '#000',
+      transparent: 'transparent',
+      ...['primary', 'neutral', 'secondary', 'error'].reduce(
+        (obj, colorName) => ({
+          ...obj,
+          [colorName]: [...tones, 'main', 'light', 'dark', 'contrast'].reduce(
+            (obj, tone) => ({
+              ...obj,
+              [tone]: `rgb(var(--color-${colorName}-${tone}) / <alpha-value>)`,
+            }),
+            {}
+          ),
+        }),
+        {}
+      ),
+    },
   },
   plugins: [scrollbar, selectionVariant],
 };

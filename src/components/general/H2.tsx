@@ -1,5 +1,5 @@
 import { ComponentProps, forwardRef } from 'react';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 
 const H2 = forwardRef<HTMLHeadingElement, ComponentProps<'h2'>>(
   ({ children, className, ...props }, ref) => (
@@ -7,8 +7,8 @@ const H2 = forwardRef<HTMLHeadingElement, ComponentProps<'h2'>>(
       {...props}
       ref={ref}
       className={cn(
-        `mb-2 select-none text-3xl font-bold tracking-tight text-slate-900
-dark:text-slate-100`,
+        `mb-2 select-none text-3xl font-bold tracking-tight text-neutral-10
+dark:text-neutral-90`,
         className
       )}
     >

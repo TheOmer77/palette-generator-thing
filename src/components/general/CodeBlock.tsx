@@ -2,9 +2,9 @@ import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { Highlight } from 'prism-react-renderer';
 
 import { IconButton } from 'components/general';
-import useDarkTheme from 'hooks/useDarkTheme';
+import { useDarkTheme } from 'hooks';
 import { CopyIcon, DoneIcon } from 'assets/icons';
-import cn from 'utils/cn';
+import { cn } from 'utils';
 import { prismThemes } from 'constants';
 
 export interface CodeBlockProps
@@ -26,8 +26,8 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
 
     return (
       <div
-        className='relative overflow-hidden rounded-lg bg-slate-100
-      dark:bg-slate-900/40'
+        className='relative overflow-hidden rounded-lg bg-neutral-98
+dark:bg-neutral-5'
       >
         <IconButton
           title='Copy code'
@@ -53,8 +53,8 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
               style={{ ...prismStyle, ...style }}
               ref={ref}
               className={cn(
-                `max-h-[calc(100vh-6.5rem)] overflow-auto p-4 text-sm
-scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-700
+                `max-h-[calc(100vh-6.5rem)]
+overflow-auto p-4 text-sm scrollbar-thin scrollbar-thumb-neutral-50/30
 md:max-h-[calc(100vh-4.5rem)]`,
                 className
               )}

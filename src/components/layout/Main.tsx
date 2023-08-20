@@ -3,31 +3,15 @@ import { Fragment, useMemo } from 'react';
 import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
-import useTonalPalette from 'hooks/useTonalPalette';
-import useGlobalState from 'hooks/useGlobalState';
-import {
-  getErrorColorHex,
-  getNeutralVariantHex,
-  getSecondaryColorHex,
-} from 'utils/colorUtils';
+import { useTheme, useTonalPalette } from 'hooks';
+import { generateVariablesCss } from 'utils';
 import { tones } from 'constants';
-import generateVariablesCss from 'utils/generateVariablesCss';
 
 const Main = () => {
-  const [{ baseColor }] = useGlobalState();
-
-  const neutralVariantColor = useMemo(
-      () => getNeutralVariantHex(baseColor),
-      [baseColor]
-    ),
-    secondaryColor = useMemo(
-      () => getSecondaryColorHex(baseColor),
-      [baseColor]
-    ),
-    errorColor = useMemo(() => getErrorColorHex(baseColor), [baseColor]);
+  const [baseColor, neutralColor, secondaryColor, errorColor] = useTheme();
 
   const [getPrimaryTone] = useTonalPalette(baseColor),
-    [getNeutralTone] = useTonalPalette(neutralVariantColor),
+    [getNeutralTone] = useTonalPalette(neutralColor),
     [getSecondaryTone] = useTonalPalette(secondaryColor),
     [getErrorTone] = useTonalPalette(errorColor);
 
@@ -62,14 +46,14 @@ const Main = () => {
       generateVariablesCss(
         {
           primary: baseColor,
-          'primary-neutral': neutralVariantColor,
+          neutral: neutralColor,
           secondary: secondaryColor,
           error: errorColor,
         },
         { format: 'rgbValues' }
       ),
 
-    [baseColor, errorColor, neutralVariantColor, secondaryColor]
+    [baseColor, errorColor, neutralColor, secondaryColor]
   );
 
   return (
