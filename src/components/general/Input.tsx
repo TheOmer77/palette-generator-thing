@@ -12,9 +12,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     <div
       className={cn(
         `relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-white px-2
-ring-1 ring-neutral-70 focus-within:ring-2 focus-within:ring-primary-40
+ring-1 ring-neutral-70 focus-within:ring-2 focus-within:ring-primary-50
 dark:bg-black dark:ring-neutral-30 dark:focus-within:ring-primary-70
-[&>label]:focus-within:text-primary-40
+[&>label]:focus-within:text-primary-50
 dark:[&>label]:focus-within:text-primary-70`,
         className
       )}
