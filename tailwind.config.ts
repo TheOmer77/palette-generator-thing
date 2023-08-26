@@ -1,8 +1,8 @@
+import type { Config } from 'tailwindcss';
 import scrollbar from 'tailwind-scrollbar';
 import { screens, tones } from './src/constants';
 
-/** @type {import('tailwindcss').Config} */
-const config = {
+const config: Config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
@@ -17,8 +17,8 @@ const config = {
         mono: ['var(--font-family-mono)', 'monospace'],
       },
       keyframes: {
-        fadein: { from: { opacity: 0 }, to: { opacity: 1 } },
-        fadeout: { from: { opacity: 1 }, to: { opacity: 0 } },
+        fadein: { from: { opacity: '0' }, to: { opacity: '1' } },
+        fadeout: { from: { opacity: '1' }, to: { opacity: '0' } },
         slidein: {
           from: { transform: 'translateY(100%)' },
           to: { transform: 'translateY(0%)' },
