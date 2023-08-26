@@ -24,9 +24,7 @@ const getColorValue = (
 
 const generateVariablesCss = (
   baseColors: { [colorName: string]: string },
-  {
-    format = 'hex',
-  }: { tones?: number[]; format?: 'hex' | 'rgb' | 'rgbValues' } = {}
+  { format = 'hex' }: { format?: 'hex' | 'rgb' | 'rgbValues' } = {}
 ) => {
   const baseColorArgbs: { [color: keyof typeof baseColors]: number } =
     Object.keys(baseColors).reduce(
