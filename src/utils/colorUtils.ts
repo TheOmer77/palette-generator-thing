@@ -47,7 +47,7 @@ export function generatePalette(
   baseColor: string,
   returnAs: 'hex' | 'rgbValues' = 'hex'
 ) {
-  const { c, h } = oklch(baseColor) as Oklch;
+  const { c, h } = oklch(parseHex(baseColor) ? baseColor : '#000') as Oklch;
 
   return shades.map(shade => {
     const { r, g, b } = toGamut('rgb')({
