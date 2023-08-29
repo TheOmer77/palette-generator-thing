@@ -3,69 +3,44 @@ import { Fragment, useMemo } from 'react';
 import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
-import { useTheme, useTonalPalette } from 'hooks';
-import { generateVariablesCss } from 'utils';
-import { tones } from 'constants';
+import { useTheme } from 'hooks';
+import { generatePalette, generateVariablesCss } from 'utils';
 
 const Main = () => {
-  const [baseColor, neutralColor, secondaryColor, errorColor] = useTheme();
-
-  const [getPrimaryTone] = useTonalPalette(baseColor),
-    [getNeutralTone] = useTonalPalette(neutralColor),
-    [getSecondaryTone] = useTonalPalette(secondaryColor),
-    [getErrorTone] = useTonalPalette(errorColor);
+  const [primary, neutral] = useTheme();
 
   const colorGrids = useMemo(
     () => [
       {
         id: 'primary',
-        title: 'Primary (base color)',
-        tones: tones.map(tone => getPrimaryTone(tone)),
+        title: 'Primary',
+        palette: generatePalette(primary),
       },
       {
         id: 'neutral',
         title: 'Neutral',
-        tones: tones.map(tone => getNeutralTone(tone)),
-      },
-      {
-        id: 'secondary',
-        title: 'Secondary',
-        tones: tones.map(tone => getSecondaryTone(tone)),
-      },
-      {
-        id: 'error',
-        title: 'Error',
-        tones: tones.map(tone => getErrorTone(tone)),
+        palette: generatePalette(neutral),
       },
     ],
-    [getErrorTone, getNeutralTone, getPrimaryTone, getSecondaryTone]
+    [neutral, primary]
   );
 
   const themeCss = useMemo(
-    () =>
-      generateVariablesCss(
-        {
-          primary: baseColor,
-          neutral: neutralColor,
-          secondary: secondaryColor,
-          error: errorColor,
-        },
-        { format: 'rgbValues' }
-      ),
-
-    [baseColor, errorColor, neutralColor, secondaryColor]
+    () => generateVariablesCss({ primary, neutral }),
+    [neutral, primary]
   );
 
   return (
     <main className='p-4 pb-24 md:pb-4'>
       <Header className='mb-6 block md:hidden' />
-      <H2>Tones</H2>
-      {colorGrids.map(({ id, title, tones }) => (
+
+      <H2>Palettes</H2>
+      {colorGrids.map(({ id, title, palette }) => (
         <Fragment key={id}>
           <H3>{title}</H3>
           <ColorGrid>
-            {tones.map(tone => (
-              <ColorBlock key={tone as string} value={tone as string} />
+            {palette.map(color => (
+              <ColorBlock key={color} value={color} />
             ))}
           </ColorGrid>
         </Fragment>
