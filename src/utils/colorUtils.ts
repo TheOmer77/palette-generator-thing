@@ -52,7 +52,7 @@ export function generatePalette(
   return shades.map(shade => {
     const { r, g, b } = toGamut('rgb')({
       mode: 'oklch',
-      l: shade / 1000,
+      l: (1000 - shade) / 1000,
       c,
       h,
     });
