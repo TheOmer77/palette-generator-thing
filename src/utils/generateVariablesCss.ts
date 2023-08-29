@@ -13,7 +13,7 @@ ${generatePalette(baseColors[key], 'rgbValues')
   )
   .join('\n')}`
     )
-    .join('\n\n')}
+    .join('\n\n  ')}
 }`;
 
 // TODO: Find main, light, dark, contrast values
