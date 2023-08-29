@@ -2,7 +2,7 @@ import { type ComponentProps, forwardRef } from 'react';
 
 import { IconButton, Input } from 'components/general';
 import { useGlobalState } from 'hooks';
-import { randomHexColor } from 'utils';
+import { autoAddHexHash, randomHexColor } from 'utils';
 import { RandomIcon } from 'assets/icons';
 
 const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
@@ -15,7 +15,9 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
           id='input-base-color'
           label='Base color'
           value={globalState.baseColor}
-          onChange={e => setGlobalState({ baseColor: e.target.value })}
+          onChange={e =>
+            setGlobalState({ baseColor: autoAddHexHash(e.target.value) })
+          }
           startAdornment={
             <div
               className='h-7 w-7 rounded-lg'

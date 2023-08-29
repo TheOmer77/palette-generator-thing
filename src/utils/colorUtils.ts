@@ -31,6 +31,11 @@ const fixupRgb = (value: number) =>
 
 export const isValidHexColor = (hex: string) => !!parseHex(hex);
 
+export const autoAddHexHash = (value: string) =>
+  typeof parseHex(value) !== 'undefined' && !value.startsWith('#')
+    ? `#${value}`
+    : value;
+
 export const hexInverseBw = (hex: string) => {
   const { l } = hsl(hex) as Hsl;
   return `rgba(${l < 140 ? '255,255,255' : '0,0,0'},var(--tw-text-opacity, 1)`;
