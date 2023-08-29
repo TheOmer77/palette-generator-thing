@@ -12,8 +12,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     <div
       className={cn(
         `relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-white px-2
-ring-1 ring-neutral-70 focus-within:ring-2 focus-within:ring-primary-500
-dark:bg-black dark:ring-neutral-30 dark:focus-within:ring-primary-300
+ring-1 ring-neutral-300 focus-within:ring-2 focus-within:ring-primary-500
+dark:bg-black dark:ring-neutral-700 dark:focus-within:ring-primary-300
 [&>label]:focus-within:text-primary-500
 dark:[&>label]:focus-within:text-primary-300`,
         className
@@ -22,7 +22,7 @@ dark:[&>label]:focus-within:text-primary-300`,
       <label
         htmlFor={id}
         className='absolute -top-6 select-none text-sm font-medium
-text-neutral-40 dark:text-neutral-60'
+text-neutral-600 dark:text-neutral-400'
       >
         {label}
       </label>
@@ -31,8 +31,8 @@ text-neutral-40 dark:text-neutral-60'
         {...props}
         ref={ref}
         id={id}
-        className='flex-grow bg-transparent text-neutral-10
-focus-visible:outline-none dark:text-neutral-90'
+        className='flex-grow bg-transparent text-neutral-900
+focus-visible:outline-none dark:text-neutral-100'
       />
       {endAdornment}
     </div>
