@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss';
 import scrollbar from 'tailwind-scrollbar';
-import { screens, tones } from './src/constants';
+import { screens, shades } from './src/constants';
 
 const config: Config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -34,13 +34,13 @@ const config: Config = {
       white: '#fff',
       black: '#000',
       transparent: 'transparent',
-      ...['primary', 'neutral', 'secondary', 'error'].reduce(
+      ...['primary' /* , 'neutral', 'secondary', 'error' */].reduce(
         (obj, colorName) => ({
           ...obj,
-          [colorName]: [...tones, 'main', 'light', 'dark', 'contrast'].reduce(
-            (obj, tone) => ({
+          [colorName]: [...shades].reduce(
+            (obj, shade) => ({
               ...obj,
-              [tone]: `rgb(var(--color-${colorName}-${tone}) / <alpha-value>)`,
+              [shade]: `rgb(var(--color-${colorName}-${shade}) / <alpha-value>)`,
             }),
             {}
           ),
