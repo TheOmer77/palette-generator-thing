@@ -14,12 +14,14 @@
     "@material/material-color-utilities": "^0.2.7",
     "@radix-ui/react-dialog": "^1.0.4",
     "clsx": "^2.0.0",
+    "culori": "^3.2.0",
     "prism-react-renderer": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
+    "@types/culori": "^2.0.0",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
