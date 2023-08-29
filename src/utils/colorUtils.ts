@@ -1,12 +1,68 @@
-import {
+/* import {
   argbFromHex,
   blueFromArgb,
   greenFromArgb,
   Hct,
   hexFromArgb,
   redFromArgb,
-} from '@material/material-color-utilities';
-import { defaultErrorHue } from '../constants';
+} from '@material/material-color-utilities'; */
+// import { defaultErrorHue } from 'constants';
+import { shades } from 'constants';
+import {
+  formatHex,
+  modeHsl,
+  modeOklch,
+  modeRgb,
+  parseHex,
+  random,
+  type Hsl,
+  type Oklch,
+  // This is named like a react hook, which confuses ESLint
+  useMode as loadMode,
+  toGamut,
+} from 'culori/fn';
+
+const hsl = loadMode(modeHsl),
+  oklch = loadMode(modeOklch);
+loadMode(modeRgb);
+
+const fixupRgb = (value: number) =>
+  Math.round(Math.max(0, Math.min(1, value)) * 255);
+
+export const isValidHexColor = (hex: string) => !!parseHex(hex);
+
+export const hexInverseBw = (hex: string) => {
+  const { l } = hsl(hex) as Hsl;
+  return `rgba(${l < 140 ? '255,255,255' : '0,0,0'},var(--tw-text-opacity, 1)`;
+};
+
+export const randomHexColor = () => formatHex(random());
+
+export function generatePalette(baseColor: string, returnAs?: 'hex'): string[];
+export function generatePalette(
+  baseColor: string,
+  returnAs: 'rgbValues'
+): [r: number, g: number, b: number][];
+export function generatePalette(
+  baseColor: string,
+  returnAs: 'hex' | 'rgbValues' = 'hex'
+) {
+  const { c, h } = oklch(baseColor) as Oklch;
+
+  return shades.map(shade => {
+    const { r, g, b } = toGamut('rgb')({
+      mode: 'oklch',
+      l: shade / 1000,
+      c,
+      h,
+    });
+    return returnAs === 'rgbValues'
+      ? [fixupRgb(r), fixupRgb(g), fixupRgb(b)]
+      : formatHex({ mode: 'rgb', r, g, b });
+  });
+}
+
+/* OLD STUFF STARTS HERE
 
 export type Rgb = [red: number, green: number, blue: number];
 
@@ -110,14 +166,6 @@ export function getErrorColorHex(
     : hexFromArgb(resultArgb);
 }
 
-export const hexInverseBw = (hex: string) => {
-  const rgb = rgbFromHex(hex);
-  const luminance = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
-  return `rgba(${
-    luminance < 140 ? '255,255,255' : '0,0,0'
-  },var(--tw-text-opacity, 1)`;
-};
-
 export const getRoundedTone = (tone: number) => tone - (tone % 5);
 
 export const getMainTone = (argb: number) =>
@@ -129,7 +177,4 @@ export const getContrastTone = (argb: number) => {
   return luminance < 140 ? 95 : 5;
 };
 
-export const randomHexColor = () =>
-  `#${Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padEnd(6, '0')}`;
+*/
