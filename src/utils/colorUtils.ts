@@ -81,7 +81,7 @@ export function getNeutralColor(
   format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
 ) {
   const baseRgb = rgb(baseColor) as Rgb,
-    { l, c, h } = oklch(baseRgb || '#000') as Oklch;
+    { l, h } = oklch(baseRgb || '#000') as Oklch;
   const resultRgb = toGamut('rgb')({
     mode: 'oklch',
     l,
