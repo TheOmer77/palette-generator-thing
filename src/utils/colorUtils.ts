@@ -37,7 +37,7 @@ export const autoAddHexHash = (value: string) =>
     : value;
 
 export const hexInverseBw = (hex: string) => {
-  const { l } = hsl(hex) as Hsl;
+  const l = fixupRgb((hsl(hex) as Hsl).l);
   return `rgba(${l < 140 ? '255,255,255' : '0,0,0'},var(--tw-text-opacity, 1)`;
 };
 
