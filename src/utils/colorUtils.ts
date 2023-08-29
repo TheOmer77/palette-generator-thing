@@ -17,17 +17,20 @@ import {
   random,
   type Hsl,
   type Oklch,
+  type Rgb,
   // This is named like a react hook, which confuses ESLint
   useMode as loadMode,
   toGamut,
 } from 'culori/fn';
 
 const hsl = loadMode(modeHsl),
-  oklch = loadMode(modeOklch);
-loadMode(modeRgb);
+  oklch = loadMode(modeOklch),
+  rgb = loadMode(modeRgb);
 
 const fixupRgb = (value: number) =>
   Math.round(Math.max(0, Math.min(1, value)) * 255);
+
+export type RgbArray = [red: number, green: number, blue: number];
 
 export const isValidHexColor = (hex: string) => !!parseHex(hex);
 
@@ -47,7 +50,7 @@ export function generatePalette(baseColor: string, returnAs?: 'hex'): string[];
 export function generatePalette(
   baseColor: string,
   returnAs: 'rgbValues'
-): [r: number, g: number, b: number][];
+): RgbArray[];
 export function generatePalette(
   baseColor: string,
   returnAs: 'hex' | 'rgbValues' = 'hex'
@@ -65,6 +68,31 @@ export function generatePalette(
       ? [fixupRgb(r), fixupRgb(g), fixupRgb(b)]
       : formatHex({ mode: 'rgb', r, g, b });
   });
+}
+
+export function getNeutralColor(baseColor: string, format?: 'hex'): string;
+export function getNeutralColor(baseColor: string, format: 'rgb'): Rgb;
+export function getNeutralColor(
+  baseColor: string,
+  format?: 'rgbArray'
+): RgbArray;
+export function getNeutralColor(
+  baseColor: string,
+  format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
+) {
+  const baseRgb = rgb(baseColor) as Rgb,
+    { l, c, h } = oklch(baseRgb || '#000') as Oklch;
+  const resultRgb = toGamut('rgb')({
+    mode: 'oklch',
+    l,
+    c: Math.min(c / 6, 8),
+    h,
+  });
+  return format === 'rgbArray'
+    ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
+    : format === 'hex'
+    ? formatHex(resultRgb)
+    : resultRgb;
 }
 
 /* OLD STUFF STARTS HERE
