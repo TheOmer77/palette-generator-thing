@@ -13,7 +13,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       className={cn(
         `relative mt-6 flex h-12 items-center gap-2 rounded-lg bg-white px-2
 ring-1 ring-neutral-300 focus-within:ring-2 focus-within:ring-primary-500
-dark:bg-black dark:ring-neutral-700 dark:focus-within:ring-primary-300
+dark:bg-neutral-950 dark:ring-neutral-700 dark:focus-within:ring-primary-300
 [&>label]:focus-within:text-primary-500
 dark:[&>label]:focus-within:text-primary-300`,
         className
