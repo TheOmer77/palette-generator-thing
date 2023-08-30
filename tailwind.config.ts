@@ -34,7 +34,7 @@ const config: Config = {
       white: '#fff',
       black: '#000',
       transparent: 'transparent',
-      ...['primary', 'neutral', 'danger' /*, 'secondary' */].reduce(
+      ...['primary', 'neutral', 'danger'].reduce(
         (obj, colorName) => ({
           ...obj,
           [colorName]: [...shades].reduce(
