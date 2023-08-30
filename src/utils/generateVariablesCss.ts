@@ -1,4 +1,4 @@
-import { shades } from 'constants';
+import { shadeNames } from 'constants';
 import { generatePalette } from './colorUtils';
 
 const generateVariablesCss = (baseColors: { [colorName: string]: string }) =>
@@ -9,7 +9,7 @@ const generateVariablesCss = (baseColors: { [colorName: string]: string }) =>
 ${generatePalette(baseColors[key], 'rgbValues')
   .map(
     (rgbValues, index) =>
-      `  --color-${key}-${shades[index]}: ${rgbValues.join(' ')};`
+      `  --color-${key}-${shadeNames[index]}: ${rgbValues.join(' ')};`
   )
   .join('\n')}`
     )
