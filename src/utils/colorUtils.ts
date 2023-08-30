@@ -9,12 +9,10 @@
 import { defaultErrorHue, shades } from 'constants';
 import {
   formatHex,
-  modeHsl,
   modeOklch,
   modeRgb,
   parseHex,
   random,
-  type Hsl,
   type Oklch,
   type Rgb,
   // This is named like a react hook, which confuses ESLint
@@ -22,8 +20,7 @@ import {
   toGamut,
 } from 'culori/fn';
 
-const hsl = loadMode(modeHsl),
-  oklch = loadMode(modeOklch),
+const oklch = loadMode(modeOklch),
   rgb = loadMode(modeRgb);
 
 const fixupRgb = (value: number) =>
@@ -60,8 +57,13 @@ export const autoAddHexHash = (value: string) =>
     : value;
 
 export const hexInverseBw = (hex: string) => {
-  const l = fixupRgb((hsl(hex) as Hsl).l);
-  return `rgba(${l < 140 ? '255,255,255' : '0,0,0'},var(--tw-text-opacity, 1)`;
+  const { r, g, b } = rgb(hex) as Rgb;
+
+  const luminance =
+    0.2126 * fixupRgb(r) + 0.7152 * fixupRgb(g) + 0.0722 * fixupRgb(b);
+  return `rgba(${
+    luminance < 140 ? '255,255,255' : '0,0,0'
+  },var(--tw-text-opacity, 1)`;
 };
 
 export const randomHexColor = () => formatHex(random());
