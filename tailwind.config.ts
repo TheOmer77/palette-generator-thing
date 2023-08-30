@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import scrollbar from 'tailwind-scrollbar';
-import { screens, shades } from './src/constants';
+
+const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
 
 const config: Config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -29,7 +30,6 @@ const config: Config = {
         },
       },
     },
-    screens,
     colors: {
       white: '#fff',
       black: '#000',
