@@ -6,8 +6,7 @@
   hexFromArgb,
   redFromArgb,
 } from '@material/material-color-utilities'; */
-// import { defaultErrorHue } from 'constants';
-import { shades } from 'constants';
+import { defaultErrorHue, shades } from 'constants';
 import {
   formatHex,
   modeHsl,
@@ -87,6 +86,31 @@ export function getNeutralColor(
     l,
     c: 0.01,
     h,
+  });
+  return format === 'rgbArray'
+    ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
+    : format === 'hex'
+    ? formatHex(resultRgb)
+    : resultRgb;
+}
+
+export function getDangerColor(baseColor: string, format?: 'hex'): string;
+export function getDangerColor(baseColor: string, format: 'rgb'): Rgb;
+export function getDangerColor(
+  baseColor: string,
+  format?: 'rgbArray'
+): RgbArray;
+export function getDangerColor(
+  baseColor: string,
+  format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
+) {
+  const baseRgb = rgb(baseColor) as Rgb,
+    { l, c } = oklch(baseRgb || '#000') as Oklch;
+  const resultRgb = toGamut('rgb')({
+    mode: 'oklch',
+    l,
+    c,
+    h: defaultErrorHue,
   });
   return format === 'rgbArray'
     ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
