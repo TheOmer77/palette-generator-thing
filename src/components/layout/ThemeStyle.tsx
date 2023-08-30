@@ -5,11 +5,11 @@ import { useTheme } from 'hooks';
 import { generateVariablesCss } from 'utils';
 
 const ThemeStyle = () => {
-  const [primary, neutral] = useTheme();
+  const [primary, neutral, danger] = useTheme();
 
   const themeCss = useMemo(
-    () => generateVariablesCss({ primary, neutral }),
-    [neutral, primary]
+    () => generateVariablesCss({ primary, neutral, danger }),
+    [danger, neutral, primary]
   );
 
   return createPortal(<style>{themeCss}</style>, document.head);
