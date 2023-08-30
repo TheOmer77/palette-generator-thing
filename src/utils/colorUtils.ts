@@ -97,6 +97,15 @@ export const getNeutralColor = getColorVariantFunction(({ mode, l, h }) => ({
   h,
 }));
 
+export const getSecondaryColor = getColorVariantFunction(
+  ({ mode, l, c, h }) => ({
+    mode,
+    l,
+    c,
+    h: (h as number) + 180,
+  })
+);
+
 export const getDangerColor = getColorVariantFunction(({ mode, l, c }) => ({
   mode,
   l,
