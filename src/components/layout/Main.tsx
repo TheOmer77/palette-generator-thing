@@ -7,7 +7,7 @@ import { useTheme } from 'hooks';
 import { generatePalette, generateVariablesCss } from 'utils';
 
 const Main = () => {
-  const [primary, neutral] = useTheme();
+  const [primary, neutral, danger] = useTheme();
 
   const colorGrids = useMemo(
     () => [
@@ -21,13 +21,18 @@ const Main = () => {
         title: 'Neutral',
         palette: generatePalette(neutral),
       },
+      {
+        id: 'danger',
+        title: 'Danger',
+        palette: generatePalette(danger),
+      },
     ],
-    [neutral, primary]
+    [danger, neutral, primary]
   );
 
   const themeCss = useMemo(
-    () => generateVariablesCss({ primary, neutral }),
-    [neutral, primary]
+    () => generateVariablesCss({ primary, neutral, danger }),
+    [danger, neutral, primary]
   );
 
   return (
