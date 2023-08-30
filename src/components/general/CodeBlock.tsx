@@ -27,7 +27,7 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
     return (
       <div
         className='relative overflow-hidden rounded-lg bg-neutral-50
-dark:bg-neutral-950'
+dark:bg-neutral-900'
       >
         <IconButton
           title='Copy code'

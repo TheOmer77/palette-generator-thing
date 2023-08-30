@@ -33,7 +33,7 @@ data-[state=closed]:animate-fadeout data-[state=open]:animate-fadein'
               `fixed inset-x-0 bottom-0 z-20 mx-auto flex w-screen max-w-2xl
 flex-col rounded-t-lg bg-white p-4 text-neutral-950 shadow shadow-neutral-900/50
 data-[state=closed]:animate-slideout data-[state=open]:animate-slidein
-dark:bg-neutral-950 dark:text-neutral-50`,
+dark:bg-neutral-900 dark:text-neutral-50`,
               className
             )}
           >
