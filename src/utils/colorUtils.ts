@@ -29,6 +29,27 @@ const hsl = loadMode(modeHsl),
 const fixupRgb = (value: number) =>
   Math.round(Math.max(0, Math.min(1, value)) * 255);
 
+const getColorVariantFunction = (modifyOklch: (oklch: Oklch) => Oklch) => {
+  function variantFunc(baseColor: string, format?: 'hex'): string;
+  function variantFunc(baseColor: string, format: 'rgb'): Rgb;
+  function variantFunc(baseColor: string, format?: 'rgbArray'): RgbArray;
+  function variantFunc(
+    baseColor: string,
+    format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
+  ) {
+    const baseRgb = rgb(baseColor) as Rgb,
+      baseOklch = oklch(baseRgb || '#000') as Oklch;
+    const resultRgb = toGamut('rgb')(modifyOklch(baseOklch));
+    return format === 'rgbArray'
+      ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
+      : format === 'hex'
+      ? formatHex(resultRgb)
+      : resultRgb;
+  }
+
+  return variantFunc;
+};
+
 export type RgbArray = [red: number, green: number, blue: number];
 
 export const isValidHexColor = (hex: string) => !!parseHex(hex);
@@ -69,55 +90,19 @@ export function generatePalette(
   });
 }
 
-export function getNeutralColor(baseColor: string, format?: 'hex'): string;
-export function getNeutralColor(baseColor: string, format: 'rgb'): Rgb;
-export function getNeutralColor(
-  baseColor: string,
-  format?: 'rgbArray'
-): RgbArray;
-export function getNeutralColor(
-  baseColor: string,
-  format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
-) {
-  const baseRgb = rgb(baseColor) as Rgb,
-    { l, h } = oklch(baseRgb || '#000') as Oklch;
-  const resultRgb = toGamut('rgb')({
-    mode: 'oklch',
-    l,
-    c: 0.01,
-    h,
-  });
-  return format === 'rgbArray'
-    ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
-    : format === 'hex'
-    ? formatHex(resultRgb)
-    : resultRgb;
-}
+export const getNeutralColor = getColorVariantFunction(({ mode, l, h }) => ({
+  mode,
+  l,
+  c: 0.01,
+  h,
+}));
 
-export function getDangerColor(baseColor: string, format?: 'hex'): string;
-export function getDangerColor(baseColor: string, format: 'rgb'): Rgb;
-export function getDangerColor(
-  baseColor: string,
-  format?: 'rgbArray'
-): RgbArray;
-export function getDangerColor(
-  baseColor: string,
-  format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
-) {
-  const baseRgb = rgb(baseColor) as Rgb,
-    { l, c } = oklch(baseRgb || '#000') as Oklch;
-  const resultRgb = toGamut('rgb')({
-    mode: 'oklch',
-    l,
-    c,
-    h: defaultErrorHue,
-  });
-  return format === 'rgbArray'
-    ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
-    : format === 'hex'
-    ? formatHex(resultRgb)
-    : resultRgb;
-}
+export const getDangerColor = getColorVariantFunction(({ mode, l, c }) => ({
+  mode,
+  l,
+  c,
+  h: defaultErrorHue,
+}));
 
 /* OLD STUFF STARTS HERE
 
