@@ -2,7 +2,7 @@ import { calculateSteps, getStepDifference } from 'utils/calculateSteps';
 
 const MIN_SHADE_NAME = 0,
   MAX_SHADE_NAME = 1000;
-const minL = 8,
+const minL = 0,
   maxL = 100;
 
 export const shadeNames = [
