@@ -9,24 +9,23 @@
 import { defaultErrorHue, shades } from 'constants';
 import {
   formatHex,
-  modeOklch,
+  modeOkhsl,
   modeRgb,
   parseHex,
   random,
-  type Oklch,
+  type Okhsl,
   type Rgb,
   // This is named like a react hook, which confuses ESLint
   useMode as loadMode,
-  toGamut,
 } from 'culori/fn';
 
-const oklch = loadMode(modeOklch),
+const okhsl = loadMode(modeOkhsl),
   rgb = loadMode(modeRgb);
 
 const fixupRgb = (value: number) =>
   Math.round(Math.max(0, Math.min(1, value)) * 255);
 
-const getColorVariantFunction = (modifyOklch: (oklch: Oklch) => Oklch) => {
+const getColorVariantFunction = (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => {
   function variantFunc(baseColor: string, format?: 'hex'): string;
   function variantFunc(baseColor: string, format: 'rgb'): Rgb;
   function variantFunc(baseColor: string, format?: 'rgbArray'): RgbArray;
@@ -35,8 +34,8 @@ const getColorVariantFunction = (modifyOklch: (oklch: Oklch) => Oklch) => {
     format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
   ) {
     const baseRgb = rgb(baseColor) as Rgb,
-      baseOklch = oklch(baseRgb || '#000') as Oklch;
-    const resultRgb = toGamut('rgb')(modifyOklch(baseOklch));
+      baseOkhsl = okhsl(baseRgb || '#000') as Okhsl;
+    const resultRgb = rgb(modifyOkhsl(baseOkhsl));
     return format === 'rgbArray'
       ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
       : format === 'hex'
@@ -77,42 +76,42 @@ export function generatePalette(
   baseColor: string,
   returnAs: 'hex' | 'rgbValues' = 'hex'
 ) {
-  const { c, h } = oklch(parseHex(baseColor) ? baseColor : '#000') as Oklch;
+  const { h, s } = okhsl(parseHex(baseColor) ? baseColor : '#000') as Okhsl;
 
   return shades.map(shade => {
-    const { r, g, b } = toGamut('rgb')({
-      mode: 'oklch',
-      l: shade / 100,
-      c,
+    const shadeRgb = rgb({
+      mode: 'okhsl',
       h,
+      s,
+      l: shade / 100,
     });
     return returnAs === 'rgbValues'
-      ? [fixupRgb(r), fixupRgb(g), fixupRgb(b)]
-      : formatHex({ mode: 'rgb', r, g, b });
+      ? [fixupRgb(shadeRgb.r), fixupRgb(shadeRgb.g), fixupRgb(shadeRgb.b)]
+      : formatHex(shadeRgb);
   });
 }
 
-export const getNeutralColor = getColorVariantFunction(({ mode, l, h }) => ({
+export const getNeutralColor = getColorVariantFunction(({ mode, h, s, l }) => ({
   mode,
-  l,
-  c: 0.01,
   h,
+  s: s * 0.2,
+  l,
 }));
 
 export const getSecondaryColor = getColorVariantFunction(
-  ({ mode, l, c, h }) => ({
+  ({ mode, h, s, l }) => ({
     mode,
-    l,
-    c,
     h: (h as number) + 180,
+    s,
+    l,
   })
 );
 
-export const getDangerColor = getColorVariantFunction(({ mode, l, c }) => ({
+export const getDangerColor = getColorVariantFunction(({ mode, s, l }) => ({
   mode,
-  l,
-  c,
   h: defaultErrorHue,
+  s,
+  l,
 }));
 
 /* OLD STUFF STARTS HERE
