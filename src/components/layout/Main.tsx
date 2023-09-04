@@ -42,7 +42,7 @@ const Main = () => {
   );
 
   return (
-    <main className='p-4 pb-24 md:pb-4'>
+    <main className='w-full max-w-7xl p-4 pb-24 md:pb-4 xl:mx-auto'>
       <Header className='mb-6 block md:hidden' />
 
       <H2>Palettes</H2>
