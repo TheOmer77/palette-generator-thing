@@ -5,6 +5,7 @@ import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
 import { useTheme } from 'hooks';
 import { generatePalette, generateVariablesCss } from 'utils';
+import { shadeNames } from 'constants';
 
 const Main = () => {
   const [primary, neutral, secondary, danger] = useTheme();
@@ -49,8 +50,12 @@ const Main = () => {
         <Fragment key={id}>
           <H3>{title}</H3>
           <ColorGrid>
-            {palette.map(color => (
-              <ColorBlock key={color} value={color} />
+            {palette.map((color, index) => (
+              <ColorBlock
+                key={color}
+                value={color}
+                label={shadeNames[index].toString()}
+              />
             ))}
           </ColorGrid>
         </Fragment>
