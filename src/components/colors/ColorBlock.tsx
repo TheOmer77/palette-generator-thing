@@ -1,14 +1,15 @@
 import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { IconButton } from 'components/general';
-import { hexInverseBw, isValidHexColor } from 'utils';
+import { cn, isHexColorLight, isValidHexColor } from 'utils';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 
 interface ColorBlockProps extends ComponentProps<'div'> {
   value: string;
+  label?: string;
 }
 
 const ColorBlock = forwardRef<HTMLDivElement, ColorBlockProps>(
-  ({ value, style, ...props }, ref) => {
+  ({ value, label, style, ...props }, ref) => {
     const [justCopied, setJustCopied] = useState(false);
 
     const copyValue = useCallback(() => {
@@ -22,24 +23,36 @@ const ColorBlock = forwardRef<HTMLDivElement, ColorBlockProps>(
         {...props}
         ref={ref}
         style={{
-          ...(isValidHexColor(value)
-            ? { backgroundColor: value, color: hexInverseBw(value) }
-            : {}),
+          ...(isValidHexColor(value) ? { backgroundColor: value } : {}),
           ...style,
         }}
-        className='relative flex select-none flex-col items-start justify-center
-        rounded-lg p-2'
+        className={cn(
+          `relative flex select-none flex-col items-start justify-center
+rounded-lg p-2`,
+          isHexColorLight(value) ? 'text-black' : 'text-white'
+        )}
       >
         <IconButton
           title='Copy color value'
-          className='absolute end-2 top-1 [--tw-text-opacity:0.5]
-          dark:[--tw-text-opacity:0.5]'
+          className={cn(
+            'absolute end-2 [--tw-text-opacity:0.6]',
+            isHexColorLight(value) ? 'text-black' : 'text-white'
+          )}
           onClick={copyValue}
-          style={isValidHexColor(value) ? { color: hexInverseBw(value) } : {}}
         >
           {justCopied ? <DoneIcon /> : <CopyIcon />}
         </IconButton>
-        {value}
+        {label && (
+          <span
+            className={cn(
+              `mt-1 text-sm leading-4 [--tw-text-opacity:0.6]`,
+              isHexColorLight(value) ? 'text-black' : 'text-white'
+            )}
+          >
+            {label}
+          </span>
+        )}
+        <span className='text-lg font-medium'>{value}</span>
       </div>
     );
   }
