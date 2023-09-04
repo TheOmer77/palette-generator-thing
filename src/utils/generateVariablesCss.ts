@@ -40,6 +40,4 @@ ${generatePalette(baseColors[key], 'rgbValues')
     .join('\n\n  ')}
 }`;
 
-// TODO: Find contrast value
-
 export default generateVariablesCss;
