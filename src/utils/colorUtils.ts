@@ -48,9 +48,12 @@ export type RgbArray = [red: number, green: number, blue: number];
 export const isValidHexColor = (hexColor: string) => !!parseHex(hexColor);
 
 export const isHexColorLight = (hexColor: string) => {
-  const { r, g, b } = parseHex(hexColor) as Rgb;
+  const rgbColor = rgb(hexColor);
+  if (!rgbColor) return false;
   const luminance =
-    0.2126 * fixupRgb(r) + 0.7152 * fixupRgb(g) + 0.0722 * fixupRgb(b);
+    0.2126 * fixupRgb(rgbColor.r) +
+    0.7152 * fixupRgb(rgbColor.g) +
+    0.0722 * fixupRgb(rgbColor.b);
   return luminance >= 140;
 };
 
