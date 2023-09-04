@@ -1,5 +1,9 @@
 import { MAX_MAIN_SHADE, MIN_MAIN_SHADE, shadeNames } from 'constants';
-import { generatePalette, getClosestShade } from './colorUtils';
+import {
+  generatePalette,
+  getClosestShade,
+  getContrastShade,
+} from './colorUtils';
 
 const generateVariablesCss = (baseColors: { [colorName: string]: string }) =>
   `:root {
@@ -28,7 +32,10 @@ ${generatePalette(baseColors[key], 'rgbValues')
       minShade: MIN_MAIN_SHADE,
       maxShade: MAX_MAIN_SHADE,
     }) + 100
-  });`
+  });
+  --color-${key}-contrast: var(--color-${key}-${getContrastShade(
+    baseColors[key]
+  )});`
     )
     .join('\n\n  ')}
 }`;

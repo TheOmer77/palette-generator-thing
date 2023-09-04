@@ -55,8 +55,8 @@ export const autoAddHexHash = (value: string) =>
     ? `#${value}`
     : value;
 
-export const hexInverseBw = (hex: string) => {
-  const { r, g, b } = rgb(hex) as Rgb;
+export const hexInverseBw = (hexColor: string) => {
+  const { r, g, b } = rgb(hexColor) as Rgb;
 
   const luminance =
     0.2126 * fixupRgb(r) + 0.7152 * fixupRgb(g) + 0.0722 * fixupRgb(b);
@@ -92,10 +92,10 @@ export function generatePalette(
 }
 
 export const getClosestShade = (
-  color: string,
+  hexColor: string,
   { minShade, maxShade }: { minShade?: number; maxShade?: number } = {}
 ) => {
-  const l = okhsl(color)?.l || 0;
+  const l = okhsl(hexColor)?.l || 0;
   const closestShade =
     Math.round((MAX_SHADE_NAME - l * MAX_SHADE_NAME) / 100) * 100;
   return typeof minShade === 'number' && typeof maxShade === 'number'
@@ -105,6 +105,13 @@ export const getClosestShade = (
     : typeof maxShade === 'number'
     ? Math.min(closestShade, maxShade)
     : closestShade;
+};
+
+export const getContrastShade = (hexColor: string) => {
+  const { r, g, b } = rgb(hexColor) as Rgb;
+  const luminance =
+    0.2126 * fixupRgb(r) + 0.7152 * fixupRgb(g) + 0.0722 * fixupRgb(b);
+  return luminance < 140 ? 50 : 950;
 };
 
 export const getNeutralColor = getColorVariantFunction(({ mode, h, s, l }) => ({
