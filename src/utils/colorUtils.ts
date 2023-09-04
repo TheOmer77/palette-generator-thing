@@ -53,22 +53,24 @@ const getColorVariantFunction = (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => {
 
 export type RgbArray = [red: number, green: number, blue: number];
 
-export const isValidHexColor = (hex: string) => !!parseHex(hex);
+export const isValidHexColor = (hexColor: string) => !!parseHex(hexColor);
+
+export const isHexColorLight = (hexColor: string) => {
+  const { r, g, b } = parseHex(hexColor) as Rgb;
+  const luminance =
+    0.2126 * fixupRgb(r) + 0.7152 * fixupRgb(g) + 0.0722 * fixupRgb(b);
+  return luminance >= 140;
+};
 
 export const autoAddHexHash = (value: string) =>
   typeof parseHex(value) !== 'undefined' && !value.startsWith('#')
     ? `#${value}`
     : value;
 
-export const hexInverseBw = (hexColor: string) => {
-  const { r, g, b } = rgb(hexColor) as Rgb;
-
-  const luminance =
-    0.2126 * fixupRgb(r) + 0.7152 * fixupRgb(g) + 0.0722 * fixupRgb(b);
-  return `rgba(${
-    luminance < 140 ? '255,255,255' : '0,0,0'
+export const hexInverseBw = (hexColor: string) =>
+  `rgba(${
+    isHexColorLight(hexColor) ? '0,0,0' : '255,255,255'
   },var(--tw-text-opacity, 1)`;
-};
 
 export const randomHexColor = () => formatHex(random());
 
@@ -114,12 +116,8 @@ export const getClosestShade = (
     : closestShade;
 };
 
-export const getContrastShade = (hexColor: string) => {
-  const { r, g, b } = (rgb(hexColor) as Rgb) || fallbackColor;
-  const luminance =
-    0.2126 * fixupRgb(r) + 0.7152 * fixupRgb(g) + 0.0722 * fixupRgb(b);
-  return luminance < 140 ? 50 : 950;
-};
+export const getContrastShade = (hexColor: string) =>
+  isHexColorLight(hexColor) ? 950 : 50;
 
 export const getNeutralColor = getColorVariantFunction(({ mode, h, s, l }) => ({
   mode,
