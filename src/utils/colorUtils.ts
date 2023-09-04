@@ -17,7 +17,12 @@ import {
   // This is named like a react hook, which confuses ESLint
   useMode as loadMode,
 } from 'culori/fn';
-import { MAX_SHADE_NAME, defaultErrorHue, shades } from 'constants';
+import {
+  MAX_SHADE_NAME,
+  defaultErrorHue,
+  fallbackColor,
+  shades,
+} from 'constants';
 
 const okhsl = loadMode(modeOkhsl),
   rgb = loadMode(modeRgb);
@@ -34,7 +39,7 @@ const getColorVariantFunction = (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => {
     format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
   ) {
     const baseRgb = rgb(baseColor) as Rgb,
-      baseOkhsl = okhsl(baseRgb || '#000') as Okhsl;
+      baseOkhsl = okhsl(baseRgb || fallbackColor) as Okhsl;
     const resultRgb = rgb(modifyOkhsl(baseOkhsl));
     return format === 'rgbArray'
       ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
@@ -76,7 +81,9 @@ export function generatePalette(
   baseColor: string,
   returnAs: 'hex' | 'rgbValues' = 'hex'
 ) {
-  const { h, s } = okhsl(parseHex(baseColor) ? baseColor : '#000') as Okhsl;
+  const { h, s } = okhsl(
+    parseHex(baseColor) ? baseColor : fallbackColor
+  ) as Okhsl;
 
   return shades.map(shade => {
     const shadeRgb = rgb({
@@ -108,7 +115,7 @@ export const getClosestShade = (
 };
 
 export const getContrastShade = (hexColor: string) => {
-  const { r, g, b } = rgb(hexColor || '#000') as Rgb;
+  const { r, g, b } = (rgb(hexColor) as Rgb) || fallbackColor;
   const luminance =
     0.2126 * fixupRgb(r) + 0.7152 * fixupRgb(g) + 0.0722 * fixupRgb(b);
   return luminance < 140 ? 50 : 950;
