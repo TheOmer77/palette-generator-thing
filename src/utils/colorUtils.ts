@@ -6,7 +6,6 @@
   hexFromArgb,
   redFromArgb,
 } from '@material/material-color-utilities'; */
-import { defaultErrorHue, shades } from 'constants';
 import {
   formatHex,
   modeOkhsl,
@@ -18,6 +17,7 @@ import {
   // This is named like a react hook, which confuses ESLint
   useMode as loadMode,
 } from 'culori/fn';
+import { MAX_SHADE_NAME, defaultErrorHue, shades } from 'constants';
 
 const okhsl = loadMode(modeOkhsl),
   rgb = loadMode(modeRgb);
@@ -90,6 +90,22 @@ export function generatePalette(
       : formatHex(shadeRgb);
   });
 }
+
+export const getClosestShade = (
+  color: string,
+  { minShade, maxShade }: { minShade?: number; maxShade?: number } = {}
+) => {
+  const l = okhsl(color)?.l || 0;
+  const closestShade =
+    Math.round((MAX_SHADE_NAME - l * MAX_SHADE_NAME) / 100) * 100;
+  return typeof minShade === 'number' && typeof maxShade === 'number'
+    ? Math.min(Math.max(closestShade, minShade), maxShade)
+    : typeof minShade === 'number'
+    ? Math.max(closestShade, minShade)
+    : typeof maxShade === 'number'
+    ? Math.min(closestShade, maxShade)
+    : closestShade;
+};
 
 export const getNeutralColor = getColorVariantFunction(({ mode, h, s, l }) => ({
   mode,
