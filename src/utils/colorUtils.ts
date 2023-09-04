@@ -108,7 +108,7 @@ export const getClosestShade = (
 };
 
 export const getContrastShade = (hexColor: string) => {
-  const { r, g, b } = rgb(hexColor) as Rgb;
+  const { r, g, b } = rgb(hexColor || '#000') as Rgb;
   const luminance =
     0.2126 * fixupRgb(r) + 0.7152 * fixupRgb(g) + 0.0722 * fixupRgb(b);
   return luminance < 140 ? 50 : 950;
