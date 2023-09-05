@@ -62,11 +62,6 @@ export const autoAddHexHash = (value: string) =>
     ? `#${value}`
     : value;
 
-export const hexInverseBw = (hexColor: string) =>
-  `rgba(${
-    isHexColorLight(hexColor) ? '0,0,0' : '255,255,255'
-  },var(--tw-text-opacity, 1)`;
-
 export const randomHexColor = () => formatHex(random());
 
 export function generatePalette(baseColor: string, returnAs?: 'hex'): string[];
