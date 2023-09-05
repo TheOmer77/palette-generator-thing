@@ -12,7 +12,7 @@ const Fab = forwardRef<HTMLButtonElement, ButtonProps>(
 items-center justify-center gap-3 self-center overflow-hidden rounded-lg
 bg-primary-50 text-base font-medium text-primary-800 shadow shadow-primary-800/50
 after:absolute after:start-0 after:top-0 after:h-full after:w-full
-after:content-[""] hover:after:bg-primary-500/10 focus-visible:bg-primary-300
+after:content-[""] hover:after:bg-primary-500/10 focus-visible:bg-primary-100
 focus-visible:outline-none active:bg-primary-100 dark:bg-primary-800
 dark:text-primary-200 dark:focus-visible:bg-primary-700 dark:active:bg-primary-700
 [&>.icon]:text-2xl`,
