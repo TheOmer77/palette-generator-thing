@@ -5,7 +5,7 @@ import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
 import { useTheme } from 'hooks';
 import { generatePalette, generateVariablesCss } from 'utils';
-import { shadeNames } from 'constants';
+import { shades } from 'constants';
 
 const Main = () => {
   const [primary, neutral, secondary, danger] = useTheme();
@@ -54,7 +54,7 @@ const Main = () => {
               <ColorBlock
                 key={color}
                 value={color}
-                label={shadeNames[index].toString()}
+                label={shades[index].toString()}
               />
             ))}
           </ColorGrid>

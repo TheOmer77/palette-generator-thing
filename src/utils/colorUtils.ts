@@ -10,10 +10,10 @@ import {
   useMode as loadMode,
 } from 'culori/fn';
 import {
-  MAX_SHADE_NAME,
+  MAX_SHADE,
   defaultErrorHue,
   fallbackColor,
-  shades,
+  shadesLightnessValues,
 } from 'constants';
 
 const okhsl = loadMode(modeOkhsl),
@@ -77,7 +77,7 @@ export function generatePalette(
     parseHex(baseColor) ? baseColor : fallbackColor
   ) as Okhsl;
 
-  return shades.map(shade => {
+  return shadesLightnessValues.map(shade => {
     const shadeRgb = rgb({
       mode: 'okhsl',
       h,
@@ -95,8 +95,7 @@ export const getClosestShade = (
   { minShade, maxShade }: { minShade?: number; maxShade?: number } = {}
 ) => {
   const l = okhsl(hexColor)?.l || 0;
-  const closestShade =
-    Math.round((MAX_SHADE_NAME - l * MAX_SHADE_NAME) / 100) * 100;
+  const closestShade = Math.round((MAX_SHADE - l * MAX_SHADE) / 100) * 100;
   return typeof minShade === 'number' && typeof maxShade === 'number'
     ? Math.min(Math.max(closestShade, minShade), maxShade)
     : typeof minShade === 'number'

@@ -1,4 +1,4 @@
-import { MAX_MAIN_SHADE, MIN_MAIN_SHADE, shadeNames } from 'constants';
+import { MAX_MAIN_SHADE, MIN_MAIN_SHADE, shades } from 'constants';
 import {
   generatePalette,
   getClosestShade,
@@ -13,7 +13,7 @@ const generateVariablesCss = (baseColors: { [colorName: string]: string }) =>
 ${generatePalette(baseColors[key], 'rgbValues')
   .map(
     (rgbValues, index) =>
-      `  --color-${key}-${shadeNames[index]}: ${rgbValues.join(' ')};`
+      `  --color-${key}-${shades[index]}: ${rgbValues.join(' ')};`
   )
   .join('\n')}
   
