@@ -1,7 +1,29 @@
 import type { Config } from 'tailwindcss';
 import scrollbar from 'tailwind-scrollbar';
+import plugin from 'tailwindcss/plugin';
+import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
+import toColorValue from 'tailwindcss/lib/util/toColorValue';
 
 const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
+
+const customPlugin = plugin(({ matchUtilities, theme }) => {
+  const themeColors = flattenColorPalette(theme('colors'));
+  const colors = Object.fromEntries(
+    Object.entries(themeColors).map(([k, v]) => [k, toColorValue(v)])
+  );
+  matchUtilities(
+    {
+      'autofill-override': value => ({
+        '&:-webkit-autofill': {
+          WebkitBoxShadow: `0 0 0px 1000px ${toColorValue(
+            value
+          )} inset !important`,
+        },
+      }),
+    },
+    { values: colors, type: 'color' }
+  );
+});
 
 const config: Config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -49,7 +71,7 @@ const config: Config = {
       ),
     },
   },
-  plugins: [scrollbar],
+  plugins: [scrollbar, customPlugin],
 };
 
 export default config;

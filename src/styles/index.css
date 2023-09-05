@@ -6,13 +6,3 @@
   --font-family: 'Figtree Variable';
   --font-family-mono: 'Fira Code Variable';
 }
-
-.autocomplete-override-white:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px theme(colors.white) inset !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  .dark\:autocomplete-override-neutral-950:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px theme(colors.neutral.950) inset !important;
-  }
-}
