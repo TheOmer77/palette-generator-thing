@@ -31,9 +31,9 @@ text-neutral-600 dark:text-neutral-400'
         {...props}
         ref={ref}
         id={id}
-        className='autofill-override-white
-dark:autofill-override-neutral-950 flex-grow bg-transparent
-text-neutral-900 focus-visible:outline-none dark:text-neutral-100'
+        className='flex-grow bg-transparent text-neutral-900
+autofill-override-white focus-visible:outline-none dark:text-neutral-100
+dark:autofill-override-neutral-950'
       />
       {endAdornment}
     </div>
