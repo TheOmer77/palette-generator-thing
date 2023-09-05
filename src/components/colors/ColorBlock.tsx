@@ -1,14 +1,14 @@
 import { ComponentProps, forwardRef, useCallback, useState } from 'react';
-import { IconButton } from 'components/general';
-import { hexInverseBw, isValidHexColor } from 'utils';
+import { cn, isHexColorLight, isValidHexColor } from 'utils';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 
-interface ColorBlockProps extends ComponentProps<'div'> {
+interface ColorBlockProps extends ComponentProps<'button'> {
   value: string;
+  label?: string;
 }
 
-const ColorBlock = forwardRef<HTMLDivElement, ColorBlockProps>(
-  ({ value, style, ...props }, ref) => {
+const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
+  ({ value, label, style, ...props }, ref) => {
     const [justCopied, setJustCopied] = useState(false);
 
     const copyValue = useCallback(() => {
@@ -18,29 +18,44 @@ const ColorBlock = forwardRef<HTMLDivElement, ColorBlockProps>(
     }, [value]);
 
     return (
-      <div
+      <button
         {...props}
         ref={ref}
         style={{
-          ...(isValidHexColor(value)
-            ? { backgroundColor: value, color: hexInverseBw(value) }
-            : {}),
+          ...(isValidHexColor(value) ? { backgroundColor: value } : {}),
           ...style,
         }}
-        className='relative flex select-none flex-col items-start justify-center
-        rounded-lg p-2'
+        className={cn(
+          `relative flex cursor-default select-none flex-col items-start
+justify-center overflow-hidden rounded-lg p-2 after:absolute after:start-0 
+after:top-0 after:h-full after:w-full after:content-[""]
+hover:after:bg-neutral-500/20 focus-visible:outline-none
+focus-visible:after:bg-neutral-500/20 active:after:bg-neutral-500/30`,
+          isHexColorLight(value) ? 'text-black' : 'text-white'
+        )}
+        title='Copy color value'
+        onClick={copyValue}
       >
-        <IconButton
-          title='Copy color value'
-          className='absolute end-2 top-1 [--tw-text-opacity:0.5]
-          dark:[--tw-text-opacity:0.5]'
-          onClick={copyValue}
-          style={isValidHexColor(value) ? { color: hexInverseBw(value) } : {}}
+        <span
+          className={cn(
+            'absolute end-2 text-xl [--tw-text-opacity:0.6]',
+            isHexColorLight(value) ? 'text-black' : 'text-white'
+          )}
         >
           {justCopied ? <DoneIcon /> : <CopyIcon />}
-        </IconButton>
-        {value}
-      </div>
+        </span>
+        {label && (
+          <span
+            className={cn(
+              `mt-1 text-sm leading-4 [--tw-text-opacity:0.6]`,
+              isHexColorLight(value) ? 'text-black' : 'text-white'
+            )}
+          >
+            {label}
+          </span>
+        )}
+        <span className='text-lg font-medium'>{value}</span>
+      </button>
     );
   }
 );

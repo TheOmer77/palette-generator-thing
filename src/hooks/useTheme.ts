@@ -1,25 +1,15 @@
 import { useMemo } from 'react';
 import useGlobalState from './useGlobalState';
-import {
-  getErrorColorHex,
-  getNeutralVariantHex,
-  getSecondaryColorHex,
-} from 'utils';
+import { getDangerColor, getNeutralColor, getSecondaryColor } from 'utils';
 
 const useTheme = () => {
   const [{ baseColor }] = useGlobalState();
 
-  const neutralColor = useMemo(
-      () => getNeutralVariantHex(baseColor),
-      [baseColor]
-    ),
-    secondaryColor = useMemo(
-      () => getSecondaryColorHex(baseColor),
-      [baseColor]
-    ),
-    errorColor = useMemo(() => getErrorColorHex(baseColor), [baseColor]);
+  const neutralColor = useMemo(() => getNeutralColor(baseColor), [baseColor]),
+    secondaryColor = useMemo(() => getSecondaryColor(baseColor), [baseColor]),
+    dangerColor = useMemo(() => getDangerColor(baseColor), [baseColor]);
 
-  return [baseColor, neutralColor, secondaryColor, errorColor];
+  return [baseColor, neutralColor, secondaryColor, dangerColor];
 };
 
 export default useTheme;

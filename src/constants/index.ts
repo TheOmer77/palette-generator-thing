@@ -1,4 +1,7 @@
-export const tones = [...[...Array(19).keys()].map(key => key * 5 + 5), 98];
+import type { Rgb } from 'culori/fn';
+
+export const fallbackColor: Rgb = { mode: 'rgb', r: 0, g: 0, b: 0 };
 export const defaultErrorHue = 25;
-export * as prismThemes from './prism';
 export { default as screens } from './breakpoints';
+export * as prismThemes from './prism';
+export * from './shades';

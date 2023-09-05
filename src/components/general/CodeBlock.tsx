@@ -26,8 +26,8 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
 
     return (
       <div
-        className='relative overflow-hidden rounded-lg bg-neutral-98
-dark:bg-neutral-5'
+        className='relative overflow-hidden rounded-lg bg-neutral-50
+dark:bg-neutral-900'
       >
         <IconButton
           title='Copy code'
@@ -54,7 +54,7 @@ dark:bg-neutral-5'
               ref={ref}
               className={cn(
                 `max-h-[calc(100vh-6.5rem)]
-overflow-auto p-4 text-sm scrollbar-thin scrollbar-thumb-neutral-50/30
+overflow-auto p-4 text-sm scrollbar-thin scrollbar-thumb-neutral-500/30
 md:max-h-[calc(100vh-4.5rem)]`,
                 className
               )}

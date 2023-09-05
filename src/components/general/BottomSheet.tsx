@@ -23,7 +23,7 @@ const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogPortal>
           <DialogOverlay
-            className='fixed inset-0 z-20 bg-neutral-5/50
+            className='fixed inset-0 z-20 bg-neutral-950/50
 data-[state=closed]:animate-fadeout data-[state=open]:animate-fadein'
           />
           <DialogContent
@@ -31,9 +31,9 @@ data-[state=closed]:animate-fadeout data-[state=open]:animate-fadein'
             ref={ref}
             className={cn(
               `fixed inset-x-0 bottom-0 z-20 mx-auto flex w-screen max-w-2xl
-flex-col rounded-t-lg bg-white p-4 text-neutral-5 shadow shadow-neutral-10/50
+flex-col rounded-t-lg bg-white p-4 text-neutral-950 shadow shadow-neutral-900/50
 data-[state=closed]:animate-slideout data-[state=open]:animate-slidein
-dark:bg-neutral-5 dark:text-neutral-98`,
+dark:bg-neutral-900 dark:text-neutral-50`,
               className
             )}
           >

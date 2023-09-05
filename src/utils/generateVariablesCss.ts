@@ -1,101 +1,43 @@
+import { MAX_MAIN_SHADE, MIN_MAIN_SHADE, shades } from 'constants';
 import {
-  argbFromHex,
-  Hct,
-  hexFromArgb,
-  TonalPalette,
-} from '@material/material-color-utilities';
-import {
-  rgbFromArgb,
-  getContrastTone,
-  getRoundedTone,
-  isValidHexColor,
+  generatePalette,
+  getClosestShade,
+  getContrastShade,
 } from './colorUtils';
-import { tones } from '../constants';
 
-const getColorValue = (
-  argb: number,
-  format: 'hex' | 'rgb' | 'rgbValues' = 'hex'
-) =>
-  format === 'rgb'
-    ? `rgb(${rgbFromArgb(argb).join(' ')})`
-    : format === 'rgbValues'
-    ? rgbFromArgb(argb).join(' ')
-    : hexFromArgb(argb);
-
-const generateVariablesCss = (
-  baseColors: { [colorName: string]: string },
-  {
-    format = 'hex',
-  }: { tones?: number[]; format?: 'hex' | 'rgb' | 'rgbValues' } = {}
-) => {
-  const baseColorArgbs: { [color: keyof typeof baseColors]: number } =
-    Object.keys(baseColors).reduce(
-      (obj, color) => ({
-        ...obj,
-        [color]: isValidHexColor(baseColors[color])
-          ? argbFromHex(baseColors[color])
-          : 0,
-      }),
-      {}
-    );
-
-  const tonalPalettes: { [color: keyof typeof baseColors]: TonalPalette } =
-    Object.keys(baseColors).reduce(
-      (obj, color) => ({
-        ...obj,
-        [color]: TonalPalette.fromInt(baseColorArgbs[color]),
-      }),
-      {}
-    );
-  const baseColorMainTones: { [color: keyof typeof baseColors]: number } =
-    Object.keys(baseColors).reduce(
-      (obj, color) => ({
-        ...obj,
-        [color]: getRoundedTone(Hct.fromInt(baseColorArgbs[color]).tone),
-      }),
-      {}
-    );
-  const baseColorContrastTones: { [color: keyof typeof baseColors]: number } =
-    Object.keys(baseColors).reduce(
-      (obj, color) => ({
-        ...obj,
-        [color]: getContrastTone(
-          tonalPalettes[color].tone(baseColorMainTones[color])
-        ),
-      }),
-      {}
-    );
-
-  return `:root {
-${Object.keys(baseColors)
+const generateVariablesCss = (baseColors: { [colorName: string]: string }) =>
+  `:root {
+  ${Object.keys(baseColors)
+    .map(
+      (key: keyof typeof baseColors) => `/* ${key} */
+${generatePalette(baseColors[key], 'rgbValues')
   .map(
-    baseColorName => `  /* ${baseColorName} */
-${tones
-  .map(
-    tone =>
-      `  --color-${baseColorName}-${tone}: ${getColorValue(
-        tonalPalettes[baseColorName].tone(tone),
-        format
-      )};`
+    (rgbValues, index) =>
+      `  --color-${key}-${shades[index]}: ${rgbValues.join(' ')};`
   )
   .join('\n')}
-
-  --color-${baseColorName}-main: var(--color-${baseColorName}-${
-    baseColorMainTones[baseColorName]
+  
+  --color-${key}-main: var(--color-${key}-${getClosestShade(baseColors[key], {
+    minShade: MIN_MAIN_SHADE,
+    maxShade: MAX_MAIN_SHADE,
+  })});
+  --color-${key}-light: var(--color-${key}-${
+    getClosestShade(baseColors[key], {
+      minShade: MIN_MAIN_SHADE,
+      maxShade: MAX_MAIN_SHADE,
+    }) - 100
   });
-  --color-${baseColorName}-light: var(--color-${baseColorName}-${
-    baseColorMainTones[baseColorName] + 15
+  --color-${key}-dark: var(--color-${key}-${
+    getClosestShade(baseColors[key], {
+      minShade: MIN_MAIN_SHADE,
+      maxShade: MAX_MAIN_SHADE,
+    }) + 100
   });
-  --color-${baseColorName}-dark: var(--color-${baseColorName}-${
-    baseColorMainTones[baseColorName] - 15
-  });
-  --color-${baseColorName}-contrast: var(--color-${baseColorName}-${
-    baseColorContrastTones[baseColorName]
-  });
-`
-  )
-  .join('\n')}}
-`;
-};
+  --color-${key}-contrast: var(--color-${key}-${getContrastShade(
+    baseColors[key]
+  )});`
+    )
+    .join('\n\n  ')}
+}`;
 
 export default generateVariablesCss;
