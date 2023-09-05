@@ -1,14 +1,13 @@
 import { ComponentProps, forwardRef, useCallback, useState } from 'react';
-import { IconButton } from 'components/general';
 import { cn, isHexColorLight, isValidHexColor } from 'utils';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 
-interface ColorBlockProps extends ComponentProps<'div'> {
+interface ColorBlockProps extends ComponentProps<'button'> {
   value: string;
   label?: string;
 }
 
-const ColorBlock = forwardRef<HTMLDivElement, ColorBlockProps>(
+const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
   ({ value, label, style, ...props }, ref) => {
     const [justCopied, setJustCopied] = useState(false);
 
@@ -19,7 +18,7 @@ const ColorBlock = forwardRef<HTMLDivElement, ColorBlockProps>(
     }, [value]);
 
     return (
-      <div
+      <button
         {...props}
         ref={ref}
         style={{
@@ -27,21 +26,24 @@ const ColorBlock = forwardRef<HTMLDivElement, ColorBlockProps>(
           ...style,
         }}
         className={cn(
-          `relative flex select-none flex-col items-start justify-center
-rounded-lg p-2`,
+          `relative flex cursor-default select-none flex-col items-start
+justify-center overflow-hidden rounded-lg p-2 after:absolute after:start-0 
+after:top-0 after:h-full after:w-full after:content-[""]
+hover:after:bg-neutral-500/20 focus-visible:outline-none
+focus-visible:after:bg-neutral-500/20 active:after:bg-neutral-500/30`,
           isHexColorLight(value) ? 'text-black' : 'text-white'
         )}
+        title='Copy color value'
+        onClick={copyValue}
       >
-        <IconButton
-          title='Copy color value'
+        <span
           className={cn(
-            'absolute end-2 [--tw-text-opacity:0.6]',
+            'absolute end-2 text-xl [--tw-text-opacity:0.6]',
             isHexColorLight(value) ? 'text-black' : 'text-white'
           )}
-          onClick={copyValue}
         >
           {justCopied ? <DoneIcon /> : <CopyIcon />}
-        </IconButton>
+        </span>
         {label && (
           <span
             className={cn(
@@ -53,7 +55,7 @@ rounded-lg p-2`,
           </span>
         )}
         <span className='text-lg font-medium'>{value}</span>
-      </div>
+      </button>
     );
   }
 );
