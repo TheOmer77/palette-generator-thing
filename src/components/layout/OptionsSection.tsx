@@ -1,8 +1,9 @@
 import { type ComponentProps, forwardRef } from 'react';
 
-import { IconButton, Input } from 'components/general';
+import { IconButton } from 'components/general';
+import { ColorInput } from 'components/colors';
 import { useGlobalState } from 'hooks';
-import { autoAddHexHash, randomHexColor } from 'utils';
+import { randomHexColor } from 'utils';
 import { RandomIcon } from 'assets/icons';
 
 const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
@@ -11,19 +12,13 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
 
     return (
       <section {...props} ref={ref}>
-        <Input
+        <ColorInput
           id='input-base-color'
           label='Base color'
           value={globalState.baseColor}
-          onChange={e =>
-            setGlobalState({ baseColor: autoAddHexHash(e.target.value) })
-          }
-          startAdornment={
-            <div
-              className='h-7 w-7 rounded-lg'
-              style={{ backgroundColor: globalState.baseColor }}
-            />
-          }
+          onChange={newColor => {
+            setGlobalState({ baseColor: newColor });
+          }}
           endAdornment={
             <IconButton
               title='Generate random color'
