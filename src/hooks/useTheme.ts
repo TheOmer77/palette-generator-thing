@@ -5,11 +5,11 @@ import { getDangerColor, getNeutralColor, getSecondaryColor } from 'utils';
 const useTheme = () => {
   const [{ baseColor }] = useGlobalState();
 
-  const neutralColor = useMemo(() => getNeutralColor(baseColor), [baseColor]),
-    secondaryColor = useMemo(() => getSecondaryColor(baseColor), [baseColor]),
-    dangerColor = useMemo(() => getDangerColor(baseColor), [baseColor]);
+  const neutral = useMemo(() => getNeutralColor(baseColor), [baseColor]),
+    secondary = useMemo(() => getSecondaryColor(baseColor), [baseColor]),
+    danger = useMemo(() => getDangerColor(baseColor), [baseColor]);
 
-  return [baseColor, neutralColor, secondaryColor, dangerColor];
+  return { primary: baseColor, neutral, secondary, danger };
 };
 
 export default useTheme;

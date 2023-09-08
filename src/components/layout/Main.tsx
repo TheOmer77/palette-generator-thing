@@ -8,7 +8,7 @@ import { generatePalette, generateVariablesCss } from 'utils';
 import { shades } from 'constants';
 
 const Main = () => {
-  const [primary, neutral, secondary, danger] = useTheme();
+  const { primary, neutral, secondary, danger } = useTheme();
 
   const colorGrids = useMemo(
     () => [
