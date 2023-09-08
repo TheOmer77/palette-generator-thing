@@ -64,14 +64,14 @@ export const autoAddHexHash = (value: string) =>
 
 export const randomHexColor = () => formatHex(random());
 
-export function generatePalette(baseColor: string, returnAs?: 'hex'): string[];
+export function generatePalette(baseColor: string, format?: 'hex'): string[];
 export function generatePalette(
   baseColor: string,
-  returnAs: 'rgbValues'
+  format: 'rgbArray'
 ): RgbArray[];
 export function generatePalette(
   baseColor: string,
-  returnAs: 'hex' | 'rgbValues' = 'hex'
+  format: 'hex' | 'rgbArray' = 'hex'
 ) {
   const { h, s } = okhsl(
     parseHex(baseColor) ? baseColor : fallbackColor
@@ -84,7 +84,7 @@ export function generatePalette(
       s,
       l: shade / 100,
     });
-    return returnAs === 'rgbValues'
+    return format === 'rgbArray'
       ? [fixupRgb(shadeRgb.r), fixupRgb(shadeRgb.g), fixupRgb(shadeRgb.b)]
       : formatHex(shadeRgb);
   });

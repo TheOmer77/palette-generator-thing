@@ -10,10 +10,10 @@ const generateVariablesCss = (baseColors: { [colorName: string]: string }) =>
   ${Object.keys(baseColors)
     .map(
       (key: keyof typeof baseColors) => `/* ${key} */
-${generatePalette(baseColors[key], 'rgbValues')
+${generatePalette(baseColors[key], 'rgbArray')
   .map(
-    (rgbValues, index) =>
-      `  --color-${key}-${shades[index]}: ${rgbValues.join(' ')};`
+    (rgbArray, index) =>
+      `  --color-${key}-${shades[index]}: ${rgbArray.join(' ')};`
   )
   .join('\n')}
   
