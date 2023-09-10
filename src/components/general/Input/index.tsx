@@ -10,7 +10,7 @@ export interface InputProps extends ComponentProps<'input'> {
   asChild?: boolean;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       id,
@@ -57,5 +57,3 @@ dark:autofill-override-neutral-950'
   }
 );
 Input.displayName = 'Input';
-
-export default Input;
