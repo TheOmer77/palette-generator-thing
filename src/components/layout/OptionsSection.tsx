@@ -8,21 +8,27 @@ import { RandomIcon } from 'assets/icons';
 
 const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
   (props, ref) => {
-    const [globalState, setGlobalState] = useGlobalState();
+    const [{ baseColors }, setGlobalState] = useGlobalState();
 
     return (
       <section {...props} ref={ref}>
         <ColorInput
           id='input-base-color'
           label='Base color'
-          value={globalState.baseColor}
+          value={baseColors.primary}
           onChange={newColor => {
-            setGlobalState({ baseColor: newColor });
+            setGlobalState({
+              baseColors: { ...baseColors, primary: newColor },
+            });
           }}
           endAdornment={
             <IconButton
               title='Generate random color'
-              onClick={() => setGlobalState({ baseColor: randomHexColor() })}
+              onClick={() =>
+                setGlobalState({
+                  baseColors: { ...baseColors, primary: randomHexColor() },
+                })
+              }
             >
               <RandomIcon />
             </IconButton>

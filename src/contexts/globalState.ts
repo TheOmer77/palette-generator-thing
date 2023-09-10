@@ -2,10 +2,12 @@ import { createContext } from 'react';
 import { randomHexColor } from 'utils';
 
 export interface GlobalState {
-  baseColor: string;
+  baseColors: { primary: string };
 }
 
-export const initialState: GlobalState = { baseColor: randomHexColor() };
+export const initialState: GlobalState = {
+  baseColors: { primary: randomHexColor() },
+};
 const initialDispatch = () => {
   return;
 };
