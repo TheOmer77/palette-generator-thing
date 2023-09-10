@@ -2,7 +2,7 @@ import { forwardRef, isValidElement } from 'react';
 import { cn } from 'utils';
 import type { ButtonProps } from './Button';
 
-const Fab = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Fab = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ icon, iconPosition = 'start', className, children, ...props }, ref) => (
     <button
       {...props}
@@ -31,5 +31,3 @@ dark:text-primary-200 dark:focus-visible:bg-primary-700 dark:active:bg-primary-7
   )
 );
 Fab.displayName = 'Fab';
-
-export default Fab;

@@ -11,7 +11,7 @@ export interface ButtonProps extends ComponentProps<'button'> {
   iconPosition?: 'start' | 'end';
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ icon, iconPosition = 'start', className, children, ...props }, ref) => (
     <button
       {...props}
@@ -36,5 +36,3 @@ focus-visible:outline-none active:bg-neutral-50/30 dark:text-neutral-300
   )
 );
 Button.displayName = 'Button';
-
-export default Button;
