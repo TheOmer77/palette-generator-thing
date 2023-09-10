@@ -12,7 +12,7 @@ import {
 
 type RovingFocusGroupProps = ComponentPropsWithoutRef<typeof RovingFocusGroup>;
 
-interface ListProps extends ComponentPropsWithoutRef<'ul'> {
+export interface ListProps extends ComponentPropsWithoutRef<'ul'> {
   disabled?: boolean;
   rovingFocus?: boolean;
   loop?: RovingFocusGroupProps['loop'];

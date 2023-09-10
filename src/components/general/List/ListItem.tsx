@@ -16,11 +16,9 @@ import {
   useRovingFocusGroupScope,
 } from './common';
 
-export interface ListItemProps extends ComponentPropsWithoutRef<'button'> {}
-
 export const ListItem = forwardRef<
   HTMLButtonElement,
-  ScopedProps<ListItemProps>
+  ScopedProps<ComponentPropsWithoutRef<'button'>>
 >(({ __scopeToggleGroup, className, ...props }, ref) => {
   const context = useListContext(LIST_ITEM_NAME, __scopeToggleGroup);
   const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToggleGroup);
