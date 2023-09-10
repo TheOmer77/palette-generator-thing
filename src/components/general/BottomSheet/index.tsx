@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from '@radix-ui/react-dialog';
 
-import H2 from '../H2';
+import { H2 } from '../Headings';
 import { cn } from 'utils';
 
 export interface BottomSheetProps

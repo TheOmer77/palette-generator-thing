@@ -1,21 +1,19 @@
 import { ComponentProps, forwardRef } from 'react';
 import { cn } from 'utils';
 
-const H2 = forwardRef<HTMLHeadingElement, ComponentProps<'h2'>>(
+export const H3 = forwardRef<HTMLHeadingElement, ComponentProps<'h3'>>(
   ({ children, className, ...props }, ref) => (
-    <h2
+    <h3
       {...props}
       ref={ref}
       className={cn(
-        `mb-2 select-none text-3xl font-bold tracking-tight text-neutral-900
-dark:text-neutral-100`,
+        `mb-2 select-none text-xl font-medium text-neutral-600
+dark:text-neutral-400`,
         className
       )}
     >
       {children}
-    </h2>
+    </h3>
   )
 );
-H2.displayName = 'H2';
-
-export default H2;
+H3.displayName = 'H3';
