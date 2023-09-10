@@ -13,7 +13,7 @@ export interface CodeBlockProps
   language?: string;
 }
 
-const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
+export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
   ({ children, language = '', style, ...props }, ref) => {
     const darkTheme = useDarkTheme();
     const [justCopied, setJustCopied] = useState(false);
@@ -74,5 +74,3 @@ md:max-h-[calc(100vh-4.5rem)]`,
   }
 );
 CodeBlock.displayName = 'CodeBlock';
-
-export default CodeBlock;
