@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fontsource-variable/figtree": "^5.0.9",
+    "@fontsource-variable/figtree": "^5.0.13",
     "@fontsource-variable/fira-code": "^5.0.8",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-slot": "^1.0.2",
@@ -29,7 +29,7 @@
     "@typescript-eslint/parser": "^6.6.0",
     "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.15",
-    "eslint": "^8.48.0",
+    "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.0",
     "eslint-plugin-import": "^2.28.1",
@@ -47,6 +47,6 @@
     "vite": "^4.4.9",
     "vite-plugin-checker": "^0.6.2",
     "vite-plugin-svgr": "^3.2.0",
-    "vite-tsconfig-paths": "^4.2.0"
+    "vite-tsconfig-paths": "^4.2.1"
   }
 }
