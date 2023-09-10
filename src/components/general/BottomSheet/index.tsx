@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from '@radix-ui/react-dialog';
 
-import H2 from './H2';
+import H2 from '../H2';
 import { cn } from 'utils';
 
 export interface BottomSheetProps
@@ -17,7 +17,7 @@ export interface BottomSheetProps
   title?: string;
 }
 
-const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(
+export const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(
   ({ title, open, onOpenChange, className, children, ...props }, ref) => {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
@@ -50,5 +50,3 @@ dark:bg-neutral-900 dark:text-neutral-50`,
   }
 );
 BottomSheet.displayName = 'BottomSheet';
-
-export default BottomSheet;
