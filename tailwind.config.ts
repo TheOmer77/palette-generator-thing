@@ -34,6 +34,8 @@ const config: Config = {
         fadeout: 'fadeout 200ms',
         slidein: 'slidein 200ms',
         slideout: 'slideout 200ms',
+        slideDown: 'slideDown 200ms',
+        slideUp: 'slideUp 200ms',
       },
       fontFamily: {
         sans: ['var(--font-family)', 'sans-serif'],
@@ -49,6 +51,14 @@ const config: Config = {
         slideout: {
           from: { transform: 'translateY(0%)' },
           to: { transform: 'translateY(100%)' },
+        },
+        slideDown: {
+          from: { height: '0' },
+          to: { height: 'var(--radix-collapsible-content-height)' },
+        },
+        slideUp: {
+          from: { height: 'var(--radix-collapsible-content-height)' },
+          to: { height: '0' },
         },
       },
     },
