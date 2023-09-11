@@ -19,9 +19,9 @@ import {
 export const ListItem = forwardRef<
   HTMLButtonElement,
   ScopedProps<ComponentPropsWithoutRef<'button'>>
->(({ __scopeToggleGroup, className, ...props }, ref) => {
-  const context = useListContext(LIST_ITEM_NAME, __scopeToggleGroup);
-  const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToggleGroup);
+>(({ __scopeList, className, ...props }, ref) => {
+  const context = useListContext(LIST_ITEM_NAME, __scopeList);
+  const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeList);
   const disabled = context.disabled || props.disabled;
   const rovingFocusItemRef = useRef<HTMLDivElement>(null);
 

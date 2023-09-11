@@ -24,7 +24,7 @@ const listClassName = `flex w-full flex-col space-y-px rounded-lg`;
 export const List = forwardRef<HTMLUListElement, ScopedProps<ListProps>>(
   (
     {
-      __scopeToggleGroup,
+      __scopeList,
       disabled = false,
       rovingFocus = true,
       loop = false,
@@ -33,11 +33,11 @@ export const List = forwardRef<HTMLUListElement, ScopedProps<ListProps>>(
     },
     ref
   ) => {
-    const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToggleGroup);
+    const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeList);
 
     return (
       <ListContext
-        scope={__scopeToggleGroup}
+        scope={__scopeList}
         rovingFocus={rovingFocus}
         disabled={disabled}
       >

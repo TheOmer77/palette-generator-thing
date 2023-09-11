@@ -4,7 +4,7 @@ import { createRovingFocusGroupScope } from '@radix-ui/react-roving-focus';
 export const LIST_GROUP_NAME = 'List',
   LIST_ITEM_NAME = 'ListItem';
 
-export type ScopedProps<P> = P & { __scopeToggleGroup?: Scope };
+export type ScopedProps<P> = P & { __scopeList?: Scope };
 export type ListContextValue = { rovingFocus: boolean; disabled: boolean };
 
 export const [createListContext, createListScope] = createContextScope(
