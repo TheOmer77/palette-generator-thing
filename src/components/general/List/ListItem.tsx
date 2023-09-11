@@ -3,11 +3,10 @@ import { RovingFocusGroupItem } from '@radix-ui/react-roving-focus';
 
 import { cn } from 'utils';
 
-const listItemClassName = `relative flex h-12 w-full cursor-default select-none items-center p-4
-outline-none transition-[background-color] after:absolute after:start-0
-after:top-0 after:h-full after:w-full after:rounded-lg after:content-[""]
-hover:after:bg-neutral-500/20 focus-visible:outline-none
-focus-visible:after:bg-neutral-500/20 active:after:bg-neutral-500/30`;
+const listItemClassName = `flex h-12 w-full cursor-default select-none items-center rounded-lg
+p-4 outline-none transition-[background-color] state-layer
+hover:state-layer-neutral-500/20 focus-visible:outline-none
+focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`;
 
 import {
   LIST_ITEM_NAME,

@@ -26,11 +26,10 @@ const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
           ...style,
         }}
         className={cn(
-          `relative flex cursor-default select-none flex-col items-start
-justify-center overflow-hidden rounded-lg p-2 after:absolute after:start-0 
-after:top-0 after:h-full after:w-full after:content-[""]
-hover:after:bg-neutral-500/20 focus-visible:outline-none
-focus-visible:after:bg-neutral-500/20 active:after:bg-neutral-500/30`,
+          `flex cursor-default select-none flex-col items-start
+justify-center overflow-hidden rounded-lg p-2 state-layer
+hover:state-layer-neutral-500/20 focus-visible:outline-none
+focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`,
           isHexColorLight(value) ? 'text-black' : 'text-white'
         )}
         title='Copy color value'
