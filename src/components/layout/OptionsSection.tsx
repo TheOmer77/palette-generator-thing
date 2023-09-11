@@ -1,39 +1,61 @@
-import { type ComponentProps, forwardRef } from 'react';
+import { type ComponentProps, forwardRef, useState } from 'react';
 
-import { IconButton } from 'components/general';
+import {
+  AccordionList,
+  AccordionListItem,
+  IconButton,
+  ListSubheader,
+} from 'components/general';
 import { ColorInput } from 'components/colors';
 import { useGlobalState } from 'hooks';
 import { randomHexColor } from 'utils';
 import { RandomIcon } from 'assets/icons';
+import type { GlobalState } from 'contexts/globalState';
 
 const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
   (props, ref) => {
     const [{ baseColors }, setGlobalState] = useGlobalState();
 
+    const [openItem, setOpenItem] = useState<
+      keyof GlobalState['baseColors'] | null
+    >(null);
+
     return (
       <section {...props} ref={ref}>
-        <ColorInput
-          id='input-base-color'
-          label='Base color'
-          value={baseColors.primary}
-          onChange={newColor => {
-            setGlobalState({
-              baseColors: { ...baseColors, primary: newColor },
-            });
-          }}
-          endAdornment={
-            <IconButton
-              title='Generate random color'
-              onClick={() =>
-                setGlobalState({
-                  baseColors: { ...baseColors, primary: randomHexColor() },
-                })
-              }
-            >
-              <RandomIcon />
-            </IconButton>
-          }
-        />
+        <AccordionList
+          value={openItem}
+          onValueChange={newValue => setOpenItem(newValue as typeof openItem)}
+        >
+          <ListSubheader>Base colors</ListSubheader>
+          <AccordionListItem value='primary' title='Primary'>
+            <div className='p-2'>
+              <ColorInput
+                id='input-base-color'
+                value={baseColors.primary}
+                onChange={newColor => {
+                  setGlobalState({
+                    baseColors: { ...baseColors, primary: newColor },
+                  });
+                }}
+                endAdornment={
+                  <IconButton
+                    title='Generate random color'
+                    onClick={() =>
+                      setGlobalState({
+                        baseColors: {
+                          ...baseColors,
+                          primary: randomHexColor(),
+                        },
+                      })
+                    }
+                  >
+                    <RandomIcon />
+                  </IconButton>
+                }
+              />
+            </div>
+          </AccordionListItem>
+        </AccordionList>
       </section>
     );
   }
