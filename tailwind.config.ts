@@ -6,11 +6,12 @@ import toColorValue from 'tailwindcss/lib/util/toColorValue';
 
 const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
 
-const customPlugin = plugin(({ matchUtilities, theme }) => {
+const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
   const themeColors = flattenColorPalette(theme('colors'));
   const colors = Object.fromEntries(
     Object.entries(themeColors).map(([k, v]) => [k, toColorValue(v)])
   );
+
   matchUtilities(
     {
       'autofill-override': value => ({
@@ -21,6 +22,27 @@ const customPlugin = plugin(({ matchUtilities, theme }) => {
         },
       }),
     },
+    { values: colors, type: 'color' }
+  );
+
+  addUtilities({
+    '.state-layer': {
+      position: 'relative',
+      overflow: 'hidden',
+      '&.fixed': { position: 'fixed' },
+      '&::after': {
+        content: '""',
+        position: 'absolute',
+        insetBlockStart: '0',
+        insetInlineStart: '0',
+        width: '100%',
+        height: '100%',
+        zIndex: '1',
+      },
+    },
+  });
+  matchUtilities(
+    { 'state-layer': value => ({ '&::after': { backgroundColor: value } }) },
     { values: colors, type: 'color' }
   );
 });
