@@ -4,13 +4,21 @@ import {
   AccordionList,
   AccordionListItem,
   IconButton,
+  ListItem,
   ListSubheader,
+  Radio,
 } from 'components/general';
 import { ColorInput } from 'components/colors';
 import { useGlobalState } from 'hooks';
 import { randomHexColor } from 'utils';
 import { RandomIcon } from 'assets/icons';
 import type { GlobalState } from 'contexts/globalState';
+
+const ListItemRadio = ({ checked = false }: { checked?: boolean }) => (
+  <Radio checked={checked} className='me-4' asChild>
+    <span />
+  </Radio>
+);
 
 const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
   (props, ref) => {
@@ -54,6 +62,34 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 }
               />
             </div>
+          </AccordionListItem>
+          <AccordionListItem value='neutral' title='Neutral'>
+            <ListItem>
+              <ListItemRadio checked />
+              Auto
+            </ListItem>
+            <ListItem>
+              <ListItemRadio />
+              Suggestions
+            </ListItem>
+            <ListItem>
+              <ListItemRadio />
+              Custom
+            </ListItem>
+          </AccordionListItem>
+          <AccordionListItem value='danger' title='Danger'>
+            <ListItem>
+              <ListItemRadio checked />
+              Auto
+            </ListItem>
+            <ListItem>
+              <ListItemRadio />
+              Suggestions
+            </ListItem>
+            <ListItem>
+              <ListItemRadio />
+              Custom
+            </ListItem>
           </AccordionListItem>
         </AccordionList>
       </section>
