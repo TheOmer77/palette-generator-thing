@@ -3,10 +3,25 @@ import { RovingFocusGroupItem } from '@radix-ui/react-roving-focus';
 
 import { cn } from 'utils';
 
-const listItemClassName = `flex h-12 w-full cursor-default select-none
+// eslint-disable-next-line react/display-name
+const ListItemButton = forwardRef<
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<'button'>
+>(({ className, ...props }, ref) => (
+  <button
+    {...props}
+    ref={ref}
+    className={cn(
+      `flex h-12 w-full cursor-default select-none
 items-center rounded-lg p-4 outline-none transition-[background-color]
-state-layer hover:state-layer-neutral-500/20 focus-visible:outline-none
-focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`;
+state-layer focus-visible:outline-none focus-visible:state-layer-neutral-500/20
+enabled:hover:state-layer-neutral-500/20 
+enabled:active:state-layer-neutral-500/30 disabled:text-neutral-600
+dark:disabled:text-neutral-400`,
+      className
+    )}
+  />
+));
 
 import {
   LIST_ITEM_NAME,
@@ -18,7 +33,7 @@ import {
 export const ListItem = forwardRef<
   HTMLButtonElement,
   ScopedProps<ComponentPropsWithoutRef<'button'>>
->(({ __scopeList, className, ...props }, ref) => {
+>(({ __scopeList, ...props }, ref) => {
   const context = useListContext(LIST_ITEM_NAME, __scopeList);
   const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeList);
   const disabled = context.disabled || props.disabled;
@@ -33,20 +48,10 @@ export const ListItem = forwardRef<
           focusable={!disabled}
           ref={rovingFocusItemRef}
         >
-          <button
-            {...props}
-            ref={ref}
-            disabled={disabled}
-            className={cn(listItemClassName, className)}
-          />
+          <ListItemButton {...props} ref={ref} disabled={disabled} />
         </RovingFocusGroupItem>
       ) : (
-        <button
-          {...props}
-          ref={ref}
-          disabled={disabled}
-          className={cn(listItemClassName, className)}
-        />
+        <ListItemButton {...props} ref={ref} disabled={disabled} />
       )}
     </li>
   );
