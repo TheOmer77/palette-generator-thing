@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { randomHexColor } from 'utils';
 
 export interface GlobalState {
-  baseColors: { primary: string };
+  baseColors: { primary: string; neutral?: string; danger?: string };
 }
 
 export const initialState: GlobalState = {
