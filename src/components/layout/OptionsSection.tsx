@@ -14,8 +14,14 @@ import { randomHexColor } from 'utils';
 import { RandomIcon } from 'assets/icons';
 import type { GlobalState } from 'contexts/globalState';
 
-const ListItemRadio = ({ checked = false }: { checked?: boolean }) => (
-  <Radio checked={checked} className='me-4' asChild>
+const ListItemRadio = ({
+  checked = false,
+  disabled = false,
+}: {
+  checked?: boolean;
+  disabled?: boolean;
+}) => (
+  <Radio checked={checked} disabled={disabled} className='me-4' asChild>
     <span />
   </Radio>
 );
@@ -65,29 +71,37 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
           </AccordionListItem>
           <AccordionListItem value='neutral' title='Neutral'>
             <ListItem>
-              <ListItemRadio checked />
+              <ListItemRadio
+                checked={typeof baseColors.neutral === 'undefined'}
+              />
               Auto
             </ListItem>
-            <ListItem>
-              <ListItemRadio />
+            {/* TODO: Remove disabled once implemented */}
+            <ListItem disabled>
+              <ListItemRadio disabled />
               Suggestions
             </ListItem>
-            <ListItem>
-              <ListItemRadio />
+            {/* TODO: Remove disabled once implemented */}
+            <ListItem disabled>
+              <ListItemRadio disabled />
               Custom
             </ListItem>
           </AccordionListItem>
           <AccordionListItem value='danger' title='Danger'>
             <ListItem>
-              <ListItemRadio checked />
+              <ListItemRadio
+                checked={typeof baseColors.danger === 'undefined'}
+              />
               Auto
             </ListItem>
-            <ListItem>
-              <ListItemRadio />
+            {/* TODO: Remove disabled once implemented */}
+            <ListItem disabled>
+              <ListItemRadio disabled />
               Suggestions
             </ListItem>
-            <ListItem>
-              <ListItemRadio />
+            {/* TODO: Remove disabled once implemented */}
+            <ListItem disabled>
+              <ListItemRadio disabled />
               Custom
             </ListItem>
           </AccordionListItem>
