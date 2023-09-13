@@ -77,6 +77,7 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               />
             </div>
           </AccordionListItem>
+
           <AccordionListItem value='neutral' title='Neutral'>
             <ListItem
               onClick={() =>
@@ -124,6 +125,7 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               />
             </Collapsible>
           </AccordionListItem>
+
           <AccordionListItem value='danger' title='Danger'>
             <ListItem
               onClick={() =>
