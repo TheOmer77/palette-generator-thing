@@ -11,7 +11,7 @@ import {
 } from 'components/general';
 import { ColorInput, type ColorInputProps } from 'components/colors';
 import { useGlobalState } from 'hooks';
-import { getNeutralColor, randomHexColor } from 'utils';
+import { getDangerColor, getNeutralColor, randomHexColor } from 'utils';
 import { RandomIcon } from 'assets/icons';
 import type { GlobalState } from 'contexts/globalState';
 
@@ -125,7 +125,16 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
             </Collapsible>
           </AccordionListItem>
           <AccordionListItem value='danger' title='Danger'>
-            <ListItem>
+            <ListItem
+              onClick={() =>
+                setGlobalState({
+                  baseColors: {
+                    ...baseColors,
+                    danger: undefined,
+                  },
+                })
+              }
+            >
               <ListItemRadio
                 checked={typeof baseColors.danger === 'undefined'}
               />
@@ -136,11 +145,31 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               <ListItemRadio disabled />
               Suggestions
             </ListItem>
-            {/* TODO: Remove disabled once implemented */}
-            <ListItem disabled>
-              <ListItemRadio disabled />
+            <ListItem
+              onClick={() =>
+                setGlobalState({
+                  baseColors: {
+                    ...baseColors,
+                    danger: getDangerColor(baseColors.primary),
+                  },
+                })
+              }
+            >
+              {/* TODO: && baseColors.danger is not a suggestion name */}
+              <ListItemRadio checked={typeof baseColors.danger === 'string'} />
               Custom
             </ListItem>
+            <Collapsible open={typeof baseColors.danger === 'string'}>
+              <ColorInputWithRandomBtn
+                id='input-danger-color'
+                value={baseColors.danger || ''}
+                onChange={newColor => {
+                  setGlobalState({
+                    baseColors: { ...baseColors, danger: newColor },
+                  });
+                }}
+              />
+            </Collapsible>
           </AccordionListItem>
         </AccordionList>
       </section>
