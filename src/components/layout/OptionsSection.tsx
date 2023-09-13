@@ -65,17 +65,15 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
         >
           <ListSubheader>Base colors</ListSubheader>
           <AccordionListItem value='primary' title='Primary'>
-            <div className='p-2'>
-              <ColorInputWithRandomBtn
-                id='input-primary-color'
-                value={baseColors.primary}
-                onChange={newColor => {
-                  setGlobalState({
-                    baseColors: { ...baseColors, primary: newColor },
-                  });
-                }}
-              />
-            </div>
+            <ColorInputWithRandomBtn
+              id='input-primary-color'
+              value={baseColors.primary}
+              onChange={newColor => {
+                setGlobalState({
+                  baseColors: { ...baseColors, primary: newColor },
+                });
+              }}
+            />
           </AccordionListItem>
 
           <AccordionListItem value='neutral' title='Neutral'>
