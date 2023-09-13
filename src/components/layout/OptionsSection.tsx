@@ -3,14 +3,15 @@ import { type ComponentProps, forwardRef, useState } from 'react';
 import {
   AccordionList,
   AccordionListItem,
+  Collapsible,
   IconButton,
   ListItem,
   ListSubheader,
   Radio,
 } from 'components/general';
-import { ColorInput } from 'components/colors';
+import { ColorInput, type ColorInputProps } from 'components/colors';
 import { useGlobalState } from 'hooks';
-import { randomHexColor } from 'utils';
+import { getNeutralColor, randomHexColor } from 'utils';
 import { RandomIcon } from 'assets/icons';
 import type { GlobalState } from 'contexts/globalState';
 
@@ -24,6 +25,26 @@ const ListItemRadio = ({
   <Radio checked={checked} disabled={disabled} className='me-4' asChild>
     <span />
   </Radio>
+);
+
+const ColorInputWithRandomBtn = ({
+  value,
+  onChange,
+  ...props
+}: ColorInputProps) => (
+  <ColorInput
+    {...props}
+    value={value}
+    onChange={onChange}
+    endAdornment={
+      <IconButton
+        title='Generate random color'
+        onClick={() => onChange?.(randomHexColor())}
+      >
+        <RandomIcon />
+      </IconButton>
+    }
+  />
 );
 
 const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
@@ -43,34 +64,28 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
           <ListSubheader>Base colors</ListSubheader>
           <AccordionListItem value='primary' title='Primary'>
             <div className='p-2'>
-              <ColorInput
-                id='input-base-color'
+              <ColorInputWithRandomBtn
+                id='input-primary-color'
                 value={baseColors.primary}
                 onChange={newColor => {
                   setGlobalState({
                     baseColors: { ...baseColors, primary: newColor },
                   });
                 }}
-                endAdornment={
-                  <IconButton
-                    title='Generate random color'
-                    onClick={() =>
-                      setGlobalState({
-                        baseColors: {
-                          ...baseColors,
-                          primary: randomHexColor(),
-                        },
-                      })
-                    }
-                  >
-                    <RandomIcon />
-                  </IconButton>
-                }
               />
             </div>
           </AccordionListItem>
           <AccordionListItem value='neutral' title='Neutral'>
-            <ListItem>
+            <ListItem
+              onClick={() =>
+                setGlobalState({
+                  baseColors: {
+                    ...baseColors,
+                    neutral: undefined,
+                  },
+                })
+              }
+            >
               <ListItemRadio
                 checked={typeof baseColors.neutral === 'undefined'}
               />
@@ -81,11 +96,34 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               <ListItemRadio disabled />
               Suggestions
             </ListItem>
-            {/* TODO: Remove disabled once implemented */}
-            <ListItem disabled>
-              <ListItemRadio disabled />
+            <ListItem
+              onClick={() =>
+                setGlobalState({
+                  baseColors: {
+                    ...baseColors,
+                    neutral: getNeutralColor(baseColors.primary),
+                  },
+                })
+              }
+            >
+              {/* TODO: && baseColors.neutral is not a suggestion name */}
+              <ListItemRadio checked={typeof baseColors.neutral === 'string'} />
               Custom
             </ListItem>
+            <Collapsible
+              open={typeof baseColors.neutral === 'string'}
+              className='p-2'
+            >
+              <ColorInputWithRandomBtn
+                id='input-neutral-color'
+                value={baseColors.neutral || ''}
+                onChange={newColor => {
+                  setGlobalState({
+                    baseColors: { ...baseColors, neutral: newColor },
+                  });
+                }}
+              />
+            </Collapsible>
           </AccordionListItem>
           <AccordionListItem value='danger' title='Danger'>
             <ListItem>
