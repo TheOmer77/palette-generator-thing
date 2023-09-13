@@ -30,6 +30,7 @@ const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
       position: 'relative',
       overflow: 'hidden',
       '&.fixed': { position: 'fixed' },
+      '&.absolute': { position: 'absolute' },
       '&::after': {
         content: '""',
         position: 'absolute',
