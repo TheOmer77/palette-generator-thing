@@ -32,19 +32,21 @@ const ColorInputWithRandomBtn = ({
   onChange,
   ...props
 }: ColorInputProps) => (
-  <ColorInput
-    {...props}
-    value={value}
-    onChange={onChange}
-    endAdornment={
-      <IconButton
-        title='Generate random color'
-        onClick={() => onChange?.(randomHexColor())}
-      >
-        <RandomIcon />
-      </IconButton>
-    }
-  />
+  <div className='p-2'>
+    <ColorInput
+      {...props}
+      value={value}
+      onChange={onChange}
+      endAdornment={
+        <IconButton
+          title='Generate random color'
+          onClick={() => onChange?.(randomHexColor())}
+        >
+          <RandomIcon />
+        </IconButton>
+      }
+    />
+  </div>
 );
 
 const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
@@ -110,10 +112,7 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               <ListItemRadio checked={typeof baseColors.neutral === 'string'} />
               Custom
             </ListItem>
-            <Collapsible
-              open={typeof baseColors.neutral === 'string'}
-              className='p-2'
-            >
+            <Collapsible open={typeof baseColors.neutral === 'string'}>
               <ColorInputWithRandomBtn
                 id='input-neutral-color'
                 value={baseColors.neutral || ''}
