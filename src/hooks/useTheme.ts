@@ -1,6 +1,11 @@
 import { useMemo } from 'react';
 import useGlobalState from './useGlobalState';
 import { getDangerColor, getNeutralColor, getSecondaryColor } from 'utils';
+import {
+  neutralColorSuggestionNames,
+  neutralColorSuggestions,
+  type NeutralColorSuggestion,
+} from 'constants/colorSuggestions';
 
 const useTheme = () => {
   const [
@@ -10,7 +15,14 @@ const useTheme = () => {
   ] = useGlobalState();
 
   const selectedNeutral = useMemo(
-      () => neutral || getNeutralColor(primary),
+      () =>
+        typeof neutral === 'string'
+          ? neutralColorSuggestionNames.includes(neutral)
+            ? neutralColorSuggestions[neutral as NeutralColorSuggestion]?.(
+                primary
+              )
+            : neutral
+          : getNeutralColor(primary),
       [neutral, primary]
     ),
     secondary = useMemo(() => getSecondaryColor(primary), [primary]),

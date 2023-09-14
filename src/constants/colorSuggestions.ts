@@ -1,9 +1,26 @@
+import {
+  modeOkhsl,
+  useMode as loadMode,
+  type Okhsl,
+  modeRgb,
+  formatHex,
+} from 'culori/fn';
+
+const okhsl = loadMode(modeOkhsl);
+loadMode(modeRgb);
+
 /**
  * A function that gets a hex color, modifies it * in some way, and returns
  * the modified color as a hex color.
  */
 export type ModifiedColorFunction = (hexColor: string) => string;
 export type ColorSuggestions = Record<string, ModifiedColorFunction>;
+
+/** Util function: Get function to get a modified color with a given saturation. */
+const getSaturationColorFn = (newSaturation: number) => (hexColor: string) => {
+  const { h, l } = okhsl(hexColor) as Okhsl;
+  return formatHex({ mode: 'okhsl', h, s: newSaturation, l });
+};
 
 // TODO: ModifiedColorFunctions
 export const generalColorSuggestions = {
@@ -25,16 +42,15 @@ export const generalColorSuggestions = {
 export const generalColorSuggestionNames = Object.keys(generalColorSuggestions);
 export type GeneralColorSuggestion = keyof typeof generalColorSuggestions;
 
-// TODO: ModifiedColorFunctions
 export const neutralColorSuggestions = {
-  gray: 'gray',
-  neutral5: 'neutral5',
-  neutral10: 'neutral10',
-  neutral15: 'neutral15',
-  neutral20: 'neutral20',
-  neutral25: 'neutral25',
-  neutral30: 'neutral30',
-} as const;
+  gray: getSaturationColorFn(0),
+  neutral5: getSaturationColorFn(0.05),
+  neutral10: getSaturationColorFn(0.1),
+  neutral15: getSaturationColorFn(0.15),
+  neutral20: getSaturationColorFn(0.2),
+  neutral25: getSaturationColorFn(0.25),
+  neutral30: getSaturationColorFn(0.3),
+} as const satisfies ColorSuggestions;
 export const neutralColorSuggestionNames = Object.keys(neutralColorSuggestions);
 export type NeutralColorSuggestion = keyof typeof neutralColorSuggestions;
 

@@ -11,9 +11,20 @@ import {
 } from 'components/general';
 import { ColorInput, type ColorInputProps } from 'components/colors';
 import { useGlobalState } from 'hooks';
-import { getDangerColor, getNeutralColor, randomHexColor } from 'utils';
-import { RandomIcon } from 'assets/icons';
+import {
+  getDangerColor,
+  getNeutralColor,
+  isHexColorLight,
+  randomHexColor,
+} from 'utils';
+import { DoneIcon, RandomIcon } from 'assets/icons';
 import type { GlobalState } from 'contexts/globalState';
+import {
+  ColorSuggestions,
+  neutralColorSuggestionNames,
+  neutralColorSuggestions,
+  type NeutralColorSuggestion,
+} from 'constants/colorSuggestions';
 
 const ListItemRadio = ({
   checked = false,
@@ -49,6 +60,34 @@ const ColorInputWithRandomBtn = ({
   </div>
 );
 
+const ColorSuggestionsBox = <T extends ColorSuggestions>({
+  baseColor,
+  colorSuggestions,
+  selectedSuggestion,
+  onSuggestionSelect,
+}: {
+  baseColor: string;
+  colorSuggestions: T;
+  selectedSuggestion?: keyof T;
+  onSuggestionSelect?: (suggestionName: keyof T) => void;
+}) => (
+  <div className='flex flex-row flex-wrap gap-2 py-2 pe-4 ps-[3.25rem]'>
+    {neutralColorSuggestionNames.map(suggestionName => {
+      const color = colorSuggestions[suggestionName as keyof T]?.(baseColor);
+      return (
+        <IconButton
+          key={suggestionName}
+          className={isHexColorLight(color) ? 'text-black' : 'text-white'}
+          style={{ backgroundColor: color }}
+          onClick={() => onSuggestionSelect?.(suggestionName)}
+        >
+          {selectedSuggestion === suggestionName && <DoneIcon />}
+        </IconButton>
+      );
+    })}
+  </div>
+);
+
 const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
   (props, ref) => {
     const [{ baseColors }, setGlobalState] = useGlobalState();
@@ -56,6 +95,14 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
     const [openItem, setOpenItem] = useState<
       keyof GlobalState['baseColors'] | null
     >(null);
+
+    const neutralIsAuto = typeof baseColors.neutral === 'undefined',
+      neutralIsSuggestion =
+        typeof baseColors.neutral === 'string' &&
+        neutralColorSuggestionNames.includes(baseColors.neutral),
+      neutralIsCustom =
+        typeof baseColors.neutral === 'string' &&
+        !neutralColorSuggestionNames.includes(baseColors.neutral);
 
     return (
       <section {...props} ref={ref}>
@@ -79,26 +126,49 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
           <AccordionListItem value='neutral' title='Neutral'>
             <ListItem
               onClick={() =>
+                !neutralIsAuto &&
+                setGlobalState({
+                  baseColors: { ...baseColors, neutral: undefined },
+                })
+              }
+            >
+              <ListItemRadio checked={neutralIsAuto} />
+              Auto
+            </ListItem>
+            <ListItem
+              onClick={() =>
+                !neutralIsSuggestion &&
                 setGlobalState({
                   baseColors: {
                     ...baseColors,
-                    neutral: undefined,
+                    neutral: neutralColorSuggestionNames[0],
                   },
                 })
               }
             >
-              <ListItemRadio
-                checked={typeof baseColors.neutral === 'undefined'}
-              />
-              Auto
-            </ListItem>
-            {/* TODO: Remove disabled once implemented */}
-            <ListItem disabled>
-              <ListItemRadio disabled />
+              <ListItemRadio checked={neutralIsSuggestion} />
               Suggestions
             </ListItem>
+            <Collapsible open={neutralIsSuggestion}>
+              <ColorSuggestionsBox
+                baseColor={baseColors.primary}
+                colorSuggestions={neutralColorSuggestions}
+                selectedSuggestion={
+                  baseColors.neutral as NeutralColorSuggestion
+                }
+                onSuggestionSelect={suggestionName =>
+                  setGlobalState({
+                    baseColors: {
+                      ...baseColors,
+                      neutral: suggestionName,
+                    },
+                  })
+                }
+              />
+            </Collapsible>
             <ListItem
               onClick={() =>
+                !neutralIsCustom &&
                 setGlobalState({
                   baseColors: {
                     ...baseColors,
@@ -107,11 +177,10 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 })
               }
             >
-              {/* TODO: && baseColors.neutral is not a suggestion name */}
-              <ListItemRadio checked={typeof baseColors.neutral === 'string'} />
+              <ListItemRadio checked={neutralIsCustom} />
               Custom
             </ListItem>
-            <Collapsible open={typeof baseColors.neutral === 'string'}>
+            <Collapsible open={neutralIsCustom}>
               <ColorInputWithRandomBtn
                 id='input-neutral-color'
                 value={baseColors.neutral || ''}

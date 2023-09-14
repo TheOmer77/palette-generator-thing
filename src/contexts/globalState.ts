@@ -1,8 +1,14 @@
 import { createContext } from 'react';
 import { randomHexColor } from 'utils';
+import type { NeutralColorSuggestion } from 'constants/colorSuggestions';
+import type { AnyStringWithAutocomplete } from 'types';
 
 export interface GlobalState {
-  baseColors: { primary: string; neutral?: string; danger?: string };
+  baseColors: {
+    primary: string;
+    neutral?: AnyStringWithAutocomplete<NeutralColorSuggestion>;
+    danger?: string;
+  };
 }
 
 export const initialState: GlobalState = {
