@@ -16,7 +16,7 @@ active:state-layer-neutral-500/30`,
       className
     )}
   >
-    {Children.only(children)}
+    {children && Children.only(children)}
   </button>
 ));
 IconButton.displayName = 'IconButton';
