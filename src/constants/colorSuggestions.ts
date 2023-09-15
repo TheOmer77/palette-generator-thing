@@ -22,6 +22,24 @@ const getSaturationColorFn = (newSaturation: number) => (hexColor: string) => {
   return formatHex({ mode: 'okhsl', h, s: newSaturation, l });
 };
 
+/**
+ * Util function: Get function to get a modified color with a given hue.
+ *
+ * If `addToExistingHue = true`, the new hue will be added to the original hue,
+ * otherwise it will replace it.
+ */
+const getHueColorFn =
+  (newHue: number, addToExistingHue = false) =>
+  (hexColor: string) => {
+    const { h, s, l } = okhsl(hexColor) as Okhsl;
+    return formatHex({
+      mode: 'okhsl',
+      h: addToExistingHue && h ? (h + newHue) % 360 : newHue,
+      s,
+      l,
+    });
+  };
+
 // TODO: ModifiedColorFunctions
 export const generalColorSuggestions = {
   complementary: 'complementary',
@@ -54,14 +72,13 @@ export const neutralColorSuggestions = {
 export const neutralColorSuggestionNames = Object.keys(neutralColorSuggestions);
 export type NeutralColorSuggestion = keyof typeof neutralColorSuggestions;
 
-// TODO: ModifiedColorFunctions
 /** NOT FINAL! Number is hue in OKHSL/OKLCH */
 export const dangerColorSuggestions = {
-  danger25: 'danger25',
-  danger30: 'danger30',
-  danger35: 'danger35',
-  danger40: 'danger40',
-  danger45: 'danger45',
-} as const;
+  danger25: getHueColorFn(25),
+  danger30: getHueColorFn(30),
+  danger35: getHueColorFn(35),
+  danger40: getHueColorFn(40),
+  danger45: getHueColorFn(45),
+} as const satisfies ColorSuggestions;
 export const dangerColorSuggestionNames = Object.keys(dangerColorSuggestions);
 export type DangerColorSuggestion = keyof typeof dangerColorSuggestions;

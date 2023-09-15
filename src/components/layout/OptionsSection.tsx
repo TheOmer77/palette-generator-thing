@@ -20,9 +20,12 @@ import {
 import { DoneIcon, RandomIcon } from 'assets/icons';
 import type { GlobalState } from 'contexts/globalState';
 import {
-  ColorSuggestions,
+  dangerColorSuggestionNames,
+  dangerColorSuggestions,
   neutralColorSuggestionNames,
   neutralColorSuggestions,
+  type ColorSuggestions,
+  type DangerColorSuggestion,
   type NeutralColorSuggestion,
 } from 'constants/colorSuggestions';
 
@@ -72,7 +75,7 @@ const ColorSuggestionsBox = <T extends ColorSuggestions>({
   onSuggestionSelect?: (suggestionName: keyof T) => void;
 }) => (
   <div className='flex flex-row flex-wrap gap-2 py-2 pe-4 ps-[3.25rem]'>
-    {neutralColorSuggestionNames.map(suggestionName => {
+    {Object.keys(colorSuggestions).map(suggestionName => {
       const color = colorSuggestions[suggestionName as keyof T]?.(baseColor);
       return (
         <IconButton
@@ -103,6 +106,13 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
       neutralIsCustom =
         typeof baseColors.neutral === 'string' &&
         !neutralColorSuggestionNames.includes(baseColors.neutral);
+    const dangerIsAuto = typeof baseColors.danger === 'undefined',
+      dangerIsSuggestion =
+        typeof baseColors.danger === 'string' &&
+        dangerColorSuggestionNames.includes(baseColors.danger),
+      dangerIsCustom =
+        typeof baseColors.danger === 'string' &&
+        !dangerColorSuggestionNames.includes(baseColors.danger);
 
     return (
       <section {...props} ref={ref}>
@@ -196,26 +206,44 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
           <AccordionListItem value='danger' title='Danger'>
             <ListItem
               onClick={() =>
+                !dangerIsAuto &&
+                setGlobalState({
+                  baseColors: { ...baseColors, danger: undefined },
+                })
+              }
+            >
+              <ListItemRadio checked={dangerIsAuto} />
+              Auto
+            </ListItem>
+            <ListItem
+              onClick={() =>
+                !dangerIsSuggestion &&
                 setGlobalState({
                   baseColors: {
                     ...baseColors,
-                    danger: undefined,
+                    danger: dangerColorSuggestionNames[0],
                   },
                 })
               }
             >
-              <ListItemRadio
-                checked={typeof baseColors.danger === 'undefined'}
-              />
-              Auto
-            </ListItem>
-            {/* TODO: Remove disabled once implemented */}
-            <ListItem disabled>
-              <ListItemRadio disabled />
+              <ListItemRadio checked={dangerIsSuggestion} />
               Suggestions
             </ListItem>
+            <Collapsible open={dangerIsSuggestion}>
+              <ColorSuggestionsBox
+                baseColor={baseColors.primary}
+                colorSuggestions={dangerColorSuggestions}
+                selectedSuggestion={baseColors.danger as DangerColorSuggestion}
+                onSuggestionSelect={suggestionName =>
+                  setGlobalState({
+                    baseColors: { ...baseColors, danger: suggestionName },
+                  })
+                }
+              />
+            </Collapsible>
             <ListItem
               onClick={() =>
+                !dangerIsCustom &&
                 setGlobalState({
                   baseColors: {
                     ...baseColors,
@@ -224,11 +252,10 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 })
               }
             >
-              {/* TODO: && baseColors.danger is not a suggestion name */}
-              <ListItemRadio checked={typeof baseColors.danger === 'string'} />
+              <ListItemRadio checked={dangerIsCustom} />
               Custom
             </ListItem>
-            <Collapsible open={typeof baseColors.danger === 'string'}>
+            <Collapsible open={dangerIsCustom}>
               <ColorInputWithRandomBtn
                 id='input-danger-color'
                 value={baseColors.danger || ''}
