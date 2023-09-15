@@ -1,4 +1,9 @@
 import {
+  MAX_LIMITED_LIGHTNESS,
+  MIN_LIMITED_LIGHTNESS,
+  MIN_LIMITED_SATURATION,
+} from 'constants';
+import {
   modeOkhsl,
   useMode as loadMode,
   type Okhsl,
@@ -29,14 +34,22 @@ const getSaturationColorFn = (newSaturation: number) => (hexColor: string) => {
  * otherwise it will replace it.
  */
 const getHueColorFn =
-  (newHue: number, addToExistingHue = false) =>
+  (
+    newHue: number,
+    {
+      addToExistingHue = false,
+      limitSaturation = false,
+    }: { addToExistingHue?: boolean; limitSaturation?: boolean } = {}
+  ) =>
   (hexColor: string) => {
     const { h, s, l } = okhsl(hexColor) as Okhsl;
     return formatHex({
       mode: 'okhsl',
       h: addToExistingHue && h ? (h + newHue) % 360 : newHue,
-      s,
-      l,
+      s: limitSaturation ? Math.max(s, MIN_LIMITED_SATURATION) : s,
+      l: limitSaturation
+        ? Math.min(Math.max(MIN_LIMITED_LIGHTNESS, l), MAX_LIMITED_LIGHTNESS)
+        : l,
     });
   };
 
@@ -74,11 +87,11 @@ export type NeutralColorSuggestion = keyof typeof neutralColorSuggestions;
 
 /** NOT FINAL! Number is hue in OKHSL/OKLCH */
 export const dangerColorSuggestions = {
-  danger25: getHueColorFn(25),
-  danger30: getHueColorFn(30),
-  danger35: getHueColorFn(35),
-  danger40: getHueColorFn(40),
-  danger45: getHueColorFn(45),
+  danger25: getHueColorFn(25, { limitSaturation: true }),
+  danger30: getHueColorFn(30, { limitSaturation: true }),
+  danger35: getHueColorFn(35, { limitSaturation: true }),
+  danger40: getHueColorFn(40, { limitSaturation: true }),
+  danger45: getHueColorFn(45, { limitSaturation: true }),
 } as const satisfies ColorSuggestions;
 export const dangerColorSuggestionNames = Object.keys(dangerColorSuggestions);
 export type DangerColorSuggestion = keyof typeof dangerColorSuggestions;

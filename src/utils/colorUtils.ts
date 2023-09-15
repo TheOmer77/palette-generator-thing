@@ -12,8 +12,11 @@ import {
 import {
   DEFAULT_DANGER_HUE,
   FALLBACK_COLOR,
+  MAX_LIMITED_LIGHTNESS,
   MAX_REDDISH_HUE,
   MAX_SHADE,
+  MIN_LIMITED_LIGHTNESS,
+  MIN_LIMITED_SATURATION,
   MIN_REDDISH_HUE,
   REDDISH_DANGER_HUE,
   shadesLightnessValues,
@@ -133,6 +136,6 @@ export const getDangerColor = getColorVariantFunction(({ mode, h, s, l }) => ({
     typeof h === 'number' && h >= MIN_REDDISH_HUE && h <= MAX_REDDISH_HUE
       ? REDDISH_DANGER_HUE
       : DEFAULT_DANGER_HUE,
-  s,
-  l,
+  s: Math.max(s, MIN_LIMITED_SATURATION),
+  l: Math.min(Math.max(MIN_LIMITED_LIGHTNESS, l), MAX_LIMITED_LIGHTNESS),
 }));
