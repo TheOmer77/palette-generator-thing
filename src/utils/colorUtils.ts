@@ -10,9 +10,9 @@ import {
   useMode as loadMode,
 } from 'culori/fn';
 import {
+  DEFAULT_DANGER_HUE,
+  FALLBACK_COLOR,
   MAX_SHADE,
-  defaultErrorHue,
-  fallbackColor,
   shadesLightnessValues,
 } from 'constants';
 
@@ -31,7 +31,7 @@ const getColorVariantFunction = (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => {
     format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
   ) {
     const baseRgb = rgb(baseColor) as Rgb,
-      baseOkhsl = okhsl(baseRgb || fallbackColor) as Okhsl;
+      baseOkhsl = okhsl(baseRgb || FALLBACK_COLOR) as Okhsl;
     const resultRgb = rgb(modifyOkhsl(baseOkhsl));
     return format === 'rgbArray'
       ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
@@ -74,7 +74,7 @@ export function generatePalette(
   format: 'hex' | 'rgbArray' = 'hex'
 ) {
   const { h, s } = okhsl(
-    parseHex(baseColor) ? baseColor : fallbackColor
+    parseHex(baseColor) ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
 
   return shadesLightnessValues.map(shade => {
@@ -126,7 +126,7 @@ export const getSecondaryColor = getColorVariantFunction(
 
 export const getDangerColor = getColorVariantFunction(({ mode, s, l }) => ({
   mode,
-  h: defaultErrorHue,
+  h: DEFAULT_DANGER_HUE,
   s,
   l,
 }));
