@@ -12,10 +12,10 @@ export interface GlobalState {
     /** Any hex color. */
     primary: string;
     /** Any of the neutral suggested color names, or any hex color.
-     * If undefined, auto choose based on the algorithm below. */
+     * If undefined, auto choose. */
     neutral?: AnyStringWithAutocomplete<NeutralColorSuggestion>;
     /** Any of the neutral danger color names, or any hex color.
-     * If undefined, auto choose based on the algorithm below. */
+     * If undefined, auto choose. */
     danger?: AnyStringWithAutocomplete<DangerColorSuggestion>;
     /** Extra colors, each can have a name and its value can be any of the
      * general suggested color names, or any hex color. */
