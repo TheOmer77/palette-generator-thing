@@ -53,23 +53,22 @@ const getHueColorFn =
     });
   };
 
-// TODO: ModifiedColorFunctions
 export const generalColorSuggestions = {
-  complementary: 'complementary',
-  splitComp1: 'splitComp1',
-  splitComp2: 'splitComp2',
+  complementary: getHueColorFn(180, { addToExistingHue: true }),
+  splitComp1: getHueColorFn(150, { addToExistingHue: true }),
+  splitComp2: getHueColorFn(210, { addToExistingHue: true }),
   // Split complementary of complementary
-  analogous1: 'analogous1',
-  analogous2: 'analogous2',
-  triad1: 'triad1',
-  triad2: 'triad2',
+  analogous1: getHueColorFn(330, { addToExistingHue: true }),
+  analogous2: getHueColorFn(30, { addToExistingHue: true }),
+  triad1: getHueColorFn(120, { addToExistingHue: true }),
+  triad2: getHueColorFn(240, { addToExistingHue: true }),
   // Triad of complementary
-  compTriad1: 'compTriad1',
-  compTriad2: 'compTriad2',
+  compTriad1: getHueColorFn(30, { addToExistingHue: true }),
+  compTriad2: getHueColorFn(60, { addToExistingHue: true }),
   // Tetradic is 3 colors, but one of them is the same as complementary
-  tetradic1: 'tetradic1',
-  tetradic2: 'tetradic2',
-} as const;
+  tetradic1: getHueColorFn(90, { addToExistingHue: true }),
+  tetradic2: getHueColorFn(270, { addToExistingHue: true }),
+} as const satisfies ColorSuggestions;
 export const generalColorSuggestionNames = Object.keys(generalColorSuggestions);
 export type GeneralColorSuggestion = keyof typeof generalColorSuggestions;
 
