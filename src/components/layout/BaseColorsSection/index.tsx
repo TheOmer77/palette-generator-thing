@@ -91,7 +91,7 @@ const ColorSuggestionsBox = <T extends ColorSuggestions>({
   </div>
 );
 
-const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
+const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
   (props, ref) => {
     const [{ baseColors }, setGlobalState] = useGlobalState();
 
@@ -272,6 +272,6 @@ const OptionsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
     );
   }
 );
-OptionsSection.displayName = 'OptionsSection';
+BaseColorsSection.displayName = 'BaseColorsSection';
 
-export default OptionsSection;
+export default BaseColorsSection;

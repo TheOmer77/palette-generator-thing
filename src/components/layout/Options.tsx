@@ -1,5 +1,5 @@
 import Header from './Header';
-import OptionsSection from './OptionsSection';
+import BaseColorsSection from './BaseColorsSection';
 import SheetWithFab from './SheetWithFab';
 import Sidebar from './Sidebar';
 import { useTailwindBreakpoint } from 'hooks';
@@ -11,11 +11,11 @@ const Options = () => {
   return mdBreakpoint ? (
     <Sidebar>
       <Header />
-      <OptionsSection />
+      <BaseColorsSection />
     </Sidebar>
   ) : (
     <SheetWithFab label='Options' fabIcon={<TuneIcon />}>
-      <OptionsSection />
+      <BaseColorsSection />
     </SheetWithFab>
   );
 };
