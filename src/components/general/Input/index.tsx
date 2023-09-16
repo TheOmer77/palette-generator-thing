@@ -1,5 +1,5 @@
 import { forwardRef, type ComponentProps, type ReactNode } from 'react';
-import { Slot } from '@radix-ui/react-slot';
+import { Primitive } from '@radix-ui/react-primitive';
 
 import { cn } from 'utils';
 
@@ -11,19 +11,7 @@ export interface InputProps extends ComponentProps<'input'> {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      id,
-      label,
-      startAdornment,
-      endAdornment,
-      asChild = false,
-      className,
-      ...props
-    },
-    ref
-  ) => {
-    const InputComponent = asChild ? Slot : 'input';
+  ({ id, label, startAdornment, endAdornment, className, ...props }, ref) => {
     return (
       <div
         className={cn(
@@ -34,7 +22,7 @@ dark:bg-neutral-950`,
         )}
       >
         {startAdornment}
-        <InputComponent
+        <Primitive.input
           {...props}
           ref={ref}
           id={id}
