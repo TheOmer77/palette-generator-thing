@@ -1,6 +1,5 @@
 import { type ComponentProps, forwardRef, useState } from 'react';
 
-import ColorInputWithRandomBtn from './ColorInputWithRandomBtn';
 import ColorSuggestionsBox from './ColorSuggestionsBox';
 import {
   AccordionList,
@@ -10,6 +9,7 @@ import {
   ListSubheader,
   Radio,
 } from 'components/general';
+import { ColorInput } from 'components/colors';
 import { useGlobalState } from 'hooks';
 import { getDangerColor, getNeutralColor } from 'utils';
 import type { GlobalState } from 'contexts/globalState';
@@ -65,15 +65,18 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
         >
           <ListSubheader>Base colors</ListSubheader>
           <AccordionListItem value='primary' title='Primary'>
-            <ColorInputWithRandomBtn
-              id='input-primary-color'
-              value={baseColors.primary}
-              onChange={newColor => {
-                setGlobalState({
-                  baseColors: { ...baseColors, primary: newColor },
-                });
-              }}
-            />
+            <div className='p-2'>
+              <ColorInput
+                id='input-primary-color'
+                value={baseColors.primary}
+                onChange={newColor => {
+                  setGlobalState({
+                    baseColors: { ...baseColors, primary: newColor },
+                  });
+                }}
+                withRandomBtn
+              />
+            </div>
           </AccordionListItem>
 
           <AccordionListItem value='neutral' title='Neutral'>
@@ -134,15 +137,18 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               Custom
             </ListItem>
             <Collapsible open={neutralIsCustom}>
-              <ColorInputWithRandomBtn
-                id='input-neutral-color'
-                value={baseColors.neutral || ''}
-                onChange={newColor => {
-                  setGlobalState({
-                    baseColors: { ...baseColors, neutral: newColor },
-                  });
-                }}
-              />
+              <div className='p-2'>
+                <ColorInput
+                  id='input-neutral-color'
+                  value={baseColors.neutral || ''}
+                  onChange={newColor => {
+                    setGlobalState({
+                      baseColors: { ...baseColors, neutral: newColor },
+                    });
+                  }}
+                  withRandomBtn
+                />
+              </div>
             </Collapsible>
           </AccordionListItem>
 
@@ -199,15 +205,18 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               Custom
             </ListItem>
             <Collapsible open={dangerIsCustom}>
-              <ColorInputWithRandomBtn
-                id='input-danger-color'
-                value={baseColors.danger || ''}
-                onChange={newColor => {
-                  setGlobalState({
-                    baseColors: { ...baseColors, danger: newColor },
-                  });
-                }}
-              />
+              <div className='p-2'>
+                <ColorInput
+                  id='input-danger-color'
+                  value={baseColors.danger || ''}
+                  onChange={newColor => {
+                    setGlobalState({
+                      baseColors: { ...baseColors, danger: newColor },
+                    });
+                  }}
+                  withRandomBtn
+                />
+              </div>
             </Collapsible>
           </AccordionListItem>
         </AccordionList>
