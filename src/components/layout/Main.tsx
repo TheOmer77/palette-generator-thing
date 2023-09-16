@@ -4,11 +4,11 @@ import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
 import { useTheme } from 'hooks';
-import { generatePalette, generateVariablesCss } from 'utils';
+import { generatePalette, generateVariablesCss, toCamelCase } from 'utils';
 import { shades } from 'constants';
 
 const Main = () => {
-  const { primary, neutral, secondary, danger } = useTheme();
+  const { primary, neutral, danger, extras } = useTheme();
 
   const colorGrids = useMemo(
     () => [
@@ -23,22 +23,37 @@ const Main = () => {
         palette: generatePalette(neutral),
       },
       {
-        id: 'secondary',
-        title: 'Secondary',
-        palette: generatePalette(secondary),
-      },
-      {
         id: 'danger',
         title: 'Danger',
         palette: generatePalette(danger),
       },
+      ...extras.map(({ name, value }, index) => ({
+        id: typeof name === 'string' ? toCamelCase(name) : `extra${index + 1}`,
+        title: name || `Extra ${index + 1}`,
+        palette: generatePalette(value),
+      })),
     ],
-    [danger, neutral, primary, secondary]
+    [danger, extras, neutral, primary]
   );
 
   const themeCss = useMemo(
-    () => generateVariablesCss({ primary, neutral, secondary, danger }),
-    [danger, neutral, primary, secondary]
+    () =>
+      generateVariablesCss(
+        extras.reduce(
+          (obj, { name, value }, index) => ({
+            ...obj,
+            [typeof name === 'string'
+              ? toCamelCase(name)
+              : `extra${index + 1}`]: value,
+          }),
+          {
+            primary,
+            neutral,
+            danger,
+          }
+        )
+      ),
+    [danger, extras, neutral, primary]
   );
 
   return (

@@ -2,6 +2,7 @@ import { createContext } from 'react';
 import { randomHexColor } from 'utils';
 import type {
   DangerColorSuggestion,
+  GeneralColorSuggestion,
   NeutralColorSuggestion,
 } from 'constants/colorSuggestions';
 import type { AnyStringWithAutocomplete } from 'types';
@@ -18,6 +19,10 @@ export interface GlobalState {
     danger?: AnyStringWithAutocomplete<DangerColorSuggestion>;
     /** Extra colors, each can have a name and its value can be any of the
      * general suggested color names, or any hex color. */
+    extras?: {
+      name?: string;
+      value: AnyStringWithAutocomplete<GeneralColorSuggestion>;
+    }[];
   };
 }
 
@@ -26,6 +31,7 @@ export const initialState: GlobalState = {
     primary: randomHexColor(),
     neutral: undefined,
     danger: undefined,
+    extras: [{ name: 'Secondary', value: 'complementary' }],
   },
 };
 const initialDispatch = () => {
