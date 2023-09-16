@@ -109,15 +109,10 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               <ColorSuggestionsBox
                 baseColor={baseColors.primary}
                 colorSuggestions={neutralColorSuggestions}
-                selectedSuggestion={
-                  baseColors.neutral as NeutralColorSuggestion
-                }
-                onSuggestionSelect={suggestionName =>
+                value={baseColors.neutral as NeutralColorSuggestion}
+                onValueChange={suggestionName =>
                   setGlobalState({
-                    baseColors: {
-                      ...baseColors,
-                      neutral: suggestionName,
-                    },
+                    baseColors: { ...baseColors, neutral: suggestionName },
                   })
                 }
               />
@@ -182,8 +177,8 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               <ColorSuggestionsBox
                 baseColor={baseColors.primary}
                 colorSuggestions={dangerColorSuggestions}
-                selectedSuggestion={baseColors.danger as DangerColorSuggestion}
-                onSuggestionSelect={suggestionName =>
+                value={baseColors.danger as DangerColorSuggestion}
+                onValueChange={suggestionName =>
                   setGlobalState({
                     baseColors: { ...baseColors, danger: suggestionName },
                   })

@@ -1,3 +1,9 @@
+import {
+  Toolbar,
+  ToolbarToggleGroup,
+  ToolbarToggleItem,
+} from '@radix-ui/react-toolbar';
+
 import { IconButton } from 'components/general';
 import { DoneIcon } from 'assets/icons';
 import { isHexColorLight } from 'utils';
@@ -6,29 +12,40 @@ import type { ColorSuggestions } from 'constants/colorSuggestions';
 const ColorSuggestionsBox = <T extends ColorSuggestions>({
   baseColor,
   colorSuggestions,
-  selectedSuggestion,
-  onSuggestionSelect,
+  value,
+  onValueChange,
 }: {
   baseColor: string;
   colorSuggestions: T;
-  selectedSuggestion?: keyof T;
-  onSuggestionSelect?: (suggestionName: keyof T) => void;
+  value?: keyof T;
+  onValueChange?: (suggestionName: keyof T) => void;
 }) => (
-  <div className='flex flex-row flex-wrap gap-2 py-2 pe-4 ps-[3.25rem]'>
-    {Object.keys(colorSuggestions).map(suggestionName => {
-      const color = colorSuggestions[suggestionName as keyof T]?.(baseColor);
-      return (
-        <IconButton
-          key={suggestionName}
-          className={isHexColorLight(color) ? 'text-black' : 'text-white'}
-          style={{ backgroundColor: color }}
-          onClick={() => onSuggestionSelect?.(suggestionName)}
-        >
-          {selectedSuggestion === suggestionName && <DoneIcon />}
-        </IconButton>
-      );
-    })}
-  </div>
+  <Toolbar className='py-2 pe-4 ps-[3.25rem]'>
+    <ToolbarToggleGroup
+      type='single'
+      value={value as string}
+      onValueChange={onValueChange}
+      className='flex flex-row flex-wrap gap-2'
+    >
+      {Object.keys(colorSuggestions).map(suggestionName => {
+        const color = colorSuggestions[suggestionName as keyof T]?.(baseColor);
+        return (
+          <ToolbarToggleItem
+            asChild
+            key={suggestionName}
+            value={suggestionName}
+          >
+            <IconButton
+              className={isHexColorLight(color) ? 'text-black' : 'text-white'}
+              style={{ backgroundColor: color }}
+            >
+              {value === suggestionName && <DoneIcon />}
+            </IconButton>
+          </ToolbarToggleItem>
+        );
+      })}
+    </ToolbarToggleGroup>
+  </Toolbar>
 );
 
 export default ColorSuggestionsBox;
