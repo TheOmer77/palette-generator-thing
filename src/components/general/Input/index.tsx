@@ -26,7 +26,7 @@ dark:bg-neutral-950`,
           {...props}
           ref={ref}
           id={id}
-          className='flex-grow bg-transparent text-neutral-900
+          className='h-full flex-grow bg-transparent text-neutral-900
 autofill-override-white focus-visible:outline-none dark:text-neutral-100
 dark:autofill-override-neutral-950 [&+.input-outline>label]:focus:text-primary-500
 dark:[&+.input-outline>label]:focus:text-primary-300
