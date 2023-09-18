@@ -275,7 +275,6 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 <ListItem asChild className='m-2'>
                   <Input
                     label='Name'
-                    placeholder={`Extra ${index + 1}`}
                     value={name || ''}
                     onChange={e => renameExtraColor(index, e.target.value)}
                   />
