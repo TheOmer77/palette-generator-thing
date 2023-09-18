@@ -5,6 +5,7 @@ import {
   AccordionList,
   AccordionListItem,
   Collapsible,
+  Input,
   ListItem,
   ListSubheader,
   Radio,
@@ -86,6 +87,22 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
           baseColors: {
             ...baseColors,
             extras: baseColors.extras?.filter?.((_, i) => i !== index),
+          },
+        }),
+      [baseColors, setGlobalState]
+    );
+
+    // TODO: Don't allow the same name as another extra color
+    const renameExtraColor = useCallback<
+      (index: number, newName: string) => void
+    >(
+      (index, newName) =>
+        setGlobalState({
+          baseColors: {
+            ...baseColors,
+            extras: baseColors.extras?.map?.((color, i) =>
+              i === index ? { ...color, name: newName } : color
+            ),
           },
         }),
       [baseColors, setGlobalState]
@@ -255,6 +272,14 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               title = name || `Extra ${index + 1}`;
             return (
               <AccordionListItem key={id} value={id} title={title}>
+                <ListItem asChild className='mx-2 mb-2 mt-6'>
+                  <Input
+                    label='Name'
+                    placeholder={`Extra ${index + 1}`}
+                    value={name || ''}
+                    onChange={e => renameExtraColor(index, e.target.value)}
+                  />
+                </ListItem>
                 <div className='px-4 py-2 text-neutral-600 dark:text-neutral-400'>
                   value = {value}
                 </div>
