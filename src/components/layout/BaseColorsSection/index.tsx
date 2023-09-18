@@ -19,11 +19,14 @@ import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
   generalColorSuggestionNames,
+  generalColorSuggestions,
   neutralColorSuggestionNames,
   neutralColorSuggestions,
   type DangerColorSuggestion,
+  type GeneralColorSuggestion,
   type NeutralColorSuggestion,
 } from 'constants/colorSuggestions';
+import { AnyStringWithAutocomplete } from 'types';
 
 const ListItemRadio = ({
   checked = false,
@@ -102,6 +105,24 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
             ...baseColors,
             extras: baseColors.extras?.map?.((color, i) =>
               i === index ? { ...color, name: newName } : color
+            ),
+          },
+        }),
+      [baseColors, setGlobalState]
+    );
+
+    const updateExtraColor = useCallback<
+      (
+        index: number,
+        newValue: AnyStringWithAutocomplete<GeneralColorSuggestion>
+      ) => void
+    >(
+      (index, newValue) =>
+        setGlobalState({
+          baseColors: {
+            ...baseColors,
+            extras: baseColors.extras?.map?.((color, i) =>
+              i === index ? { ...color, value: newValue } : color
             ),
           },
         }),
@@ -270,6 +291,9 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
           {baseColors.extras?.map(({ name, value }, index) => {
             const id = `extra${index + 1}`,
               title = name || `Extra ${index + 1}`;
+            const colorIsSuggestion =
+                generalColorSuggestionNames.includes(value),
+              colorIsCustom = !generalColorSuggestionNames.includes(value);
             return (
               <AccordionListItem key={id} value={id} title={title}>
                 <ListItem asChild className='m-2'>
@@ -279,20 +303,22 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                     onChange={e => renameExtraColor(index, e.target.value)}
                   />
                 </ListItem>
-                <div className='px-4 py-2 text-neutral-600 dark:text-neutral-400'>
-                  value = {value}
-                </div>
                 <ListItem>
-                  <ListItemRadio
-                    checked={generalColorSuggestionNames.includes(value)}
-                  />
+                  <ListItemRadio checked={colorIsSuggestion} />
                   Suggestions
                 </ListItem>
-                <ListItem disabled>
-                  <ListItemRadio
-                    disabled
-                    checked={!generalColorSuggestionNames.includes(value)}
+                <Collapsible open={colorIsSuggestion}>
+                  <ColorSuggestionsBox
+                    baseColor={baseColors.primary}
+                    colorSuggestions={generalColorSuggestions}
+                    value={value as GeneralColorSuggestion}
+                    onValueChange={suggestionName =>
+                      updateExtraColor(index, suggestionName)
+                    }
                   />
+                </Collapsible>
+                <ListItem disabled>
+                  <ListItemRadio disabled checked={colorIsCustom} />
                   Custom
                 </ListItem>
                 <ListItem onClick={() => removeExtraColor(index)}>
