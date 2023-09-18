@@ -28,7 +28,10 @@ const Main = () => {
         palette: generatePalette(danger),
       },
       ...extras.map(({ name, value }, index) => ({
-        id: typeof name === 'string' ? toCamelCase(name) : `extra${index + 1}`,
+        id:
+          typeof name === 'string' && name.length > 0
+            ? toCamelCase(name)
+            : `extra${index + 1}`,
         title: name || `Extra ${index + 1}`,
         palette: generatePalette(value),
       })),
@@ -42,7 +45,7 @@ const Main = () => {
         extras.reduce(
           (obj, { name, value }, index) => ({
             ...obj,
-            [typeof name === 'string'
+            [typeof name === 'string' && name.length > 0
               ? toCamelCase(name)
               : `extra${index + 1}`]: value,
           }),

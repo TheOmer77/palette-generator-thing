@@ -1,4 +1,4 @@
-import { type ComponentProps, forwardRef, useState } from 'react';
+import { type ComponentProps, forwardRef, useState, useCallback } from 'react';
 
 import ColorSuggestionsBox from './ColorSuggestionsBox';
 import {
@@ -8,6 +8,7 @@ import {
   ListItem,
   ListSubheader,
   Radio,
+  Separator,
 } from 'components/general';
 import { ColorInput } from 'components/colors';
 import { useGlobalState } from 'hooks';
@@ -16,6 +17,7 @@ import type { GlobalState } from 'contexts/globalState';
 import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
+  generalColorSuggestionNames,
   neutralColorSuggestionNames,
   neutralColorSuggestions,
   type DangerColorSuggestion,
@@ -56,6 +58,38 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
       dangerIsCustom =
         typeof baseColors.danger === 'string' &&
         !dangerColorSuggestionNames.includes(baseColors.danger);
+
+    const addExtraColor = useCallback(
+      () =>
+        setGlobalState({
+          baseColors: {
+            ...baseColors,
+            extras: [
+              ...(baseColors.extras || []),
+              {
+                name: '',
+                value:
+                  generalColorSuggestionNames[
+                    (baseColors.extras?.length || 0) %
+                      generalColorSuggestionNames.length
+                  ],
+              },
+            ],
+          },
+        }),
+      [baseColors, setGlobalState]
+    );
+
+    const removeExtraColor = useCallback<(index: number) => void>(
+      index =>
+        setGlobalState({
+          baseColors: {
+            ...baseColors,
+            extras: baseColors.extras?.filter?.((_, i) => i !== index),
+          },
+        }),
+      [baseColors, setGlobalState]
+    );
 
     return (
       <section {...props} ref={ref}>
@@ -214,6 +248,23 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               </div>
             </Collapsible>
           </AccordionListItem>
+
+          <Separator />
+          {baseColors.extras?.map(({ name, value }, index) => {
+            const id = `extra${index + 1}`,
+              title = name || `Extra ${index + 1}`;
+            return (
+              <AccordionListItem key={id} value={id} title={title}>
+                <div className='px-4 py-2 text-neutral-600 dark:text-neutral-400'>
+                  value = {value}
+                </div>
+                <ListItem onClick={() => removeExtraColor(index)}>
+                  Remove
+                </ListItem>
+              </AccordionListItem>
+            );
+          })}
+          <ListItem onClick={addExtraColor}>Add extra color</ListItem>
         </AccordionList>
       </section>
     );
