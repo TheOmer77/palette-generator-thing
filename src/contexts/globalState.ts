@@ -31,7 +31,7 @@ export const initialState: GlobalState = {
     primary: randomHexColor(),
     neutral: undefined,
     danger: undefined,
-    extras: [{ name: 'Secondary', value: 'complementary' }],
+    extras: [],
   },
 };
 const initialDispatch = () => {
