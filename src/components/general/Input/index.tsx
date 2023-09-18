@@ -26,27 +26,24 @@ dark:bg-neutral-950`,
           {...props}
           ref={ref}
           id={id}
-          className='h-full flex-grow bg-transparent text-neutral-900
-autofill-override-white focus-visible:outline-none dark:text-neutral-100
-dark:autofill-override-neutral-950 [&+.input-outline>label]:focus:text-primary-500
-dark:[&+.input-outline>label]:focus:text-primary-300
-[&+.input-outline]:focus:ring-2
-[&+.input-outline]:focus:ring-primary-500
-dark:[&+.input-outline]:focus:ring-primary-300'
+          className='peer h-full flex-grow bg-transparent
+text-neutral-900 autofill-override-white focus-visible:outline-none
+dark:text-neutral-100 dark:autofill-override-neutral-950'
         />
+        {endAdornment}
         <div
           className='input-outline pointer-events-none absolute start-0 top-0
-h-full w-full rounded-lg ring-1 ring-neutral-300 dark:ring-neutral-700'
+h-full w-full rounded-lg  ring-1 ring-neutral-300 peer-focus:ring-2
+peer-focus:ring-primary-500 dark:ring-neutral-700
+dark:peer-focus:ring-primary-300'
+        />
+        <label
+          htmlFor={id}
+          className='absolute -top-6 select-none text-sm
+font-medium text-neutral-600 peer-focus:text-primary-500 dark:text-neutral-400 dark:peer-focus:text-primary-300'
         >
-          <label
-            htmlFor={id}
-            className='pointer-events-auto absolute -top-6 select-none text-sm
-font-medium text-neutral-600 dark:text-neutral-400'
-          >
-            {label}
-          </label>
-        </div>
-        {endAdornment}
+          {label}
+        </label>
       </div>
     );
   }
