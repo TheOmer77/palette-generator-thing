@@ -56,6 +56,7 @@ dark:bg-neutral-950`,
           ref={ref}
           id={id}
           value={value}
+          aria-label={label}
           className={cn(
             `peer h-full flex-grow bg-transparent
 text-neutral-900 autofill-override-white focus-visible:outline-none
@@ -73,6 +74,7 @@ focus:placeholder:opacity-100`
         {label && (
           <label
             htmlFor={id}
+            aria-hidden
             className={cn(
               `peer-place pointer-events-none absolute select-none
 text-base text-neutral-600 transition-[font-size,transform,color]
