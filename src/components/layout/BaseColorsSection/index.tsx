@@ -32,7 +32,7 @@ const ListItemRadio = ({
   checked?: boolean;
   disabled?: boolean;
 }) => (
-  <Radio checked={checked} disabled={disabled} className='me-4' asChild>
+  <Radio checked={checked} disabled={disabled} className='z-10 me-4' asChild>
     <span />
   </Radio>
 );
@@ -272,7 +272,7 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
               title = name || `Extra ${index + 1}`;
             return (
               <AccordionListItem key={id} value={id} title={title}>
-                <ListItem asChild className='mx-2 mb-2 mt-6'>
+                <ListItem asChild className='m-2'>
                   <Input
                     label='Name'
                     placeholder={`Extra ${index + 1}`}
