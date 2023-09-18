@@ -1,27 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef, useRef } from 'react';
 import { RovingFocusGroupItem } from '@radix-ui/react-roving-focus';
-
-import { cn } from 'utils';
-
-// eslint-disable-next-line react/display-name
-const ListItemButton = forwardRef<
-  HTMLButtonElement,
-  ComponentPropsWithoutRef<'button'>
->(({ className, ...props }, ref) => (
-  <button
-    {...props}
-    ref={ref}
-    className={cn(
-      `flex h-12 w-full cursor-default select-none
-items-center rounded-lg p-4 outline-none transition-[background-color]
-state-layer focus-visible:outline-none focus-visible:state-layer-neutral-500/20
-enabled:hover:state-layer-neutral-500/20 
-enabled:active:state-layer-neutral-500/30 disabled:text-neutral-600
-dark:disabled:text-neutral-400`,
-      className
-    )}
-  />
-));
+import { Primitive } from '@radix-ui/react-primitive';
 
 import {
   LIST_ITEM_NAME,
@@ -29,10 +8,34 @@ import {
   useListContext,
   useRovingFocusGroupScope,
 } from './common';
+import { cn } from 'utils';
+
+// eslint-disable-next-line react/display-name
+const ListItemButton = forwardRef<
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<typeof Primitive.button>
+>(({ asChild, className, ...props }, ref) => (
+  <Primitive.button
+    {...props}
+    ref={ref}
+    asChild={asChild}
+    className={cn(
+      !asChild &&
+        `flex h-12 w-full cursor-default select-none
+items-center rounded-lg p-4 text-start outline-none
+transition-[background-color] state-layer focus-visible:outline-none
+focus-visible:state-layer-neutral-500/20 
+enabled:hover:state-layer-neutral-500/20
+enabled:active:state-layer-neutral-500/30 disabled:text-neutral-600
+dark:disabled:text-neutral-400`,
+      className
+    )}
+  />
+));
 
 export const ListItem = forwardRef<
   HTMLButtonElement,
-  ScopedProps<ComponentPropsWithoutRef<'button'>>
+  ScopedProps<ComponentPropsWithoutRef<typeof Primitive.button>>
 >(({ __scopeList, ...props }, ref) => {
   const context = useListContext(LIST_ITEM_NAME, __scopeList);
   const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeList);
