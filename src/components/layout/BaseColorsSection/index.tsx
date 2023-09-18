@@ -282,6 +282,19 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 <div className='px-4 py-2 text-neutral-600 dark:text-neutral-400'>
                   value = {value}
                 </div>
+                <ListItem>
+                  <ListItemRadio
+                    checked={generalColorSuggestionNames.includes(value)}
+                  />
+                  Suggestions
+                </ListItem>
+                <ListItem disabled>
+                  <ListItemRadio
+                    disabled
+                    checked={!generalColorSuggestionNames.includes(value)}
+                  />
+                  Custom
+                </ListItem>
                 <ListItem onClick={() => removeExtraColor(index)}>
                   Remove
                 </ListItem>
