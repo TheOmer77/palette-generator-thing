@@ -28,16 +28,29 @@ import {
 } from 'constants/colorSuggestions';
 import { AnyStringWithAutocomplete } from 'types';
 
-const ListItemRadio = ({
+const RadioListItem = ({
   checked = false,
   disabled = false,
+  children,
+  ...props
 }: {
   checked?: boolean;
   disabled?: boolean;
-}) => (
-  <Radio checked={checked} disabled={disabled} className='z-10 me-4' asChild>
-    <span />
-  </Radio>
+  children?: string;
+} & ComponentProps<typeof ListItem>) => (
+  <ListItem
+    {...props}
+    disabled={disabled}
+    role='radio'
+    aria-checked={checked}
+    aria-disabled={disabled}
+    aria-label={children}
+  >
+    <Radio checked={checked} disabled={disabled} className='z-10 me-4' asChild>
+      <span />
+    </Radio>
+    {children}
+  </ListItem>
 );
 
 const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
@@ -151,8 +164,9 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
             </div>
           </AccordionListItem>
 
-          <AccordionListItem value='neutral' title='Neutral'>
-            <ListItem
+          <AccordionListItem value='neutral' title='Neutral' role='radiogroup'>
+            <RadioListItem
+              checked={neutralIsAuto}
               onClick={() =>
                 !neutralIsAuto &&
                 setGlobalState({
@@ -160,10 +174,10 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 })
               }
             >
-              <ListItemRadio checked={neutralIsAuto} />
               Auto
-            </ListItem>
-            <ListItem
+            </RadioListItem>
+            <RadioListItem
+              checked={neutralIsSuggestion}
               onClick={() =>
                 !neutralIsSuggestion &&
                 setGlobalState({
@@ -174,9 +188,8 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 })
               }
             >
-              <ListItemRadio checked={neutralIsSuggestion} />
               Suggestions
-            </ListItem>
+            </RadioListItem>
             <Collapsible open={neutralIsSuggestion}>
               <ColorSuggestionsBox
                 baseColor={baseColors.primary}
@@ -189,7 +202,8 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 }
               />
             </Collapsible>
-            <ListItem
+            <RadioListItem
+              checked={neutralIsCustom}
               onClick={() =>
                 !neutralIsCustom &&
                 setGlobalState({
@@ -200,9 +214,8 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 })
               }
             >
-              <ListItemRadio checked={neutralIsCustom} />
               Custom
-            </ListItem>
+            </RadioListItem>
             <Collapsible open={neutralIsCustom}>
               <div className='p-2'>
                 <ColorInput
@@ -219,8 +232,9 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
             </Collapsible>
           </AccordionListItem>
 
-          <AccordionListItem value='danger' title='Danger'>
-            <ListItem
+          <AccordionListItem value='danger' title='Danger' role='radiogroup'>
+            <RadioListItem
+              checked={dangerIsAuto}
               onClick={() =>
                 !dangerIsAuto &&
                 setGlobalState({
@@ -228,10 +242,10 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 })
               }
             >
-              <ListItemRadio checked={dangerIsAuto} />
               Auto
-            </ListItem>
-            <ListItem
+            </RadioListItem>
+            <RadioListItem
+              checked={dangerIsSuggestion}
               onClick={() =>
                 !dangerIsSuggestion &&
                 setGlobalState({
@@ -242,9 +256,8 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 })
               }
             >
-              <ListItemRadio checked={dangerIsSuggestion} />
               Suggestions
-            </ListItem>
+            </RadioListItem>
             <Collapsible open={dangerIsSuggestion}>
               <ColorSuggestionsBox
                 baseColor={baseColors.primary}
@@ -257,7 +270,8 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 }
               />
             </Collapsible>
-            <ListItem
+            <RadioListItem
+              checked={dangerIsCustom}
               onClick={() =>
                 !dangerIsCustom &&
                 setGlobalState({
@@ -268,9 +282,8 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                 })
               }
             >
-              <ListItemRadio checked={dangerIsCustom} />
               Custom
-            </ListItem>
+            </RadioListItem>
             <Collapsible open={dangerIsCustom}>
               <div className='p-2'>
                 <ColorInput
@@ -303,24 +316,24 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                     onChange={e => renameExtraColor(index, e.target.value)}
                   />
                 </ListItem>
-                <ListItem>
-                  <ListItemRadio checked={colorIsSuggestion} />
-                  Suggestions
-                </ListItem>
-                <Collapsible open={colorIsSuggestion}>
-                  <ColorSuggestionsBox
-                    baseColor={baseColors.primary}
-                    colorSuggestions={generalColorSuggestions}
-                    value={value as GeneralColorSuggestion}
-                    onValueChange={suggestionName =>
-                      updateExtraColor(index, suggestionName)
-                    }
-                  />
-                </Collapsible>
-                <ListItem disabled>
-                  <ListItemRadio disabled checked={colorIsCustom} />
-                  Custom
-                </ListItem>
+                <div role='radiogroup'>
+                  <RadioListItem checked={colorIsSuggestion}>
+                    Suggestions
+                  </RadioListItem>
+                  <Collapsible open={colorIsSuggestion}>
+                    <ColorSuggestionsBox
+                      baseColor={baseColors.primary}
+                      colorSuggestions={generalColorSuggestions}
+                      value={value as GeneralColorSuggestion}
+                      onValueChange={suggestionName =>
+                        updateExtraColor(index, suggestionName)
+                      }
+                    />
+                  </Collapsible>
+                  <RadioListItem disabled checked={colorIsCustom}>
+                    Custom
+                  </RadioListItem>
+                </div>
                 <ListItem onClick={() => removeExtraColor(index)}>
                   Remove
                 </ListItem>
