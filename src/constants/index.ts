@@ -18,6 +18,6 @@ export const MIN_LIMITED_SATURATION = 0.75,
   MIN_LIMITED_LIGHTNESS = 0.05,
   MAX_LIMITED_LIGHTNESS = 0.95;
 
-export { default as screens } from './breakpoints';
+export * from './breakpoints';
 export * as prismThemes from './prism';
 export * from './shades';
