@@ -63,7 +63,7 @@ export const generalColorSuggestions = {
   triad1: getHueColorFn(120, { addToExistingHue: true }),
   triad2: getHueColorFn(240, { addToExistingHue: true }),
   // Triad of complementary
-  compTriad1: getHueColorFn(30, { addToExistingHue: true }),
+  compTriad1: getHueColorFn(300, { addToExistingHue: true }),
   compTriad2: getHueColorFn(60, { addToExistingHue: true }),
   // Tetradic is 3 colors, but one of them is the same as complementary
   tetradic1: getHueColorFn(90, { addToExistingHue: true }),
