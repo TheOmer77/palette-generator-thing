@@ -12,7 +12,7 @@
   --color-prism-regex: #7dd3fc;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: light), print {
   :root {
     --color-prism-plain: #334155;
     --color-prism-comment: #64748b;
