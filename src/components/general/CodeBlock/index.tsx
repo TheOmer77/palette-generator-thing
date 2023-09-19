@@ -31,7 +31,7 @@ dark:bg-neutral-900'
       >
         <IconButton
           title='Copy code'
-          className='absolute end-2 top-2'
+          className='absolute end-2 top-2 print:hidden'
           onClick={copyCode}
         >
           {justCopied ? <DoneIcon /> : <CopyIcon />}
@@ -55,7 +55,7 @@ dark:bg-neutral-900'
               className={cn(
                 `max-h-[calc(100vh-6.5rem)]
 overflow-auto p-4 text-sm scrollbar-thin scrollbar-thumb-neutral-500/30
-md:max-h-[calc(100vh-4.5rem)]`,
+print:max-h-none md:max-h-[calc(100vh-4.5rem)] md:print:max-h-none`,
                 className
               )}
             >

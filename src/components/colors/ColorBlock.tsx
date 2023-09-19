@@ -26,8 +26,8 @@ const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
           ...style,
         }}
         className={cn(
-          `flex cursor-default select-none flex-col items-start
-justify-center overflow-hidden rounded-lg p-2 state-layer
+          `flex cursor-default select-none flex-col items-start justify-center
+overflow-hidden rounded-lg p-2 state-layer [print-color-adjust:exact]
 hover:state-layer-neutral-500/20 focus-visible:outline-none
 focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`,
           isHexColorLight(value) ? 'text-black' : 'text-white'
@@ -37,7 +37,7 @@ focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`,
       >
         <span
           className={cn(
-            'absolute end-2 text-xl [--tw-text-opacity:0.6]',
+            'absolute end-2 text-xl [--tw-text-opacity:0.6] print:hidden',
             isHexColorLight(value) ? 'text-black' : 'text-white'
           )}
         >

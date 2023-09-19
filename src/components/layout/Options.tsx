@@ -13,7 +13,7 @@ const Options = () => {
       <Header className='p-2' />
       <div
         className='overflow-y-auto p-2 scrollbar-thin
-scrollbar-thumb-neutral-500/30'
+scrollbar-thumb-neutral-500/30 print:hidden'
       >
         <BaseColorsSection />
       </div>

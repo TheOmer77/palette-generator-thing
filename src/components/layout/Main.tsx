@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
@@ -65,7 +65,7 @@ const Main = () => {
 
       <H2>Palettes</H2>
       {colorGrids.map(({ id, title, palette }) => (
-        <Fragment key={id}>
+        <div key={id} className='break-inside-avoid'>
           <H3>{title}</H3>
           <ColorGrid>
             {palette.map((color, index) => (
@@ -76,10 +76,10 @@ const Main = () => {
               />
             ))}
           </ColorGrid>
-        </Fragment>
+        </div>
       ))}
 
-      <H2>Theme CSS variables</H2>
+      <H2 className='break-before-page'>Theme CSS variables</H2>
       <CodeBlock language='css'>{themeCss}</CodeBlock>
     </main>
   );
