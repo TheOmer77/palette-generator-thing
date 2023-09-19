@@ -1,0 +1,73 @@
+:root {
+  --color-prism-plain: #cbd5e1;
+  --color-prism-comment: #64748b;
+  --color-prism-variable: #f1f5f9;
+  --color-prism-hexcode: #f8fafc;
+  --color-prism-keyword: #fdba74;
+  --color-prism-function: #93c5fd;
+  --color-prism-deleted: #fca5a5;
+  --color-prism-inserted: #6ee7b7;
+  --color-prism-changed: #fcd34d;
+  --color-prism-selector: #f0abfc;
+  --color-prism-regex: #7dd3fc;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-prism-plain: #334155;
+    --color-prism-comment: #64748b;
+    --color-prism-variable: #0f172a;
+    --color-prism-hexcode: #020617;
+    --color-prism-keyword: #c2410c;
+    --color-prism-function: #1d4ed8;
+    --color-prism-deleted: #b91c1c;
+    --color-prism-inserted: #047857;
+    --color-prism-changed: #b45309;
+    --color-prism-selector: #a21caf;
+    --color-prism-regex: #0369a1;
+  }
+}
+
+.prism-code .token {
+  color: var(--color-prism-plain);
+}
+
+.prism-code .token.comment,
+.prism-code .token.punctuation {
+  color: var(--color-prism-comment);
+}
+.prism-code .token.variable {
+  color: var(--color-prism-variable);
+}
+.prism-code .token.hexcode {
+  color: var(--color-prism-hexcode);
+}
+.prism-code .token.keyword,
+.prism-code .token.builtin,
+.prism-code .token.number,
+.prism-code .token.char,
+.prism-code .token.constant {
+  color: var(--color-prism-keyword);
+}
+.prism-code .token.function {
+  color: var(--color-prism-function);
+}
+.prism-code .token.tag,
+.prism-code .token.deleted,
+.prism-code .token.string {
+  color: var(--color-prism-deleted);
+}
+.prism-code .token.symbol,
+.prism-code .token.inserted {
+  color: var(--color-prism-inserted);
+}
+.prism-code .token.changed {
+  color: var(--color-prism-changed);
+}
+.prism-code .token.attr-name,
+.prism-code .token.selector {
+  color: var(--color-prism-selector);
+}
+.prism-code .token.regex {
+  color: var(--color-prism-regex);
+}

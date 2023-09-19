@@ -2,10 +2,10 @@ import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { Highlight } from 'prism-react-renderer';
 
 import { IconButton } from 'components/general';
-import { useDarkTheme } from 'hooks';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 import { cn } from 'utils';
-import { prismThemes } from 'constants';
+
+import 'styles/prism.css';
 
 export interface CodeBlockProps
   extends Omit<ComponentProps<'pre'>, 'children'> {
@@ -15,7 +15,6 @@ export interface CodeBlockProps
 
 export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
   ({ children, language = '', style, ...props }, ref) => {
-    const darkTheme = useDarkTheme();
     const [justCopied, setJustCopied] = useState(false);
 
     const copyCode = useCallback(() => {
@@ -39,7 +38,7 @@ dark:bg-neutral-900'
         <Highlight
           language={language}
           code={children}
-          theme={prismThemes[darkTheme ? 'dark' : 'light']}
+          theme={{ plain: {}, styles: [] }}
         >
           {({
             className,
