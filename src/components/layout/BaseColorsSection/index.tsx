@@ -317,7 +317,18 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                   />
                 </ListItem>
                 <div role='radiogroup'>
-                  <RadioListItem checked={colorIsSuggestion}>
+                  <RadioListItem
+                    checked={colorIsSuggestion}
+                    onClick={() =>
+                      !colorIsSuggestion &&
+                      updateExtraColor(
+                        index,
+                        generalColorSuggestionNames[
+                          index % generalColorSuggestionNames.length
+                        ]
+                      )
+                    }
+                  >
                     Suggestions
                   </RadioListItem>
                   <Collapsible open={colorIsSuggestion}>
@@ -330,9 +341,32 @@ const BaseColorsSection = forwardRef<HTMLElement, ComponentProps<'section'>>(
                       }
                     />
                   </Collapsible>
-                  <RadioListItem disabled checked={colorIsCustom}>
+                  <RadioListItem
+                    checked={colorIsCustom}
+                    onClick={() =>
+                      !colorIsCustom &&
+                      updateExtraColor(
+                        index,
+                        generalColorSuggestions[
+                          value as GeneralColorSuggestion
+                        ]?.(baseColors.primary)
+                      )
+                    }
+                  >
                     Custom
                   </RadioListItem>
+                  <Collapsible open={colorIsCustom}>
+                    <div className='p-2'>
+                      <ColorInput
+                        id={`input-extra-color-${index}`}
+                        value={value || ''}
+                        onChange={newColor => {
+                          updateExtraColor(index, newColor);
+                        }}
+                        withRandomBtn
+                      />
+                    </div>
+                  </Collapsible>
                 </div>
                 <ListItem onClick={() => removeExtraColor(index)}>
                   Remove
