@@ -9,16 +9,22 @@ import {
   // This is named like a react hook, which confuses ESLint
   useMode as loadMode,
 } from 'culori/fn';
+
+import { calculateSteps } from './calculateSteps';
 import {
   DEFAULT_DANGER_HUE,
   FALLBACK_COLOR,
+  MAX_DANGER_HUE,
   MAX_LIMITED_LIGHTNESS,
   MAX_REDDISH_HUE,
   MAX_SHADE,
+  MIN_DANGER_HUE,
   MIN_LIMITED_LIGHTNESS,
   MIN_LIMITED_SATURATION,
   MIN_REDDISH_HUE,
-  REDDISH_DANGER_HUE,
+  REDDISH_DEFAULT_DANGER_HUE,
+  REDDISH_MAX_DANGER_HUE,
+  REDDISH_MIN_DANGER_HUE,
   shadesLightnessValues,
 } from 'constants';
 
@@ -121,12 +127,23 @@ export const getNeutralColor = getColorVariantFunction(({ mode, h, s, l }) => ({
   l,
 }));
 
-export const getDangerColor = getColorVariantFunction(({ mode, h, s, l }) => ({
-  mode,
-  h:
-    typeof h === 'number' && h >= MIN_REDDISH_HUE && h <= MAX_REDDISH_HUE
-      ? REDDISH_DANGER_HUE
-      : DEFAULT_DANGER_HUE,
-  s: Math.max(s, MIN_LIMITED_SATURATION),
-  l: Math.min(Math.max(MIN_LIMITED_LIGHTNESS, l), MAX_LIMITED_LIGHTNESS),
-}));
+export const getDangerColor = getColorVariantFunction(({ mode, h, s, l }) => {
+  const colorIsreddish =
+    typeof h === 'number' && h >= MIN_REDDISH_HUE && h <= MAX_REDDISH_HUE;
+  const potentialSuggestionHue = calculateSteps(30, 330, 11)
+    .map(hue => (typeof h === 'number' ? (h + hue) % 360 : hue))
+    .find(
+      hue =>
+        hue >= (colorIsreddish ? REDDISH_MIN_DANGER_HUE : MIN_DANGER_HUE) &&
+        hue <= (colorIsreddish ? REDDISH_MAX_DANGER_HUE : MAX_DANGER_HUE)
+    );
+
+  return {
+    mode,
+    h:
+      potentialSuggestionHue ||
+      (colorIsreddish ? REDDISH_DEFAULT_DANGER_HUE : DEFAULT_DANGER_HUE),
+    s: Math.max(s, MIN_LIMITED_SATURATION),
+    l: Math.min(Math.max(MIN_LIMITED_LIGHTNESS, l), MAX_LIMITED_LIGHTNESS),
+  };
+});
