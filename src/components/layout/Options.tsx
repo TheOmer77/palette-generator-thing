@@ -9,7 +9,7 @@ const Options = () => {
   const mdBreakpoint = useTailwindBreakpoint('md');
 
   return mdBreakpoint ? (
-    <Sidebar>
+    <Sidebar className='print:hidden print:md:flex'>
       <Header className='p-2' />
       <div
         className='overflow-y-auto p-2 scrollbar-thin
