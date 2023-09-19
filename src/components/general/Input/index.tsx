@@ -89,8 +89,8 @@ dark:text-neutral-400 dark:peer-focus:text-primary-300`,
         )}
         <div
           className='input-outline pointer-events-none absolute start-0 top-0
-h-full w-full rounded-lg ring-1 ring-neutral-300 peer-focus:ring-2
-peer-focus:ring-primary-500 dark:ring-neutral-700
+h-full w-full rounded-lg ring-1 ring-neutral-300 transition-shadow
+peer-focus:ring-2 peer-focus:ring-primary-500 dark:ring-neutral-700
 dark:peer-focus:ring-primary-300'
         />
       </div>
