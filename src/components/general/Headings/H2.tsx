@@ -7,8 +7,7 @@ export const H2 = forwardRef<HTMLHeadingElement, ComponentProps<'h2'>>(
       {...props}
       ref={ref}
       className={cn(
-        `mb-2 select-none text-3xl font-bold tracking-tight text-neutral-900
-dark:text-neutral-100 print:text-neutral-900`,
+        `mb-2 select-none text-3xl font-bold tracking-tight`,
         className
       )}
     >
