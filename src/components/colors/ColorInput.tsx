@@ -23,17 +23,12 @@ export interface ColorInputProps
 }
 
 const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
-  ({ value, onChange, withRandomBtn, ...props }, ref) => (
+  ({ value, onChange, withRandomBtn, label = 'Hex color', ...props }, ref) => (
     <Input
       asChild
       ref={ref}
       value={value}
-      startAdornment={
-        <div
-          className='h-7 w-7 rounded-lg'
-          style={{ backgroundColor: value }}
-        />
-      }
+      label={label}
       {...(withRandomBtn
         ? {
             endAdornment: (
