@@ -19,7 +19,7 @@ import {
 } from 'components/general';
 import { ColorInput } from 'components/colors';
 import { useGlobalState, useTheme } from 'hooks';
-import { getDangerColor, getNeutralColor } from 'utils';
+import { getDangerColor, getNeutralColor, toCamelCase } from 'utils';
 import type { GlobalState } from 'contexts/globalState';
 import {
   dangerColorSuggestionNames,
@@ -33,6 +33,8 @@ import {
   type NeutralColorSuggestion,
 } from 'constants/colorSuggestions';
 import { AnyStringWithAutocomplete } from 'types';
+
+const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 
 const ColorListItem = ({
   value,
@@ -142,7 +144,6 @@ const BaseColorsSection = forwardRef<
     [baseColors, setGlobalState]
   );
 
-  // TODO: Don't allow the same name as another extra color
   const renameExtraColor = useCallback<
     (index: number, newName: string) => void
   >(
@@ -354,6 +355,19 @@ const BaseColorsSection = forwardRef<
             title = name || `Extra ${index + 1}`;
           const colorIsSuggestion = generalColorSuggestionNames.includes(value),
             colorIsCustom = !generalColorSuggestionNames.includes(value);
+          const nameIsReserved =
+              typeof name === 'string' && RESERVED_COLOR_NAMES.includes(name),
+            nameIsDuplicate =
+              typeof name === 'string' &&
+              name.length > 0 &&
+              Array.isArray(baseColors.extras) &&
+              baseColors.extras.filter(
+                ({ name: n }) =>
+                  typeof n === 'string' &&
+                  toCamelCase(n).toLowerCase() ===
+                    toCamelCase(name).toLowerCase()
+              ).length > 1;
+
           return (
             <ColorListItem
               key={id}
@@ -361,13 +375,23 @@ const BaseColorsSection = forwardRef<
               color={themeColors.extras[index].value}
               title={title}
             >
-              <ListItem asChild className='m-2'>
-                <Input
-                  label='Name'
-                  value={name || ''}
-                  onChange={e => renameExtraColor(index, e.target.value)}
-                />
-              </ListItem>
+              <div className='m-2'>
+                <ListItem asChild>
+                  <Input
+                    label='Name'
+                    value={name || ''}
+                    onChange={e => renameExtraColor(index, e.target.value)}
+                    invalid={nameIsReserved || nameIsDuplicate}
+                    helperText={
+                      nameIsReserved
+                        ? 'This name is reserved.'
+                        : nameIsDuplicate
+                        ? "This name can't be used by multiple colors."
+                        : undefined
+                    }
+                  />
+                </ListItem>
+              </div>
               <div role='radiogroup'>
                 <RadioListItem
                   checked={colorIsSuggestion}

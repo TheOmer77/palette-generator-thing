@@ -10,8 +10,8 @@ import { shades } from 'constants';
 const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();
 
-  const colorGrids = useMemo(
-    () => [
+  const colorGrids = useMemo(() => {
+    const grids = [
       {
         id: 'primary',
         title: 'Primary',
@@ -35,9 +35,12 @@ const Main = () => {
         title: name || `Extra ${index + 1}`,
         palette: generatePalette(value),
       })),
-    ],
-    [danger, extras, neutral, primary]
-  );
+    ];
+    // Return only grids with unique ids
+    return [...new Set(grids.map(({ id }) => id))].map(uid =>
+      grids.find(({ id }) => id === uid)
+    ) as typeof grids;
+  }, [danger, extras, neutral, primary]);
 
   const themeCss = useMemo(
     () =>
