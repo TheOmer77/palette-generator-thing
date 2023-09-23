@@ -5,7 +5,7 @@ import {
   ScopedProps,
   useAccordionListContext,
 } from './common';
-import { Collapsible, ListItem } from 'components/general';
+import { Collapsible, ListItem, ListItemIcon } from 'components/general';
 import { cn } from 'utils';
 import { ExpandMoreIcon } from 'assets/icons';
 
@@ -39,9 +39,14 @@ export const AccordionListItem = forwardRef<
         onClick={() => onValueChange?.(value === currentValue ? null : value)}
       >
         {title}
-        <ExpandMoreIcon
-          className={cn('ms-auto text-xl duration-200', open && 'rotate-180')}
-        />
+        <ListItemIcon>
+          <ExpandMoreIcon
+            className={cn(
+              'me-0 ms-auto text-xl duration-200',
+              open && 'rotate-180'
+            )}
+          />
+        </ListItemIcon>
       </ListItem>
       <Collapsible open={open}>{children}</Collapsible>
     </div>
