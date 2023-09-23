@@ -12,12 +12,14 @@ import {
   Collapsible,
   Input,
   ListItem,
+  ListItemIcon,
   ListItemText,
   ListSubheader,
   Radio,
   Separator,
 } from 'components/general';
 import { ColorInput } from 'components/colors';
+import { AddIcon, DeleteIcon } from 'assets/icons';
 import { useGlobalState, useTheme } from 'hooks';
 import { getDangerColor, getNeutralColor, toCamelCase } from 'utils';
 import type { GlobalState } from 'contexts/globalState';
@@ -32,7 +34,7 @@ import {
   type GeneralColorSuggestion,
   type NeutralColorSuggestion,
 } from 'constants/colorSuggestions';
-import { AnyStringWithAutocomplete } from 'types';
+import type { AnyStringWithAutocomplete } from 'types';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 
@@ -445,12 +447,20 @@ const BaseColorsSection = forwardRef<
                 </Collapsible>
               </div>
               <ListItem onClick={() => removeExtraColor(index)}>
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
                 Remove
               </ListItem>
             </ColorListItem>
           );
         })}
-        <ListItem onClick={addExtraColor}>Add extra color</ListItem>
+        <ListItem onClick={addExtraColor}>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+          Add extra color
+        </ListItem>
       </AccordionList>
     </section>
   );
