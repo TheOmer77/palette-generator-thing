@@ -51,6 +51,7 @@ const ColorListItem = ({
   <AccordionListItem
     {...props}
     value={value}
+    aria-label={`${title} - ${color.split('').join(' ')}`}
     title={
       <>
         <div
