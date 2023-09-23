@@ -12,6 +12,8 @@ import { cn } from 'utils';
 export interface InputProps
   extends ComponentPropsWithoutRef<typeof Primitive.input> {
   label?: string;
+  invalid?: boolean;
+  helperText?: string;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
 }
@@ -23,6 +25,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       value,
       onChange,
       label,
+      invalid,
+      helperText,
       startAdornment,
       endAdornment,
       className,
@@ -40,6 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         className={cn(
           `relative flex h-14 items-center gap-2 rounded-lg bg-white px-3
 dark:bg-neutral-950`,
+          typeof helperText === 'string' && helperText.length > 0 && `mb-7`,
           className
         )}
       >
@@ -57,6 +62,7 @@ dark:bg-neutral-950`,
           id={id}
           value={value}
           aria-label={label}
+          aria-invalid={invalid}
           className={cn(
             `peer h-full flex-grow bg-transparent
 text-neutral-900 autofill-override-white focus-visible:outline-none
@@ -76,10 +82,13 @@ focus:placeholder:opacity-100`
             htmlFor={id}
             aria-hidden
             className={cn(
-              `peer-place pointer-events-none absolute select-none
-text-base text-neutral-600 transition-[font-size,transform,color]
-peer-focus:-translate-y-3 peer-focus:text-sm peer-focus:text-primary-500
-dark:text-neutral-400 dark:peer-focus:text-primary-300`,
+              `pointer-events-none absolute select-none text-base
+text-neutral-600 transition-[font-size,transform,color]
+peer-invalid:text-danger-600 peer-focus:-translate-y-3 peer-focus:text-sm
+peer-focus:text-primary-500 peer-aria-[invalid=true]:text-danger-600
+dark:text-neutral-400 dark:peer-invalid:text-danger-300
+dark:peer-focus:text-primary-300
+dark:peer-aria-[invalid=true]:text-danger-300`,
               (startAdornment || value || (!value && uncontrolledHasValue)) &&
                 '-translate-y-3 text-sm'
             )}
@@ -90,9 +99,22 @@ dark:text-neutral-400 dark:peer-focus:text-primary-300`,
         <div
           className='input-outline pointer-events-none absolute start-0 top-0
 h-full w-full rounded-lg ring-1 ring-neutral-300 transition-shadow
-peer-focus:ring-2 peer-focus:ring-primary-500 dark:ring-neutral-700
-dark:peer-focus:ring-primary-300'
+peer-invalid:ring-danger-600 peer-focus:ring-2 peer-focus:ring-primary-500
+peer-aria-[invalid=true]:ring-danger-600 dark:ring-neutral-700
+dark:peer-invalid:ring-danger-300 dark:peer-focus:ring-primary-300
+dark:peer-aria-[invalid=true]:ring-danger-300'
         />
+        {typeof helperText === 'string' && helperText.length > 0 && (
+          <span
+            className='absolute top-[3.75rem] select-none text-sm
+text-neutral-700 peer-invalid:text-danger-600
+peer-aria-[invalid=true]:text-danger-600 dark:text-neutral-300
+dark:peer-invalid:text-danger-300
+dark:peer-aria-[invalid=true]:text-danger-300'
+          >
+            {helperText}
+          </span>
+        )}
       </div>
     );
   }
