@@ -34,18 +34,13 @@ const okhsl = loadMode(modeOkhsl),
 const fixupRgb = (value: number) =>
   Math.round(Math.max(0, Math.min(1, value)) * 255);
 
-const getColorVariantFunction = (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => {
-  function variantFunc(baseColor: string, format?: 'hex'): string;
-  function variantFunc(baseColor: string, format: 'rgb'): Rgb;
-  function variantFunc(baseColor: string, format: 'hex' | 'rgb' = 'hex') {
+const getColorVariantFunction =
+  (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => (baseColor: string) => {
     const baseRgb = rgb(baseColor) as Rgb,
       baseOkhsl = okhsl(baseRgb || FALLBACK_COLOR) as Okhsl;
     const resultRgb = rgb(modifyOkhsl(baseOkhsl));
-    return format === 'hex' ? formatHex(resultRgb) : resultRgb;
-  }
-
-  return variantFunc;
-};
+    return formatHex(resultRgb);
+  };
 
 export type RgbArray = [red: number, green: number, blue: number];
 
