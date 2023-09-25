@@ -69,6 +69,11 @@ export const isHexColorLight = (hexColor: string) => {
   return luminance >= 140;
 };
 
+export const toRgbArray = (color: Rgb | string): RgbArray => {
+  const { r, g, b } = typeof color === 'string' ? (rgb(color) as Rgb) : color;
+  return [fixupRgb(r), fixupRgb(g), fixupRgb(b)];
+};
+
 export const autoAddHexHash = (value: string) =>
   typeof parseHex(value) !== 'undefined' && !value.startsWith('#')
     ? `#${value}`
