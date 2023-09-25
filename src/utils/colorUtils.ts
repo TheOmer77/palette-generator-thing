@@ -109,31 +109,41 @@ export const getSaturationColorFn = (newSaturation: number) =>
  * If `addToExistingHue = true`, the new hue will be added to the original hue,
  * otherwise it will replace it.
  */
-export const getHueColorFn =
-  (
-    newHue: number,
-    {
-      addToExistingHue = false,
-      limitSaturation = false,
-      mode = 'okhsl',
-    }: {
-      addToExistingHue?: boolean;
-      limitSaturation?: boolean;
-      mode?: 'okhsl' | 'hsl';
-    } = {}
-  ) =>
-  (hexColor: string) => {
-    const { h, s, l } =
-      mode === 'hsl' ? (hsl(hexColor) as Hsl) : (okhsl(hexColor) as Okhsl);
-    return formatHex({
-      mode,
-      h: addToExistingHue && h ? (h + newHue) % 360 : newHue,
-      s: limitSaturation ? Math.max(s, MIN_LIMITED_SATURATION) : s,
-      l: limitSaturation
-        ? Math.min(Math.max(MIN_LIMITED_LIGHTNESS, l), MAX_LIMITED_LIGHTNESS)
-        : l,
-    });
-  };
+export const getHueColorFn = (
+  newHue: number,
+  {
+    addToExistingHue = false,
+    limitSaturation = false,
+    lightnessMode = 'hsl',
+  }: {
+    addToExistingHue?: boolean;
+    limitSaturation?: boolean;
+    lightnessMode?: 'okhsl' | 'hsl';
+  } = {}
+) =>
+  getColorVariantFn(baseColor => {
+    const { mode, h, s, l } = baseColor;
+    if (lightnessMode === 'okhsl')
+      return {
+        mode,
+        h: addToExistingHue && h ? (h + newHue) % 360 : newHue,
+        s: limitSaturation ? Math.max(s, MIN_LIMITED_SATURATION) : s,
+        l: limitSaturation
+          ? Math.min(Math.max(MIN_LIMITED_LIGHTNESS, l), MAX_LIMITED_LIGHTNESS)
+          : l,
+      };
+
+    const resultH =
+        addToExistingHue && typeof h === 'number' ? (h + newHue) % 360 : newHue,
+      hslResultH = hsl({ mode: 'okhsl', h: resultH, s, l }).h;
+    const hslBaseColor = hsl(baseColor) as Hsl;
+    const resultL = Math.min(
+      Math.max(okhsl({ ...hslBaseColor, h: hslResultH }).l, Math.min(0.2, l)),
+      Math.max(0.8, l)
+    );
+
+    return { mode, h: resultH, s, l: resultL };
+  });
 
 export const getNeutralColor = getColorVariantFn(({ mode, h, s, l }) => ({
   mode,

@@ -7,20 +7,20 @@ export type ColorSuggestions = Record<
 >;
 
 export const generalColorSuggestions = {
-  complementary: getHueColorFn(180, { addToExistingHue: true, mode: 'hsl' }),
-  splitComp1: getHueColorFn(150, { addToExistingHue: true, mode: 'hsl' }),
-  splitComp2: getHueColorFn(210, { addToExistingHue: true, mode: 'hsl' }),
+  complementary: getHueColorFn(180, { addToExistingHue: true }),
+  splitComp1: getHueColorFn(150, { addToExistingHue: true }),
+  splitComp2: getHueColorFn(210, { addToExistingHue: true }),
   // Split complementary of complementary
-  analogous1: getHueColorFn(330, { addToExistingHue: true, mode: 'hsl' }),
-  analogous2: getHueColorFn(30, { addToExistingHue: true, mode: 'hsl' }),
-  triad1: getHueColorFn(120, { addToExistingHue: true, mode: 'hsl' }),
-  triad2: getHueColorFn(240, { addToExistingHue: true, mode: 'hsl' }),
+  analogous1: getHueColorFn(330, { addToExistingHue: true }),
+  analogous2: getHueColorFn(30, { addToExistingHue: true }),
+  triad1: getHueColorFn(120, { addToExistingHue: true }),
+  triad2: getHueColorFn(240, { addToExistingHue: true }),
   // Triad of complementary
-  compTriad1: getHueColorFn(300, { addToExistingHue: true, mode: 'hsl' }),
-  compTriad2: getHueColorFn(60, { addToExistingHue: true, mode: 'hsl' }),
+  compTriad1: getHueColorFn(300, { addToExistingHue: true }),
+  compTriad2: getHueColorFn(60, { addToExistingHue: true }),
   // Tetradic is 3 colors, but one of them is the same as complementary
-  tetradic1: getHueColorFn(90, { addToExistingHue: true, mode: 'hsl' }),
-  tetradic2: getHueColorFn(270, { addToExistingHue: true, mode: 'hsl' }),
+  tetradic1: getHueColorFn(90, { addToExistingHue: true }),
+  tetradic2: getHueColorFn(270, { addToExistingHue: true }),
 } as const satisfies ColorSuggestions;
 export const generalColorSuggestionNames = Object.keys(generalColorSuggestions);
 export type GeneralColorSuggestion = keyof typeof generalColorSuggestions;
