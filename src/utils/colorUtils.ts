@@ -138,11 +138,19 @@ export const getHueColorFn = (
       hslResultH = hsl({ mode: 'okhsl', h: resultH, s, l }).h;
     const hslBaseColor = hsl(baseColor) as Hsl;
     const resultL = Math.min(
-      Math.max(okhsl({ ...hslBaseColor, h: hslResultH }).l, Math.min(0.2, l)),
-      Math.max(0.8, l)
+      Math.max(
+        okhsl({ ...hslBaseColor, h: hslResultH }).l,
+        Math.min(MIN_LIMITED_LIGHTNESS, l)
+      ),
+      Math.max(MAX_LIMITED_LIGHTNESS, l)
     );
 
-    return { mode, h: resultH, s, l: resultL };
+    return {
+      mode,
+      h: resultH,
+      s: limitSaturation ? Math.max(s, MIN_LIMITED_SATURATION) : s,
+      l: resultL,
+    };
   });
 
 export const getNeutralColor = getColorVariantFn(({ mode, h, s, l }) => ({
@@ -171,8 +179,11 @@ export const getDangerColor = getColorVariantFn(baseColor => {
     hslResultH = hsl({ mode: 'okhsl', h: resultH, s, l }).h;
   const hslBaseColor = hsl(baseColor) as Hsl;
   const resultL = Math.min(
-    Math.max(okhsl({ ...hslBaseColor, h: hslResultH }).l, Math.min(0.2, l)),
-    Math.max(0.8, l)
+    Math.max(
+      okhsl({ ...hslBaseColor, h: hslResultH }).l,
+      Math.min(MIN_LIMITED_LIGHTNESS, l)
+    ),
+    Math.max(MAX_LIMITED_LIGHTNESS, l)
   );
 
   return {
