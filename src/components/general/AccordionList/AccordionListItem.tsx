@@ -39,13 +39,13 @@ export const AccordionListItem = forwardRef<
         onClick={() => onValueChange?.(value === currentValue ? null : value)}
       >
         {title}
-        <ListItemIcon>
-          <ExpandMoreIcon
-            className={cn(
-              'me-0 ms-auto text-xl duration-200',
-              open && 'rotate-180'
-            )}
-          />
+        <ListItemIcon
+          className={cn(
+            'me-0 ms-auto text-xl duration-200',
+            open && 'rotate-180'
+          )}
+        >
+          <ExpandMoreIcon />
         </ListItemIcon>
       </ListItem>
       <Collapsible open={open}>{children}</Collapsible>
