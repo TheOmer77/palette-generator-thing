@@ -5,7 +5,7 @@ export const DEFAULT_DANGER_HUE = 30,
   REDDISH_MIN_DANGER_HUE = 35,
   REDDISH_MAX_DANGER_HUE = 45;
 
-export const MIN_REDDISH_HUE = 25,
+export const MIN_REDDISH_HUE = 23,
   MAX_REDDISH_HUE = 32;
 
 export const MIN_LIMITED_SATURATION = 0.75,
