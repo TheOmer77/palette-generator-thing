@@ -1,66 +1,10 @@
-import {
-  MAX_LIMITED_LIGHTNESS,
-  MIN_LIMITED_LIGHTNESS,
-  MIN_LIMITED_SATURATION,
-} from 'constants';
-import {
-  formatHex,
-  modeHsl,
-  modeOkhsl,
-  modeRgb,
-  type Hsl,
-  type Okhsl,
-  useMode as loadMode,
-} from 'culori/fn';
+import { getColorVariantFn, getHueColorFn, getSaturationColorFn } from 'utils';
+1;
 
-const okhsl = loadMode(modeOkhsl),
-  hsl = loadMode(modeHsl);
-loadMode(modeRgb);
-
-/**
- * A function that gets a hex color, modifies it * in some way, and returns
- * the modified color as a hex color.
- */
-export type ModifiedColorFunction = (hexColor: string) => string;
-export type ColorSuggestions = Record<string, ModifiedColorFunction>;
-
-/** Util function: Get function to get a modified color with a given saturation. */
-const getSaturationColorFn = (newSaturation: number) => (hexColor: string) => {
-  const { h, l } = okhsl(hexColor) as Okhsl;
-  return formatHex({ mode: 'okhsl', h, s: newSaturation, l });
-};
-
-/**
- * Util function: Get function to get a modified color with a given hue.
- *
- * If `addToExistingHue = true`, the new hue will be added to the original hue,
- * otherwise it will replace it.
- */
-const getHueColorFn =
-  (
-    newHue: number,
-    {
-      addToExistingHue = false,
-      limitSaturation = false,
-      mode = 'okhsl',
-    }: {
-      addToExistingHue?: boolean;
-      limitSaturation?: boolean;
-      mode?: 'okhsl' | 'hsl';
-    } = {}
-  ) =>
-  (hexColor: string) => {
-    const { h, s, l } =
-      mode === 'hsl' ? (hsl(hexColor) as Hsl) : (okhsl(hexColor) as Okhsl);
-    return formatHex({
-      mode,
-      h: addToExistingHue && h ? (h + newHue) % 360 : newHue,
-      s: limitSaturation ? Math.max(s, MIN_LIMITED_SATURATION) : s,
-      l: limitSaturation
-        ? Math.min(Math.max(MIN_LIMITED_LIGHTNESS, l), MAX_LIMITED_LIGHTNESS)
-        : l,
-    });
-  };
+export type ColorSuggestions = Record<
+  string,
+  ReturnType<typeof getColorVariantFn>
+>;
 
 export const generalColorSuggestions = {
   complementary: getHueColorFn(180, { addToExistingHue: true, mode: 'hsl' }),

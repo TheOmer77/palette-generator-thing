@@ -1,9 +1,11 @@
 import {
   formatHex,
+  modeHsl,
   modeOkhsl,
   modeRgb,
   parseHex,
   random,
+  type Hsl,
   type Okhsl,
   type Rgb,
   // This is named like a react hook, which confuses ESLint
@@ -29,18 +31,11 @@ import {
 } from 'constants';
 
 const okhsl = loadMode(modeOkhsl),
+  hsl = loadMode(modeHsl),
   rgb = loadMode(modeRgb);
 
 const fixupRgb = (value: number) =>
   Math.round(Math.max(0, Math.min(1, value)) * 255);
-
-const getColorVariantFunction =
-  (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => (baseColor: string) => {
-    const baseRgb = rgb(baseColor) as Rgb,
-      baseOkhsl = okhsl(baseRgb || FALLBACK_COLOR) as Okhsl;
-    const resultRgb = rgb(modifyOkhsl(baseOkhsl));
-    return formatHex(resultRgb);
-  };
 
 export type RgbArray = [red: number, green: number, blue: number];
 
@@ -96,14 +91,58 @@ export const getClosestShade = (
 export const getContrastShade = (hexColor: string) =>
   isHexColorLight(hexColor) ? 950 : 50;
 
-export const getNeutralColor = getColorVariantFunction(({ mode, h, s, l }) => ({
+export const getColorVariantFn =
+  (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => (baseColor: string) => {
+    const baseRgb = rgb(baseColor) as Rgb,
+      baseOkhsl = okhsl(baseRgb || FALLBACK_COLOR) as Okhsl;
+    const resultRgb = rgb(modifyOkhsl(baseOkhsl));
+    return formatHex(resultRgb);
+  };
+
+/** Get function to get a modified color with a given saturation. */
+export const getSaturationColorFn = (newSaturation: number) =>
+  getColorVariantFn(({ h, l }) => ({ mode: 'okhsl', h, s: newSaturation, l }));
+
+/**
+ * Get function to get a modified color with a given hue.
+ *
+ * If `addToExistingHue = true`, the new hue will be added to the original hue,
+ * otherwise it will replace it.
+ */
+export const getHueColorFn =
+  (
+    newHue: number,
+    {
+      addToExistingHue = false,
+      limitSaturation = false,
+      mode = 'okhsl',
+    }: {
+      addToExistingHue?: boolean;
+      limitSaturation?: boolean;
+      mode?: 'okhsl' | 'hsl';
+    } = {}
+  ) =>
+  (hexColor: string) => {
+    const { h, s, l } =
+      mode === 'hsl' ? (hsl(hexColor) as Hsl) : (okhsl(hexColor) as Okhsl);
+    return formatHex({
+      mode,
+      h: addToExistingHue && h ? (h + newHue) % 360 : newHue,
+      s: limitSaturation ? Math.max(s, MIN_LIMITED_SATURATION) : s,
+      l: limitSaturation
+        ? Math.min(Math.max(MIN_LIMITED_LIGHTNESS, l), MAX_LIMITED_LIGHTNESS)
+        : l,
+    });
+  };
+
+export const getNeutralColor = getColorVariantFn(({ mode, h, s, l }) => ({
   mode,
   h,
   s: s * 0.2,
   l,
 }));
 
-export const getDangerColor = getColorVariantFunction(({ mode, h, s, l }) => {
+export const getDangerColor = getColorVariantFn(({ mode, h, s, l }) => {
   const colorIsreddish =
     typeof h === 'number' && h >= MIN_REDDISH_HUE && h <= MAX_REDDISH_HUE;
   const potentialSuggestionHue = calculateSteps(30, 330, 11)
