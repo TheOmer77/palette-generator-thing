@@ -3,6 +3,7 @@ import {
   generatePalette,
   getClosestShade,
   getContrastShade,
+  toRgbArray,
 } from './colorUtils';
 
 const generateVariablesCss = (baseColors: { [colorName: string]: string }) =>
@@ -10,10 +11,10 @@ const generateVariablesCss = (baseColors: { [colorName: string]: string }) =>
   ${Object.keys(baseColors)
     .map(
       (key: keyof typeof baseColors) => `/* ${key} */
-${generatePalette(baseColors[key], 'rgbArray')
+${generatePalette(baseColors[key])
   .map(
-    (rgbArray, index) =>
-      `  --color-${key}-${shades[index]}: ${rgbArray.join(' ')};`
+    (color, index) =>
+      `  --color-${key}-${shades[index]}: ${toRgbArray(color).join(' ')};`
   )
   .join('\n')}
   

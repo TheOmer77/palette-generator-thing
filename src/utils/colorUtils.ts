@@ -37,19 +37,11 @@ const fixupRgb = (value: number) =>
 const getColorVariantFunction = (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => {
   function variantFunc(baseColor: string, format?: 'hex'): string;
   function variantFunc(baseColor: string, format: 'rgb'): Rgb;
-  function variantFunc(baseColor: string, format?: 'rgbArray'): RgbArray;
-  function variantFunc(
-    baseColor: string,
-    format: 'hex' | 'rgb' | 'rgbArray' = 'hex'
-  ) {
+  function variantFunc(baseColor: string, format: 'hex' | 'rgb' = 'hex') {
     const baseRgb = rgb(baseColor) as Rgb,
       baseOkhsl = okhsl(baseRgb || FALLBACK_COLOR) as Okhsl;
     const resultRgb = rgb(modifyOkhsl(baseOkhsl));
-    return format === 'rgbArray'
-      ? [fixupRgb(resultRgb.r), fixupRgb(resultRgb.g), fixupRgb(resultRgb.b)]
-      : format === 'hex'
-      ? formatHex(resultRgb)
-      : resultRgb;
+    return format === 'hex' ? formatHex(resultRgb) : resultRgb;
   }
 
   return variantFunc;
@@ -81,30 +73,14 @@ export const autoAddHexHash = (value: string) =>
 
 export const randomHexColor = () => formatHex(random());
 
-export function generatePalette(baseColor: string, format?: 'hex'): string[];
-export function generatePalette(
-  baseColor: string,
-  format: 'rgbArray'
-): RgbArray[];
-export function generatePalette(
-  baseColor: string,
-  format: 'hex' | 'rgbArray' = 'hex'
-) {
+export function generatePalette(baseColor: string) {
   const { h, s } = okhsl(
     parseHex(baseColor) ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
 
-  return shadesLightnessValues.map(shade => {
-    const shadeRgb = rgb({
-      mode: 'okhsl',
-      h,
-      s,
-      l: shade / 100,
-    });
-    return format === 'rgbArray'
-      ? [fixupRgb(shadeRgb.r), fixupRgb(shadeRgb.g), fixupRgb(shadeRgb.b)]
-      : formatHex(shadeRgb);
-  });
+  return shadesLightnessValues.map(shade =>
+    formatHex(rgb({ mode: 'okhsl', h, s, l: shade / 100 }))
+  );
 }
 
 export const getClosestShade = (
