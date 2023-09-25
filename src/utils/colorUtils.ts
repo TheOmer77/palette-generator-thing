@@ -152,7 +152,9 @@ export const getNeutralColor = getColorVariantFn(({ mode, h, s, l }) => ({
   l,
 }));
 
-export const getDangerColor = getColorVariantFn(({ mode, h, s, l }) => {
+export const getDangerColor = getColorVariantFn(baseColor => {
+  const { mode, h, s, l } = baseColor;
+
   const colorIsreddish =
     typeof h === 'number' && h >= MIN_REDDISH_HUE && h <= MAX_REDDISH_HUE;
   const potentialSuggestionHue = calculateSteps(30, 330, 11)
@@ -163,12 +165,23 @@ export const getDangerColor = getColorVariantFn(({ mode, h, s, l }) => {
         hue <= (colorIsreddish ? REDDISH_MAX_DANGER_HUE : MAX_DANGER_HUE)
     );
 
-  return {
-    mode,
-    h:
+  const resultH =
       potentialSuggestionHue ||
       (colorIsreddish ? REDDISH_DEFAULT_DANGER_HUE : DEFAULT_DANGER_HUE),
+    hslResultH = hsl({ mode: 'okhsl', h: resultH, s, l }).h;
+  const hslBaseColor = hsl(baseColor) as Hsl;
+  const resultL = Math.min(
+    Math.max(okhsl({ ...hslBaseColor, h: hslResultH }).l, Math.min(0.2, l)),
+    Math.max(0.8, l)
+  );
+
+  return {
+    mode,
+    h: resultH,
     s: Math.max(s, MIN_LIMITED_SATURATION),
-    l: Math.min(Math.max(MIN_LIMITED_LIGHTNESS, l), MAX_LIMITED_LIGHTNESS),
+    l: Math.min(
+      Math.max(MIN_LIMITED_LIGHTNESS, resultL),
+      MAX_LIMITED_LIGHTNESS
+    ),
   };
 });
