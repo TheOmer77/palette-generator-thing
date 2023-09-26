@@ -30,19 +30,20 @@ data-[state=closed]:animate-fadeout data-[state=open]:animate-fadein'
             {...props}
             ref={ref}
             className={cn(
-              `fixed inset-x-0 bottom-0 z-20 mx-auto flex w-screen max-w-2xl
-flex-col rounded-t-lg bg-white p-4 text-neutral-950 shadow shadow-neutral-900/50
+              `fixed inset-x-0 bottom-0 z-20 mx-auto flex
+max-h-[calc(100vh-4rem)] w-screen max-w-2xl flex-col rounded-t-lg bg-white
+text-neutral-950 shadow shadow-neutral-900/50
 data-[state=closed]:animate-slideout data-[state=open]:animate-slidein
 dark:bg-neutral-900 dark:text-neutral-50`,
               className
             )}
           >
             {title && (
-              <DialogTitle asChild>
+              <DialogTitle asChild className='m-0 px-4 py-3'>
                 <H2>{title}</H2>
               </DialogTitle>
             )}
-            {children}
+            <div className='overflow-y-auto'>{children}</div>
           </DialogContent>
         </DialogPortal>
       </Dialog>
