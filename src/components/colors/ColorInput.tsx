@@ -1,52 +1,110 @@
-import { forwardRef, type ComponentProps } from 'react';
-import { HexColorInput } from 'react-colorful';
+import {
+  ChangeEventHandler,
+  FocusEventHandler,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { formatHex, modeRgb, useMode as loadMode } from 'culori/fn';
 
 import { IconButton, Input, type InputProps } from 'components/general';
 import { RandomIcon } from 'assets/icons';
-import { randomHexColor } from 'utils';
+import { autoAddHexHash, isValidHexColor, randomHexColor } from 'utils';
+
+loadMode(modeRgb);
 
 export interface ColorInputProps
   extends Omit<
     InputProps,
     | 'asChild'
-    | 'onChange'
-    | 'color'
-    | 'ref'
-    | 'value'
-    | 'type'
-    | 'startAdornment'
     | 'endAdornment'
+    | 'onChange'
+    | 'ref'
+    | 'startAdornment'
+    | 'type'
+    | 'value'
   > {
-  value: string;
-  onChange?: ComponentProps<typeof HexColorInput>['onChange'];
+  value?: string;
+  onChange?: (newValue: string) => void;
+  withAlpha?: boolean;
   withRandomBtn?: boolean;
 }
 
-const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
-  ({ value, onChange, withRandomBtn, label = 'Hex color', ...props }, ref) => (
-    <Input
-      asChild
-      ref={ref}
-      value={value}
-      label={label}
-      {...(withRandomBtn
-        ? {
-            endAdornment: (
-              <IconButton
-                title='Generate random color'
-                onClick={() => onChange?.(randomHexColor())}
-              >
-                <RandomIcon />
-              </IconButton>
-            ),
-          }
-        : {})}
-      {...props}
-    >
-      <HexColorInput prefixed color={value} onChange={onChange} />
-    </Input>
-  )
+export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
+  (
+    {
+      value,
+      onChange,
+      onBlur,
+      withAlpha = false,
+      withRandomBtn,
+      label = 'Hex color',
+      ...props
+    },
+    ref
+  ) => {
+    const [internalValue, setInternalValue] = useState(value);
+    const [invalid, setInvalid] = useState(
+      typeof value !== 'string' || !isValidHexColor(value)
+    );
+
+    const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+      e => {
+        const newValue = autoAddHexHash(
+          e.target.value
+            .toLowerCase()
+            .replace(/([^0-9A-F]+)/gi, '')
+            .substring(0, withAlpha ? 8 : 6)
+        );
+
+        if (isValidHexColor(newValue, withAlpha)) onChange?.(newValue);
+        setInvalid(!isValidHexColor(newValue, withAlpha));
+        setInternalValue(newValue);
+      },
+      [onChange, withAlpha]
+    );
+
+    const handleBlur = useCallback<FocusEventHandler<HTMLInputElement>>(
+      e => {
+        onBlur?.(e);
+
+        setInvalid(false);
+        const formattedValue = formatHex(value);
+        if (typeof formattedValue === 'string' && value !== formattedValue)
+          return onChange?.(formattedValue);
+        setInternalValue(formattedValue);
+      },
+      [onChange, onBlur, value]
+    );
+
+    useEffect(() => {
+      setInternalValue(autoAddHexHash(value?.toLowerCase?.() || ''));
+    }, [value]);
+
+    return (
+      <Input
+        {...props}
+        ref={ref}
+        label={label}
+        value={internalValue || '#'}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        invalid={invalid}
+        {...(withRandomBtn
+          ? {
+              endAdornment: (
+                <IconButton
+                  title='Generate random color'
+                  onClick={() => onChange?.(randomHexColor())}
+                >
+                  <RandomIcon />
+                </IconButton>
+              ),
+            }
+          : {})}
+      />
+    );
+  }
 );
 ColorInput.displayName = 'ColorInput';
-
-export default ColorInput;
