@@ -39,7 +39,17 @@ const fixupRgb = (value: number) =>
 
 export type RgbArray = [red: number, green: number, blue: number];
 
-export const isValidHexColor = (hexColor: string) => !!parseHex(hexColor);
+export const isValidHexColor = (value: string, withAlpha = false) => {
+  const match = /^#?([0-9A-F]{3,8})$/i.exec(value);
+  const length = match ? match[1].length : 0;
+
+  return (
+    length === 3 || // '#rgb' format
+    length === 6 || // '#rrggbb' format
+    (withAlpha && length === 4) || // '#rgba' format
+    (withAlpha && length === 8) // '#rrggbbaa' format
+  );
+};
 
 export const isHexColorLight = (hexColor: string) => {
   const rgbColor = rgb(hexColor);
@@ -57,9 +67,7 @@ export const toRgbArray = (color: Rgb | string): RgbArray => {
 };
 
 export const autoAddHexHash = (value: string) =>
-  typeof parseHex(value) !== 'undefined' && !value.startsWith('#')
-    ? `#${value}`
-    : value;
+  !value.startsWith('#') ? `#${value}` : value;
 
 export const randomHexColor = () => formatHex(random());
 
