@@ -193,16 +193,18 @@ const BaseColorsSection = forwardRef<
           title='Primary'
         >
           <div className='p-2'>
-            <ColorInput
-              id='input-primary-color'
-              value={baseColors.primary}
-              onChange={newColor => {
-                setGlobalState({
-                  baseColors: { ...baseColors, primary: newColor },
-                });
-              }}
-              withRandomBtn
-            />
+            <ListItem asChild>
+              <ColorInput
+                id='input-primary-color'
+                value={baseColors.primary}
+                onChange={newColor => {
+                  setGlobalState({
+                    baseColors: { ...baseColors, primary: newColor },
+                  });
+                }}
+                withRandomBtn
+              />
+            </ListItem>
           </div>
         </ColorListItem>
 
@@ -265,16 +267,18 @@ const BaseColorsSection = forwardRef<
           </RadioListItem>
           <Collapsible open={neutralIsCustom}>
             <div className='p-2'>
-              <ColorInput
-                id='input-neutral-color'
-                value={baseColors.neutral || ''}
-                onChange={newColor => {
-                  setGlobalState({
-                    baseColors: { ...baseColors, neutral: newColor },
-                  });
-                }}
-                withRandomBtn
-              />
+              <ListItem asChild>
+                <ColorInput
+                  id='input-neutral-color'
+                  value={baseColors.neutral || ''}
+                  onChange={newColor => {
+                    setGlobalState({
+                      baseColors: { ...baseColors, neutral: newColor },
+                    });
+                  }}
+                  withRandomBtn
+                />
+              </ListItem>
             </div>
           </Collapsible>
         </ColorListItem>
@@ -338,16 +342,18 @@ const BaseColorsSection = forwardRef<
           </RadioListItem>
           <Collapsible open={dangerIsCustom}>
             <div className='p-2'>
-              <ColorInput
-                id='input-danger-color'
-                value={baseColors.danger || ''}
-                onChange={newColor => {
-                  setGlobalState({
-                    baseColors: { ...baseColors, danger: newColor },
-                  });
-                }}
-                withRandomBtn
-              />
+              <ListItem asChild>
+                <ColorInput
+                  id='input-danger-color'
+                  value={baseColors.danger || ''}
+                  onChange={newColor => {
+                    setGlobalState({
+                      baseColors: { ...baseColors, danger: newColor },
+                    });
+                  }}
+                  withRandomBtn
+                />
+              </ListItem>
             </div>
           </Collapsible>
         </ColorListItem>
