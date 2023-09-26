@@ -34,6 +34,7 @@ data-[state=closed]:animate-fadeout data-[state=open]:animate-fadein'
 max-h-[calc(100vh-4rem)] w-screen max-w-2xl flex-col rounded-t-lg bg-white
 text-neutral-950 shadow shadow-neutral-900/50
 data-[state=closed]:animate-slideout data-[state=open]:animate-slidein
+supports-[height:100dvh]:max-h-[calc(100dvh-4rem)]
 dark:bg-neutral-900 dark:text-neutral-50`,
               className
             )}
