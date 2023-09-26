@@ -19,7 +19,7 @@ export interface ListProps extends ComponentPropsWithoutRef<'ul'> {
   dir?: RovingFocusGroupProps['dir'];
 }
 
-const listClassName = `flex w-full flex-col gap-px rounded-lg`;
+const listClassName = `flex w-full flex-col gap-px rounded-lg p-2`;
 
 export const List = forwardRef<HTMLUListElement, ScopedProps<ListProps>>(
   (

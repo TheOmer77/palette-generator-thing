@@ -12,7 +12,7 @@ const Options = () => {
     <Sidebar className='print:hidden print:md:flex'>
       <Header className='p-2' />
       <div
-        className='overflow-y-auto p-2 scrollbar-thin
+        className='overflow-y-auto scrollbar-thin
 scrollbar-thumb-neutral-500/30 print:hidden'
       >
         <BaseColorsSection />
