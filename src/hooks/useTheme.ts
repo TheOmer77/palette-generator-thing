@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import useGlobalState from './useGlobalState';
-import { getDangerColor, getNeutralColor } from 'utils';
+import { getAutoDangerColor, getAutoNeutralColor } from 'utils';
 import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
@@ -28,7 +28,7 @@ const useTheme = () => {
                 primary
               )
             : neutral
-          : getNeutralColor(primary),
+          : getAutoNeutralColor(primary),
       [neutral, primary]
     ),
     selectedDanger = useMemo(
@@ -37,7 +37,7 @@ const useTheme = () => {
           ? dangerColorSuggestionNames.includes(danger)
             ? dangerColorSuggestions[danger as DangerColorSuggestion]?.(primary)
             : danger
-          : getDangerColor(primary),
+          : getAutoDangerColor(primary),
       [danger, primary]
     ),
     selectedExtras = useMemo(

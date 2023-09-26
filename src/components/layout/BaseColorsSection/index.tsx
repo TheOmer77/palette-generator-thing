@@ -21,7 +21,7 @@ import {
 import { ColorInput } from 'components/colors';
 import { AddIcon, DeleteIcon } from 'assets/icons';
 import { useGlobalState, useTheme } from 'hooks';
-import { getDangerColor, getNeutralColor, toCamelCase } from 'utils';
+import { getAutoDangerColor, getAutoNeutralColor, toCamelCase } from 'utils';
 import type { GlobalState } from 'contexts/globalState';
 import {
   dangerColorSuggestionNames,
@@ -258,7 +258,7 @@ const BaseColorsSection = forwardRef<
               setGlobalState({
                 baseColors: {
                   ...baseColors,
-                  neutral: getNeutralColor(baseColors.primary),
+                  neutral: getAutoNeutralColor(baseColors.primary),
                 },
               })
             }
@@ -333,7 +333,7 @@ const BaseColorsSection = forwardRef<
               setGlobalState({
                 baseColors: {
                   ...baseColors,
-                  danger: getDangerColor(baseColors.primary),
+                  danger: getAutoDangerColor(baseColors.primary),
                 },
               })
             }

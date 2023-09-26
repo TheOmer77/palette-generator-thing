@@ -161,14 +161,14 @@ export const getHueColorFn = (
     };
   });
 
-export const getNeutralColor = getColorVariantFn(({ mode, h, s, l }) => ({
+export const getAutoNeutralColor = getColorVariantFn(({ mode, h, s, l }) => ({
   mode,
   h,
   s: s * 0.2,
   l,
 }));
 
-export const getDangerColor = getColorVariantFn(baseColor => {
+export const getAutoDangerColor = getColorVariantFn(baseColor => {
   const { mode, h, s, l } = baseColor;
 
   const colorIsreddish =
