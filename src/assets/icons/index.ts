@@ -1,7 +1,7 @@
-export { ReactComponent as AddIcon } from './add.svg';
-export { ReactComponent as CopyIcon } from './copy.svg';
-export { ReactComponent as DeleteIcon } from './delete.svg';
-export { ReactComponent as DoneIcon } from './done.svg';
-export { ReactComponent as ExpandMoreIcon } from './expandMore.svg';
-export { ReactComponent as RandomIcon } from './random.svg';
-export { ReactComponent as TuneIcon } from './tune.svg';
+export { default as AddIcon } from './add.svg?react';
+export { default as CopyIcon } from './copy.svg?react';
+export { default as DeleteIcon } from './delete.svg?react';
+export { default as DoneIcon } from './done.svg?react';
+export { default as ExpandMoreIcon } from './expandMore.svg?react';
+export { default as RandomIcon } from './random.svg?react';
+export { default as TuneIcon } from './tune.svg?react';
