@@ -4,7 +4,7 @@ import {
   ToolbarToggleItem,
 } from '@radix-ui/react-toolbar';
 
-import { IconButton } from 'components/general';
+import { IconButton, ListItem } from 'components/general';
 import { DoneIcon } from 'assets/icons';
 import { isHexColorLight } from 'utils';
 import type { ColorSuggestions } from 'constants/colorSuggestions';
@@ -30,18 +30,16 @@ const ColorSuggestionsBox = <T extends ColorSuggestions>({
       {Object.keys(colorSuggestions).map(suggestionName => {
         const color = colorSuggestions[suggestionName as keyof T]?.(baseColor);
         return (
-          <ToolbarToggleItem
-            asChild
-            key={suggestionName}
-            value={suggestionName}
-          >
-            <IconButton
-              className={isHexColorLight(color) ? 'text-black' : 'text-white'}
-              style={{ backgroundColor: color }}
-            >
-              {value === suggestionName && <DoneIcon />}
-            </IconButton>
-          </ToolbarToggleItem>
+          <ListItem asChild key={suggestionName}>
+            <ToolbarToggleItem asChild value={suggestionName}>
+              <IconButton
+                className={isHexColorLight(color) ? 'text-black' : 'text-white'}
+                style={{ backgroundColor: color }}
+              >
+                {value === suggestionName && <DoneIcon />}
+              </IconButton>
+            </ToolbarToggleItem>
+          </ListItem>
         );
       })}
     </ToolbarToggleGroup>
