@@ -19,7 +19,17 @@ export interface ListProps extends ComponentPropsWithoutRef<'ul'> {
   dir?: RovingFocusGroupProps['dir'];
 }
 
-const listClassName = `flex w-full flex-col gap-px rounded-lg p-2`;
+// eslint-disable-next-line react/display-name
+const ListUl = forwardRef<HTMLUListElement, ComponentPropsWithoutRef<'ul'>>(
+  ({ className, ...props }, ref) => (
+    <ul
+      {...props}
+      ref={ref}
+      role='group'
+      className={cn('flex w-full flex-col gap-px rounded-lg px-2', className)}
+    />
+  )
+);
 
 export const List = forwardRef<HTMLUListElement, ScopedProps<ListProps>>(
   (
@@ -48,20 +58,10 @@ export const List = forwardRef<HTMLUListElement, ScopedProps<ListProps>>(
             orientation='vertical'
             loop={loop}
           >
-            <ul
-              {...props}
-              ref={ref}
-              role='group'
-              className={cn(listClassName, className)}
-            />
+            <ListUl {...props} ref={ref} className={className} />
           </RovingFocusGroup>
         ) : (
-          <ul
-            {...props}
-            ref={ref}
-            role='group'
-            className={cn(listClassName, className)}
-          />
+          <ListUl {...props} ref={ref} className={className} />
         )}
       </ListContext>
     );
