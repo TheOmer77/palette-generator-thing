@@ -5,15 +5,14 @@ import {
   useState,
 } from 'react';
 
+import ColorListItem from './ColorListItem';
 import ColorSuggestionsBox from './ColorSuggestionsBox';
 import {
   AccordionList,
-  AccordionListItem,
   Collapsible,
   Input,
   ListItem,
   ListItemIcon,
-  ListItemText,
   ListSubheader,
   Radio,
   Separator,
@@ -37,32 +36,6 @@ import {
 import type { AnyStringWithAutocomplete } from 'types';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
-
-const ColorListItem = ({
-  value,
-  color,
-  title,
-  ...props
-}: {
-  value: string;
-  color: string;
-  title: string;
-} & ComponentPropsWithoutRef<typeof AccordionListItem>) => (
-  <AccordionListItem
-    {...props}
-    value={value}
-    aria-label={`${title} - ${color.split('').join(' ')}`}
-    title={
-      <>
-        <div
-          className='me-3 h-8 w-8 rounded-lg'
-          style={{ backgroundColor: color }}
-        />
-        <ListItemText primary={title} secondary={color} />
-      </>
-    }
-  />
-);
 
 const RadioListItem = ({
   checked = false,

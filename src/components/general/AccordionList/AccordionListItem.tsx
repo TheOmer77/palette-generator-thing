@@ -9,7 +9,7 @@ import { Collapsible, ListItem, ListItemIcon } from 'components/general';
 import { cn } from 'utils';
 import { ExpandMoreIcon } from 'assets/icons';
 
-interface AccordionListItemProps
+export interface AccordionListItemProps
   extends Omit<ComponentPropsWithoutRef<'button'>, 'title' | 'onClick'> {
   value: string;
   title: ReactNode;
