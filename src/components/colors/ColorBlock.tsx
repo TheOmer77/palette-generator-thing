@@ -2,12 +2,12 @@ import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { cn, isHexColorLight, isValidHexColor } from 'utils';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 
-interface ColorBlockProps extends ComponentProps<'button'> {
+export interface ColorBlockProps extends ComponentProps<'button'> {
   value: string;
   label?: string;
 }
 
-const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
+export const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
   ({ value, label, style, ...props }, ref) => {
     const [justCopied, setJustCopied] = useState(false);
 
@@ -59,5 +59,3 @@ focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`,
   }
 );
 ColorBlock.displayName = 'ColorBlock';
-
-export default ColorBlock;

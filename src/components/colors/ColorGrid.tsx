@@ -1,7 +1,7 @@
 import { ComponentProps, forwardRef } from 'react';
 import { cn } from 'utils';
 
-const ColorGrid = forwardRef<HTMLDivElement, ComponentProps<'div'>>(
+export const ColorGrid = forwardRef<HTMLDivElement, ComponentProps<'div'>>(
   ({ children, className, ...props }, ref) => (
     <div
       {...props}
@@ -17,5 +17,3 @@ lg:grid-cols-4 xl:grid-cols-5`,
   )
 );
 ColorGrid.displayName = 'ColorGrid';
-
-export default ColorGrid;
