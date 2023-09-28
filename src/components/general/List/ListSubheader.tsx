@@ -10,11 +10,11 @@ export const ListSubheader = forwardRef<
       {...props}
       ref={ref}
       className={cn(
-        `select-none px-2 text-sm font-medium text-neutral-600
+        `sticky top-0 z-10 select-none p-2 text-sm font-medium text-neutral-600
 dark:text-neutral-400`,
         className
       )}
-    ></span>
+    />
   );
 });
 ListSubheader.displayName = 'ListSubheader';
