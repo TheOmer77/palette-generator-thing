@@ -4,13 +4,13 @@ import { getAutoDangerColor, getAutoNeutralColor } from 'utils';
 import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
+  generalColorSuggestionNames,
+  generalColorSuggestions,
   neutralColorSuggestionNames,
   neutralColorSuggestions,
   type DangerColorSuggestion,
+  type GeneralColorSuggestion,
   type NeutralColorSuggestion,
-  generalColorSuggestionNames,
-  GeneralColorSuggestion,
-  generalColorSuggestions,
 } from 'constants/colorSuggestions';
 
 const useTheme = () => {
