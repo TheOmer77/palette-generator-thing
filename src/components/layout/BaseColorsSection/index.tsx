@@ -186,7 +186,9 @@ const BaseColorsSection = forwardRef<
         value={openItem}
         onValueChange={newValue => setOpenItem(newValue as typeof openItem)}
       >
-        <ListSubheader>Base colors</ListSubheader>
+        <ListSubheader className='bg-neutral-50 dark:bg-neutral-900'>
+          Base colors
+        </ListSubheader>
         <ColorListItem
           value='primary'
           color={themeColors.primary}
@@ -462,7 +464,7 @@ const BaseColorsSection = forwardRef<
             </ColorListItem>
           );
         })}
-        <ListItem onClick={addExtraColor}>
+        <ListItem onClick={addExtraColor} className='mb-2'>
           <ListItemIcon>
             <AddIcon />
           </ListItemIcon>
