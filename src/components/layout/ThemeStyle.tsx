@@ -5,7 +5,7 @@ import { useTheme } from 'hooks';
 import { generateVariablesCss } from 'utils';
 
 const ThemeStyle = () => {
-  const [primary, neutral, danger] = useTheme();
+  const { primary, neutral, danger } = useTheme();
 
   const themeCss = useMemo(
     () => generateVariablesCss({ primary, neutral, danger }),

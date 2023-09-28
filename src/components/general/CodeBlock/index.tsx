@@ -2,10 +2,10 @@ import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { Highlight } from 'prism-react-renderer';
 
 import { IconButton } from 'components/general';
-import { useDarkTheme } from 'hooks';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 import { cn } from 'utils';
-import { prismThemes } from 'constants';
+
+import 'styles/prism.css';
 
 export interface CodeBlockProps
   extends Omit<ComponentProps<'pre'>, 'children'> {
@@ -13,9 +13,8 @@ export interface CodeBlockProps
   language?: string;
 }
 
-const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
+export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
   ({ children, language = '', style, ...props }, ref) => {
-    const darkTheme = useDarkTheme();
     const [justCopied, setJustCopied] = useState(false);
 
     const copyCode = useCallback(() => {
@@ -31,7 +30,7 @@ dark:bg-neutral-900'
       >
         <IconButton
           title='Copy code'
-          className='absolute end-2 top-2'
+          className='absolute end-2 top-2 print:hidden'
           onClick={copyCode}
         >
           {justCopied ? <DoneIcon /> : <CopyIcon />}
@@ -39,7 +38,7 @@ dark:bg-neutral-900'
         <Highlight
           language={language}
           code={children}
-          theme={prismThemes[darkTheme ? 'dark' : 'light']}
+          theme={{ plain: {}, styles: [] }}
         >
           {({
             className,
@@ -55,7 +54,7 @@ dark:bg-neutral-900'
               className={cn(
                 `max-h-[calc(100vh-6.5rem)]
 overflow-auto p-4 text-sm scrollbar-thin scrollbar-thumb-neutral-500/30
-md:max-h-[calc(100vh-4.5rem)]`,
+print:max-h-none md:max-h-[calc(100vh-4.5rem)] md:print:max-h-none`,
                 className
               )}
             >
@@ -74,5 +73,3 @@ md:max-h-[calc(100vh-4.5rem)]`,
   }
 );
 CodeBlock.displayName = 'CodeBlock';
-
-export default CodeBlock;

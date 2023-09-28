@@ -2,12 +2,12 @@ import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { cn, isHexColorLight, isValidHexColor } from 'utils';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 
-interface ColorBlockProps extends ComponentProps<'button'> {
+export interface ColorBlockProps extends ComponentProps<'button'> {
   value: string;
   label?: string;
 }
 
-const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
+export const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
   ({ value, label, style, ...props }, ref) => {
     const [justCopied, setJustCopied] = useState(false);
 
@@ -26,11 +26,10 @@ const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
           ...style,
         }}
         className={cn(
-          `relative flex cursor-default select-none flex-col items-start
-justify-center overflow-hidden rounded-lg p-2 after:absolute after:start-0 
-after:top-0 after:h-full after:w-full after:content-[""]
-hover:after:bg-neutral-500/20 focus-visible:outline-none
-focus-visible:after:bg-neutral-500/20 active:after:bg-neutral-500/30`,
+          `flex cursor-default select-none flex-col items-start justify-center
+overflow-hidden rounded-lg p-2 state-layer [print-color-adjust:exact]
+hover:state-layer-neutral-500/20 focus-visible:outline-none
+focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`,
           isHexColorLight(value) ? 'text-black' : 'text-white'
         )}
         title='Copy color value'
@@ -38,7 +37,7 @@ focus-visible:after:bg-neutral-500/20 active:after:bg-neutral-500/30`,
       >
         <span
           className={cn(
-            'absolute end-2 text-xl [--tw-text-opacity:0.6]',
+            'absolute end-2 text-xl [--tw-text-opacity:0.6] print:hidden',
             isHexColorLight(value) ? 'text-black' : 'text-white'
           )}
         >
@@ -60,5 +59,3 @@ focus-visible:after:bg-neutral-500/20 active:after:bg-neutral-500/30`,
   }
 );
 ColorBlock.displayName = 'ColorBlock';
-
-export default ColorBlock;

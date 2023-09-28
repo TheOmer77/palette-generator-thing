@@ -12,10 +12,19 @@ const SheetWithFab = ({ label, fabIcon, children }: SheetWithFabProps) => {
 
   return (
     <>
-      <Fab icon={fabIcon} onClick={() => setSheetOpen(true)}>
+      <Fab
+        icon={fabIcon}
+        onClick={() => setSheetOpen(true)}
+        className='print:hidden'
+      >
         {label}
       </Fab>
-      <BottomSheet title={label} open={sheetOpen} onOpenChange={setSheetOpen}>
+      <BottomSheet
+        title={label}
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+        className='print:hidden'
+      >
         {children}
       </BottomSheet>
     </>

@@ -6,11 +6,12 @@ import toColorValue from 'tailwindcss/lib/util/toColorValue';
 
 const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
 
-const customPlugin = plugin(({ matchUtilities, theme }) => {
+const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
   const themeColors = flattenColorPalette(theme('colors'));
   const colors = Object.fromEntries(
     Object.entries(themeColors).map(([k, v]) => [k, toColorValue(v)])
   );
+
   matchUtilities(
     {
       'autofill-override': value => ({
@@ -21,6 +22,29 @@ const customPlugin = plugin(({ matchUtilities, theme }) => {
         },
       }),
     },
+    { values: colors, type: 'color' }
+  );
+
+  addUtilities({
+    '.state-layer': {
+      position: 'relative',
+      overflow: 'hidden',
+      '&.fixed': { position: 'fixed' },
+      '&.absolute': { position: 'absolute' },
+      '&::after': {
+        content: '""',
+        position: 'absolute',
+        insetBlockStart: '0',
+        insetInlineStart: '0',
+        width: '100%',
+        height: '100%',
+        zIndex: '1',
+        transition: 'background-color 100ms cubic-bezier(0.4, 0, 0.2, 1)',
+      },
+    },
+  });
+  matchUtilities(
+    { 'state-layer': value => ({ '&::after': { backgroundColor: value } }) },
     { values: colors, type: 'color' }
   );
 });
@@ -34,6 +58,8 @@ const config: Config = {
         fadeout: 'fadeout 200ms',
         slidein: 'slidein 200ms',
         slideout: 'slideout 200ms',
+        slideDown: 'slideDown 200ms',
+        slideUp: 'slideUp 200ms',
       },
       fontFamily: {
         sans: ['var(--font-family)', 'sans-serif'],
@@ -49,6 +75,14 @@ const config: Config = {
         slideout: {
           from: { transform: 'translateY(0%)' },
           to: { transform: 'translateY(100%)' },
+        },
+        slideDown: {
+          from: { height: '0' },
+          to: { height: 'var(--radix-collapsible-content-height)' },
+        },
+        slideUp: {
+          from: { height: 'var(--radix-collapsible-content-height)' },
+          to: { height: '0' },
         },
       },
     },

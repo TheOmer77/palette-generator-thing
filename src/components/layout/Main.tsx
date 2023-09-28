@@ -1,17 +1,17 @@
-import { Fragment, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
 import { useTheme } from 'hooks';
-import { generatePalette, generateVariablesCss } from 'utils';
+import { generatePalette, generateVariablesCss, toCamelCase } from 'utils';
 import { shades } from 'constants';
 
 const Main = () => {
-  const [primary, neutral, secondary, danger] = useTheme();
+  const { primary, neutral, danger, extras } = useTheme();
 
-  const colorGrids = useMemo(
-    () => [
+  const colorGrids = useMemo(() => {
+    const grids = [
       {
         id: 'primary',
         title: 'Primary',
@@ -23,22 +23,43 @@ const Main = () => {
         palette: generatePalette(neutral),
       },
       {
-        id: 'secondary',
-        title: 'Secondary',
-        palette: generatePalette(secondary),
-      },
-      {
         id: 'danger',
         title: 'Danger',
         palette: generatePalette(danger),
       },
-    ],
-    [danger, neutral, primary, secondary]
-  );
+      ...extras.map(({ name, value }, index) => ({
+        id:
+          typeof name === 'string' && name.length > 0
+            ? toCamelCase(name)
+            : `extra${index + 1}`,
+        title: name || `Extra ${index + 1}`,
+        palette: generatePalette(value),
+      })),
+    ];
+    // Return only grids with unique ids
+    return [...new Set(grids.map(({ id }) => id))].map(uid =>
+      grids.find(({ id }) => id === uid)
+    ) as typeof grids;
+  }, [danger, extras, neutral, primary]);
 
   const themeCss = useMemo(
-    () => generateVariablesCss({ primary, neutral, secondary, danger }),
-    [danger, neutral, primary, secondary]
+    () =>
+      generateVariablesCss(
+        extras.reduce(
+          (obj, { name, value }, index) => ({
+            ...obj,
+            [typeof name === 'string' && name.length > 0
+              ? toCamelCase(name)
+              : `extra${index + 1}`]: value,
+          }),
+          {
+            primary,
+            neutral,
+            danger,
+          }
+        )
+      ),
+    [danger, extras, neutral, primary]
   );
 
   return (
@@ -47,7 +68,7 @@ const Main = () => {
 
       <H2>Palettes</H2>
       {colorGrids.map(({ id, title, palette }) => (
-        <Fragment key={id}>
+        <div key={id} className='break-inside-avoid'>
           <H3>{title}</H3>
           <ColorGrid>
             {palette.map((color, index) => (
@@ -58,10 +79,10 @@ const Main = () => {
               />
             ))}
           </ColorGrid>
-        </Fragment>
+        </div>
       ))}
 
-      <H2>Theme CSS variables</H2>
+      <H2 className='break-before-page'>Theme CSS variables</H2>
       <CodeBlock language='css'>{themeCss}</CodeBlock>
     </main>
   );

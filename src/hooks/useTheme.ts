@@ -1,15 +1,64 @@
 import { useMemo } from 'react';
 import useGlobalState from './useGlobalState';
-import { getDangerColor, getNeutralColor, getSecondaryColor } from 'utils';
+import { getAutoDangerColor, getAutoNeutralColor } from 'utils';
+import {
+  dangerColorSuggestionNames,
+  dangerColorSuggestions,
+  generalColorSuggestionNames,
+  generalColorSuggestions,
+  neutralColorSuggestionNames,
+  neutralColorSuggestions,
+  type DangerColorSuggestion,
+  type GeneralColorSuggestion,
+  type NeutralColorSuggestion,
+} from 'constants/colorSuggestions';
 
 const useTheme = () => {
-  const [{ baseColor }] = useGlobalState();
+  const [
+    {
+      baseColors: { primary, neutral, danger, extras },
+    },
+  ] = useGlobalState();
 
-  const neutralColor = useMemo(() => getNeutralColor(baseColor), [baseColor]),
-    secondaryColor = useMemo(() => getSecondaryColor(baseColor), [baseColor]),
-    dangerColor = useMemo(() => getDangerColor(baseColor), [baseColor]);
+  const selectedNeutral = useMemo(
+      () =>
+        typeof neutral === 'string'
+          ? neutralColorSuggestionNames.includes(neutral)
+            ? neutralColorSuggestions[neutral as NeutralColorSuggestion]?.(
+                primary
+              )
+            : neutral
+          : getAutoNeutralColor(primary),
+      [neutral, primary]
+    ),
+    selectedDanger = useMemo(
+      () =>
+        typeof danger === 'string'
+          ? dangerColorSuggestionNames.includes(danger)
+            ? dangerColorSuggestions[danger as DangerColorSuggestion]?.(primary)
+            : danger
+          : getAutoDangerColor(primary),
+      [danger, primary]
+    ),
+    selectedExtras = useMemo(
+      () =>
+        extras?.map(({ name, value }) => ({
+          name,
+          value: generalColorSuggestionNames.includes(value)
+            ? generalColorSuggestions[value as GeneralColorSuggestion]?.(
+                primary
+              )
+            : value,
+        })) || [],
+      [extras, primary]
+    );
 
-  return [baseColor, neutralColor, secondaryColor, dangerColor];
+  return {
+    primary,
+    neutral: selectedNeutral,
+    danger: selectedDanger,
+    extras: selectedExtras,
+  };
 };
 
 export default useTheme;
