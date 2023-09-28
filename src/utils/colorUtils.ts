@@ -111,12 +111,7 @@ export const getColorVariantFn =
 export const getSaturationColorFn = (newSaturation: number) =>
   getColorVariantFn(({ h, l }) => ({ mode: 'okhsl', h, s: newSaturation, l }));
 
-/**
- * Get function to get a modified color with a given hue.
- *
- * If `addToExistingHue = true`, the new hue will be added to the original hue,
- * otherwise it will replace it.
- */
+/** Get function to get a modified color with a given hue. */
 export const getHueColorFn = (
   newHue: number,
   {
@@ -124,6 +119,10 @@ export const getHueColorFn = (
     limitSaturation = false,
     lightnessMode = 'hsl',
   }: {
+    /**
+     * If true, the new hue will be added to the original hue, otherwise it
+     * will replace it.
+     */
     addToExistingHue?: boolean;
     limitSaturation?: boolean;
     lightnessMode?: 'okhsl' | 'hsl';
