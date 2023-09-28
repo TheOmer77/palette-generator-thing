@@ -24,7 +24,7 @@ export const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(
         <DialogPortal>
           <DialogOverlay
             className='fixed inset-0 z-20 bg-neutral-950/50
-data-[state=closed]:animate-fadeout data-[state=open]:animate-fadein'
+data-[state=closed]:animate-fadeout data-[state=open]:animate-fadein print:hidden'
           />
           <DialogContent
             {...props}
