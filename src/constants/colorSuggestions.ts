@@ -37,7 +37,6 @@ export const neutralColorSuggestions = {
 export const neutralColorSuggestionNames = Object.keys(neutralColorSuggestions);
 export type NeutralColorSuggestion = keyof typeof neutralColorSuggestions;
 
-/** NOT FINAL! Number is hue in OKHSL/OKLCH */
 export const dangerColorSuggestions = {
   danger25: getHueColorFn(25, { limitSaturation: true }),
   danger30: getHueColorFn(30, { limitSaturation: true }),
