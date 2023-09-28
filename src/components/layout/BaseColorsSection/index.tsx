@@ -7,6 +7,7 @@ import {
 
 import ColorListItem from './ColorListItem';
 import ColorSuggestionsBox from './ColorSuggestionsBox';
+import RadioListItem from './RadioListItem';
 import {
   AccordionList,
   Collapsible,
@@ -14,7 +15,6 @@ import {
   ListItem,
   ListItemIcon,
   ListSubheader,
-  Radio,
   Separator,
 } from 'components/general';
 import { ColorInput } from 'components/colors';
@@ -36,31 +36,6 @@ import {
 import type { AnyStringWithAutocomplete } from 'types';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
-
-const RadioListItem = ({
-  checked = false,
-  disabled = false,
-  children,
-  ...props
-}: {
-  checked?: boolean;
-  disabled?: boolean;
-  children?: string;
-} & ComponentPropsWithoutRef<typeof ListItem>) => (
-  <ListItem
-    {...props}
-    disabled={disabled}
-    role='radio'
-    aria-checked={checked}
-    aria-disabled={disabled}
-    aria-label={children}
-  >
-    <Radio checked={checked} disabled={disabled} className='z-10 me-4' asChild>
-      <span />
-    </Radio>
-    {children}
-  </ListItem>
-);
 
 const BaseColorsSection = forwardRef<
   HTMLElement,
