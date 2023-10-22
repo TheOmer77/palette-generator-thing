@@ -35,7 +35,7 @@ scrollbar-thumb-neutral-500/30 print:hidden'
   ) : (
     <SheetWithFab label='Options' fabIcon={<TuneIcon />}>
       <AccordionList
-        className='overflow-y-auto scrollbar-thin
+        className='overflow-y-auto pb-2 scrollbar-thin
 scrollbar-thumb-neutral-500/30 print:hidden'
         value={openItem}
         onValueChange={handleValueChange}
