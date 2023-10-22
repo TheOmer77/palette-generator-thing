@@ -9,7 +9,10 @@ const GeneratedCodeSection = () => {
   // TODO: Actual functionality lol
   return (
     <section>
-      <ListSubheader className='bg-neutral-50 dark:bg-neutral-900'>
+      <ListSubheader
+        className='dark:bg-neutral-900 md:bg-neutral-50
+dark:md:bg-neutral-900'
+      >
         Generated code
       </ListSubheader>
       <AccordionListItem

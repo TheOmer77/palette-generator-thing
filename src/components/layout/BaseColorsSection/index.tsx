@@ -119,7 +119,10 @@ const BaseColorsSection = forwardRef<
 
   return (
     <section {...props} ref={ref}>
-      <ListSubheader className='bg-neutral-50 dark:bg-neutral-900'>
+      <ListSubheader
+        className='dark:bg-neutral-900 md:bg-neutral-50
+dark:md:bg-neutral-900'
+      >
         Base colors
       </ListSubheader>
       <ColorListItem
