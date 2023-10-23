@@ -56,6 +56,7 @@ const config: Config = {
       animation: {
         fadein: 'fadein 200ms',
         fadeout: 'fadeout 200ms',
+        'fadeout-fast': 'fadeout 150ms',
         slidein: 'slidein 200ms',
         slideout: 'slideout 200ms',
         slideDown: 'slideDown 200ms',
