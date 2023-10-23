@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemIcon,
   ListSubheader,
+  RadioGroup,
   Separator,
 } from 'components/general';
 import { ColorInput } from 'components/colors';
@@ -146,155 +147,140 @@ dark:md:bg-neutral-900'
         </div>
       </ColorListItem>
 
-      <ColorListItem
-        value='neutral'
-        color={themeColors.neutral}
-        title='Neutral'
-        role='radiogroup'
+      <RadioGroup
+        asChild
+        value={
+          neutralIsAuto
+            ? 'auto'
+            : neutralIsSuggestion
+            ? 'suggestions'
+            : neutralIsCustom
+            ? 'custom'
+            : undefined
+        }
+        onValueChange={newValue =>
+          ((newValue === 'auto' && !neutralIsAuto) ||
+            (newValue === 'suggestions' && !neutralIsSuggestion) ||
+            (newValue === 'custom' && !neutralIsCustom)) &&
+          setGlobalState({
+            baseColors: {
+              ...baseColors,
+              neutral:
+                newValue === 'suggestions'
+                  ? neutralColorSuggestionNames[0]
+                  : newValue === 'custom'
+                  ? getAutoNeutralColor(baseColors.primary)
+                  : undefined,
+            },
+          })
+        }
       >
-        <RadioListItem
-          checked={neutralIsAuto}
-          onClick={() =>
-            !neutralIsAuto &&
-            setGlobalState({
-              baseColors: { ...baseColors, neutral: undefined },
-            })
-          }
+        <ColorListItem
+          value='neutral'
+          color={themeColors.neutral}
+          title='Neutral'
         >
-          Auto
-        </RadioListItem>
-        <RadioListItem
-          checked={neutralIsSuggestion}
-          onClick={() =>
-            !neutralIsSuggestion &&
-            setGlobalState({
-              baseColors: {
-                ...baseColors,
-                neutral: neutralColorSuggestionNames[0],
-              },
-            })
-          }
-        >
-          Suggestions
-        </RadioListItem>
-        <Collapsible open={neutralIsSuggestion}>
-          <ColorSuggestionsBox
-            baseColor={baseColors.primary}
-            colorSuggestions={neutralColorSuggestions}
-            value={baseColors.neutral as NeutralColorSuggestion}
-            onValueChange={suggestionName =>
-              setGlobalState({
-                baseColors: { ...baseColors, neutral: suggestionName },
-              })
-            }
-          />
-        </Collapsible>
-        <RadioListItem
-          checked={neutralIsCustom}
-          onClick={() =>
-            !neutralIsCustom &&
-            setGlobalState({
-              baseColors: {
-                ...baseColors,
-                neutral: getAutoNeutralColor(baseColors.primary),
-              },
-            })
-          }
-        >
-          Custom
-        </RadioListItem>
-        <Collapsible open={neutralIsCustom}>
-          <div className='p-2'>
-            <ListItem asChild>
-              <ColorInput
-                id='input-neutral-color'
-                value={baseColors.neutral || ''}
-                onChange={newColor => {
-                  setGlobalState({
-                    baseColors: { ...baseColors, neutral: newColor },
-                  });
-                }}
-                withRandomBtn
-              />
-            </ListItem>
-          </div>
-        </Collapsible>
-      </ColorListItem>
+          <RadioListItem value='auto'>Auto</RadioListItem>
+          <RadioListItem value='suggestions'>Suggestions</RadioListItem>
+          <Collapsible open={neutralIsSuggestion}>
+            <ColorSuggestionsBox
+              baseColor={baseColors.primary}
+              colorSuggestions={neutralColorSuggestions}
+              value={baseColors.neutral as NeutralColorSuggestion}
+              onValueChange={suggestionName =>
+                setGlobalState({
+                  baseColors: { ...baseColors, neutral: suggestionName },
+                })
+              }
+            />
+          </Collapsible>
+          <RadioListItem value='custom'>Custom</RadioListItem>
+          <Collapsible open={neutralIsCustom}>
+            <div className='p-2'>
+              <ListItem asChild>
+                <ColorInput
+                  id='input-neutral-color'
+                  value={baseColors.neutral || ''}
+                  onChange={newColor => {
+                    setGlobalState({
+                      baseColors: { ...baseColors, neutral: newColor },
+                    });
+                  }}
+                  withRandomBtn
+                />
+              </ListItem>
+            </div>
+          </Collapsible>
+        </ColorListItem>
+      </RadioGroup>
 
-      <ColorListItem
-        value='danger'
-        color={themeColors.danger}
-        title='Danger'
-        role='radiogroup'
+      <RadioGroup
+        asChild
+        value={
+          dangerIsAuto
+            ? 'auto'
+            : dangerIsSuggestion
+            ? 'suggestions'
+            : dangerIsCustom
+            ? 'custom'
+            : undefined
+        }
+        onValueChange={newValue =>
+          ((newValue === 'auto' && !dangerIsAuto) ||
+            (newValue === 'suggestions' && !dangerIsSuggestion) ||
+            (newValue === 'custom' && !dangerIsCustom)) &&
+          setGlobalState({
+            baseColors: {
+              ...baseColors,
+              danger:
+                newValue === 'suggestions'
+                  ? dangerColorSuggestionNames[0]
+                  : newValue === 'custom'
+                  ? getAutoDangerColor(baseColors.primary)
+                  : undefined,
+            },
+          })
+        }
       >
-        <RadioListItem
-          checked={dangerIsAuto}
-          onClick={() =>
-            !dangerIsAuto &&
-            setGlobalState({
-              baseColors: { ...baseColors, danger: undefined },
-            })
-          }
+        <ColorListItem
+          value='danger'
+          color={themeColors.danger}
+          title='Danger'
+          role='radiogroup'
         >
-          Auto
-        </RadioListItem>
-        <RadioListItem
-          checked={dangerIsSuggestion}
-          onClick={() =>
-            !dangerIsSuggestion &&
-            setGlobalState({
-              baseColors: {
-                ...baseColors,
-                danger: dangerColorSuggestionNames[0],
-              },
-            })
-          }
-        >
-          Suggestions
-        </RadioListItem>
-        <Collapsible open={dangerIsSuggestion}>
-          <ColorSuggestionsBox
-            baseColor={baseColors.primary}
-            colorSuggestions={dangerColorSuggestions}
-            value={baseColors.danger as DangerColorSuggestion}
-            onValueChange={suggestionName =>
-              setGlobalState({
-                baseColors: { ...baseColors, danger: suggestionName },
-              })
-            }
-          />
-        </Collapsible>
-        <RadioListItem
-          checked={dangerIsCustom}
-          onClick={() =>
-            !dangerIsCustom &&
-            setGlobalState({
-              baseColors: {
-                ...baseColors,
-                danger: getAutoDangerColor(baseColors.primary),
-              },
-            })
-          }
-        >
-          Custom
-        </RadioListItem>
-        <Collapsible open={dangerIsCustom}>
-          <div className='p-2'>
-            <ListItem asChild>
-              <ColorInput
-                id='input-danger-color'
-                value={baseColors.danger || ''}
-                onChange={newColor => {
-                  setGlobalState({
-                    baseColors: { ...baseColors, danger: newColor },
-                  });
-                }}
-                withRandomBtn
-              />
-            </ListItem>
-          </div>
-        </Collapsible>
-      </ColorListItem>
+          <RadioListItem value='auto'>Auto</RadioListItem>
+          <RadioListItem value='suggestions'>Suggestions</RadioListItem>
+          <Collapsible open={dangerIsSuggestion}>
+            <ColorSuggestionsBox
+              baseColor={baseColors.primary}
+              colorSuggestions={dangerColorSuggestions}
+              value={baseColors.danger as DangerColorSuggestion}
+              onValueChange={suggestionName =>
+                setGlobalState({
+                  baseColors: { ...baseColors, danger: suggestionName },
+                })
+              }
+            />
+          </Collapsible>
+          <RadioListItem value='custom'>Custom</RadioListItem>
+          <Collapsible open={dangerIsCustom}>
+            <div className='p-2'>
+              <ListItem asChild>
+                <ColorInput
+                  id='input-danger-color'
+                  value={baseColors.danger || ''}
+                  onChange={newColor => {
+                    setGlobalState({
+                      baseColors: { ...baseColors, danger: newColor },
+                    });
+                  }}
+                  withRandomBtn
+                />
+              </ListItem>
+            </div>
+          </Collapsible>
+        </ColorListItem>
+      </RadioGroup>
 
       <Separator />
       {baseColors.extras?.map(({ name, value }, index) => {
@@ -338,21 +324,24 @@ dark:md:bg-neutral-900'
                 />
               </ListItem>
             </div>
-            <div role='radiogroup'>
-              <RadioListItem
-                checked={colorIsSuggestion}
-                onClick={() =>
-                  !colorIsSuggestion &&
-                  updateExtraColor(
-                    index,
-                    generalColorSuggestionNames[
-                      index % generalColorSuggestionNames.length
-                    ]
-                  )
-                }
-              >
-                Suggestions
-              </RadioListItem>
+            <RadioGroup
+              value={colorIsSuggestion ? 'suggestions' : 'custom'}
+              onValueChange={newValue =>
+                ((newValue === 'suggestions' && !colorIsSuggestion) ||
+                  (newValue === 'custom' && !colorIsCustom)) &&
+                updateExtraColor(
+                  index,
+                  newValue === 'suggestions'
+                    ? generalColorSuggestionNames[
+                        index % generalColorSuggestionNames.length
+                      ]
+                    : generalColorSuggestions[
+                        value as GeneralColorSuggestion
+                      ]?.(baseColors.primary)
+                )
+              }
+            >
+              <RadioListItem value='suggestions'>Suggestions</RadioListItem>
               <Collapsible open={colorIsSuggestion}>
                 <ColorSuggestionsBox
                   baseColor={baseColors.primary}
@@ -363,20 +352,7 @@ dark:md:bg-neutral-900'
                   }
                 />
               </Collapsible>
-              <RadioListItem
-                checked={colorIsCustom}
-                onClick={() =>
-                  !colorIsCustom &&
-                  updateExtraColor(
-                    index,
-                    generalColorSuggestions[value as GeneralColorSuggestion]?.(
-                      baseColors.primary
-                    )
-                  )
-                }
-              >
-                Custom
-              </RadioListItem>
+              <RadioListItem value='custom'>Custom</RadioListItem>
               <Collapsible open={colorIsCustom}>
                 <div className='p-2'>
                   <ColorInput
@@ -389,7 +365,7 @@ dark:md:bg-neutral-900'
                   />
                 </div>
               </Collapsible>
-            </div>
+            </RadioGroup>
             <ListItem onClick={() => removeExtraColor(index)}>
               <ListItemIcon>
                 <DeleteIcon />
