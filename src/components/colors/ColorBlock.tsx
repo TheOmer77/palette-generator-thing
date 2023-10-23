@@ -35,7 +35,10 @@ hover:state-layer-neutral-500/20 focus-visible:outline-none
 focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`,
             isHexColorLight(value) ? 'text-black' : 'text-white'
           )}
-          aria-label='Copy color value'
+          // Hex color has spaces so it's read correctly by screen readers
+          aria-label={`${label} - ${value
+            .split('')
+            .join(' ')} - Copy color value`}
           onClick={copyValue}
         >
           <span
