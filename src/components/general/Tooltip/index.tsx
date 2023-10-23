@@ -28,6 +28,10 @@ data-[state=delayed-open]:data-[side=bottom]:animate-slideDownAndFade
 data-[state=delayed-open]:data-[side=left]:animate-slideLeftAndFade
 data-[state=delayed-open]:data-[side=right]:animate-slideRightAndFade
 data-[state=delayed-open]:data-[side=top]:animate-slideUpAndFade
+data-[state=instant-open]:data-[side=bottom]:animate-slideDownAndFade
+data-[state=instant-open]:data-[side=left]:animate-slideLeftAndFade
+data-[state=instant-open]:data-[side=right]:animate-slideRightAndFade
+data-[state=instant-open]:data-[side=top]:animate-slideUpAndFade
 dark:bg-neutral-900 dark:text-neutral-200`,
             className
           )}
