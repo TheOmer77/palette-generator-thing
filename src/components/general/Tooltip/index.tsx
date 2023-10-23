@@ -22,7 +22,7 @@ export const Tooltip = ({ title, side, className, children }: TooltipProps) => (
         <TooltipContent
           side={side}
           className={clsx(
-            `select-none rounded bg-neutral-50 p-2 text-sm leading-none
+            `select-none rounded-lg bg-neutral-50 p-2 text-sm leading-none
 text-neutral-800 shadow-sm shadow-neutral-950/25 will-change-[transform,opacity]
 data-[state=closed]:animate-fadeout-fast
 data-[state=delayed-open]:data-[side=bottom]:animate-slideDownAndFade
