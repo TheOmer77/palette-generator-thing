@@ -10,7 +10,7 @@ const GeneratedCodeSection = () => {
   return (
     <section>
       <ListSubheader
-        className='dark:bg-neutral-900 md:bg-neutral-50
+        className='bg-white dark:bg-neutral-900 md:bg-neutral-50
 dark:md:bg-neutral-900'
       >
         Generated code
