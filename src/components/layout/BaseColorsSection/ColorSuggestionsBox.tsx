@@ -24,7 +24,11 @@ const ColorSuggestionsBox = <T extends ColorSuggestions>({
     <ToolbarToggleGroup
       type='single'
       value={value as string}
-      onValueChange={onValueChange}
+      onValueChange={suggestionName =>
+        typeof suggestionName === 'string' &&
+        suggestionName.length > 0 &&
+        onValueChange?.(suggestionName)
+      }
       className='flex flex-row flex-wrap gap-2'
     >
       {Object.keys(colorSuggestions).map(suggestionName => {
