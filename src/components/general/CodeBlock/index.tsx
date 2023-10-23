@@ -1,7 +1,7 @@
 import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { Highlight } from 'prism-react-renderer';
 
-import { IconButton } from 'components/general';
+import { IconButton, Tooltip } from 'components/general';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 import { cn } from 'utils';
 
@@ -28,13 +28,15 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
         className='relative overflow-hidden rounded-lg bg-neutral-50
 dark:bg-neutral-900'
       >
-        <IconButton
-          title='Copy code'
-          className='absolute end-2 top-2 print:hidden'
-          onClick={copyCode}
-        >
-          {justCopied ? <DoneIcon /> : <CopyIcon />}
-        </IconButton>
+        <Tooltip title='Copy code'>
+          <IconButton
+            aria-label='Copy code'
+            className='absolute end-2 top-2 print:hidden'
+            onClick={copyCode}
+          >
+            {justCopied ? <DoneIcon /> : <CopyIcon />}
+          </IconButton>
+        </Tooltip>
         <Highlight
           language={language}
           code={children}
