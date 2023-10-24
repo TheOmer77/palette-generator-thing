@@ -1,14 +1,4 @@
-import {
-  formatHex,
-  formatRgb,
-  modeRgb,
-  useMode as loadMode,
-  type Color,
-  type Rgb,
-} from 'culori/fn';
-import { fixupRgb } from 'utils';
-
-const rgb = loadMode(modeRgb);
+import { formatHex, formatRgb, type Color } from 'culori/fn';
 
 type ColorFormat = {
   id: string;
@@ -25,15 +15,13 @@ export const colorFormats = [
   {
     id: 'rgb',
     displayName: 'RGB',
-    toString: color => formatRgb(color) as string,
+    toString: color => (formatRgb(color) as string).replaceAll(',', ''),
   },
   {
     id: 'rgbRaw',
     displayName: 'RGB (Raw)',
-    toString: color => {
-      const { r, g, b } = rgb(color) as Rgb;
-      return [fixupRgb(r), fixupRgb(g), fixupRgb(b)].join(' ');
-    },
+    toString: color =>
+      (formatRgb(color) as string).replaceAll(',', '').slice(4, -1),
   },
   { id: 'hsl', displayName: 'HSL' },
   { id: 'hslRaw', displayName: 'HSL (Raw)' },
