@@ -34,10 +34,10 @@ const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),
   rgb = loadMode(modeRgb);
 
-const fixupRgb = (value: number) =>
-  Math.round(Math.max(0, Math.min(1, value)) * 255);
-
 export type RgbArray = [red: number, green: number, blue: number];
+
+export const fixupRgb = (value: number) =>
+  Math.round(Math.max(0, Math.min(1, value)) * 255);
 
 export const isValidHexColor = (value: string, withAlpha = false) => {
   const match = /^#?([0-9A-F]{3,8})$/i.exec(value);
@@ -59,11 +59,6 @@ export const isHexColorLight = (hexColor: string) => {
     0.7152 * fixupRgb(rgbColor.g) +
     0.0722 * fixupRgb(rgbColor.b);
   return luminance >= 140;
-};
-
-export const toRgbArray = (color: Rgb | string): RgbArray => {
-  const { r, g, b } = typeof color === 'string' ? (rgb(color) as Rgb) : color;
-  return [fixupRgb(r), fixupRgb(g), fixupRgb(b)];
 };
 
 export const autoAddHexHash = (value: string) =>

@@ -8,7 +8,7 @@ const ThemeStyle = () => {
   const { primary, neutral, danger } = useTheme();
 
   const themeCss = useMemo(
-    () => generateVariablesCss({ primary, neutral, danger }),
+    () => generateVariablesCss({ primary, neutral, danger }, 'rgbRaw'),
     [danger, neutral, primary]
   );
 

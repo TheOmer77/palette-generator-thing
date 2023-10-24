@@ -1,14 +1,21 @@
-import { MAX_MAIN_SHADE, MIN_MAIN_SHADE, shades } from 'constants';
+import {
+  MAX_MAIN_SHADE,
+  MIN_MAIN_SHADE,
+  colorFormats,
+  shades,
+} from 'constants';
 import {
   generatePalette,
   getClosestShade,
   getContrastShade,
-  toRgbArray,
 } from './colorUtils';
 
-export const generateVariablesCss = (baseColors: {
-  [colorName: string]: string;
-}) =>
+export const generateVariablesCss = (
+  baseColors: {
+    [colorName: string]: string;
+  },
+  colorFormat: (typeof colorFormats)[number]['id'] = 'hex'
+) =>
   `:root {
   ${Object.keys(baseColors)
     .map(
@@ -16,7 +23,9 @@ export const generateVariablesCss = (baseColors: {
 ${generatePalette(baseColors[key])
   .map(
     (color, index) =>
-      `  --color-${key}-${shades[index]}: ${toRgbArray(color).join(' ')};`
+      `  --color-${key}-${shades[index]}: ${colorFormats
+        .find(({ id }) => id === colorFormat)
+        ?.toString?.(color)};`
   )
   .join('\n')}
   
