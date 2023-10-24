@@ -6,7 +6,7 @@ import {
   ListSubheader,
   RadioGroup,
 } from 'components/general';
-import RadioListItem from '../BaseColorsSection/RadioListItem';
+import RadioListItem from '../RadioListItem';
 import { colorFormats } from 'constants';
 import { useGlobalState } from 'hooks';
 

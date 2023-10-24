@@ -2,7 +2,7 @@ import { forwardRef, useCallback, type ComponentPropsWithoutRef } from 'react';
 
 import ColorListItem from './ColorListItem';
 import ColorSuggestionsBox from './ColorSuggestionsBox';
-import RadioListItem from './RadioListItem';
+import RadioListItem from '../RadioListItem';
 import {
   Collapsible,
   Input,
