@@ -6,7 +6,9 @@ import {
   toRgbArray,
 } from './colorUtils';
 
-const generateVariablesCss = (baseColors: { [colorName: string]: string }) =>
+export const generateVariablesCss = (baseColors: {
+  [colorName: string]: string;
+}) =>
   `:root {
   ${Object.keys(baseColors)
     .map(
@@ -40,5 +42,3 @@ ${generatePalette(baseColors[key])
     )
     .join('\n\n  ')}
 }`;
-
-export default generateVariablesCss;
