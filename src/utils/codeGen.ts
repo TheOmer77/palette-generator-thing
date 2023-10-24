@@ -14,7 +14,7 @@ export const generateVariablesCss = (
   baseColors: {
     [colorName: string]: string;
   },
-  colorFormat: (typeof colorFormats)[number]['id'] = 'hex'
+  colorFormat: keyof typeof colorFormats = 'hex'
 ) =>
   `:root {
   ${Object.keys(baseColors)
@@ -23,9 +23,9 @@ export const generateVariablesCss = (
 ${generatePalette(baseColors[key])
   .map(
     (color, index) =>
-      `  --color-${key}-${shades[index]}: ${colorFormats
-        .find(({ id }) => id === colorFormat)
-        ?.toString?.(color)};`
+      `  --color-${key}-${shades[index]}: ${colorFormats[
+        colorFormat
+      ]?.toString?.(color)};`
   )
   .join('\n')}
   

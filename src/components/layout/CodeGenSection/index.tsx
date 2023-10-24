@@ -82,16 +82,15 @@ const CodeGenSection = forwardRef<
               <ListItemText
                 primary='Color format'
                 secondary={
-                  colorFormats.find(({ id }) => id === codeGen.colorFormat)
-                    ?.displayName || 'None'
+                  colorFormats[codeGen.colorFormat]?.displayName || 'None'
                 }
               />
             }
             value='codeGen-colorFormat'
           >
-            {colorFormats.map(({ id, displayName }) => (
-              <RadioListItem key={id} value={id}>
-                {displayName}
+            {Object.keys(colorFormats).map(key => (
+              <RadioListItem key={key} value={key}>
+                {colorFormats[key as keyof typeof colorFormats].displayName}
               </RadioListItem>
             ))}
           </AccordionListItem>

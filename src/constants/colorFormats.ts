@@ -13,41 +13,34 @@ const lch = loadMode(modeLch),
   oklch = loadMode(modeOklch);
 
 type ColorFormat = {
-  id: string;
   displayName: string;
   toString: (color: string | Color) => string;
 };
 
-export const colorFormats = [
-  {
-    id: 'hex',
+export const colorFormats = {
+  hex: {
     displayName: 'Hex',
     toString: color => formatHex(color) as string,
   },
-  {
-    id: 'rgb',
+  rgb: {
     displayName: 'RGB',
     toString: color => (formatRgb(color) as string).replaceAll(',', ''),
   },
-  {
-    id: 'rgbRaw',
+  rgbRaw: {
     displayName: 'RGB (Raw)',
     toString: color =>
       (formatRgb(color) as string).replaceAll(',', '').slice(4, -1),
   },
-  {
-    id: 'hsl',
+  hsl: {
     displayName: 'HSL',
     toString: color => (formatHsl(color) as string).replaceAll(',', ''),
   },
-  {
-    id: 'hslRaw',
+  hslRaw: {
     displayName: 'HSL (Raw)',
     toString: color =>
       (formatHsl(color) as string).replaceAll(',', '').slice(4, -1),
   },
-  {
-    id: 'lch',
+  lch: {
     displayName: 'LCH',
     toString: color =>
       `lch(${(formatCss(lch(color)) as string)
@@ -56,8 +49,7 @@ export const colorFormats = [
         .map(num => Math.round(Number(num) * 100) / 100)
         .join(' ')})`,
   },
-  {
-    id: 'lchRaw',
+  lchRaw: {
     displayName: 'LCH (Raw)',
     toString: color =>
       (formatCss(lch(color)) as string)
@@ -66,8 +58,7 @@ export const colorFormats = [
         .map(num => Math.round(Number(num) * 100) / 100)
         .join(' '),
   },
-  {
-    id: 'oklch',
+  oklch: {
     displayName: 'OKLCH',
     toString: color =>
       `oklch(${(formatCss(oklch(color)) as string)
@@ -76,8 +67,7 @@ export const colorFormats = [
         .map(num => Math.round(Number(num) * 100) / 100)
         .join(' ')})`,
   },
-  {
-    id: 'oklchRaw',
+  oklchRaw: {
     displayName: 'OKLCH (Raw)',
     toString: color =>
       (formatCss(oklch(color)) as string)
@@ -86,4 +76,4 @@ export const colorFormats = [
         .map(num => Math.round(Number(num) * 100) / 100)
         .join(' '),
   },
-] as const satisfies readonly ColorFormat[];
+} as const satisfies Record<string, ColorFormat>;

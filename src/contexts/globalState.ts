@@ -30,7 +30,7 @@ export interface GlobalState {
     format: 'none' | 'css' | 'json' | 'custom';
     /** Color format for generated code, if format is `css` or `json`.
      * If format is `none` or `custom`, has no effect. */
-    colorFormat: (typeof colorFormats)[number]['id'];
+    colorFormat: keyof typeof colorFormats;
   };
 }
 
