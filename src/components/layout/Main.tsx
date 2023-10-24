@@ -84,8 +84,12 @@ const Main = () => {
         </div>
       ))}
 
-      <H2 className='break-before-page'>Theme CSS variables</H2>
-      <CodeBlock language='css'>{themeCss}</CodeBlock>
+      {codeGen.format !== 'none' && (
+        <>
+          <H2 className='break-before-page'>Theme CSS variables</H2>
+          <CodeBlock language='css'>{themeCss}</CodeBlock>
+        </>
+      )}
     </main>
   );
 };

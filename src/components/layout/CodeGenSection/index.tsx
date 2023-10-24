@@ -38,13 +38,24 @@ const CodeGenSection = forwardRef<
         }
       >
         <AccordionListItem
-          title={<ListItemText primary='Format' secondary='CSS variables' />}
+          title={
+            <ListItemText
+              primary='Format'
+              secondary={
+                codeGen.format === 'css'
+                  ? 'CSS variables'
+                  : codeGen.format === 'json'
+                  ? 'JSON'
+                  : codeGen.format === 'custom'
+                  ? 'Custom'
+                  : 'None'
+              }
+            />
+          }
           value='codeGen-format'
           role='radiogroup'
         >
-          <RadioListItem value='none' disabled>
-            None
-          </RadioListItem>
+          <RadioListItem value='none'>None</RadioListItem>
           <RadioListItem value='css'>CSS variables</RadioListItem>
           <RadioListItem value='json' disabled>
             JSON
@@ -54,38 +65,39 @@ const CodeGenSection = forwardRef<
           </RadioListItem>
         </AccordionListItem>
       </RadioGroup>
-      {/* TODO: Show codeGen-colorFormat only if codeGen-format isn't None of Custom */}
-      <RadioGroup
-        asChild
-        value={codeGen.colorFormat}
-        onValueChange={newValue =>
-          setGlobalState({
-            codeGen: {
-              ...codeGen,
-              colorFormat: newValue as typeof codeGen.colorFormat,
-            },
-          })
-        }
-      >
-        <AccordionListItem
-          title={
-            <ListItemText
-              primary='Color format'
-              secondary={
-                colorFormats.find(({ id }) => id === codeGen.colorFormat)
-                  ?.displayName || 'None'
-              }
-            />
+      {['css', 'json'].includes(codeGen.format) && (
+        <RadioGroup
+          asChild
+          value={codeGen.colorFormat}
+          onValueChange={newValue =>
+            setGlobalState({
+              codeGen: {
+                ...codeGen,
+                colorFormat: newValue as typeof codeGen.colorFormat,
+              },
+            })
           }
-          value='codeGen-colorFormat'
         >
-          {colorFormats.map(({ id, displayName }) => (
-            <RadioListItem key={id} value={id}>
-              {displayName}
-            </RadioListItem>
-          ))}
-        </AccordionListItem>
-      </RadioGroup>
+          <AccordionListItem
+            title={
+              <ListItemText
+                primary='Color format'
+                secondary={
+                  colorFormats.find(({ id }) => id === codeGen.colorFormat)
+                    ?.displayName || 'None'
+                }
+              />
+            }
+            value='codeGen-colorFormat'
+          >
+            {colorFormats.map(({ id, displayName }) => (
+              <RadioListItem key={id} value={id}>
+                {displayName}
+              </RadioListItem>
+            ))}
+          </AccordionListItem>
+        </RadioGroup>
+      )}
     </section>
   );
 });
