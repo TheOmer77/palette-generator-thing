@@ -1,3 +1,5 @@
+import { forwardRef, type ComponentPropsWithoutRef } from 'react';
+
 import {
   AccordionListItem,
   ListItemText,
@@ -5,10 +7,13 @@ import {
 } from 'components/general';
 import RadioListItem from '../BaseColorsSection/RadioListItem';
 
-const GeneratedCodeSection = () => {
+const GeneratedCodeSection = forwardRef<
+  HTMLElement,
+  ComponentPropsWithoutRef<'section'>
+>((props, ref) => {
   // TODO: Actual functionality lol
   return (
-    <section>
+    <section {...props} ref={ref}>
       <ListSubheader
         className='bg-white dark:bg-neutral-900 md:bg-neutral-50
 dark:md:bg-neutral-900'
@@ -17,7 +22,7 @@ dark:md:bg-neutral-900'
       </ListSubheader>
       <AccordionListItem
         title={<ListItemText primary='Format' secondary='CSS variables' />}
-        value='code-format'
+        value='codeGen-format'
         role='radiogroup'
       >
         <RadioListItem disabled>None</RadioListItem>
@@ -25,10 +30,10 @@ dark:md:bg-neutral-900'
         <RadioListItem disabled>JSON</RadioListItem>
         <RadioListItem disabled>Custom</RadioListItem>
       </AccordionListItem>
-      {/* TODO: Show code-colors only if code-format isn't None of Custom */}
+      {/* TODO: Show codeGen-colorFormat only if codeGen-format isn't None of Custom */}
       <AccordionListItem
         title={<ListItemText primary='Color format' secondary='RGB (raw)' />}
-        value='code-colors'
+        value='codeGen-colorFormat'
         role='radiogroup'
       >
         <RadioListItem disabled>Hex</RadioListItem>
@@ -43,6 +48,7 @@ dark:md:bg-neutral-900'
       </AccordionListItem>
     </section>
   );
-};
+});
+GeneratedCodeSection.displayName = 'GeneratedCodeSection';
 
 export default GeneratedCodeSection;
