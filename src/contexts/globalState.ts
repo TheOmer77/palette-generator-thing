@@ -5,6 +5,7 @@ import type {
   GeneralColorSuggestion,
   NeutralColorSuggestion,
 } from 'constants/colorSuggestions';
+import { colorFormats } from 'constants';
 import type { AnyStringWithAutocomplete } from 'types';
 
 export interface GlobalState {
@@ -24,6 +25,13 @@ export interface GlobalState {
       value: AnyStringWithAutocomplete<GeneralColorSuggestion>;
     }[];
   };
+  codeGen: {
+    /** Format for generated theme code. */
+    format: 'none' | 'css' | 'json' | 'custom';
+    /** Color format for generated code, if format is `css` or `json`.
+     * If format is `none` or `custom`, has no effect. */
+    colorFormat: (typeof colorFormats)[number]['id'];
+  };
 }
 
 export const initialState: GlobalState = {
@@ -32,6 +40,10 @@ export const initialState: GlobalState = {
     neutral: undefined,
     danger: undefined,
     extras: [],
+  },
+  codeGen: {
+    format: 'none',
+    colorFormat: 'hex',
   },
 };
 const initialDispatch = () => {
