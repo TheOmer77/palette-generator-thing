@@ -25,16 +25,35 @@ const CodeGenSection = forwardRef<
         Generated code
       </ListSubheader>
       {/* TODO: RadioGroup + actual functionality lol */}
-      <AccordionListItem
-        title={<ListItemText primary='Format' secondary='CSS variables' />}
-        value='codeGen-format'
-        role='radiogroup'
+      <RadioGroup
+        asChild
+        value={codeGen.format}
+        onValueChange={newValue =>
+          setGlobalState({
+            codeGen: {
+              ...codeGen,
+              format: newValue as typeof codeGen.format,
+            },
+          })
+        }
       >
-        <RadioListItem disabled>None</RadioListItem>
-        <RadioListItem checked>CSS variables</RadioListItem>
-        <RadioListItem disabled>JSON</RadioListItem>
-        <RadioListItem disabled>Custom</RadioListItem>
-      </AccordionListItem>
+        <AccordionListItem
+          title={<ListItemText primary='Format' secondary='CSS variables' />}
+          value='codeGen-format'
+          role='radiogroup'
+        >
+          <RadioListItem value='none' disabled>
+            None
+          </RadioListItem>
+          <RadioListItem value='css'>CSS variables</RadioListItem>
+          <RadioListItem value='json' disabled>
+            JSON
+          </RadioListItem>
+          <RadioListItem value='custom' disabled>
+            Custom
+          </RadioListItem>
+        </AccordionListItem>
+      </RadioGroup>
       {/* TODO: Show codeGen-colorFormat only if codeGen-format isn't None of Custom */}
       <RadioGroup
         asChild
