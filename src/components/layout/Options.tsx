@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Header from './Header';
 import BaseColorsSection from './BaseColorsSection';
-import GeneratedCodeSection from './GeneratedCodeSection';
+import CodeGenSection from './CodeGenSection';
 import SheetWithFab from './SheetWithFab';
 import Sidebar from './Sidebar';
 import { AccordionList } from 'components/general';
@@ -29,7 +29,7 @@ scrollbar-thumb-neutral-500/30 print:hidden'
         onValueChange={handleValueChange}
       >
         <BaseColorsSection />
-        <GeneratedCodeSection />
+        <CodeGenSection />
       </AccordionList>
     </Sidebar>
   ) : (
@@ -41,7 +41,7 @@ scrollbar-thumb-neutral-500/30 print:hidden'
         onValueChange={handleValueChange}
       >
         <BaseColorsSection />
-        <GeneratedCodeSection />
+        <CodeGenSection />
       </AccordionList>
     </SheetWithFab>
   );

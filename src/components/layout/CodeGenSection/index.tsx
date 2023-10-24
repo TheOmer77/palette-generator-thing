@@ -7,7 +7,7 @@ import {
 } from 'components/general';
 import RadioListItem from '../BaseColorsSection/RadioListItem';
 
-const GeneratedCodeSection = forwardRef<
+const CodeGenSection = forwardRef<
   HTMLElement,
   ComponentPropsWithoutRef<'section'>
 >((props, ref) => {
@@ -49,6 +49,6 @@ dark:md:bg-neutral-900'
     </section>
   );
 });
-GeneratedCodeSection.displayName = 'GeneratedCodeSection';
+CodeGenSection.displayName = 'CodeGenSection';
 
-export default GeneratedCodeSection;
+export default CodeGenSection;
