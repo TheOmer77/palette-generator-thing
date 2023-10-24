@@ -24,7 +24,6 @@ const CodeGenSection = forwardRef<
       >
         Generated code
       </ListSubheader>
-      {/* TODO: RadioGroup + actual functionality lol */}
       <RadioGroup
         asChild
         value={codeGen.format}
