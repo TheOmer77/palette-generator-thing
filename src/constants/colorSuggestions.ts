@@ -1,4 +1,8 @@
-import { getColorVariantFn, getHueColorFn, getSaturationColorFn } from 'utils';
+import {
+  getColorVariantFn,
+  getHueColorFn,
+  getSaturationColorFn,
+} from 'utils/colorUtils';
 
 export type ColorSuggestions = Record<
   string,

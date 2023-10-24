@@ -1,7 +1,8 @@
 import { ComponentProps, forwardRef, useCallback, useState } from 'react';
 import { Highlight } from 'prism-react-renderer';
 
-import { IconButton, Tooltip } from 'components/general';
+import { IconButton } from '../Buttons';
+import { Tooltip } from '../Tooltip';
 import { CopyIcon, DoneIcon } from 'assets/icons';
 import { cn } from 'utils';
 

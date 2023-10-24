@@ -5,7 +5,8 @@ import {
   ScopedProps,
   useAccordionListContext,
 } from './common';
-import { Collapsible, ListItem, ListItemIcon } from 'components/general';
+import { Collapsible } from '../Collapsible';
+import { ListItem, ListItemIcon } from '../List';
 import { cn } from 'utils';
 import { ExpandMoreIcon } from 'assets/icons';
 

@@ -26,7 +26,7 @@ import {
   type DangerColorSuggestion,
   type GeneralColorSuggestion,
   type NeutralColorSuggestion,
-} from 'constants/colorSuggestions';
+} from 'constants';
 import type { AnyStringWithAutocomplete } from 'types';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
