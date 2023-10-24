@@ -49,7 +49,15 @@ const CodeGenSection = forwardRef<
         }
       >
         <AccordionListItem
-          title={<ListItemText primary='Color format' secondary='RGB (raw)' />}
+          title={
+            <ListItemText
+              primary='Color format'
+              secondary={
+                colorFormats.find(({ id }) => id === codeGen.colorFormat)
+                  ?.displayName || 'None'
+              }
+            />
+          }
           value='codeGen-colorFormat'
         >
           {colorFormats.map(({ id, displayName }) => (

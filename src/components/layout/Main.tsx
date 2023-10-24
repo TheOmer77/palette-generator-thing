@@ -3,12 +3,13 @@ import { useMemo } from 'react';
 import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
-import { useTheme } from 'hooks';
+import { useGlobalState, useTheme } from 'hooks';
 import { generatePalette, generateVariablesCss, toCamelCase } from 'utils';
 import { shades } from 'constants';
 
 const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();
+  const [{ codeGen }] = useGlobalState();
 
   const colorGrids = useMemo(() => {
     const grids = [
@@ -57,9 +58,10 @@ const Main = () => {
             neutral,
             danger,
           }
-        )
+        ),
+        codeGen.colorFormat
       ),
-    [danger, extras, neutral, primary]
+    [codeGen.colorFormat, danger, extras, neutral, primary]
   );
 
   return (
