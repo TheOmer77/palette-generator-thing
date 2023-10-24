@@ -4,11 +4,13 @@ import {
   formatHsl,
   formatRgb,
   modeLch,
+  modeOklch,
   useMode as loadMode,
   type Color,
 } from 'culori/fn';
 
-const lch = loadMode(modeLch);
+const lch = loadMode(modeLch),
+  oklch = loadMode(modeOklch);
 
 type ColorFormat = {
   id: string;
@@ -64,6 +66,24 @@ export const colorFormats = [
         .map(num => Math.round(Number(num) * 100) / 100)
         .join(' '),
   },
-  { id: 'oklch', displayName: 'OKLCH' },
-  { id: 'oklchRaw', displayName: 'OKLCH (Raw)' },
+  {
+    id: 'oklch',
+    displayName: 'OKLCH',
+    toString: color =>
+      `oklch(${(formatCss(oklch(color)) as string)
+        .slice(6, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' ')})`,
+  },
+  {
+    id: 'oklchRaw',
+    displayName: 'OKLCH (Raw)',
+    toString: color =>
+      (formatCss(oklch(color)) as string)
+        .slice(6, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' '),
+  },
 ] as const satisfies readonly ColorFormat[];
