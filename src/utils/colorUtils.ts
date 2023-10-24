@@ -1,5 +1,6 @@
 import {
   formatHex,
+  formatRgb,
   modeHsl,
   modeOkhsl,
   modeRgb,
@@ -36,9 +37,6 @@ const okhsl = loadMode(modeOkhsl),
 
 export type RgbArray = [red: number, green: number, blue: number];
 
-export const fixupRgb = (value: number) =>
-  Math.round(Math.max(0, Math.min(1, value)) * 255);
-
 export const isValidHexColor = (value: string, withAlpha = false) => {
   const match = /^#?([0-9A-F]{3,8})$/i.exec(value);
   const length = match ? match[1].length : 0;
@@ -52,12 +50,12 @@ export const isValidHexColor = (value: string, withAlpha = false) => {
 };
 
 export const isHexColorLight = (hexColor: string) => {
-  const rgbColor = rgb(hexColor);
-  if (!rgbColor) return false;
-  const luminance =
-    0.2126 * fixupRgb(rgbColor.r) +
-    0.7152 * fixupRgb(rgbColor.g) +
-    0.0722 * fixupRgb(rgbColor.b);
+  if (!parseHex(hexColor)) return false;
+  const [r, g, b] = (formatRgb(hexColor) as string)
+    .slice(4, -1)
+    .split(', ')
+    .map(Number);
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
   return luminance >= 140;
 };
 
