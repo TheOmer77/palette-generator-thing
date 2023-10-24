@@ -1,4 +1,4 @@
-import { formatHex, formatRgb, type Color } from 'culori/fn';
+import { formatHex, formatHsl, formatRgb, type Color } from 'culori/fn';
 
 type ColorFormat = {
   id: string;
@@ -23,8 +23,17 @@ export const colorFormats = [
     toString: color =>
       (formatRgb(color) as string).replaceAll(',', '').slice(4, -1),
   },
-  { id: 'hsl', displayName: 'HSL' },
-  { id: 'hslRaw', displayName: 'HSL (Raw)' },
+  {
+    id: 'hsl',
+    displayName: 'HSL',
+    toString: color => (formatHsl(color) as string).replaceAll(',', ''),
+  },
+  {
+    id: 'hslRaw',
+    displayName: 'HSL (Raw)',
+    toString: color =>
+      (formatHsl(color) as string).replaceAll(',', '').slice(4, -1),
+  },
   { id: 'lch', displayName: 'LCH' },
   { id: 'lchRaw', displayName: 'LCH (Raw)' },
   { id: 'oklch', displayName: 'OKLCH' },
