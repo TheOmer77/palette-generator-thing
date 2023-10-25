@@ -1,12 +1,12 @@
 import { createContext } from 'react';
 import { randomHexColor } from 'utils';
+import { codeFormats, colorFormats } from 'constants';
 import type {
+  AnyStringWithAutocomplete,
   DangerColorSuggestion,
   GeneralColorSuggestion,
   NeutralColorSuggestion,
-} from 'constants/colorSuggestions';
-import { codeFormats, colorFormats } from 'constants';
-import type { AnyStringWithAutocomplete } from 'types';
+} from 'types';
 
 export interface GlobalState {
   baseColors: {

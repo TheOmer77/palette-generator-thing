@@ -8,10 +8,12 @@ import {
   generalColorSuggestions,
   neutralColorSuggestionNames,
   neutralColorSuggestions,
-  type DangerColorSuggestion,
-  type GeneralColorSuggestion,
-  type NeutralColorSuggestion,
 } from 'constants/colorSuggestions';
+import type {
+  DangerColorSuggestion,
+  GeneralColorSuggestion,
+  NeutralColorSuggestion,
+} from 'types';
 
 const useTheme = () => {
   const [

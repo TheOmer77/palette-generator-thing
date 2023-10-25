@@ -23,11 +23,13 @@ import {
   generalColorSuggestions,
   neutralColorSuggestionNames,
   neutralColorSuggestions,
-  type DangerColorSuggestion,
-  type GeneralColorSuggestion,
-  type NeutralColorSuggestion,
 } from 'constants';
-import type { AnyStringWithAutocomplete } from 'types';
+import type {
+  AnyStringWithAutocomplete,
+  DangerColorSuggestion,
+  GeneralColorSuggestion,
+  NeutralColorSuggestion,
+} from 'types';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 
