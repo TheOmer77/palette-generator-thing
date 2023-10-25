@@ -1,5 +1,5 @@
 import { ComponentProps, forwardRef, useCallback, useState } from 'react';
-import { Highlight } from 'prism-react-renderer';
+import { Highlight, Prism } from 'prism-react-renderer';
 
 import { IconButton } from '../Buttons';
 import { Tooltip } from '../Tooltip';
@@ -7,6 +7,10 @@ import { CopyIcon, DoneIcon } from 'assets/icons';
 import { cn } from 'utils';
 
 import 'styles/prism.css';
+
+window.Prism = Prism;
+//@ts-expect-error Import JSON language
+await import('prismjs/components/prism-json');
 
 export interface CodeBlockProps
   extends Omit<ComponentProps<'pre'>, 'children'> {
