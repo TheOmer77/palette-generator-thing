@@ -43,3 +43,37 @@ ${generatePalette(baseColors[key])
     })
     .join('\n\n  ')}
 }`;
+
+export const generateJsonCode = (
+  baseColors: {
+    [colorName: string]: string;
+  },
+  colorFormat: keyof typeof colorFormats = 'hex'
+) => `{
+${Object.keys(baseColors)
+  .map(key => {
+    const mainShade = getClosestShade(baseColors[key], {
+        minShade: MIN_MAIN_SHADE,
+        maxShade: MAX_MAIN_SHADE,
+      }),
+      lightShade = mainShade - 100,
+      darkShade = mainShade + 100,
+      contrastShade = getContrastShade(baseColors[key]);
+    const palette = generatePalette(baseColors[key]);
+    return `  "${key}": {
+${palette
+  .map(
+    (color, index) =>
+      `    "${shades[index]}": "${colorFormats[colorFormat]?.toString?.(
+        color
+      )}"`
+  )
+  .join(',\n')},
+    "main": "${palette[shades.findIndex(el => el === mainShade)]}",
+    "light": "${palette[shades.findIndex(el => el === lightShade)]}",
+    "dark": "${palette[shades.findIndex(el => el === darkShade)]}",
+    "contrast": "${palette[shades.findIndex(el => el === contrastShade)]}"
+  }`;
+  })
+  .join(',\n')}
+}`;

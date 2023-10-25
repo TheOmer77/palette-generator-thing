@@ -56,9 +56,7 @@ const CodeGenSection = forwardRef<
         >
           <RadioListItem value='none'>None</RadioListItem>
           <RadioListItem value='css'>CSS variables</RadioListItem>
-          <RadioListItem value='json' disabled>
-            JSON
-          </RadioListItem>
+          <RadioListItem value='json'>JSON</RadioListItem>
           <RadioListItem value='custom' disabled>
             Custom
           </RadioListItem>

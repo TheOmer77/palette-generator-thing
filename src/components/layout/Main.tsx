@@ -4,7 +4,12 @@ import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
 import { useGlobalState, useTheme } from 'hooks';
-import { generatePalette, generateCssCode, toCamelCase } from 'utils';
+import {
+  generateCssCode,
+  generateJsonCode,
+  generatePalette,
+  toCamelCase,
+} from 'utils';
 import { shades } from 'constants';
 
 const Main = () => {
@@ -43,26 +48,26 @@ const Main = () => {
     ) as typeof grids;
   }, [danger, extras, neutral, primary]);
 
-  const themeCode = useMemo(
-    () =>
-      generateCssCode(
-        extras.reduce(
-          (obj, { name, value }, index) => ({
-            ...obj,
-            [typeof name === 'string' && name.length > 0
-              ? toCamelCase(name)
-              : `extra${index + 1}`]: value,
-          }),
-          {
-            primary,
-            neutral,
-            danger,
-          }
-        ),
-        codeGen.colorFormat
-      ),
-    [codeGen.colorFormat, danger, extras, neutral, primary]
-  );
+  const themeCode = useMemo(() => {
+    const palettes = extras.reduce(
+      (obj, { name, value }, index) => ({
+        ...obj,
+        [typeof name === 'string' && name.length > 0
+          ? toCamelCase(name)
+          : `extra${index + 1}`]: value,
+      }),
+      {
+        primary,
+        neutral,
+        danger,
+      }
+    );
+    return codeGen.format === 'css'
+      ? generateCssCode(palettes, codeGen.colorFormat)
+      : codeGen.format === 'json'
+      ? generateJsonCode(palettes, codeGen.colorFormat)
+      : '';
+  }, [codeGen.colorFormat, codeGen.format, danger, extras, neutral, primary]);
 
   return (
     <main className='w-full max-w-7xl p-4 pb-24 md:pb-4 xl:mx-auto'>
@@ -87,7 +92,13 @@ const Main = () => {
       {codeGen.format !== 'none' && (
         <>
           <H2 className='break-before-page'>Theme CSS variables</H2>
-          <CodeBlock language='css'>{themeCode}</CodeBlock>
+          <CodeBlock
+            language={
+              ['css', 'json'].includes(codeGen.format) ? codeGen.format : ''
+            }
+          >
+            {themeCode}
+          </CodeBlock>
         </>
       )}
     </main>
