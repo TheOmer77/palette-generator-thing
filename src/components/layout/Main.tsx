@@ -8,6 +8,7 @@ import {
   generateCssCode,
   generateJsonCode,
   generatePalette,
+  generateScssCode,
   toCamelCase,
 } from 'utils';
 import { codeFormats, shades } from 'constants';
@@ -62,11 +63,17 @@ const Main = () => {
         danger,
       }
     );
-    return codeGen.format === 'css'
-      ? generateCssCode(palettes, codeGen.colorFormat)
-      : codeGen.format === 'json'
-      ? generateJsonCode(palettes, codeGen.colorFormat)
-      : '';
+
+    switch (codeGen.format) {
+      case 'css':
+        return generateCssCode(palettes, codeGen.colorFormat);
+      case 'scss':
+        return generateScssCode(palettes, codeGen.colorFormat);
+      case 'json':
+        return generateJsonCode(palettes, codeGen.colorFormat);
+      default:
+        return '';
+    }
   }, [codeGen.colorFormat, codeGen.format, danger, extras, neutral, primary]);
 
   return (
@@ -96,7 +103,7 @@ const Main = () => {
           </H2>
           <CodeBlock
             language={
-              ['css', 'json'].includes(codeGen.format) ? codeGen.format : ''
+              !['none', 'custom'].includes(codeGen.format) ? codeGen.format : ''
             }
           >
             {themeCode}
