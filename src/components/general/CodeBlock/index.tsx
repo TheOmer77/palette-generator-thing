@@ -9,6 +9,8 @@ import { cn } from 'utils';
 import 'styles/prism.css';
 
 window.Prism = Prism;
+//@ts-expect-error Import SCSS language
+await import('prismjs/components/prism-scss');
 //@ts-expect-error Import JSON language
 await import('prismjs/components/prism-json');
 
