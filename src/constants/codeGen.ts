@@ -21,7 +21,6 @@ export const codeFormats = {
   none: { displayName: 'None' },
   css: { displayName: 'CSS variables' },
   json: { displayName: 'JSON' },
-  custom: { displayName: 'Custom' },
 } as const;
 
 export const colorFormats = {
