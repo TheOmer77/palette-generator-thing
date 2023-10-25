@@ -4,7 +4,7 @@ import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
 import { useGlobalState, useTheme } from 'hooks';
-import { generatePalette, generateVariablesCss, toCamelCase } from 'utils';
+import { generatePalette, generateCssCode, toCamelCase } from 'utils';
 import { shades } from 'constants';
 
 const Main = () => {
@@ -43,9 +43,9 @@ const Main = () => {
     ) as typeof grids;
   }, [danger, extras, neutral, primary]);
 
-  const themeCss = useMemo(
+  const themeCode = useMemo(
     () =>
-      generateVariablesCss(
+      generateCssCode(
         extras.reduce(
           (obj, { name, value }, index) => ({
             ...obj,
@@ -87,7 +87,7 @@ const Main = () => {
       {codeGen.format !== 'none' && (
         <>
           <H2 className='break-before-page'>Theme CSS variables</H2>
-          <CodeBlock language='css'>{themeCss}</CodeBlock>
+          <CodeBlock language='css'>{themeCode}</CodeBlock>
         </>
       )}
     </main>

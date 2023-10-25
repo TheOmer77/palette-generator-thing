@@ -10,7 +10,7 @@ import {
   getContrastShade,
 } from './colorUtils';
 
-export const generateVariablesCss = (
+export const generateCssCode = (
   baseColors: {
     [colorName: string]: string;
   },

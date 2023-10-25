@@ -2,13 +2,13 @@ import { useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useTheme } from 'hooks';
-import { generateVariablesCss } from 'utils';
+import { generateCssCode } from 'utils';
 
 const ThemeStyle = () => {
   const { primary, neutral, danger } = useTheme();
 
   const themeCss = useMemo(
-    () => generateVariablesCss({ primary, neutral, danger }, 'rgbRaw'),
+    () => generateCssCode({ primary, neutral, danger }, 'rgbRaw'),
     [danger, neutral, primary]
   );
 
