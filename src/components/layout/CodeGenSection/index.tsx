@@ -2,6 +2,7 @@ import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
 import {
   AccordionListItem,
+  Collapsible,
   ListItemText,
   ListSubheader,
   RadioGroup,
@@ -53,7 +54,7 @@ const CodeGenSection = forwardRef<
           ))}
         </AccordionListItem>
       </RadioGroup>
-      {!['none', 'custom'].includes(codeGen.format) && (
+      <Collapsible open={!['none', 'custom'].includes(codeGen.format)}>
         <RadioGroup
           asChild
           value={codeGen.colorFormat}
@@ -84,7 +85,7 @@ const CodeGenSection = forwardRef<
             ))}
           </AccordionListItem>
         </RadioGroup>
-      )}
+      </Collapsible>
     </section>
   );
 });
