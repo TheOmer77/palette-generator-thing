@@ -1,13 +1,18 @@
 import { ReactNode, useState } from 'react';
-import { BottomSheet, Fab } from 'components/general';
+import { BottomSheet, BottomSheetProps, Fab } from 'components/general';
 
-export interface SheetWithFabProps {
+export interface SheetWithFabProps extends BottomSheetProps {
   label: string;
   fabIcon?: ReactNode;
-  children?: ReactNode;
 }
 
-const SheetWithFab = ({ label, fabIcon, children }: SheetWithFabProps) => {
+const SheetWithFab = ({
+  label,
+  fabIcon,
+  onOpenChange,
+  children,
+  ...props
+}: SheetWithFabProps) => {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
@@ -20,9 +25,13 @@ const SheetWithFab = ({ label, fabIcon, children }: SheetWithFabProps) => {
         {label}
       </Fab>
       <BottomSheet
+        {...props}
         title={label}
         open={sheetOpen}
-        onOpenChange={setSheetOpen}
+        onOpenChange={open => {
+          setSheetOpen(open);
+          onOpenChange?.(open);
+        }}
         className='print:hidden'
       >
         {children}

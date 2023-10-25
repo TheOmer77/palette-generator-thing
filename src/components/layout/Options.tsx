@@ -33,7 +33,11 @@ scrollbar-thumb-neutral-500/30 print:hidden'
       </AccordionList>
     </Sidebar>
   ) : (
-    <SheetWithFab label='Options' fabIcon={<TuneIcon />}>
+    <SheetWithFab
+      label='Options'
+      fabIcon={<TuneIcon />}
+      onOpenChange={open => !open && setOpenItem(null)}
+    >
       <AccordionList
         className='pb-2 scrollbar-thin
 scrollbar-thumb-neutral-500/30 print:hidden'

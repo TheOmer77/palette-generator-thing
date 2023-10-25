@@ -1,4 +1,4 @@
-import { type ComponentProps, forwardRef } from 'react';
+import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -12,7 +12,7 @@ import { H2 } from '../Headings';
 import { cn } from 'utils';
 
 export interface BottomSheetProps
-  extends ComponentProps<'div'>,
+  extends ComponentPropsWithoutRef<'div'>,
     Pick<DialogProps, 'open' | 'onOpenChange'> {
   title?: string;
 }
