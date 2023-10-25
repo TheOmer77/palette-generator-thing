@@ -19,7 +19,7 @@ type ColorFormat = {
 
 export const codeFormats = {
   none: { displayName: 'None' },
-  css: { displayName: 'CSS variables' },
+  css: { displayName: 'CSS' },
   json: { displayName: 'JSON' },
 } as const;
 
