@@ -18,8 +18,15 @@ export const generateCssCode = (
 ) =>
   `:root {
   ${Object.keys(baseColors)
-    .map(
-      (key: keyof typeof baseColors) => `/* ${key} */
+    .map((key: keyof typeof baseColors) => {
+      const mainShade = getClosestShade(baseColors[key], {
+          minShade: MIN_MAIN_SHADE,
+          maxShade: MAX_MAIN_SHADE,
+        }),
+        lightShade = mainShade - 100,
+        darkShade = mainShade + 100,
+        contrastShade = getContrastShade(baseColors[key]);
+      return `/* ${key} */
 ${generatePalette(baseColors[key])
   .map(
     (color, index) =>
@@ -29,25 +36,10 @@ ${generatePalette(baseColors[key])
   )
   .join('\n')}
   
-  --color-${key}-main: var(--color-${key}-${getClosestShade(baseColors[key], {
-    minShade: MIN_MAIN_SHADE,
-    maxShade: MAX_MAIN_SHADE,
-  })});
-  --color-${key}-light: var(--color-${key}-${
-    getClosestShade(baseColors[key], {
-      minShade: MIN_MAIN_SHADE,
-      maxShade: MAX_MAIN_SHADE,
-    }) - 100
-  });
-  --color-${key}-dark: var(--color-${key}-${
-    getClosestShade(baseColors[key], {
-      minShade: MIN_MAIN_SHADE,
-      maxShade: MAX_MAIN_SHADE,
-    }) + 100
-  });
-  --color-${key}-contrast: var(--color-${key}-${getContrastShade(
-    baseColors[key]
-  )});`
-    )
+  --color-${key}-main: var(--color-${key}-${mainShade});
+  --color-${key}-light: var(--color-${key}-${lightShade});
+  --color-${key}-dark: var(--color-${key}-${darkShade});
+  --color-${key}-contrast: var(--color-${key}-${contrastShade});`;
+    })
     .join('\n\n  ')}
 }`;
