@@ -1,5 +1,5 @@
 export * from './breakpoints';
-export * from './colorFormats';
+export * from './codeGen';
 export * from './colorSuggestions';
 export * from './fallbackColor';
 export * from './hslDefaults';

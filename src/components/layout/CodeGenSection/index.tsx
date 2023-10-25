@@ -7,7 +7,7 @@ import {
   RadioGroup,
 } from 'components/general';
 import RadioListItem from '../RadioListItem';
-import { colorFormats } from 'constants';
+import { codeFormats, colorFormats } from 'constants';
 import { useGlobalState } from 'hooks';
 
 const CodeGenSection = forwardRef<
@@ -54,15 +54,14 @@ const CodeGenSection = forwardRef<
           value='codeGen-format'
           role='radiogroup'
         >
-          <RadioListItem value='none'>None</RadioListItem>
-          <RadioListItem value='css'>CSS variables</RadioListItem>
-          <RadioListItem value='json'>JSON</RadioListItem>
-          <RadioListItem value='custom' disabled>
-            Custom
-          </RadioListItem>
+          {Object.keys(codeFormats).map(key => (
+            <RadioListItem key={key} value={key} disabled={key === 'custom'}>
+              {codeFormats[key as keyof typeof codeFormats].displayName}
+            </RadioListItem>
+          ))}
         </AccordionListItem>
       </RadioGroup>
-      {['css', 'json'].includes(codeGen.format) && (
+      {!['none', 'custom'].includes(codeGen.format) && (
         <RadioGroup
           asChild
           value={codeGen.colorFormat}

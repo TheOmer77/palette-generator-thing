@@ -5,7 +5,7 @@ import type {
   GeneralColorSuggestion,
   NeutralColorSuggestion,
 } from 'constants/colorSuggestions';
-import { colorFormats } from 'constants';
+import { codeFormats, colorFormats } from 'constants';
 import type { AnyStringWithAutocomplete } from 'types';
 
 export interface GlobalState {
@@ -27,7 +27,7 @@ export interface GlobalState {
   };
   codeGen: {
     /** Format for generated theme code. */
-    format: 'none' | 'css' | 'json' | 'custom';
+    format: keyof typeof codeFormats;
     /** Color format for generated code, if format is `css` or `json`.
      * If format is `none` or `custom`, has no effect. */
     colorFormat: keyof typeof colorFormats;
