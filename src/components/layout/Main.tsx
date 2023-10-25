@@ -10,7 +10,7 @@ import {
   generatePalette,
   toCamelCase,
 } from 'utils';
-import { shades } from 'constants';
+import { codeFormats, shades } from 'constants';
 
 const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();
@@ -91,7 +91,9 @@ const Main = () => {
 
       {codeGen.format !== 'none' && (
         <>
-          <H2 className='break-before-page'>Theme CSS variables</H2>
+          <H2 className='break-before-page'>
+            {codeFormats[codeGen.format].displayName} code
+          </H2>
           <CodeBlock
             language={
               ['css', 'json'].includes(codeGen.format) ? codeGen.format : ''
