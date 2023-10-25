@@ -69,10 +69,18 @@ ${palette
       )}"`
   )
   .join(',\n')},
-    "main": "${palette[shades.findIndex(el => el === mainShade)]}",
-    "light": "${palette[shades.findIndex(el => el === lightShade)]}",
-    "dark": "${palette[shades.findIndex(el => el === darkShade)]}",
-    "contrast": "${palette[shades.findIndex(el => el === contrastShade)]}"
+    "main": "${colorFormats[colorFormat]?.toString?.(
+      palette[shades.findIndex(el => el === mainShade)]
+    )}",
+    "light": "${colorFormats[colorFormat]?.toString?.(
+      palette[shades.findIndex(el => el === lightShade)]
+    )}",
+    "dark": "${colorFormats[colorFormat]?.toString?.(
+      palette[shades.findIndex(el => el === darkShade)]
+    )}",
+    "contrast": "${colorFormats[colorFormat]?.toString?.(
+      palette[shades.findIndex(el => el === contrastShade)]
+    )}"
   }`;
   })
   .join(',\n')}
