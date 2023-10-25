@@ -6,16 +6,11 @@ import {
   modeLch,
   modeOklch,
   useMode as loadMode,
-  type Color,
 } from 'culori/fn';
+import type { ColorFormat } from 'types';
 
 const lch = loadMode(modeLch),
   oklch = loadMode(modeOklch);
-
-type ColorFormat = {
-  displayName: string;
-  toString: (color: string | Color) => string;
-};
 
 export const codeFormats = {
   none: { displayName: 'None' },
