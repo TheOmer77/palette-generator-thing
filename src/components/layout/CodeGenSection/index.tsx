@@ -40,15 +40,7 @@ const CodeGenSection = forwardRef<
           title={
             <ListItemText
               primary='Format'
-              secondary={
-                codeGen.format === 'css'
-                  ? 'CSS variables'
-                  : codeGen.format === 'json'
-                  ? 'JSON'
-                  : codeGen.format === 'custom'
-                  ? 'Custom'
-                  : 'None'
-              }
+              secondary={codeFormats[codeGen.format].displayName}
             />
           }
           value='codeGen-format'
