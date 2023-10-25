@@ -28,7 +28,7 @@ export interface GlobalState {
   codeGen: {
     /** Format for generated theme code. */
     format: keyof typeof codeFormats;
-    /** Color format for generated code, if format is `css` or `json`.
+    /** Color format for generated code.
      * If format is `none` or `custom`, has no effect. */
     colorFormat: keyof typeof colorFormats;
   };
