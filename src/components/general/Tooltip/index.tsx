@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
   type TooltipContentProps,
 } from '@radix-ui/react-tooltip';
-import clsx from 'clsx';
+import { cn } from 'utils';
 
 export interface TooltipProps
   extends Omit<TooltipContentProps, 'sideOffset' | 'title'> {
@@ -21,7 +21,7 @@ export const Tooltip = ({ title, side, className, children }: TooltipProps) => (
       <TooltipPortal>
         <TooltipContent
           side={side}
-          className={clsx(
+          className={cn(
             `z-30 select-none rounded-lg bg-neutral-50 p-2 text-sm leading-none
 text-neutral-800 shadow-sm shadow-neutral-950/25
 will-change-[transform,opacity] data-[state=closed]:animate-fadeout-fast
