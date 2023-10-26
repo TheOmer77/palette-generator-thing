@@ -12,7 +12,7 @@ import type { GlobalState } from 'types';
 
 const Options = () => {
   const [openItem, setOpenItem] = useState<
-    keyof GlobalState['baseColors'] | null
+    keyof GlobalState['baseColors'] | keyof GlobalState['codeGen'] | null
   >(null);
   const mdBreakpoint = useTailwindBreakpoint('md');
 
