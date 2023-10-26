@@ -35,8 +35,6 @@ const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),
   rgb = loadMode(modeRgb);
 
-export type RgbArray = [red: number, green: number, blue: number];
-
 export const isValidHexColor = (value: string, withAlpha = false) => {
   const match = /^#?([0-9A-F]{3,8})$/i.exec(value);
   const length = match ? match[1].length : 0;
