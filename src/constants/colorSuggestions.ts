@@ -1,9 +1,5 @@
-import { getColorVariantFn, getHueColorFn, getSaturationColorFn } from 'utils';
-
-export type ColorSuggestions = Record<
-  string,
-  ReturnType<typeof getColorVariantFn>
->;
+import { getHueColorFn, getSaturationColorFn } from 'utils/colorUtils';
+import type { ColorSuggestions } from 'types/colorSuggestions';
 
 export const generalColorSuggestions = {
   complementary: getHueColorFn(180, { addToExistingHue: true }),
@@ -22,7 +18,6 @@ export const generalColorSuggestions = {
   tetradic2: getHueColorFn(270, { addToExistingHue: true }),
 } as const satisfies ColorSuggestions;
 export const generalColorSuggestionNames = Object.keys(generalColorSuggestions);
-export type GeneralColorSuggestion = keyof typeof generalColorSuggestions;
 
 export const neutralColorSuggestions = {
   gray: getSaturationColorFn(0),
@@ -34,7 +29,6 @@ export const neutralColorSuggestions = {
   neutral30: getSaturationColorFn(0.3),
 } as const satisfies ColorSuggestions;
 export const neutralColorSuggestionNames = Object.keys(neutralColorSuggestions);
-export type NeutralColorSuggestion = keyof typeof neutralColorSuggestions;
 
 export const dangerColorSuggestions = {
   danger25: getHueColorFn(25, { limitSaturation: true }),
@@ -44,4 +38,3 @@ export const dangerColorSuggestions = {
   danger45: getHueColorFn(45, { limitSaturation: true }),
 } as const satisfies ColorSuggestions;
 export const dangerColorSuggestionNames = Object.keys(dangerColorSuggestions);
-export type DangerColorSuggestion = keyof typeof dangerColorSuggestions;

@@ -8,7 +8,12 @@ import {
 } from 'react';
 import { formatHex, modeRgb, useMode as loadMode } from 'culori/fn';
 
-import { IconButton, Input, type InputProps } from 'components/general';
+import {
+  IconButton,
+  Input,
+  Tooltip,
+  type InputProps,
+} from 'components/general';
 import { RandomIcon } from 'assets/icons';
 import { autoAddHexHash, isValidHexColor, randomHexColor } from 'utils';
 
@@ -94,12 +99,14 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         {...(withRandomBtn
           ? {
               endAdornment: (
-                <IconButton
-                  title='Generate random color'
-                  onClick={() => onChange?.(randomHexColor())}
-                >
-                  <RandomIcon />
-                </IconButton>
+                <Tooltip title='Generate random color'>
+                  <IconButton
+                    aria-label='Generate random color'
+                    onClick={() => onChange?.(randomHexColor())}
+                  >
+                    <RandomIcon />
+                  </IconButton>
+                </Tooltip>
               ),
             }
           : {})}

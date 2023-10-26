@@ -7,7 +7,7 @@ import {
 import { IconButton, ListItem } from 'components/general';
 import { DoneIcon } from 'assets/icons';
 import { isHexColorLight } from 'utils';
-import type { ColorSuggestions } from 'constants/colorSuggestions';
+import type { ColorSuggestions } from 'types';
 
 const ColorSuggestionsBox = <T extends ColorSuggestions>({
   baseColor,
@@ -24,7 +24,11 @@ const ColorSuggestionsBox = <T extends ColorSuggestions>({
     <ToolbarToggleGroup
       type='single'
       value={value as string}
-      onValueChange={onValueChange}
+      onValueChange={suggestionName =>
+        typeof suggestionName === 'string' &&
+        suggestionName.length > 0 &&
+        onValueChange?.(suggestionName)
+      }
       className='flex flex-row flex-wrap gap-2'
     >
       {Object.keys(colorSuggestions).map(suggestionName => {

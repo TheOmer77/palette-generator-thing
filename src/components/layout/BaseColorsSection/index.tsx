@@ -1,27 +1,21 @@
-import {
-  forwardRef,
-  type ComponentPropsWithoutRef,
-  useCallback,
-  useState,
-} from 'react';
+import { forwardRef, useCallback, type ComponentPropsWithoutRef } from 'react';
 
 import ColorListItem from './ColorListItem';
 import ColorSuggestionsBox from './ColorSuggestionsBox';
-import RadioListItem from './RadioListItem';
+import RadioListItem from '../RadioListItem';
 import {
-  AccordionList,
   Collapsible,
   Input,
   ListItem,
   ListItemIcon,
   ListSubheader,
+  RadioGroup,
   Separator,
 } from 'components/general';
 import { ColorInput } from 'components/colors';
 import { AddIcon, DeleteIcon } from 'assets/icons';
 import { useGlobalState, useTheme } from 'hooks';
 import { getAutoDangerColor, getAutoNeutralColor, toCamelCase } from 'utils';
-import type { GlobalState } from 'contexts/globalState';
 import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
@@ -29,11 +23,13 @@ import {
   generalColorSuggestions,
   neutralColorSuggestionNames,
   neutralColorSuggestions,
-  type DangerColorSuggestion,
-  type GeneralColorSuggestion,
-  type NeutralColorSuggestion,
-} from 'constants/colorSuggestions';
-import type { AnyStringWithAutocomplete } from 'types';
+} from 'constants';
+import type {
+  AnyStringWithAutocomplete,
+  DangerColorSuggestion,
+  GeneralColorSuggestion,
+  NeutralColorSuggestion,
+} from 'types';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 
@@ -43,10 +39,6 @@ const BaseColorsSection = forwardRef<
 >((props, ref) => {
   const [{ baseColors }, setGlobalState] = useGlobalState();
   const themeColors = useTheme();
-
-  const [openItem, setOpenItem] = useState<
-    keyof GlobalState['baseColors'] | null
-  >(null);
 
   const neutralIsAuto = typeof baseColors.neutral === 'undefined',
     neutralIsSuggestion =
@@ -130,65 +122,68 @@ const BaseColorsSection = forwardRef<
 
   return (
     <section {...props} ref={ref}>
-      <AccordionList
-        value={openItem}
-        onValueChange={newValue => setOpenItem(newValue as typeof openItem)}
+      <ListSubheader
+        className='bg-white dark:bg-neutral-900 md:bg-neutral-50
+dark:md:bg-neutral-900'
       >
-        <ListSubheader className='bg-neutral-50 dark:bg-neutral-900'>
-          Base colors
-        </ListSubheader>
-        <ColorListItem
-          value='primary'
-          color={themeColors.primary}
-          title='Primary'
-        >
-          <div className='p-2'>
-            <ListItem asChild>
-              <ColorInput
-                id='input-primary-color'
-                value={baseColors.primary}
-                onChange={newColor => {
-                  setGlobalState({
-                    baseColors: { ...baseColors, primary: newColor },
-                  });
-                }}
-                withRandomBtn
-              />
-            </ListItem>
-          </div>
-        </ColorListItem>
+        Base colors
+      </ListSubheader>
+      <ColorListItem
+        value='primary'
+        color={themeColors.primary}
+        title='Primary'
+      >
+        <div className='p-2'>
+          <ListItem asChild>
+            <ColorInput
+              id='input-primary-color'
+              value={baseColors.primary}
+              onChange={newColor => {
+                setGlobalState({
+                  baseColors: { ...baseColors, primary: newColor },
+                });
+              }}
+              withRandomBtn
+            />
+          </ListItem>
+        </div>
+      </ColorListItem>
 
+      <RadioGroup
+        asChild
+        value={
+          neutralIsAuto
+            ? 'auto'
+            : neutralIsSuggestion
+            ? 'suggestions'
+            : neutralIsCustom
+            ? 'custom'
+            : undefined
+        }
+        onValueChange={newValue =>
+          ((newValue === 'auto' && !neutralIsAuto) ||
+            (newValue === 'suggestions' && !neutralIsSuggestion) ||
+            (newValue === 'custom' && !neutralIsCustom)) &&
+          setGlobalState({
+            baseColors: {
+              ...baseColors,
+              neutral:
+                newValue === 'suggestions'
+                  ? neutralColorSuggestionNames[0]
+                  : newValue === 'custom'
+                  ? getAutoNeutralColor(baseColors.primary)
+                  : undefined,
+            },
+          })
+        }
+      >
         <ColorListItem
           value='neutral'
           color={themeColors.neutral}
           title='Neutral'
-          role='radiogroup'
         >
-          <RadioListItem
-            checked={neutralIsAuto}
-            onClick={() =>
-              !neutralIsAuto &&
-              setGlobalState({
-                baseColors: { ...baseColors, neutral: undefined },
-              })
-            }
-          >
-            Auto
-          </RadioListItem>
-          <RadioListItem
-            checked={neutralIsSuggestion}
-            onClick={() =>
-              !neutralIsSuggestion &&
-              setGlobalState({
-                baseColors: {
-                  ...baseColors,
-                  neutral: neutralColorSuggestionNames[0],
-                },
-              })
-            }
-          >
-            Suggestions
-          </RadioListItem>
+          <RadioListItem value='auto'>Auto</RadioListItem>
+          <RadioListItem value='suggestions'>Suggestions</RadioListItem>
           <Collapsible open={neutralIsSuggestion}>
             <ColorSuggestionsBox
               baseColor={baseColors.primary}
@@ -201,20 +196,7 @@ const BaseColorsSection = forwardRef<
               }
             />
           </Collapsible>
-          <RadioListItem
-            checked={neutralIsCustom}
-            onClick={() =>
-              !neutralIsCustom &&
-              setGlobalState({
-                baseColors: {
-                  ...baseColors,
-                  neutral: getAutoNeutralColor(baseColors.primary),
-                },
-              })
-            }
-          >
-            Custom
-          </RadioListItem>
+          <RadioListItem value='custom'>Custom</RadioListItem>
           <Collapsible open={neutralIsCustom}>
             <div className='p-2'>
               <ListItem asChild>
@@ -232,38 +214,44 @@ const BaseColorsSection = forwardRef<
             </div>
           </Collapsible>
         </ColorListItem>
+      </RadioGroup>
 
+      <RadioGroup
+        asChild
+        value={
+          dangerIsAuto
+            ? 'auto'
+            : dangerIsSuggestion
+            ? 'suggestions'
+            : dangerIsCustom
+            ? 'custom'
+            : undefined
+        }
+        onValueChange={newValue =>
+          ((newValue === 'auto' && !dangerIsAuto) ||
+            (newValue === 'suggestions' && !dangerIsSuggestion) ||
+            (newValue === 'custom' && !dangerIsCustom)) &&
+          setGlobalState({
+            baseColors: {
+              ...baseColors,
+              danger:
+                newValue === 'suggestions'
+                  ? dangerColorSuggestionNames[0]
+                  : newValue === 'custom'
+                  ? getAutoDangerColor(baseColors.primary)
+                  : undefined,
+            },
+          })
+        }
+      >
         <ColorListItem
           value='danger'
           color={themeColors.danger}
           title='Danger'
           role='radiogroup'
         >
-          <RadioListItem
-            checked={dangerIsAuto}
-            onClick={() =>
-              !dangerIsAuto &&
-              setGlobalState({
-                baseColors: { ...baseColors, danger: undefined },
-              })
-            }
-          >
-            Auto
-          </RadioListItem>
-          <RadioListItem
-            checked={dangerIsSuggestion}
-            onClick={() =>
-              !dangerIsSuggestion &&
-              setGlobalState({
-                baseColors: {
-                  ...baseColors,
-                  danger: dangerColorSuggestionNames[0],
-                },
-              })
-            }
-          >
-            Suggestions
-          </RadioListItem>
+          <RadioListItem value='auto'>Auto</RadioListItem>
+          <RadioListItem value='suggestions'>Suggestions</RadioListItem>
           <Collapsible open={dangerIsSuggestion}>
             <ColorSuggestionsBox
               baseColor={baseColors.primary}
@@ -276,20 +264,7 @@ const BaseColorsSection = forwardRef<
               }
             />
           </Collapsible>
-          <RadioListItem
-            checked={dangerIsCustom}
-            onClick={() =>
-              !dangerIsCustom &&
-              setGlobalState({
-                baseColors: {
-                  ...baseColors,
-                  danger: getAutoDangerColor(baseColors.primary),
-                },
-              })
-            }
-          >
-            Custom
-          </RadioListItem>
+          <RadioListItem value='custom'>Custom</RadioListItem>
           <Collapsible open={dangerIsCustom}>
             <div className='p-2'>
               <ListItem asChild>
@@ -307,118 +282,107 @@ const BaseColorsSection = forwardRef<
             </div>
           </Collapsible>
         </ColorListItem>
+      </RadioGroup>
 
-        <Separator />
-        {baseColors.extras?.map(({ name, value }, index) => {
-          const id = `extra${index + 1}`,
-            title = name || `Extra ${index + 1}`;
-          const colorIsSuggestion = generalColorSuggestionNames.includes(value),
-            colorIsCustom = !generalColorSuggestionNames.includes(value);
-          const nameIsReserved =
-              typeof name === 'string' && RESERVED_COLOR_NAMES.includes(name),
-            nameIsDuplicate =
-              typeof name === 'string' &&
-              name.length > 0 &&
-              Array.isArray(baseColors.extras) &&
-              baseColors.extras.filter(
-                ({ name: n }) =>
-                  typeof n === 'string' &&
-                  toCamelCase(n).toLowerCase() ===
-                    toCamelCase(name).toLowerCase()
-              ).length > 1;
+      <Separator />
+      {baseColors.extras?.map(({ name, value }, index) => {
+        const id = `extra${index + 1}`,
+          title = name || `Extra ${index + 1}`;
+        const colorIsSuggestion = generalColorSuggestionNames.includes(value),
+          colorIsCustom = !generalColorSuggestionNames.includes(value);
+        const nameIsReserved =
+            typeof name === 'string' && RESERVED_COLOR_NAMES.includes(name),
+          nameIsDuplicate =
+            typeof name === 'string' &&
+            name.length > 0 &&
+            Array.isArray(baseColors.extras) &&
+            baseColors.extras.filter(
+              ({ name: n }) =>
+                typeof n === 'string' &&
+                toCamelCase(n).toLowerCase() === toCamelCase(name).toLowerCase()
+            ).length > 1;
 
-          return (
-            <ColorListItem
-              key={id}
-              value={id}
-              color={themeColors.extras[index].value}
-              title={title}
-            >
-              <div className='m-2'>
-                <ListItem asChild>
-                  <Input
-                    label='Name'
-                    value={name || ''}
-                    onChange={e => renameExtraColor(index, e.target.value)}
-                    invalid={nameIsReserved || nameIsDuplicate}
-                    helperText={
-                      nameIsReserved
-                        ? 'This name is reserved.'
-                        : nameIsDuplicate
-                        ? "This name can't be used by multiple colors."
-                        : undefined
-                    }
-                  />
-                </ListItem>
-              </div>
-              <div role='radiogroup'>
-                <RadioListItem
-                  checked={colorIsSuggestion}
-                  onClick={() =>
-                    !colorIsSuggestion &&
-                    updateExtraColor(
-                      index,
-                      generalColorSuggestionNames[
+        return (
+          <ColorListItem
+            key={id}
+            value={id}
+            color={themeColors.extras[index].value}
+            title={title}
+          >
+            <div className='m-2'>
+              <ListItem asChild>
+                <Input
+                  label='Name'
+                  value={name || ''}
+                  onChange={e => renameExtraColor(index, e.target.value)}
+                  invalid={nameIsReserved || nameIsDuplicate}
+                  helperText={
+                    nameIsReserved
+                      ? 'This name is reserved.'
+                      : nameIsDuplicate
+                      ? "This name can't be used by multiple colors."
+                      : undefined
+                  }
+                />
+              </ListItem>
+            </div>
+            <RadioGroup
+              value={colorIsSuggestion ? 'suggestions' : 'custom'}
+              onValueChange={newValue =>
+                ((newValue === 'suggestions' && !colorIsSuggestion) ||
+                  (newValue === 'custom' && !colorIsCustom)) &&
+                updateExtraColor(
+                  index,
+                  newValue === 'suggestions'
+                    ? generalColorSuggestionNames[
                         index % generalColorSuggestionNames.length
                       ]
-                    )
-                  }
-                >
-                  Suggestions
-                </RadioListItem>
-                <Collapsible open={colorIsSuggestion}>
-                  <ColorSuggestionsBox
-                    baseColor={baseColors.primary}
-                    colorSuggestions={generalColorSuggestions}
-                    value={value as GeneralColorSuggestion}
-                    onValueChange={suggestionName =>
-                      updateExtraColor(index, suggestionName)
-                    }
-                  />
-                </Collapsible>
-                <RadioListItem
-                  checked={colorIsCustom}
-                  onClick={() =>
-                    !colorIsCustom &&
-                    updateExtraColor(
-                      index,
-                      generalColorSuggestions[
+                    : generalColorSuggestions[
                         value as GeneralColorSuggestion
                       ]?.(baseColors.primary)
-                    )
+                )
+              }
+            >
+              <RadioListItem value='suggestions'>Suggestions</RadioListItem>
+              <Collapsible open={colorIsSuggestion}>
+                <ColorSuggestionsBox
+                  baseColor={baseColors.primary}
+                  colorSuggestions={generalColorSuggestions}
+                  value={value as GeneralColorSuggestion}
+                  onValueChange={suggestionName =>
+                    updateExtraColor(index, suggestionName)
                   }
-                >
-                  Custom
-                </RadioListItem>
-                <Collapsible open={colorIsCustom}>
-                  <div className='p-2'>
-                    <ColorInput
-                      id={`input-extra-color-${index}`}
-                      value={value || ''}
-                      onChange={newColor => {
-                        updateExtraColor(index, newColor);
-                      }}
-                      withRandomBtn
-                    />
-                  </div>
-                </Collapsible>
-              </div>
-              <ListItem onClick={() => removeExtraColor(index)}>
-                <ListItemIcon>
-                  <DeleteIcon />
-                </ListItemIcon>
-                Remove
-              </ListItem>
-            </ColorListItem>
-          );
-        })}
-        <ListItem onClick={addExtraColor} className='mb-2'>
-          <ListItemIcon>
-            <AddIcon />
-          </ListItemIcon>
-          Add extra color
-        </ListItem>
-      </AccordionList>
+                />
+              </Collapsible>
+              <RadioListItem value='custom'>Custom</RadioListItem>
+              <Collapsible open={colorIsCustom}>
+                <div className='p-2'>
+                  <ColorInput
+                    id={`input-extra-color-${index}`}
+                    value={value || ''}
+                    onChange={newColor => {
+                      updateExtraColor(index, newColor);
+                    }}
+                    withRandomBtn
+                  />
+                </div>
+              </Collapsible>
+            </RadioGroup>
+            <ListItem onClick={() => removeExtraColor(index)}>
+              <ListItemIcon>
+                <DeleteIcon />
+              </ListItemIcon>
+              Remove
+            </ListItem>
+          </ColorListItem>
+        );
+      })}
+      <ListItem onClick={addExtraColor} className='mb-2'>
+        <ListItemIcon>
+          <AddIcon />
+        </ListItemIcon>
+        Add extra color
+      </ListItem>
     </section>
   );
 });

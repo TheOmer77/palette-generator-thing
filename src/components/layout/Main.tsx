@@ -3,12 +3,19 @@ import { useMemo } from 'react';
 import Header from './Header';
 import { CodeBlock, H2, H3 } from 'components/general';
 import { ColorBlock, ColorGrid } from 'components/colors';
-import { useTheme } from 'hooks';
-import { generatePalette, generateVariablesCss, toCamelCase } from 'utils';
-import { shades } from 'constants';
+import { useGlobalState, useTheme } from 'hooks';
+import {
+  generateCssCode,
+  generateJsonCode,
+  generatePalette,
+  generateScssCode,
+  toCamelCase,
+} from 'utils';
+import { codeFormats, shades } from 'constants';
 
 const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();
+  const [{ codeGen }] = useGlobalState();
 
   const colorGrids = useMemo(() => {
     const grids = [
@@ -42,25 +49,32 @@ const Main = () => {
     ) as typeof grids;
   }, [danger, extras, neutral, primary]);
 
-  const themeCss = useMemo(
-    () =>
-      generateVariablesCss(
-        extras.reduce(
-          (obj, { name, value }, index) => ({
-            ...obj,
-            [typeof name === 'string' && name.length > 0
-              ? toCamelCase(name)
-              : `extra${index + 1}`]: value,
-          }),
-          {
-            primary,
-            neutral,
-            danger,
-          }
-        )
-      ),
-    [danger, extras, neutral, primary]
-  );
+  const themeCode = useMemo(() => {
+    const palettes = extras.reduce(
+      (obj, { name, value }, index) => ({
+        ...obj,
+        [typeof name === 'string' && name.length > 0
+          ? toCamelCase(name)
+          : `extra${index + 1}`]: value,
+      }),
+      {
+        primary,
+        neutral,
+        danger,
+      }
+    );
+
+    switch (codeGen.format) {
+      case 'css':
+        return generateCssCode(palettes, codeGen.colorFormat);
+      case 'scss':
+        return generateScssCode(palettes, codeGen.colorFormat);
+      case 'json':
+        return generateJsonCode(palettes, codeGen.colorFormat);
+      default:
+        return '';
+    }
+  }, [codeGen.colorFormat, codeGen.format, danger, extras, neutral, primary]);
 
   return (
     <main className='w-full max-w-7xl p-4 pb-24 md:pb-4 xl:mx-auto'>
@@ -82,8 +96,20 @@ const Main = () => {
         </div>
       ))}
 
-      <H2 className='break-before-page'>Theme CSS variables</H2>
-      <CodeBlock language='css'>{themeCss}</CodeBlock>
+      {codeGen.format !== 'none' && (
+        <>
+          <H2 className='break-before-page'>
+            {codeFormats[codeGen.format].displayName} code
+          </H2>
+          <CodeBlock
+            language={
+              !['none', 'custom'].includes(codeGen.format) ? codeGen.format : ''
+            }
+          >
+            {themeCode}
+          </CodeBlock>
+        </>
+      )}
     </main>
   );
 };
