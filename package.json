@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fontsource-variable/figtree": "^5.0.19",
-    "@fontsource-variable/fira-code": "^5.0.16",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-context": "^1.0.1",
     "@radix-ui/react-dialog": "^1.0.5",
