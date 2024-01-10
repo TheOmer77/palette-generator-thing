@@ -5,10 +5,10 @@ import BaseColorsSection from './BaseColorsSection';
 import CodeGenSection from './CodeGenSection';
 import SheetWithFab from './SheetWithFab';
 import Sidebar from './Sidebar';
-import { AccordionList } from 'components/general';
-import { useTailwindBreakpoint } from 'hooks';
-import { TuneIcon } from 'assets/icons';
-import type { GlobalState } from 'types';
+import { AccordionList } from '@/components/general';
+import { useTailwindBreakpoint } from '@/hooks';
+import { TuneIcon } from '@/assets/icons';
+import type { GlobalState } from '@/types';
 
 const Options = () => {
   const [openItem, setOpenItem] = useState<

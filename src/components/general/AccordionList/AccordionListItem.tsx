@@ -1,14 +1,20 @@
-import { ComponentPropsWithoutRef, ReactNode, forwardRef } from 'react';
+'use client';
+
+import {
+  forwardRef,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from 'react';
 
 import {
   ACCORDION_ITEM_NAME,
-  ScopedProps,
   useAccordionListContext,
+  type ScopedProps,
 } from './common';
 import { Collapsible } from '../Collapsible';
 import { ListItem, ListItemIcon } from '../List';
-import { cn } from 'utils';
-import { ExpandMoreIcon } from 'assets/icons';
+import { cn } from '@/utils';
+import { ExpandMoreIcon } from '@/assets/icons';
 
 export interface AccordionListItemProps
   extends Omit<ComponentPropsWithoutRef<'button'>, 'title' | 'onClick'> {

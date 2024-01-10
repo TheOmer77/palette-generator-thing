@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
   type TooltipContentProps,
 } from '@radix-ui/react-tooltip';
-import { cn } from 'utils';
+import { cn } from '@/utils';
 
 export interface TooltipProps
   extends Omit<TooltipContentProps, 'sideOffset' | 'title'> {

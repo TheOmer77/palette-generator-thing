@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 
-import { List, ListProps } from '../List';
+import { List, type ListProps } from '../List';
 import {
   ACCORDION_GROUP_NAME,
   AccordionListContext,
-  AccordionListContextValue,
-  ScopedProps,
+  type AccordionListContextValue,
+  type ScopedProps,
 } from './common';
 
 export type AccordionListProps = ListProps & AccordionListContextValue;

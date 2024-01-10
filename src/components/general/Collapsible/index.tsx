@@ -1,12 +1,12 @@
 import { forwardRef } from 'react';
 import {
   CollapsibleContent,
-  CollapsibleContentProps,
   Root,
+  type CollapsibleContentProps,
 } from '@radix-ui/react-collapsible';
 import { Primitive } from '@radix-ui/react-primitive';
 
-import { cn } from 'utils';
+import { cn } from '@/utils';
 
 export interface CollapsibleProps extends CollapsibleContentProps {
   open?: boolean;

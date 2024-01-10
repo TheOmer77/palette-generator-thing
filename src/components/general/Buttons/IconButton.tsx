@@ -1,9 +1,10 @@
-import { Children, ComponentProps, forwardRef } from 'react';
-import { cn } from 'utils';
+import { Children, forwardRef, type ComponentPropsWithoutRef } from 'react';
+
+import { cn } from '@/utils';
 
 export const IconButton = forwardRef<
   HTMLButtonElement,
-  ComponentProps<'button'>
+  ComponentPropsWithoutRef<'button'>
 >(({ children, className, ...props }, ref) => (
   <button
     {...props}

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
+
 import useGlobalState from './useGlobalState';
-import { getAutoDangerColor, getAutoNeutralColor } from 'utils';
+import { getAutoDangerColor, getAutoNeutralColor } from '@/utils';
 import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
@@ -8,12 +9,12 @@ import {
   generalColorSuggestions,
   neutralColorSuggestionNames,
   neutralColorSuggestions,
-} from 'constants/colorSuggestions';
+} from '@/constants/colorSuggestions';
 import type {
   DangerColorSuggestion,
   GeneralColorSuggestion,
   NeutralColorSuggestion,
-} from 'types';
+} from '@/types';
 
 const useTheme = () => {
   const [

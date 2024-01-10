@@ -29,7 +29,7 @@ import {
   REDDISH_MAX_DANGER_HUE,
   REDDISH_MIN_DANGER_HUE,
   shadesLightnessValues,
-} from 'constants';
+} from '@/constants';
 
 const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),
@@ -81,10 +81,10 @@ export const getClosestShade = (
   return typeof minShade === 'number' && typeof maxShade === 'number'
     ? Math.min(Math.max(closestShade, minShade), maxShade)
     : typeof minShade === 'number'
-    ? Math.max(closestShade, minShade)
-    : typeof maxShade === 'number'
-    ? Math.min(closestShade, maxShade)
-    : closestShade;
+      ? Math.max(closestShade, minShade)
+      : typeof maxShade === 'number'
+        ? Math.min(closestShade, maxShade)
+        : closestShade;
 };
 
 export const getContrastShade = (hexColor: string) =>

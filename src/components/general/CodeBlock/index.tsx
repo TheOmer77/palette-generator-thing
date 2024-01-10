@@ -1,12 +1,17 @@
-import { ComponentProps, forwardRef, useCallback, useState } from 'react';
+import {
+  forwardRef,
+  useCallback,
+  useState,
+  type ComponentPropsWithoutRef,
+} from 'react';
 import { Highlight, Prism } from 'prism-react-renderer';
 
 import { IconButton } from '../Buttons';
 import { Tooltip } from '../Tooltip';
-import { CopyIcon, DoneIcon } from 'assets/icons';
-import { cn } from 'utils';
+import { CopyIcon, DoneIcon } from '@/assets/icons';
+import { cn } from '@/utils';
 
-import 'styles/prism.css';
+import '@/styles/prism.css';
 
 window.Prism = Prism;
 //@ts-expect-error Import SCSS language
@@ -15,7 +20,7 @@ await import('prismjs/components/prism-scss');
 await import('prismjs/components/prism-json');
 
 export interface CodeBlockProps
-  extends Omit<ComponentProps<'pre'>, 'children'> {
+  extends Omit<ComponentPropsWithoutRef<'pre'>, 'children'> {
   children: string;
   language?: string;
 }
@@ -63,7 +68,7 @@ dark:bg-neutral-900'
               className={cn(
                 `max-h-[calc(100vh-6.5rem)]
 overflow-auto p-4 text-sm scrollbar-thin scrollbar-thumb-neutral-500/30
-print:max-h-none md:max-h-[calc(100vh-4.5rem)] md:print:max-h-none`,
+md:max-h-[calc(100vh-4.5rem)] print:max-h-none md:print:max-h-none`,
                 className
               )}
             >

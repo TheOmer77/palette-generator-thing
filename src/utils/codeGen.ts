@@ -3,7 +3,7 @@ import {
   MIN_MAIN_SHADE,
   colorFormats,
   shades,
-} from 'constants';
+} from '@/constants';
 import {
   generatePalette,
   getClosestShade,

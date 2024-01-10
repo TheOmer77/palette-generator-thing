@@ -1,5 +1,6 @@
-import { ReactNode, useState } from 'react';
-import { BottomSheet, BottomSheetProps, Fab } from 'components/general';
+import { useState, type ReactNode } from 'react';
+
+import { BottomSheet, Fab, type BottomSheetProps } from '@/components/general';
 
 export interface SheetWithFabProps extends BottomSheetProps {
   label: string;

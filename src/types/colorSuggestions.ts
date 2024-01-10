@@ -1,9 +1,9 @@
-import { getColorVariantFn } from 'utils';
+import { getColorVariantFn } from '@/utils';
 import {
   dangerColorSuggestions,
   generalColorSuggestions,
   neutralColorSuggestions,
-} from 'constants';
+} from '@/constants';
 
 export type ColorSuggestions = Record<
   string,

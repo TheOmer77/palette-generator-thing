@@ -1,13 +1,13 @@
 import {
   forwardRef,
-  type ComponentPropsWithoutRef,
-  type ReactNode,
   useState,
   useEffect,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
 } from 'react';
 import { Primitive } from '@radix-ui/react-primitive';
 
-import { cn } from 'utils';
+import { cn } from '@/utils';
 
 export interface InputProps
   extends ComponentPropsWithoutRef<typeof Primitive.input> {

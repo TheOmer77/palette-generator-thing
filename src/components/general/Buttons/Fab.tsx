@@ -1,6 +1,7 @@
 import { forwardRef, isValidElement } from 'react';
-import { cn } from 'utils';
+
 import type { ButtonProps } from './Button';
+import { cn } from '@/utils';
 
 export const Fab = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ icon, iconPosition = 'start', className, children, ...props }, ref) => (

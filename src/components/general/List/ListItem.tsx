@@ -1,14 +1,14 @@
-import { ComponentPropsWithoutRef, forwardRef, useRef } from 'react';
+import { forwardRef, useRef, type ComponentPropsWithoutRef } from 'react';
 import { RovingFocusGroupItem } from '@radix-ui/react-roving-focus';
 import { Primitive } from '@radix-ui/react-primitive';
 
 import {
   LIST_ITEM_NAME,
-  ScopedProps,
   useListContext,
   useRovingFocusGroupScope,
+  type ScopedProps,
 } from './common';
-import { cn } from 'utils';
+import { cn } from '@/utils';
 
 // eslint-disable-next-line react/display-name
 const ListItemButton = forwardRef<

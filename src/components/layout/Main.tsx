@@ -1,17 +1,17 @@
 import { useMemo } from 'react';
 
 import Header from './Header';
-import { CodeBlock, H2, H3 } from 'components/general';
-import { ColorBlock, ColorGrid } from 'components/colors';
-import { useGlobalState, useTheme } from 'hooks';
+import { ColorBlock, ColorGrid } from '@/components/colors';
+import { H2, H3 } from '@/components/general';
+import { useGlobalState, useTheme } from '@/hooks';
 import {
   generateCssCode,
   generateJsonCode,
   generatePalette,
   generateScssCode,
   toCamelCase,
-} from 'utils';
-import { codeFormats, shades } from 'constants';
+} from '@/utils';
+import { shades } from '@/constants';
 
 const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();
@@ -49,6 +49,8 @@ const Main = () => {
     ) as typeof grids;
   }, [danger, extras, neutral, primary]);
 
+  // TODO: Remove line below once CodeBlock is fixed
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const themeCode = useMemo(() => {
     const palettes = extras.reduce(
       (obj, { name, value }, index) => ({
@@ -96,7 +98,8 @@ const Main = () => {
         </div>
       ))}
 
-      {codeGen.format !== 'none' && (
+      {/* TODO: Uncomment once CodeBlock is fixed */}
+      {/* {codeGen.format !== 'none' && (
         <>
           <H2 className='break-before-page'>
             {codeFormats[codeGen.format].displayName} code
@@ -109,7 +112,7 @@ const Main = () => {
             {themeCode}
           </CodeBlock>
         </>
-      )}
+      )} */}
     </main>
   );
 };

@@ -1,10 +1,15 @@
-import { ComponentProps, forwardRef, useCallback, useState } from 'react';
+import {
+  forwardRef,
+  type ComponentPropsWithoutRef,
+  useState,
+  useCallback,
+} from 'react';
 
-import { Tooltip } from 'components/general';
-import { cn, isHexColorLight, isValidHexColor } from 'utils';
-import { CopyIcon, DoneIcon } from 'assets/icons';
+import { Tooltip } from '@/components/general';
+import { cn, isHexColorLight, isValidHexColor } from '@/utils';
+import { CopyIcon, DoneIcon } from '@/assets/icons';
 
-export interface ColorBlockProps extends ComponentProps<'button'> {
+export interface ColorBlockProps extends ComponentPropsWithoutRef<'button'> {
   value: string;
   label?: string;
 }

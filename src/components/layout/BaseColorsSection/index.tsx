@@ -11,11 +11,11 @@ import {
   ListSubheader,
   RadioGroup,
   Separator,
-} from 'components/general';
-import { ColorInput } from 'components/colors';
-import { AddIcon, DeleteIcon } from 'assets/icons';
-import { useGlobalState, useTheme } from 'hooks';
-import { getAutoDangerColor, getAutoNeutralColor, toCamelCase } from 'utils';
+} from '@/components/general';
+import { ColorInput } from '@/components/colors';
+import { AddIcon, DeleteIcon } from '@/assets/icons';
+import { useGlobalState, useTheme } from '@/hooks';
+import { getAutoDangerColor, getAutoNeutralColor, toCamelCase } from '@/utils';
 import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
@@ -23,13 +23,13 @@ import {
   generalColorSuggestions,
   neutralColorSuggestionNames,
   neutralColorSuggestions,
-} from 'constants';
+} from '@/constants';
 import type {
   AnyStringWithAutocomplete,
   DangerColorSuggestion,
   GeneralColorSuggestion,
   NeutralColorSuggestion,
-} from 'types';
+} from '@/types';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 
@@ -123,7 +123,7 @@ const BaseColorsSection = forwardRef<
   return (
     <section {...props} ref={ref}>
       <ListSubheader
-        className='bg-white dark:bg-neutral-900 md:bg-neutral-50
+        className='bg-white md:bg-neutral-50 dark:bg-neutral-900
 dark:md:bg-neutral-900'
       >
         Base colors
@@ -155,10 +155,10 @@ dark:md:bg-neutral-900'
           neutralIsAuto
             ? 'auto'
             : neutralIsSuggestion
-            ? 'suggestions'
-            : neutralIsCustom
-            ? 'custom'
-            : undefined
+              ? 'suggestions'
+              : neutralIsCustom
+                ? 'custom'
+                : undefined
         }
         onValueChange={newValue =>
           ((newValue === 'auto' && !neutralIsAuto) ||
@@ -171,8 +171,8 @@ dark:md:bg-neutral-900'
                 newValue === 'suggestions'
                   ? neutralColorSuggestionNames[0]
                   : newValue === 'custom'
-                  ? getAutoNeutralColor(baseColors.primary)
-                  : undefined,
+                    ? getAutoNeutralColor(baseColors.primary)
+                    : undefined,
             },
           })
         }
@@ -222,10 +222,10 @@ dark:md:bg-neutral-900'
           dangerIsAuto
             ? 'auto'
             : dangerIsSuggestion
-            ? 'suggestions'
-            : dangerIsCustom
-            ? 'custom'
-            : undefined
+              ? 'suggestions'
+              : dangerIsCustom
+                ? 'custom'
+                : undefined
         }
         onValueChange={newValue =>
           ((newValue === 'auto' && !dangerIsAuto) ||
@@ -238,8 +238,8 @@ dark:md:bg-neutral-900'
                 newValue === 'suggestions'
                   ? dangerColorSuggestionNames[0]
                   : newValue === 'custom'
-                  ? getAutoDangerColor(baseColors.primary)
-                  : undefined,
+                    ? getAutoDangerColor(baseColors.primary)
+                    : undefined,
             },
           })
         }
@@ -320,8 +320,8 @@ dark:md:bg-neutral-900'
                     nameIsReserved
                       ? 'This name is reserved.'
                       : nameIsDuplicate
-                      ? "This name can't be used by multiple colors."
-                      : undefined
+                        ? "This name can't be used by multiple colors."
+                        : undefined
                   }
                 />
               </ListItem>
