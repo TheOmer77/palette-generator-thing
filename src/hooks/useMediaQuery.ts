@@ -1,7 +1,9 @@
 import { useDebugValue, useEffect, useState } from 'react';
 
 const useMediaQuery = (media: string) => {
-  const [value, setValue] = useState<boolean>(window.matchMedia(media).matches);
+  const [value, setValue] = useState<boolean>(
+    typeof window !== 'undefined' && window.matchMedia(media).matches
+  );
 
   useEffect(() => {
     const eventListener = (e: MediaQueryListEvent) => setValue(e.matches);
