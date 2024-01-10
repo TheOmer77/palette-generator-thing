@@ -2,7 +2,7 @@ import {
   AccordionListItem,
   ListItemText,
   type AccordionListItemProps,
-} from 'components/general';
+} from '@/components/general';
 
 interface ColorListItemProps extends AccordionListItemProps {
   value: string;

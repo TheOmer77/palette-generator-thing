@@ -1,10 +1,10 @@
 import {
-  type ComponentProps,
-  type ReactNode,
   forwardRef,
   isValidElement,
+  type ComponentProps,
+  type ReactNode,
 } from 'react';
-import { cn } from 'utils';
+import { cn } from '@/utils';
 
 export interface ButtonProps extends ComponentProps<'button'> {
   icon?: ReactNode;

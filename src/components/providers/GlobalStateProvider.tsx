@@ -1,11 +1,13 @@
-import { ReactNode, useCallback, useState } from 'react';
+'use client';
+
+import { useCallback, useState, type ReactNode } from 'react';
 
 import {
   GlobalDispatchContext,
   GlobalStateContext,
   initialState,
-} from 'contexts/globalState';
-import type { GlobalState } from 'types';
+} from '@/contexts/globalState';
+import type { GlobalState } from '@/types';
 
 const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
   const [globalState, _setGlobalState] = useState(initialState);

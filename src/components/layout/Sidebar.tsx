@@ -1,7 +1,8 @@
-import { ComponentProps, forwardRef } from 'react';
-import { cn } from 'utils';
+import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
-const Sidebar = forwardRef<HTMLElement, ComponentProps<'aside'>>(
+import { cn } from '@/utils';
+
+const Sidebar = forwardRef<HTMLElement, ComponentPropsWithoutRef<'aside'>>(
   ({ className, children, ...props }, ref) => (
     <>
       <aside
@@ -9,7 +10,7 @@ const Sidebar = forwardRef<HTMLElement, ComponentProps<'aside'>>(
         ref={ref}
         className={cn(
           `fixed flex h-screen w-[50vw] max-w-[25rem] flex-col gap-4 rounded-lg
-bg-neutral-50 dark:bg-neutral-900 md:rounded-none`,
+bg-neutral-50 md:rounded-none dark:bg-neutral-900`,
           className
         )}
       >

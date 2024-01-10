@@ -4,10 +4,10 @@ import {
   ToolbarToggleItem,
 } from '@radix-ui/react-toolbar';
 
-import { IconButton, ListItem } from 'components/general';
-import { DoneIcon } from 'assets/icons';
-import { isHexColorLight } from 'utils';
-import type { ColorSuggestions } from 'types';
+import { IconButton, ListItem } from '@/components/general';
+import { DoneIcon } from '@/assets/icons';
+import { isHexColorLight } from '@/utils';
+import type { ColorSuggestions } from '@/types';
 
 const ColorSuggestionsBox = <T extends ColorSuggestions>({
   baseColor,

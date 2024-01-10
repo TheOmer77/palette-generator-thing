@@ -1,10 +1,12 @@
+'use client';
+
 import {
-  ChangeEventHandler,
-  FocusEventHandler,
   forwardRef,
   useCallback,
   useEffect,
   useState,
+  type ChangeEventHandler,
+  type FocusEventHandler,
 } from 'react';
 import { formatHex, modeRgb, useMode as loadMode } from 'culori/fn';
 
@@ -13,9 +15,9 @@ import {
   Input,
   Tooltip,
   type InputProps,
-} from 'components/general';
-import { RandomIcon } from 'assets/icons';
-import { autoAddHexHash, isValidHexColor, randomHexColor } from 'utils';
+} from '@/components/general';
+import { RandomIcon } from '@/assets/icons';
+import { autoAddHexHash, isValidHexColor, randomHexColor } from '@/utils';
 
 loadMode(modeRgb);
 

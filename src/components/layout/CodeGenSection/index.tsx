@@ -1,15 +1,15 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
+import RadioListItem from '../RadioListItem';
 import {
   AccordionListItem,
   Collapsible,
   ListItemText,
   ListSubheader,
   RadioGroup,
-} from 'components/general';
-import RadioListItem from '../RadioListItem';
-import { codeFormats, colorFormats } from 'constants';
-import { useGlobalState } from 'hooks';
+} from '@/components/general';
+import { useGlobalState } from '@/hooks';
+import { codeFormats, colorFormats } from '@/constants';
 
 const CodeGenSection = forwardRef<
   HTMLElement,
@@ -20,7 +20,7 @@ const CodeGenSection = forwardRef<
   return (
     <section {...props} ref={ref}>
       <ListSubheader
-        className='bg-white dark:bg-neutral-900 md:bg-neutral-50
+        className='bg-white md:bg-neutral-50 dark:bg-neutral-900
         dark:md:bg-neutral-900'
       >
         Generated code

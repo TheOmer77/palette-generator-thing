@@ -1,5 +1,6 @@
 import { useContext, type ComponentPropsWithoutRef } from 'react';
-import { ListItem, Radio, RadioGroupContext } from 'components/general';
+
+import { ListItem, Radio, RadioGroupContext } from '@/components/general';
 
 interface RadioListItemProps extends ComponentPropsWithoutRef<typeof ListItem> {
   checked?: boolean;

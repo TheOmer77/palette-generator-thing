@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-family: 'Figtree Variable';
-  --font-family-mono: 'Fira Code Variable';
+body {
+  @apply overflow-x-hidden bg-white text-neutral-900 scrollbar-thin
+scrollbar-thumb-neutral-500/30 selection:bg-primary-500/30
+selection:text-primary-950 dark:bg-neutral-950 dark:text-neutral-100
+dark:selection:text-primary-50 print:text-neutral-900;
 }

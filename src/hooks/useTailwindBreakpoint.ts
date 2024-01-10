@@ -1,7 +1,7 @@
 import { useDebugValue } from 'react';
 
-import { screens } from 'constants';
 import useMediaQuery from './useMediaQuery';
+import { screens } from '@/constants';
 
 const useTailwindBreakpoint = (breakpoint: keyof typeof screens) => {
   const value = useMediaQuery(`(min-width: ${screens[breakpoint]})`);

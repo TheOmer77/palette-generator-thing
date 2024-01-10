@@ -1,4 +1,4 @@
-import { codeFormats, colorFormats } from 'constants';
+import { codeFormats, colorFormats } from '@/constants';
 import type {
   DangerColorSuggestion,
   GeneralColorSuggestion,

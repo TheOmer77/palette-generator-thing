@@ -1,13 +1,15 @@
-import { ComponentPropsWithoutRef, forwardRef } from 'react';
-import { cn } from 'utils';
+'use client';
+
+import { forwardRef, type ComponentPropsWithoutRef } from 'react';
+import { cn } from '@/utils';
 
 import { RovingFocusGroup } from '@radix-ui/react-roving-focus';
 
 import {
   LIST_GROUP_NAME,
   ListContext,
-  ScopedProps,
   useRovingFocusGroupScope,
+  type ScopedProps,
 } from './common';
 
 type RovingFocusGroupProps = ComponentPropsWithoutRef<typeof RovingFocusGroup>;

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import {
   GlobalDispatchContext,
   GlobalStateContext,
-} from 'contexts/globalState';
+} from '@/contexts/globalState';
 
 const useGlobalState = () => {
   const globalState = useContext(GlobalStateContext);

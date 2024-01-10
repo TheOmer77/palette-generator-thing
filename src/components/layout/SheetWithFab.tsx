@@ -1,5 +1,8 @@
-import { ReactNode, useState } from 'react';
-import { BottomSheet, BottomSheetProps, Fab } from 'components/general';
+'use client';
+
+import { useState, type ReactNode } from 'react';
+
+import { BottomSheet, Fab, type BottomSheetProps } from '@/components/general';
 
 export interface SheetWithFabProps extends BottomSheetProps {
   label: string;
@@ -20,7 +23,7 @@ const SheetWithFab = ({
       <Fab
         icon={fabIcon}
         onClick={() => setSheetOpen(true)}
-        className='print:hidden'
+        className='flex md:hidden print:hidden'
       >
         {label}
       </Fab>

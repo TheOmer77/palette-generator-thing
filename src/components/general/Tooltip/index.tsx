@@ -1,3 +1,5 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import {
   Tooltip as TooltipRoot,
@@ -7,7 +9,7 @@ import {
   TooltipTrigger,
   type TooltipContentProps,
 } from '@radix-ui/react-tooltip';
-import { cn } from 'utils';
+import { cn } from '@/utils';
 
 export interface TooltipProps
   extends Omit<TooltipContentProps, 'sideOffset' | 'title'> {

@@ -1,9 +1,11 @@
+'use client';
+
 import { forwardRef, useContext } from 'react';
 import {
   Primitive,
   type ComponentPropsWithoutRef,
 } from '@radix-ui/react-primitive';
-import { cn } from 'utils';
+import { cn } from '@/utils';
 import { RadioGroupContext } from './context';
 
 export interface RadioProps

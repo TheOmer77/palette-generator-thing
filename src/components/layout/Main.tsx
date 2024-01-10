@@ -1,17 +1,19 @@
+'use client';
+
 import { useMemo } from 'react';
 
 import Header from './Header';
-import { CodeBlock, H2, H3 } from 'components/general';
-import { ColorBlock, ColorGrid } from 'components/colors';
-import { useGlobalState, useTheme } from 'hooks';
+import { ColorBlock, ColorGrid } from '@/components/colors';
+import { CodeBlock, H2, H3 } from '@/components/general';
+import { useGlobalState, useTheme } from '@/hooks';
 import {
   generateCssCode,
   generateJsonCode,
   generatePalette,
   generateScssCode,
   toCamelCase,
-} from 'utils';
-import { codeFormats, shades } from 'constants';
+} from '@/utils';
+import { codeFormats, shades } from '@/constants';
 
 const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();

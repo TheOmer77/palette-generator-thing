@@ -1,16 +1,16 @@
 import type { Config } from 'tailwindcss';
 import scrollbar from 'tailwind-scrollbar';
 import plugin from 'tailwindcss/plugin';
+
+//@ts-expect-error Javascript only, no type decleration
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
+//@ts-expect-error Javascript only, no type decleration
 import toColorValue from 'tailwindcss/lib/util/toColorValue';
 
 const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
 
 const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
   const themeColors = flattenColorPalette(theme('colors'));
-  const colors = Object.fromEntries(
-    Object.entries(themeColors).map(([k, v]) => [k, toColorValue(v)])
-  );
 
   matchUtilities(
     {
@@ -22,7 +22,7 @@ const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
         },
       }),
     },
-    { values: colors, type: 'color' }
+    { values: themeColors, type: 'color' }
   );
 
   addUtilities({
@@ -45,7 +45,7 @@ const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
   });
   matchUtilities(
     { 'state-layer': value => ({ '&::after': { backgroundColor: value } }) },
-    { values: colors, type: 'color' }
+    { values: themeColors, type: 'color' }
   );
 });
 
