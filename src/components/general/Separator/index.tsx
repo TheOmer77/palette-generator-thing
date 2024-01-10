@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef } from 'react';
 import { Root, type SeparatorProps } from '@radix-ui/react-separator';
 

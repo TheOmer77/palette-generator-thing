@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, useCallback, type ComponentPropsWithoutRef } from 'react';
 
 import ColorListItem from './ColorListItem';

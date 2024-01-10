@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, type ReactNode } from 'react';
 
 import { BottomSheet, Fab, type BottomSheetProps } from '@/components/general';

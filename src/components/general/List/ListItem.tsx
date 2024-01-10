@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, useRef, type ComponentPropsWithoutRef } from 'react';
 import { RovingFocusGroupItem } from '@radix-ui/react-roving-focus';
 import { Primitive } from '@radix-ui/react-primitive';
