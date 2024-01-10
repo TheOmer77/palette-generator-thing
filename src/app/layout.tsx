@@ -28,6 +28,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <GlobalStateProvider>
       <html lang='en' className={clsx(font.variable, fontMono.variable)}>
         <head>
+          <meta name='color-scheme' content='light dark' />
           <ThemeStyle />
         </head>
         <body>{children}</body>
