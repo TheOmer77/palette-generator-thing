@@ -1,4 +1,4 @@
-import { Main, Options, ThemeStyle } from '@/components/layout';
+import { Main, Options } from '@/components/layout';
 
 const HomePage = () => (
   <div
@@ -7,7 +7,6 @@ md:grid-cols-[min(50vw,25rem),max(50vw,calc(100vw-25rem))]'
   >
     <Options />
     <Main />
-    <ThemeStyle />
   </div>
 );
 

@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
-import { createPortal } from 'react-dom';
+'use client';
 
-import { useTheme } from 'hooks';
-import { generateCssCode } from 'utils';
+import { useMemo } from 'react';
+
+import { useTheme } from '@/hooks';
+import { generateCssCode } from '@/utils';
 
 const ThemeStyle = () => {
   const { primary, neutral, danger } = useTheme();
@@ -12,7 +13,7 @@ const ThemeStyle = () => {
     [danger, neutral, primary]
   );
 
-  return createPortal(<style>{themeCss}</style>, document.head);
+  return <style>{themeCss}</style>;
 };
 
 export default ThemeStyle;
