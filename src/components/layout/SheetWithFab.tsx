@@ -23,7 +23,7 @@ const SheetWithFab = ({
       <Fab
         icon={fabIcon}
         onClick={() => setSheetOpen(true)}
-        className='print:hidden'
+        className='flex md:hidden print:hidden'
       >
         {label}
       </Fab>
