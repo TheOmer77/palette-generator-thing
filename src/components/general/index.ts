@@ -1,7 +1,8 @@
 export * from './AccordionList';
 export * from './BottomSheet';
 export * from './Buttons';
-export * from './CodeBlock';
+// TODO: Uncomment once CodeBlock is fixed
+// export * from './CodeBlock';
 export * from './Collapsible';
 export * from './Headings';
 export * from './Input';
