@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 
 import Header from './Header';
 import { ColorBlock, ColorGrid } from '@/components/colors';
-import { H2, H3 } from '@/components/general';
+import { CodeBlock, H2, H3 } from '@/components/general';
 import { useGlobalState, useTheme } from '@/hooks';
 import {
   generateCssCode,
@@ -13,7 +13,7 @@ import {
   generateScssCode,
   toCamelCase,
 } from '@/utils';
-import { shades } from '@/constants';
+import { codeFormats, shades } from '@/constants';
 
 const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();
@@ -51,8 +51,6 @@ const Main = () => {
     ) as typeof grids;
   }, [danger, extras, neutral, primary]);
 
-  // TODO: Remove line below once CodeBlock is fixed
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const themeCode = useMemo(() => {
     const palettes = extras.reduce(
       (obj, { name, value }, index) => ({
@@ -100,8 +98,7 @@ const Main = () => {
         </div>
       ))}
 
-      {/* TODO: Uncomment once CodeBlock is fixed */}
-      {/* {codeGen.format !== 'none' && (
+      {codeGen.format !== 'none' && (
         <>
           <H2 className='break-before-page'>
             {codeFormats[codeGen.format].displayName} code
@@ -114,7 +111,7 @@ const Main = () => {
             {themeCode}
           </CodeBlock>
         </>
-      )} */}
+      )}
     </main>
   );
 };
