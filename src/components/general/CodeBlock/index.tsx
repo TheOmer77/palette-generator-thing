@@ -9,7 +9,7 @@ import {
 import { Highlight, Prism } from 'prism-react-renderer';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
-import { IconButton } from '../Buttons';
+import { IconButton } from '../IconButton';
 import { Tooltip } from '../Tooltip';
 import { cn } from '@/utils';
 

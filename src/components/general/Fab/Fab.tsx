@@ -1,9 +1,18 @@
-import { forwardRef, isValidElement } from 'react';
+import {
+  forwardRef,
+  isValidElement,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from 'react';
 
-import type { ButtonProps } from './Button';
 import { cn } from '@/utils';
 
-export const Fab = forwardRef<HTMLButtonElement, ButtonProps>(
+export interface FabProps extends ComponentPropsWithoutRef<'button'> {
+  icon?: ReactNode;
+  iconPosition?: 'start' | 'end';
+}
+
+export const Fab = forwardRef<HTMLButtonElement, FabProps>(
   ({ icon, iconPosition = 'start', className, children, ...props }, ref) => (
     <button
       {...props}
