@@ -53,6 +53,9 @@ const config: Config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      spacing: { inherit: 'inherit' },
+      height: { screen: '100dvh' },
+      maxHeight: { screen: '100dvh' },
       animation: {
         fadein: 'fadein 200ms',
         fadeout: 'fadeout 200ms',
@@ -109,6 +112,7 @@ const config: Config = {
       },
     },
     colors: {
+      inherit: 'inherit',
       white: '#fff',
       black: '#000',
       transparent: 'transparent',
