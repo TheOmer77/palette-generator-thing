@@ -7,10 +7,10 @@ import {
 
 import { cn } from '@/utils';
 
-export interface FabProps extends ComponentPropsWithoutRef<'button'> {
+export type FabProps = ComponentPropsWithoutRef<'button'> & {
   icon?: ReactNode;
   iconPosition?: 'start' | 'end';
-}
+};
 
 export const Fab = forwardRef<HTMLButtonElement, FabProps>(
   ({ icon, iconPosition = 'start', className, children, ...props }, ref) => (

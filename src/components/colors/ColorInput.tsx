@@ -18,22 +18,21 @@ import { autoAddHexHash, isValidHexColor, randomHexColor } from '@/utils';
 
 loadMode(modeRgb);
 
-export interface ColorInputProps
-  extends Omit<
-    InputProps,
-    | 'asChild'
-    | 'endAdornment'
-    | 'onChange'
-    | 'ref'
-    | 'startAdornment'
-    | 'type'
-    | 'value'
-  > {
+export type ColorInputProps = Omit<
+  InputProps,
+  | 'asChild'
+  | 'endAdornment'
+  | 'onChange'
+  | 'ref'
+  | 'startAdornment'
+  | 'type'
+  | 'value'
+> & {
   value?: string;
   onChange?: (newValue: string) => void;
   withAlpha?: boolean;
   withRandomBtn?: boolean;
-}
+};
 
 export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
   (

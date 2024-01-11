@@ -5,11 +5,11 @@ import {
   Primitive,
   type ComponentPropsWithoutRef,
 } from '@radix-ui/react-primitive';
+
 import { RadioGroupContext, type RadioGroupValue } from './context';
 
-export interface RadioGroupProps
-  extends RadioGroupValue,
-    ComponentPropsWithoutRef<typeof Primitive.div> {}
+export type RadioGroupProps = RadioGroupValue &
+  ComponentPropsWithoutRef<typeof Primitive.div>;
 
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   ({ value, onValueChange, children, ...props }, ref) => (

@@ -16,12 +16,14 @@ import { Collapsible } from '../Collapsible';
 import { ListItem, ListItemIcon } from '../List';
 import { cn } from '@/utils';
 
-export interface AccordionListItemProps
-  extends Omit<ComponentPropsWithoutRef<'button'>, 'title' | 'onClick'> {
+export type AccordionListItemProps = Omit<
+  ComponentPropsWithoutRef<'button'>,
+  'title' | 'onClick'
+> & {
   value: string;
   title: ReactNode;
   open?: boolean;
-}
+};
 
 export const AccordionListItem = forwardRef<
   HTMLButtonElement,

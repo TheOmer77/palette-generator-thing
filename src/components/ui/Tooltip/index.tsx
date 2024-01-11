@@ -11,10 +11,9 @@ import {
 } from '@radix-ui/react-tooltip';
 import { cn } from '@/utils';
 
-export interface TooltipProps
-  extends Omit<TooltipContentProps, 'sideOffset' | 'title'> {
+export type TooltipProps = Omit<TooltipContentProps, 'sideOffset' | 'title'> & {
   title: ReactNode;
-}
+};
 
 export const Tooltip = ({ title, side, className, children }: TooltipProps) => (
   <TooltipProvider>

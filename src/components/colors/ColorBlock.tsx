@@ -9,10 +9,10 @@ import { CheckIcon, CopyIcon } from 'lucide-react';
 import { Tooltip } from '@/components/ui/Tooltip';
 import { cn, isHexColorLight, isValidHexColor } from '@/utils';
 
-export interface ColorBlockProps extends ComponentPropsWithoutRef<'button'> {
+export type ColorBlockProps = ComponentPropsWithoutRef<'button'> & {
   value: string;
   label?: string;
-}
+};
 
 export const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
   ({ value, label, style, ...props }, ref) => {

@@ -5,14 +5,14 @@ import {
   Primitive,
   type ComponentPropsWithoutRef,
 } from '@radix-ui/react-primitive';
-import { cn } from '@/utils';
-import { RadioGroupContext } from './context';
 
-export interface RadioProps
-  extends ComponentPropsWithoutRef<typeof Primitive.button> {
+import { RadioGroupContext } from './context';
+import { cn } from '@/utils';
+
+export type RadioProps = ComponentPropsWithoutRef<typeof Primitive.button> & {
   checked?: boolean;
   value?: string;
-}
+};
 
 export const Radio = forwardRef<HTMLButtonElement, RadioProps>(
   ({ value, checked = false, disabled, className, onClick, ...props }, ref) => {

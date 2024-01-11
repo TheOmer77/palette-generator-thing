@@ -10,9 +10,7 @@ import { Primitive } from '@radix-ui/react-primitive';
 
 import { cn } from '@/utils';
 
-export interface CollapsibleProps extends CollapsibleContentProps {
-  open?: boolean;
-}
+export type CollapsibleProps = CollapsibleContentProps & { open?: boolean };
 
 export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(
   ({ open = false, asChild, className, children, ...props }, ref) => {

@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
-export interface RadioGroupValue {
+export type RadioGroupValue = {
   value?: string;
   onValueChange?: (newValue?: string) => void;
-}
+};
 
 const initialState: RadioGroupValue = {};
 

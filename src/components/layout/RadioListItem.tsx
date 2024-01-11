@@ -3,12 +3,12 @@ import { useContext, type ComponentPropsWithoutRef } from 'react';
 import { ListItem, ListItemIcon } from '@/components/ui/List';
 import { Radio, RadioGroupContext } from '@/components/ui/Radio';
 
-interface RadioListItemProps extends ComponentPropsWithoutRef<typeof ListItem> {
+type RadioListItemProps = ComponentPropsWithoutRef<typeof ListItem> & {
   checked?: boolean;
   disabled?: boolean;
   children?: string;
   value?: string;
-}
+};
 
 const RadioListItem = ({
   checked = false,

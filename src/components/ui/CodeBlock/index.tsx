@@ -19,11 +19,13 @@ import '@/styles/prism.css';
 require('prismjs/components/prism-scss');
 require('prismjs/components/prism-json');
 
-export interface CodeBlockProps
-  extends Omit<ComponentPropsWithoutRef<'pre'>, 'children'> {
+export type CodeBlockProps = Omit<
+  ComponentPropsWithoutRef<'pre'>,
+  'children'
+> & {
   children: string;
   language?: string;
-}
+};
 
 export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
   ({ language = '', style, children, ...props }, ref) => {

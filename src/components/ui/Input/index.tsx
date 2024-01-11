@@ -11,14 +11,13 @@ import { Primitive } from '@radix-ui/react-primitive';
 
 import { cn } from '@/utils';
 
-export interface InputProps
-  extends ComponentPropsWithoutRef<typeof Primitive.input> {
+export type InputProps = ComponentPropsWithoutRef<typeof Primitive.input> & {
   label?: string;
   invalid?: boolean;
   helperText?: string;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
-}
+};
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (

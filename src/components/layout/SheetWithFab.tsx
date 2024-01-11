@@ -8,10 +8,10 @@ import {
 } from '@/components/ui/BottomSheet';
 import { Fab } from '@/components/ui/Fab';
 
-export interface SheetWithFabProps extends BottomSheetProps {
+export type SheetWithFabProps = BottomSheetProps & {
   label: string;
   fabIcon?: ReactNode;
-}
+};
 
 export const SheetWithFab = ({
   label,

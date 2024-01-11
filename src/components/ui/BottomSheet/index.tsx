@@ -13,11 +13,10 @@ import {
 import { H2 } from '../Headings';
 import { cn } from '@/utils';
 
-export interface BottomSheetProps
-  extends ComponentPropsWithoutRef<'div'>,
-    Pick<DialogProps, 'open' | 'onOpenChange'> {
-  title?: string;
-}
+export type BottomSheetProps = ComponentPropsWithoutRef<'div'> &
+  Pick<DialogProps, 'open' | 'onOpenChange'> & {
+    title?: string;
+  };
 
 export const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(
   ({ title, open, onOpenChange, className, children, ...props }, ref) => (
