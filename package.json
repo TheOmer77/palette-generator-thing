@@ -41,6 +41,7 @@
     "eslint-config-prettier": "^9.1.0",
     "postcss": "^8.4.33",
     "postcss-hover-media-feature": "^1.0.2",
+    "postcss-viewport-unit-fallback": "^1.0.1",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwind-scrollbar": "^3.0.5",
