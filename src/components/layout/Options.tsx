@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { SlidersHorizontalIcon } from 'lucide-react';
 
 import Header from './Header';
 import BaseColorsSection from './BaseColorsSection';
@@ -8,7 +9,6 @@ import CodeGenSection from './CodeGenSection';
 import SheetWithFab from './SheetWithFab';
 import Sidebar from './Sidebar';
 import { AccordionList } from '@/components/general';
-import { TuneIcon } from '@/assets/icons';
 import type { GlobalState } from '@/types';
 
 const Options = () => {
@@ -35,7 +35,7 @@ const Options = () => {
       </Sidebar>
       <SheetWithFab
         label='Options'
-        fabIcon={<TuneIcon />}
+        fabIcon={<SlidersHorizontalIcon />}
         onOpenChange={open => !open && setOpenItem(null)}
       >
         <AccordionList

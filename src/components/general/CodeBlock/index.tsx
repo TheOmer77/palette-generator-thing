@@ -7,10 +7,10 @@ import {
   type ComponentPropsWithoutRef,
 } from 'react';
 import { Highlight, Prism } from 'prism-react-renderer';
+import { CheckIcon, CopyIcon } from 'lucide-react';
 
 import { IconButton } from '../Buttons';
 import { Tooltip } from '../Tooltip';
-import { CopyIcon, DoneIcon } from '@/assets/icons';
 import { cn } from '@/utils';
 
 import '@/styles/prism.css';
@@ -46,7 +46,7 @@ dark:bg-neutral-900'
             className='absolute end-2 top-2 print:hidden'
             onClick={copyCode}
           >
-            {justCopied ? <DoneIcon /> : <CopyIcon />}
+            {justCopied ? <CheckIcon /> : <CopyIcon />}
           </IconButton>
         </Tooltip>
         <Highlight

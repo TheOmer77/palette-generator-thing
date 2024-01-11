@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, useCallback, type ComponentPropsWithoutRef } from 'react';
+import { PlusIcon, TrashIcon } from 'lucide-react';
 
 import ColorListItem from './ColorListItem';
 import ColorSuggestionsBox from './ColorSuggestionsBox';
@@ -15,7 +16,6 @@ import {
   Separator,
 } from '@/components/general';
 import { ColorInput } from '@/components/colors';
-import { AddIcon, DeleteIcon } from '@/assets/icons';
 import { useGlobalState, useTheme } from '@/hooks';
 import { getAutoDangerColor, getAutoNeutralColor, toCamelCase } from '@/utils';
 import {
@@ -372,7 +372,7 @@ dark:md:bg-neutral-900'
             </RadioGroup>
             <ListItem onClick={() => removeExtraColor(index)}>
               <ListItemIcon>
-                <DeleteIcon />
+                <TrashIcon />
               </ListItemIcon>
               Remove
             </ListItem>
@@ -381,7 +381,7 @@ dark:md:bg-neutral-900'
       })}
       <ListItem onClick={addExtraColor} className='mb-2'>
         <ListItemIcon>
-          <AddIcon />
+          <PlusIcon />
         </ListItemIcon>
         Add extra color
       </ListItem>

@@ -9,6 +9,7 @@ import {
   type FocusEventHandler,
 } from 'react';
 import { formatHex, modeRgb, useMode as loadMode } from 'culori/fn';
+import { Dice5Icon } from 'lucide-react';
 
 import {
   IconButton,
@@ -16,7 +17,6 @@ import {
   Tooltip,
   type InputProps,
 } from '@/components/general';
-import { RandomIcon } from '@/assets/icons';
 import { autoAddHexHash, isValidHexColor, randomHexColor } from '@/utils';
 
 loadMode(modeRgb);
@@ -106,7 +106,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                     aria-label='Generate random color'
                     onClick={() => onChange?.(randomHexColor())}
                   >
-                    <RandomIcon />
+                    <Dice5Icon />
                   </IconButton>
                 </Tooltip>
               ),

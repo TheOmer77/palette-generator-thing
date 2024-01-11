@@ -4,10 +4,10 @@ import {
   useState,
   type ComponentPropsWithoutRef,
 } from 'react';
+import { CheckIcon, CopyIcon } from 'lucide-react';
 
 import { Tooltip } from '@/components/general';
 import { cn, isHexColorLight, isValidHexColor } from '@/utils';
-import { CopyIcon, DoneIcon } from '@/assets/icons';
 
 export interface ColorBlockProps extends ComponentPropsWithoutRef<'button'> {
   value: string;
@@ -17,6 +17,7 @@ export interface ColorBlockProps extends ComponentPropsWithoutRef<'button'> {
 export const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
   ({ value, label, style, ...props }, ref) => {
     const [justCopied, setJustCopied] = useState(false);
+    const Icon = justCopied ? CheckIcon : CopyIcon;
 
     const copyValue = useCallback(() => {
       navigator.clipboard.writeText(value);
@@ -46,19 +47,17 @@ focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`,
             .join(' ')} - Copy color value`}
           onClick={copyValue}
         >
-          <span
+          <Icon
             className={cn(
-              'absolute end-2 text-xl [--tw-text-opacity:0.6] print:hidden',
-              isHexColorLight(value) ? 'text-black' : 'text-white'
+              'absolute end-2 print:hidden',
+              isHexColorLight(value) ? 'text-black/60' : 'text-white/60'
             )}
-          >
-            {justCopied ? <DoneIcon /> : <CopyIcon />}
-          </span>
+          />
           {label && (
             <span
               className={cn(
-                `mt-1 text-xs leading-4 [--tw-text-opacity:0.6]`,
-                isHexColorLight(value) ? 'text-black' : 'text-white'
+                `mt-1 text-xs leading-4`,
+                isHexColorLight(value) ? 'text-black/60' : 'text-white/60'
               )}
             >
               {label}

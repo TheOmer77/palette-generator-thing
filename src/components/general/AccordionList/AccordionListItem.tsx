@@ -5,6 +5,7 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from 'react';
+import { ChevronDownIcon } from 'lucide-react';
 
 import {
   ACCORDION_ITEM_NAME,
@@ -14,7 +15,6 @@ import {
 import { Collapsible } from '../Collapsible';
 import { ListItem, ListItemIcon } from '../List';
 import { cn } from '@/utils';
-import { ExpandMoreIcon } from '@/assets/icons';
 
 export interface AccordionListItemProps
   extends Omit<ComponentPropsWithoutRef<'button'>, 'title' | 'onClick'> {
@@ -47,12 +47,9 @@ export const AccordionListItem = forwardRef<
       >
         {title}
         <ListItemIcon
-          className={cn(
-            'me-0 ms-auto text-xl duration-200',
-            open && 'rotate-180'
-          )}
+          className={cn('me-0 ms-auto duration-200', open && 'rotate-180')}
         >
-          <ExpandMoreIcon />
+          <ChevronDownIcon />
         </ListItemIcon>
       </ListItem>
       <Collapsible open={open}>{children}</Collapsible>
