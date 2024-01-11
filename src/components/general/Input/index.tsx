@@ -44,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         className={cn(
-          `relative flex h-12 items-center gap-2 rounded-lg bg-white px-3
+          `relative flex h-12 items-center gap-2 rounded-lg bg-white px-1
 dark:bg-neutral-950`,
           typeof helperText === 'string' && helperText.length > 0 && `mb-7`,
           className
@@ -66,7 +66,7 @@ dark:bg-neutral-950`,
           aria-label={label}
           aria-invalid={invalid}
           className={cn(
-            `peer h-full flex-grow bg-transparent text-sm
+            `peer h-full flex-grow bg-transparent px-2 text-sm
 text-neutral-900 autofill-override-white focus-visible:outline-none
 dark:text-neutral-100 dark:autofill-override-neutral-950`,
             label &&
@@ -84,7 +84,7 @@ focus:placeholder:opacity-100`
             htmlFor={id}
             aria-hidden
             className={cn(
-              `pointer-events-none absolute select-none text-sm
+              `pointer-events-none absolute select-none px-2 text-sm
 text-neutral-600 transition-[font-size,transform,color]
 peer-invalid:text-danger-600 peer-focus:-translate-y-2.5 peer-focus:text-xs
 peer-focus:text-primary-500 peer-aria-[invalid=true]:text-danger-600
