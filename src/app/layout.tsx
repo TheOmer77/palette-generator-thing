@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { Fira_Code, Plus_Jakarta_Sans } from 'next/font/google';
+import { Fira_Code, Figtree } from 'next/font/google';
 import clsx from 'clsx';
 
 import GlobalStateProvider from '@/components/providers/GlobalStateProvider';
 import { ThemeStyle } from '@/components/layout';
 import '@/styles/index.css';
 
-const font = Plus_Jakarta_Sans({
+const font = Figtree({
   subsets: ['latin'],
   variable: '--font-family',
   fallback: ['sans-serif'],
