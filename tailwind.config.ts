@@ -50,67 +50,99 @@ const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
 });
 
 const config: Config = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      spacing: { inherit: 'inherit', em: '1em' },
-      height: { screen: '100dvh' },
-      maxHeight: { screen: '100dvh' },
-      screens: { '2xl': '1440px' },
       animation: {
-        fadein: 'fadein 200ms',
-        fadeout: 'fadeout 200ms',
-        'fadeout-fast': 'fadeout 150ms',
-        slidein: 'slidein 200ms',
-        slideout: 'slideout 200ms',
-        slideDown: 'slideDown 200ms',
-        slideUp: 'slideUp 200ms',
-        slideDownAndFade: 'slideDownAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
-        slideLeftAndFade: 'slideLeftAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
-        slideUpAndFade: 'slideUpAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
-        slideRightAndFade:
-          'slideRightAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
+        'collapse-in': 'collapse-in 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'collapse-out': 'collapse-out 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'fade-in': 'fade-in 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'fade-out': 'fade-out 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'slide-in': 'slide-in 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'slide-out': 'slide-out 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'tooltip-in': 'tooltip-in 150ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'tooltip-out': 'fade-out 150ms cubic-bezier(0.2, 1, 0.4, 1)',
       },
       fontFamily: {
-        sans: ['var(--font-family)', 'sans-serif'],
         mono: ['var(--font-family-mono)', 'monospace'],
+        sans: ['var(--font-family)', 'sans-serif'],
       },
+      height: { screen: '100dvh' },
       keyframes: {
-        fadein: { from: { opacity: '0' }, to: { opacity: '1' } },
-        fadeout: { from: { opacity: '1' }, to: { opacity: '0' } },
-        slidein: {
-          from: { transform: 'translateY(100%)' },
-          to: { transform: 'translateY(0%)' },
-        },
-        slideout: {
-          from: { transform: 'translateY(0%)' },
-          to: { transform: 'translateY(100%)' },
-        },
-        slideDown: {
+        'collapse-in': {
           from: { height: '0' },
           to: { height: 'var(--radix-collapsible-content-height)' },
         },
-        slideUp: {
+        'collapse-out': {
           from: { height: 'var(--radix-collapsible-content-height)' },
           to: { height: '0' },
         },
-        slideDownAndFade: {
-          from: { opacity: '0', transform: 'translateY(-2px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
+        'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
+        'fade-out': { from: { opacity: '1' }, to: { opacity: '0' } },
+        'slide-in': {
+          from: {
+            transform: `translate(
+  var(--slide-translate-origin-x, 0%),
+  var(--slide-translate-origin-y, 0%)
+)`,
+          },
+          to: { transform: 'translate(0%, 0%)' },
         },
-        slideLeftAndFade: {
-          from: { opacity: '0', transform: 'translateX(2px)' },
-          to: { opacity: '1', transform: 'translateX(0)' },
+        'slide-out': {
+          from: { transform: 'translate(0%, 0%)' },
+          to: {
+            transform: `translate(
+  var(--slide-translate-origin-x, 0%),
+  var(--slide-translate-origin-y, 0%)
+)`,
+          },
         },
-        slideUpAndFade: {
-          from: { opacity: '0', transform: 'translateY(2px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
+        'tooltip-in': {
+          from: {
+            opacity: '0',
+            transform: `translate(
+  var(--slide-translate-origin-x, 0%),
+  var(--slide-translate-origin-y, 0%)
+)`,
+          },
+          to: { opacity: '1', transform: 'translate(0%, 0%)' },
         },
-        slideRightAndFade: {
-          from: { opacity: '0', transform: 'translateX(-2px)' },
-          to: { opacity: '1', transform: 'translateX(0)' },
+        'zoom-in': {
+          from: {
+            opacity: '0',
+            transform: `translate(
+  var(--zoom-translate-x, 0%),
+  var(--zoom-translate-y, 0%)
+) scale(0.95)`,
+          },
+          to: {
+            opacity: '1',
+            transform: `translate(
+  var(--zoom-translate-x, 0%),
+  var(--zoom-translate-y, 0%)
+) scale(1)`,
+          },
+        },
+        'zoom-out': {
+          from: {
+            opacity: '1',
+            transform: `translate(
+  var(--zoom-translate-x, 0%),
+  var(--zoom-translate-y, 0%)
+) scale(1)`,
+          },
+          to: {
+            opacity: '0',
+            transform: `translate(
+  var(--zoom-translate-x, 0%),
+  var(--zoom-translate-y, 0%)
+) scale(0.95)`,
+          },
         },
       },
+      maxHeight: { screen: '100dvh' },
+      screens: { '2xl': '1440px' },
+      spacing: { em: '1em', inherit: 'inherit' },
     },
     colors: {
       inherit: 'inherit',

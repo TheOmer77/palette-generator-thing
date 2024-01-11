@@ -26,15 +26,13 @@ export const Tooltip = ({ title, side, className, children }: TooltipProps) => (
           className={cn(
             `z-30 select-none rounded-lg bg-neutral-50 p-2 text-xs leading-none
 text-neutral-800 shadow-sm shadow-neutral-950/25
-will-change-[transform,opacity] data-[state=closed]:animate-fadeout-fast
-data-[state=delayed-open]:data-[side=bottom]:animate-slideDownAndFade
-data-[state=delayed-open]:data-[side=left]:animate-slideLeftAndFade
-data-[state=delayed-open]:data-[side=right]:animate-slideRightAndFade
-data-[state=delayed-open]:data-[side=top]:animate-slideUpAndFade
-data-[state=instant-open]:data-[side=bottom]:animate-slideDownAndFade
-data-[state=instant-open]:data-[side=left]:animate-slideLeftAndFade
-data-[state=instant-open]:data-[side=right]:animate-slideRightAndFade
-data-[state=instant-open]:data-[side=top]:animate-slideUpAndFade
+will-change-[transform,opacity] data-[state=closed]:animate-tooltip-out
+data-[state=delayed-open]:animate-tooltip-in
+data-[state=instant-open]:animate-tooltip-in
+data-[side=bottom]:[--slide-translate-origin-y:-2px]
+data-[side=left]:[--slide-translate-origin-x:2px]
+data-[side=right]:[--slide-translate-origin-x:-2px]
+data-[side=top]:[--slide-translate-origin-y:2px]
 dark:bg-neutral-900 dark:text-neutral-200`,
             className
           )}
