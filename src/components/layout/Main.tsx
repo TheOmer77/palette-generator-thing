@@ -79,7 +79,10 @@ const Main = () => {
   }, [codeGen.colorFormat, codeGen.format, danger, extras, neutral, primary]);
 
   return (
-    <main className='w-full max-w-7xl p-4 pb-24 md:pb-4 xl:mx-auto'>
+    <main
+      className='p-4 md:ps-[21rem] [&>*]:mx-auto [&>*]:w-full
+[&>*]:max-w-screen-lg'
+    >
       <Header className='mb-6 block md:hidden' />
 
       <H2>Palettes</H2>

@@ -9,14 +9,14 @@ const Sidebar = forwardRef<HTMLElement, ComponentPropsWithoutRef<'aside'>>(
         {...props}
         ref={ref}
         className={cn(
-          `fixed flex h-screen w-[50vw] max-w-[25rem] flex-col gap-4 rounded-lg
-bg-neutral-50 md:rounded-none dark:bg-neutral-900`,
+          `fixed flex h-screen w-80 flex-col rounded-lg bg-neutral-50
+after:absolute after:end-0 after:top-0 after:-z-10 after:h-inherit
+after:w-screen after:bg-inherit md:rounded-none dark:bg-neutral-900`,
           className
         )}
       >
         {children}
       </aside>
-      <div className='w-[50vw] max-w-[25rem]' />
     </>
   )
 );
