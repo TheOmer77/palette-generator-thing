@@ -66,8 +66,8 @@ dark:bg-neutral-900'
               style={{ ...prismStyle, ...style }}
               ref={ref}
               className={cn(
-                `max-h-[calc(100vh-6.5rem)]
-overflow-auto p-4 text-sm scrollbar-thin scrollbar-thumb-neutral-500/30
+                `max-h-[calc(100vh-6.5rem)] overflow-auto p-4 text-sm
+leading-relaxed scrollbar-thin scrollbar-thumb-neutral-500/30
 md:max-h-[calc(100vh-4.5rem)] print:max-h-none md:print:max-h-none`,
                 className
               )}
