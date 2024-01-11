@@ -10,8 +10,8 @@ export const IconButton = forwardRef<
     {...props}
     ref={ref}
     className={cn(
-      `flex h-8 w-8 cursor-default items-center justify-center rounded-lg
-text-xl text-neutral-500 state-layer hover:state-layer-neutral-500/20
+      `flex h-9 w-9 cursor-default items-center justify-center rounded-lg
+text-neutral-500 state-layer hover:state-layer-neutral-500/20
 focus-visible:outline-none focus-visible:state-layer-neutral-500/20
 active:state-layer-neutral-500/30`,
       className
