@@ -53,7 +53,7 @@ const config: Config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      spacing: { inherit: 'inherit' },
+      spacing: { inherit: 'inherit', em: '1em' },
       height: { screen: '100dvh' },
       maxHeight: { screen: '100dvh' },
       screens: { '2xl': '1440px' },
