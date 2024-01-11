@@ -1,8 +1,8 @@
 import {
   forwardRef,
-  type ComponentPropsWithoutRef,
-  useState,
   useCallback,
+  useState,
+  type ComponentPropsWithoutRef,
 } from 'react';
 
 import { Tooltip } from '@/components/general';
@@ -57,14 +57,14 @@ focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`,
           {label && (
             <span
               className={cn(
-                `mt-1 text-sm leading-4 [--tw-text-opacity:0.6]`,
+                `mt-1 text-xs leading-4 [--tw-text-opacity:0.6]`,
                 isHexColorLight(value) ? 'text-black' : 'text-white'
               )}
             >
               {label}
             </span>
           )}
-          <span className='text-lg font-medium'>{value}</span>
+          <span className='text-base font-medium'>{value}</span>
         </button>
       </Tooltip>
     );

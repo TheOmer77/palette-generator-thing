@@ -44,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         className={cn(
-          `relative flex h-14 items-center gap-2 rounded-lg bg-white px-3
+          `relative flex h-12 items-center gap-2 rounded-lg bg-white px-3
 dark:bg-neutral-950`,
           typeof helperText === 'string' && helperText.length > 0 && `mb-7`,
           className
@@ -66,7 +66,7 @@ dark:bg-neutral-950`,
           aria-label={label}
           aria-invalid={invalid}
           className={cn(
-            `peer h-full flex-grow bg-transparent
+            `peer h-full flex-grow bg-transparent text-sm
 text-neutral-900 autofill-override-white focus-visible:outline-none
 dark:text-neutral-100 dark:autofill-override-neutral-950`,
             label &&
@@ -84,15 +84,15 @@ focus:placeholder:opacity-100`
             htmlFor={id}
             aria-hidden
             className={cn(
-              `pointer-events-none absolute select-none text-base
+              `pointer-events-none absolute select-none text-sm
 text-neutral-600 transition-[font-size,transform,color]
-peer-invalid:text-danger-600 peer-focus:-translate-y-3 peer-focus:text-sm
+peer-invalid:text-danger-600 peer-focus:-translate-y-2.5 peer-focus:text-xs
 peer-focus:text-primary-500 peer-aria-[invalid=true]:text-danger-600
 dark:text-neutral-400 dark:peer-invalid:text-danger-300
 dark:peer-focus:text-primary-300
 dark:peer-aria-[invalid=true]:text-danger-300`,
               (startAdornment || value || (!value && uncontrolledHasValue)) &&
-                '-translate-y-3 text-sm'
+                '-translate-y-2.5 text-xs'
             )}
           >
             {label}
@@ -108,7 +108,7 @@ dark:peer-aria-[invalid=true]:ring-danger-300'
         />
         {typeof helperText === 'string' && helperText.length > 0 && (
           <span
-            className='absolute top-[3.75rem] select-none text-sm
+            className='absolute top-[3.75rem] select-none text-xs
 text-neutral-700 peer-invalid:text-danger-600
 peer-aria-[invalid=true]:text-danger-600 dark:text-neutral-300
 dark:peer-invalid:text-danger-300
