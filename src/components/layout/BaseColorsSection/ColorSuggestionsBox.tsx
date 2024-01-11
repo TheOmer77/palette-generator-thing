@@ -5,7 +5,8 @@ import {
 } from '@radix-ui/react-toolbar';
 import { CheckIcon } from 'lucide-react';
 
-import { IconButton, ListItem } from '@/components/general';
+import { IconButton } from '@/components/ui/IconButton';
+import { ListItem } from '@/components/ui/List';
 import { isHexColorLight } from '@/utils';
 import type { ColorSuggestions } from '@/types';
 

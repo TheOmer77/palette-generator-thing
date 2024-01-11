@@ -6,15 +6,11 @@ import { PlusIcon, TrashIcon } from 'lucide-react';
 import ColorListItem from './ColorListItem';
 import ColorSuggestionsBox from './ColorSuggestionsBox';
 import RadioListItem from '../RadioListItem';
-import {
-  Collapsible,
-  Input,
-  ListItem,
-  ListItemIcon,
-  ListSubheader,
-  RadioGroup,
-  Separator,
-} from '@/components/general';
+import { Collapsible } from '@/components/ui/Collapsible';
+import { Input } from '@/components/ui/Input';
+import { ListItem, ListItemIcon, ListSubheader } from '@/components/ui/List';
+import { RadioGroup } from '@/components/ui/Radio';
+import { Separator } from '@/components/ui/Separator';
 import { ColorInput } from '@/components/colors';
 import { useGlobalState, useTheme } from '@/hooks';
 import { getAutoDangerColor, getAutoNeutralColor, toCamelCase } from '@/utils';

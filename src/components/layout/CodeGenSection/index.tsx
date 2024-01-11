@@ -3,13 +3,10 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
 import RadioListItem from '../RadioListItem';
-import {
-  AccordionListItem,
-  Collapsible,
-  ListItemText,
-  ListSubheader,
-  RadioGroup,
-} from '@/components/general';
+import { AccordionListItem } from '@/components/ui/AccordionList';
+import { Collapsible } from '@/components/ui/Collapsible';
+import { ListItemText, ListSubheader } from '@/components/ui/List';
+import { RadioGroup } from '@/components/ui/Radio';
 import { useGlobalState } from '@/hooks';
 import { codeFormats, colorFormats } from '@/constants';
 

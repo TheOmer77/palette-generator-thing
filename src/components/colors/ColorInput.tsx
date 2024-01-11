@@ -11,12 +11,9 @@ import {
 import { formatHex, modeRgb, useMode as loadMode } from 'culori/fn';
 import { Dice5Icon } from 'lucide-react';
 
-import {
-  IconButton,
-  Input,
-  Tooltip,
-  type InputProps,
-} from '@/components/general';
+import { IconButton } from '@/components/ui/IconButton';
+import { Input, type InputProps } from '@/components/ui/Input';
+import { Tooltip } from '@/components/ui/Tooltip';
 import { autoAddHexHash, isValidHexColor, randomHexColor } from '@/utils';
 
 loadMode(modeRgb);

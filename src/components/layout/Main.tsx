@@ -4,7 +4,8 @@ import { useMemo } from 'react';
 
 import { Header } from './Header';
 import { ColorBlock, ColorGrid } from '@/components/colors';
-import { CodeBlock, H2, H3 } from '@/components/general';
+import { CodeBlock } from '@/components/ui/CodeBlock';
+import { H2, H3 } from '@/components/ui/Headings';
 import { useGlobalState, useTheme } from '@/hooks';
 import {
   generateCssCode,

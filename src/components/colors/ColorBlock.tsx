@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
-import { Tooltip } from '@/components/general';
+import { Tooltip } from '@/components/ui/Tooltip';
 import { cn, isHexColorLight, isValidHexColor } from '@/utils';
 
 export interface ColorBlockProps extends ComponentPropsWithoutRef<'button'> {

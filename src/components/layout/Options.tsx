@@ -8,7 +8,7 @@ import { BaseColorsSection } from './BaseColorsSection';
 import { CodeGenSection } from './CodeGenSection';
 import { SheetWithFab } from './SheetWithFab';
 import { Sidebar } from './Sidebar';
-import { AccordionList } from '@/components/general';
+import { AccordionList } from '@/components/ui/AccordionList';
 import type { GlobalState } from '@/types';
 
 export const Options = () => {
