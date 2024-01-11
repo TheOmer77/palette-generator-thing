@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { useTheme } from '@/hooks';
 import { generateCssCode } from '@/utils';
 
-const ThemeStyle = () => {
+export const ThemeStyle = () => {
   const { primary, neutral, danger } = useTheme();
 
   const themeCss = useMemo(
@@ -15,5 +15,3 @@ const ThemeStyle = () => {
 
   return <style>{themeCss}</style>;
 };
-
-export default ThemeStyle;

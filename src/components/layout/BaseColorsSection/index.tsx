@@ -35,7 +35,7 @@ import type {
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 
-const BaseColorsSection = forwardRef<
+export const BaseColorsSection = forwardRef<
   HTMLElement,
   ComponentPropsWithoutRef<'section'>
 >((props, ref) => {
@@ -389,5 +389,3 @@ dark:md:bg-neutral-900'
   );
 });
 BaseColorsSection.displayName = 'BaseColorsSection';
-
-export default BaseColorsSection;

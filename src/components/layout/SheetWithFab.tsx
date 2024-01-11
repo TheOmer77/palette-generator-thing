@@ -9,7 +9,7 @@ export interface SheetWithFabProps extends BottomSheetProps {
   fabIcon?: ReactNode;
 }
 
-const SheetWithFab = ({
+export const SheetWithFab = ({
   label,
   fabIcon,
   onOpenChange,
@@ -42,5 +42,3 @@ const SheetWithFab = ({
     </>
   );
 };
-
-export default SheetWithFab;

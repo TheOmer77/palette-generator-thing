@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
 import RadioListItem from '../RadioListItem';
@@ -11,7 +13,7 @@ import {
 import { useGlobalState } from '@/hooks';
 import { codeFormats, colorFormats } from '@/constants';
 
-const CodeGenSection = forwardRef<
+export const CodeGenSection = forwardRef<
   HTMLElement,
   ComponentPropsWithoutRef<'section'>
 >((props, ref) => {
@@ -90,5 +92,3 @@ const CodeGenSection = forwardRef<
   );
 });
 CodeGenSection.displayName = 'CodeGenSection';
-
-export default CodeGenSection;

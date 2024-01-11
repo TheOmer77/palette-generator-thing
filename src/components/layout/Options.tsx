@@ -3,15 +3,15 @@
 import { useState } from 'react';
 import { SlidersHorizontalIcon } from 'lucide-react';
 
-import Header from './Header';
-import BaseColorsSection from './BaseColorsSection';
-import CodeGenSection from './CodeGenSection';
-import SheetWithFab from './SheetWithFab';
-import Sidebar from './Sidebar';
+import { Header } from './Header';
+import { BaseColorsSection } from './BaseColorsSection';
+import { CodeGenSection } from './CodeGenSection';
+import { SheetWithFab } from './SheetWithFab';
+import { Sidebar } from './Sidebar';
 import { AccordionList } from '@/components/general';
 import type { GlobalState } from '@/types';
 
-const Options = () => {
+export const Options = () => {
   const [openItem, setOpenItem] = useState<
     keyof GlobalState['baseColors'] | keyof GlobalState['codeGen'] | null
   >(null);
@@ -51,5 +51,3 @@ const Options = () => {
     </>
   );
 };
-
-export default Options;

@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 
-import Header from './Header';
+import { Header } from './Header';
 import { ColorBlock, ColorGrid } from '@/components/colors';
 import { CodeBlock, H2, H3 } from '@/components/general';
 import { useGlobalState, useTheme } from '@/hooks';
@@ -15,7 +15,7 @@ import {
 } from '@/utils';
 import { codeFormats, shades } from '@/constants';
 
-const Main = () => {
+export const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();
   const [{ codeGen }] = useGlobalState();
 
@@ -118,5 +118,3 @@ const Main = () => {
     </main>
   );
 };
-
-export default Main;
