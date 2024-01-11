@@ -56,6 +56,7 @@ const config: Config = {
       spacing: { inherit: 'inherit' },
       height: { screen: '100dvh' },
       maxHeight: { screen: '100dvh' },
+      screens: { '2xl': '1440px' },
       animation: {
         fadein: 'fadein 200ms',
         fadeout: 'fadeout 200ms',
