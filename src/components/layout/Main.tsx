@@ -12,8 +12,8 @@ import {
   generateJsonCode,
   generatePalette,
   generateScssCode,
-  toCamelCase,
 } from '@/utils';
+import { toCamelCase } from '@/lib/utils';
 import { codeFormats, shades } from '@/constants';
 
 export const Main = () => {

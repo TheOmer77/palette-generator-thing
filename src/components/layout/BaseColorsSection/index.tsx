@@ -13,7 +13,8 @@ import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import { ColorInput } from '@/components/colors';
 import { useGlobalState, useTheme } from '@/hooks';
-import { getAutoDangerColor, getAutoNeutralColor, toCamelCase } from '@/utils';
+import { getAutoDangerColor, getAutoNeutralColor } from '@/utils';
+import { toCamelCase } from '@/lib/utils';
 import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
