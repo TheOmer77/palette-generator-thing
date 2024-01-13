@@ -3,7 +3,7 @@ import type {
   DangerColorSuggestion,
   GeneralColorSuggestion,
   NeutralColorSuggestion,
-} from './colorSuggestions';
+} from './defaultSuggestions';
 import type { AnyStringWithAutocomplete } from './utils';
 
 export type GlobalState = {
