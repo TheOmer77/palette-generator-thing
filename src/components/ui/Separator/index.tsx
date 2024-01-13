@@ -11,10 +11,10 @@ export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(
       {...props}
       ref={ref}
       className={cn(
-        `bg-neutral-300 data-[orientation=horizontal]:my-1
+        `bg-muted data-[orientation=horizontal]:my-1
 data-[orientation=vertical]:mx-1 data-[orientation=horizontal]:h-px
 data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full
-data-[orientation=vertical]:w-px dark:bg-neutral-700`,
+data-[orientation=vertical]:w-px`,
         className
       )}
     />

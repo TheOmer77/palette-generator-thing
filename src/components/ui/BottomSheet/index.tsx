@@ -32,10 +32,10 @@ print:hidden'
           ref={ref}
           className={cn(
             `fixed inset-x-0 bottom-0 z-20 mx-auto flex
-max-h-[calc(100dvh-4rem)] w-screen max-w-2xl flex-col rounded-t-lg bg-white
-text-neutral-950 shadow shadow-neutral-900/50 [--slide-translate-origin-y:100%]
+max-h-[calc(100dvh-4rem)] w-screen max-w-2xl flex-col rounded-t-lg bg-background
+text-foreground shadow shadow-neutral-900/50 [--slide-translate-origin-y:100%]
 data-[state=closed]:animate-slide-out data-[state=open]:animate-slide-in
-dark:bg-neutral-900 dark:text-neutral-50`,
+dark:bg-card`,
             className
           )}
         >

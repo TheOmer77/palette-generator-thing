@@ -26,10 +26,9 @@ const ListItemButton = forwardRef<
         `flex min-h-10 w-full cursor-default select-none items-center
 rounded-lg px-4 py-2 text-start text-sm outline-none
 transition-[background-color] duration-100 state-layer
-focus-visible:outline-none focus-visible:state-layer-neutral-500/20
-active:bg-neutral-500/20 active:duration-0
-enabled:hover:state-layer-neutral-500/20 disabled:text-neutral-600
-dark:disabled:text-neutral-400`,
+focus-visible:outline-none focus-visible:state-layer-muted/30
+active:bg-muted/30 active:duration-0
+enabled:hover:state-layer-muted/30 disabled:text-muted [&>*]:z-10`,
       className
     )}
   />

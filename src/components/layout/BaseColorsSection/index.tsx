@@ -121,10 +121,7 @@ export const BaseColorsSection = forwardRef<
 
   return (
     <section {...props} ref={ref}>
-      <ListSubheader
-        className='bg-white md:bg-neutral-50 dark:bg-neutral-900
-dark:md:bg-neutral-900'
-      >
+      <ListSubheader className='bg-background md:bg-card dark:bg-card'>
         Base colors
       </ListSubheader>
       <ColorListItem

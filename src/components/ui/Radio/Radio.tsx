@@ -33,15 +33,14 @@ export const Radio = forwardRef<HTMLButtonElement, RadioProps>(
         }}
         className={cn(
           `relative flex h-em w-em cursor-default items-center justify-center
-rounded-full p-[0.3125rem] outline-none ring-[1.5px] ring-inset ring-neutral-600
-transition-[background-color,box-shadow] after:h-full after:w-full
-after:scale-0 after:rounded-full after:bg-white after:transition-transform
-after:content-[''] aria-disabled:ring-neutral-400
-data-[state=checked]:bg-primary-500 data-[state=checked]:ring-0
+rounded-full p-[0.3125rem] outline-none ring-[1.5px] ring-inset
+ring-muted-foreground transition-[background-color,box-shadow] after:h-full
+after:w-full after:scale-0 after:rounded-full after:bg-primary-foreground
+after:transition-transform after:content-[''] aria-disabled:ring-muted
+data-[state=checked]:bg-primary data-[state=checked]:ring-0
 data-[state=checked]:after:block data-[state=checked]:after:scale-100
-disabled:ring-neutral-400 dark:ring-neutral-400 dark:after:bg-primary-900
-dark:aria-disabled:ring-neutral-600 dark:data-[state=checked]:bg-primary-300
-dark:disabled:ring-neutral-600`,
+disabled:ring-muted dark:after:bg-primary-900
+dark:data-[state=checked]:bg-primary-300`,
           className
         )}
       />

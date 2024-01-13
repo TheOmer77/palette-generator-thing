@@ -37,10 +37,7 @@ export const AccordionListItem = forwardRef<
 
   return (
     <div
-      className={cn(
-        'rounded-lg transition-[background-color] duration-200',
-        open && 'bg-white dark:bg-neutral-800'
-      )}
+      className={cn('rounded-lg transition-[background-color] duration-200')}
     >
       <ListItem
         {...props}
