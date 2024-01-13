@@ -21,10 +21,12 @@ export const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
     const Icon = justCopied ? CheckIcon : CopyIcon;
 
     const copyValue = useCallback(() => {
+      if (justCopied) return;
+
       navigator.clipboard.writeText(value);
       setJustCopied(true);
       setTimeout(() => setJustCopied(false), 1500);
-    }, [value]);
+    }, [justCopied, value]);
 
     return (
       <Tooltip title='Copy color value'>

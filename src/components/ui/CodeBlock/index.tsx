@@ -32,10 +32,12 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
     const [justCopied, setJustCopied] = useState(false);
 
     const copyCode = useCallback(() => {
+      if (justCopied) return;
+
       navigator.clipboard.writeText(children);
       setJustCopied(true);
       setTimeout(() => setJustCopied(false), 1500);
-    }, [children]);
+    }, [children, justCopied]);
 
     return (
       <div className='relative overflow-hidden rounded-lg bg-card'>
