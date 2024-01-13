@@ -16,11 +16,9 @@ import {
 import { calculateSteps } from './calculateSteps';
 import {
   DEFAULT_DANGER_HUE,
-  FALLBACK_COLOR,
   MAX_DANGER_HUE,
   MAX_LIMITED_LIGHTNESS,
   MAX_REDDISH_HUE,
-  MAX_SHADE,
   MIN_DANGER_HUE,
   MIN_LIMITED_LIGHTNESS,
   MIN_LIMITED_SATURATION,
@@ -28,8 +26,9 @@ import {
   REDDISH_DEFAULT_DANGER_HUE,
   REDDISH_MAX_DANGER_HUE,
   REDDISH_MIN_DANGER_HUE,
-  shadesLightnessValues,
-} from '@/constants';
+} from '@/constants/hslDefaults';
+import { FALLBACK_COLOR } from '@/constants/fallbackColor';
+import { MAX_SHADE, shadesLightnessValues } from '@/constants/shades';
 
 const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),

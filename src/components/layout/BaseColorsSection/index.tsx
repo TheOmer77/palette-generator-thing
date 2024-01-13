@@ -13,7 +13,7 @@ import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import { ColorInput } from '@/components/colors';
 import { useGlobalState, useTheme } from '@/hooks';
-import { getAutoDangerColor, getAutoNeutralColor } from '@/utils';
+import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
 import {
   dangerColorSuggestionNames,
@@ -24,11 +24,11 @@ import {
   neutralColorSuggestions,
 } from '@/constants';
 import type {
-  AnyStringWithAutocomplete,
   DangerColorSuggestion,
   GeneralColorSuggestion,
   NeutralColorSuggestion,
-} from '@/types';
+} from '@/types/defaultSuggestions';
+import type { AnyStringWithAutocomplete } from '@/types/utils';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 

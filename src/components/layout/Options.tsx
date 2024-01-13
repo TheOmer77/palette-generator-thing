@@ -9,7 +9,7 @@ import { CodeGenSection } from './CodeGenSection';
 import { SheetWithFab } from './SheetWithFab';
 import { Sidebar } from './Sidebar';
 import { AccordionList } from '@/components/ui/AccordionList';
-import type { GlobalState } from '@/types';
+import type { GlobalState } from '@/types/globalState';
 
 export const Options = () => {
   const [openItem, setOpenItem] = useState<

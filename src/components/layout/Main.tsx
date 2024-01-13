@@ -10,9 +10,9 @@ import { useGlobalState, useTheme } from '@/hooks';
 import {
   generateCssCode,
   generateJsonCode,
-  generatePalette,
   generateScssCode,
-} from '@/utils';
+} from '@/lib/codeGen';
+import { generatePalette } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
 import { codeFormats, shades } from '@/constants';
 

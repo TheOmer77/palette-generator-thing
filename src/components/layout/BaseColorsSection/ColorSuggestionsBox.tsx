@@ -7,8 +7,8 @@ import { CheckIcon } from 'lucide-react';
 
 import { IconButton } from '@/components/ui/IconButton';
 import { ListItem } from '@/components/ui/List';
-import { isHexColorLight } from '@/utils';
-import type { ColorSuggestions } from '@/types';
+import { isHexColorLight } from '@/lib/colorUtils';
+import type { ColorSuggestions } from '@/types/colorSuggestions';
 
 const ColorSuggestionsBox = <T extends ColorSuggestions>({
   baseColor,

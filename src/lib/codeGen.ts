@@ -1,14 +1,14 @@
 import {
+  generatePalette,
+  getClosestShade,
+  getContrastShade,
+} from './colorUtils';
+import {
   MAX_MAIN_SHADE,
   MIN_MAIN_SHADE,
   colorFormats,
   shades,
 } from '@/constants';
-import {
-  generatePalette,
-  getClosestShade,
-  getContrastShade,
-} from './colorUtils';
 
 export const generateCssCode = (
   baseColors: {

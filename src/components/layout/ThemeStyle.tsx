@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 
 import { useTheme } from '@/hooks';
-import { generateCssCode } from '@/utils';
+import { generateCssCode } from '@/lib/codeGen';
 
 export const ThemeStyle = () => {
   const { primary, neutral, danger } = useTheme();

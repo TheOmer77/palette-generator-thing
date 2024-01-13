@@ -7,7 +7,7 @@ import {
   modeOklch,
   useMode as loadMode,
 } from 'culori/fn';
-import type { ColorFormat } from '@/types';
+import type { ColorFormat } from '@/types/codeGen';
 
 const lch = loadMode(modeLch),
   oklch = loadMode(modeOklch);

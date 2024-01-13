@@ -14,7 +14,11 @@ import { Dice5Icon } from 'lucide-react';
 import { IconButton } from '@/components/ui/IconButton';
 import { Input, type InputProps } from '@/components/ui/Input';
 import { Tooltip } from '@/components/ui/Tooltip';
-import { autoAddHexHash, isValidHexColor, randomHexColor } from '@/utils';
+import {
+  autoAddHexHash,
+  isValidHexColor,
+  randomHexColor,
+} from '@/lib/colorUtils';
 
 loadMode(modeRgb);
 
