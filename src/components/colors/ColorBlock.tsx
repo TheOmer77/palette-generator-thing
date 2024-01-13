@@ -38,8 +38,9 @@ export const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
           className={cn(
             `flex cursor-default select-none flex-col items-start justify-center
 overflow-hidden rounded-lg p-2 state-layer [print-color-adjust:exact]
-hover:state-layer-neutral-500/20 focus-visible:outline-none
-focus-visible:state-layer-neutral-500/20 active:state-layer-neutral-500/30`,
+hover:state-layer-muted/20 focus-visible:outline-none
+focus-visible:state-layer-muted/20 active:state-layer-muted/40
+active:after:duration-0`,
             isHexColorLight(value) ? 'text-black' : 'text-white'
           )}
           // Hex color has spaces so it's read correctly by screen readers
