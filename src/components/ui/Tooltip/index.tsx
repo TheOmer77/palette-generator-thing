@@ -32,7 +32,7 @@ data-[side=bottom]:[--slide-translate-origin-y:-2px]
 data-[side=left]:[--slide-translate-origin-x:2px]
 data-[side=right]:[--slide-translate-origin-x:-2px]
 data-[side=top]:[--slide-translate-origin-y:2px]
-dark:bg-neutral-900 dark:text-neutral-200`,
+dark:bg-neutral-900 dark:text-neutral-200 print:hidden`,
             className
           )}
           sideOffset={4}
