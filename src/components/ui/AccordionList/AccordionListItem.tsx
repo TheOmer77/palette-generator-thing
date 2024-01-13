@@ -14,7 +14,7 @@ import {
 } from './common';
 import { Collapsible } from '../Collapsible';
 import { ListItem, ListItemIcon } from '../List';
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 export type AccordionListItemProps = Omit<
   ComponentPropsWithoutRef<'button'>,

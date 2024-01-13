@@ -5,7 +5,7 @@ import {
   type ReactNode,
 } from 'react';
 
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 export type FabProps = ComponentPropsWithoutRef<'button'> & {
   icon?: ReactNode;

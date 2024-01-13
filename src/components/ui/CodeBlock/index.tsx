@@ -11,7 +11,7 @@ import { CheckIcon, CopyIcon } from 'lucide-react';
 
 import { IconButton } from '../IconButton';
 import { Tooltip } from '../Tooltip';
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 import '@/styles/prism.css';
 

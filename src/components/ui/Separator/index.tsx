@@ -3,7 +3,7 @@
 import { forwardRef } from 'react';
 import { Root, type SeparatorProps } from '@radix-ui/react-separator';
 
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(
   ({ className, ...props }, ref) => (

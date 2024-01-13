@@ -11,7 +11,7 @@ import {
 } from '@radix-ui/react-dialog';
 
 import { H2 } from '../Headings';
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 export type BottomSheetProps = ComponentPropsWithoutRef<'div'> &
   Pick<DialogProps, 'open' | 'onOpenChange'> & {

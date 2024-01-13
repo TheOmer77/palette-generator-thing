@@ -7,7 +7,7 @@ import {
 } from '@radix-ui/react-primitive';
 
 import { RadioGroupContext } from './context';
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 export type RadioProps = ComponentPropsWithoutRef<typeof Primitive.button> & {
   checked?: boolean;

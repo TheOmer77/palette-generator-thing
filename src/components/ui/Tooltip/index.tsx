@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
   type TooltipContentProps,
 } from '@radix-ui/react-tooltip';
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 export type TooltipProps = Omit<TooltipContentProps, 'sideOffset' | 'title'> & {
   title: ReactNode;

@@ -8,7 +8,7 @@ import {
 } from '@radix-ui/react-collapsible';
 import { Primitive } from '@radix-ui/react-primitive';
 
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 export type CollapsibleProps = CollapsibleContentProps & { open?: boolean };
 

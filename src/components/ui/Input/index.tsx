@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { Primitive } from '@radix-ui/react-primitive';
 
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 export type InputProps = ComponentPropsWithoutRef<typeof Primitive.input> & {
   label?: string;

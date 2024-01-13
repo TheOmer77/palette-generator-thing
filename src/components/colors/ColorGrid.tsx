@@ -1,6 +1,6 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 
 export const ColorGrid = forwardRef<
   HTMLDivElement,
