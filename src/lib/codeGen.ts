@@ -25,7 +25,7 @@ export const generateCssCode = (
         }),
         lightShade = mainShade - 100,
         darkShade = mainShade + 100,
-        contrastShade = getContrastShade(baseColors[key]);
+        contrastShade = getContrastShade(baseColors[key], mainShade);
       return `/* ${key} */
 ${generatePalette(baseColors[key])
   .map(
@@ -58,7 +58,7 @@ export const generateScssCode = (
         }),
         lightShade = mainShade - 100,
         darkShade = mainShade + 100,
-        contrastShade = getContrastShade(baseColors[key]);
+        contrastShade = getContrastShade(baseColors[key], mainShade);
       return `// ${key}
 ${generatePalette(baseColors[key])
   .map(
@@ -90,7 +90,7 @@ ${Object.keys(baseColors)
       }),
       lightShade = mainShade - 100,
       darkShade = mainShade + 100,
-      contrastShade = getContrastShade(baseColors[key]);
+      contrastShade = getContrastShade(baseColors[key], mainShade);
     const palette = generatePalette(baseColors[key]);
     return `  "${key}": {
 ${palette

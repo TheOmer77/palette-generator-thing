@@ -28,7 +28,7 @@ import {
   REDDISH_MIN_DANGER_HUE,
 } from '@/constants/hslDefaults';
 import { FALLBACK_COLOR } from '@/constants/fallbackColor';
-import { MAX_SHADE, shadesLightnessValues } from '@/constants/shades';
+import { MAX_SHADE, shades, shadesLightnessValues } from '@/constants/shades';
 
 const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),
@@ -61,7 +61,16 @@ export const autoAddHexHash = (value: string) =>
 
 export const randomHexColor = () => formatHex(random());
 
-export function generatePalette(baseColor: string) {
+export const getPaletteShade = (baseColor: string, shade: number) => {
+  const { h, s } = okhsl(
+    parseHex(baseColor) ? baseColor : FALLBACK_COLOR
+  ) as Okhsl;
+  const l = shadesLightnessValues[shades.findIndex(sh => sh === shade)] / 100;
+
+  return formatHex(rgb({ mode: 'okhsl', h, s, l }));
+};
+
+export const generatePalette = (baseColor: string) => {
   const { h, s } = okhsl(
     parseHex(baseColor) ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
@@ -69,7 +78,7 @@ export function generatePalette(baseColor: string) {
   return shadesLightnessValues.map(shade =>
     formatHex(rgb({ mode: 'okhsl', h, s, l: shade / 100 }))
   );
-}
+};
 
 export const getClosestShade = (
   hexColor: string,
@@ -86,8 +95,11 @@ export const getClosestShade = (
         : closestShade;
 };
 
-export const getContrastShade = (hexColor: string) =>
-  isHexColorLight(hexColor) ? 950 : 50;
+export const getContrastShade = (hexColor: string, shade?: number) => {
+  if (!shade) return isHexColorLight(hexColor) ? 950 : 50;
+  const paletteShade = getPaletteShade(hexColor, shade);
+  return isHexColorLight(paletteShade) ? 950 : 50;
+};
 
 export const getColorVariantFn =
   (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => (baseColor: string) => {
