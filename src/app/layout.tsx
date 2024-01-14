@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { Fira_Code, Figtree } from 'next/font/google';
+import { Figtree, Fira_Code } from 'next/font/google';
 import clsx from 'clsx';
 
 import GlobalStateProvider from '@/components/providers/GlobalStateProvider';
