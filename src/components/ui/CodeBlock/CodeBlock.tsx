@@ -41,7 +41,7 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
 
     return (
       <div className='relative overflow-hidden rounded-lg bg-card'>
-        <Tooltip title='Copy code'>
+        <Tooltip content='Copy code'>
           <IconButton
             aria-label='Copy code'
             className='absolute end-2 top-2 print:hidden'

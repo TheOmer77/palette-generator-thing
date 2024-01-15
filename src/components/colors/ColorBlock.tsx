@@ -29,7 +29,7 @@ export const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
     }, [justCopied, value]);
 
     return (
-      <Tooltip title='Copy color value'>
+      <Tooltip content='Copy color value'>
         <button
           {...props}
           ref={ref}

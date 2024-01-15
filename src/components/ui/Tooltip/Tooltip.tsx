@@ -9,13 +9,19 @@ import {
   TooltipTrigger,
   type TooltipContentProps,
 } from '@radix-ui/react-tooltip';
+
 import { cn } from '@/lib/utils';
 
 export type TooltipProps = Omit<TooltipContentProps, 'sideOffset' | 'title'> & {
-  title: ReactNode;
+  content: ReactNode;
 };
 
-export const Tooltip = ({ title, side, className, children }: TooltipProps) => (
+export const Tooltip = ({
+  content,
+  side,
+  className,
+  children,
+}: TooltipProps) => (
   <TooltipProvider>
     <TooltipRoot>
       <TooltipTrigger asChild>{children}</TooltipTrigger>
@@ -36,7 +42,7 @@ data-[side=top]:[--slide-translate-origin-y:2px] print:hidden`,
           )}
           sideOffset={4}
         >
-          {title}
+          {content}
         </TooltipContent>
       </TooltipPortal>
     </TooltipRoot>
