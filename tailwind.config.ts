@@ -77,8 +77,8 @@ const config = {
         sm: 'calc(var(--border-radius) - 4px)',
       },
       fontFamily: {
-        mono: ['var(--font-family-mono)', 'monospace'],
         sans: ['var(--font-family)', 'sans-serif'],
+        mono: ['var(--font-family-mono)', 'monospace'],
       },
       height: { screen: '100dvh' },
       keyframes: {
