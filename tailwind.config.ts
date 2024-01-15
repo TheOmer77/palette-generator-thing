@@ -40,7 +40,7 @@ const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
         width: '100%',
         height: '100%',
         zIndex: '1',
-        transition: 'background-color 100ms cubic-bezier(0.4, 0, 0.2, 1)',
+        transition: 'background-color 75ms cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
   });
