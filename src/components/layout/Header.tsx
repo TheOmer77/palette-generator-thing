@@ -15,7 +15,7 @@ dark:text-primary-300 print:text-6xl print:text-primary-800`,
       className
     )}
   >
-    <h1>Palette generator thing</h1>
+    Palette generator thing
   </header>
 ));
 Header.displayName = 'Header';
