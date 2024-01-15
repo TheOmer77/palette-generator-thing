@@ -36,9 +36,7 @@ export const AccordionListItem = forwardRef<
   const open = currentValue === value;
 
   return (
-    <div
-      className={cn('rounded-lg transition-[background-color] duration-200')}
-    >
+    <div className='rounded-lg transition-[background-color] duration-200'>
       <ListItem
         {...props}
         ref={ref}
