@@ -2,20 +2,21 @@
 
 import { useMemo } from 'react';
 
-import Header from './Header';
+import { Header } from './Header';
 import { ColorBlock, ColorGrid } from '@/components/colors';
-import { CodeBlock, H2, H3 } from '@/components/general';
+import { CodeBlock } from '@/components/ui/CodeBlock';
+import { H2, H3 } from '@/components/ui/Headings';
 import { useGlobalState, useTheme } from '@/hooks';
 import {
   generateCssCode,
   generateJsonCode,
-  generatePalette,
   generateScssCode,
-  toCamelCase,
-} from '@/utils';
+} from '@/lib/codeGen';
+import { generatePalette } from '@/lib/colorUtils';
+import { toCamelCase } from '@/lib/utils';
 import { codeFormats, shades } from '@/constants';
 
-const Main = () => {
+export const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();
   const [{ codeGen }] = useGlobalState();
 
@@ -79,7 +80,10 @@ const Main = () => {
   }, [codeGen.colorFormat, codeGen.format, danger, extras, neutral, primary]);
 
   return (
-    <main className='w-full max-w-7xl p-4 pb-24 md:pb-4 xl:mx-auto'>
+    <main
+      className='p-4 md:ps-[21rem] [&>*]:mx-auto [&>*]:w-full
+[&>*]:max-w-screen-lg'
+    >
       <Header className='mb-6 block md:hidden' />
 
       <H2>Palettes</H2>
@@ -115,5 +119,3 @@ const Main = () => {
     </main>
   );
 };
-
-export default Main;

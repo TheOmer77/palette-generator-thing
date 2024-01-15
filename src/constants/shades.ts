@@ -1,4 +1,4 @@
-import { calculateSteps, getStepDifference } from '@/utils/calculateSteps';
+import { calculateSteps, getStepDifference } from '@/lib/calculateSteps';
 
 export const MIN_SHADE = 0,
   MAX_SHADE = 1000;

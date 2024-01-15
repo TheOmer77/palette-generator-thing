@@ -1,23 +1,20 @@
 'use client';
 
 import { forwardRef, useCallback, type ComponentPropsWithoutRef } from 'react';
+import { PlusIcon, TrashIcon } from 'lucide-react';
 
 import ColorListItem from './ColorListItem';
 import ColorSuggestionsBox from './ColorSuggestionsBox';
 import RadioListItem from '../RadioListItem';
-import {
-  Collapsible,
-  Input,
-  ListItem,
-  ListItemIcon,
-  ListSubheader,
-  RadioGroup,
-  Separator,
-} from '@/components/general';
+import { Collapsible } from '@/components/ui/Collapsible';
+import { Input } from '@/components/ui/Input';
+import { ListItem, ListItemIcon, ListSubheader } from '@/components/ui/List';
+import { RadioGroup } from '@/components/ui/Radio';
+import { Separator } from '@/components/ui/Separator';
 import { ColorInput } from '@/components/colors';
-import { AddIcon, DeleteIcon } from '@/assets/icons';
 import { useGlobalState, useTheme } from '@/hooks';
-import { getAutoDangerColor, getAutoNeutralColor, toCamelCase } from '@/utils';
+import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
+import { toCamelCase } from '@/lib/utils';
 import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
@@ -27,15 +24,15 @@ import {
   neutralColorSuggestions,
 } from '@/constants';
 import type {
-  AnyStringWithAutocomplete,
   DangerColorSuggestion,
   GeneralColorSuggestion,
   NeutralColorSuggestion,
-} from '@/types';
+} from '@/types/defaultSuggestions';
+import type { AnyStringWithAutocomplete } from '@/types/utils';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 
-const BaseColorsSection = forwardRef<
+export const BaseColorsSection = forwardRef<
   HTMLElement,
   ComponentPropsWithoutRef<'section'>
 >((props, ref) => {
@@ -124,10 +121,7 @@ const BaseColorsSection = forwardRef<
 
   return (
     <section {...props} ref={ref}>
-      <ListSubheader
-        className='bg-white md:bg-neutral-50 dark:bg-neutral-900
-dark:md:bg-neutral-900'
-      >
+      <ListSubheader className='bg-background md:bg-card dark:bg-card'>
         Base colors
       </ListSubheader>
       <ColorListItem
@@ -372,7 +366,7 @@ dark:md:bg-neutral-900'
             </RadioGroup>
             <ListItem onClick={() => removeExtraColor(index)}>
               <ListItemIcon>
-                <DeleteIcon />
+                <TrashIcon />
               </ListItemIcon>
               Remove
             </ListItem>
@@ -381,7 +375,7 @@ dark:md:bg-neutral-900'
       })}
       <ListItem onClick={addExtraColor} className='mb-2'>
         <ListItemIcon>
-          <AddIcon />
+          <PlusIcon />
         </ListItemIcon>
         Add extra color
       </ListItem>
@@ -389,5 +383,3 @@ dark:md:bg-neutral-900'
   );
 });
 BaseColorsSection.displayName = 'BaseColorsSection';
-
-export default BaseColorsSection;

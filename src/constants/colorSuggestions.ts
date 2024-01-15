@@ -1,4 +1,4 @@
-import { getHueColorFn, getSaturationColorFn } from '@/utils/colorUtils';
+import { getHueColorFn, getSaturationColorFn } from '@/lib/colorUtils';
 import type { ColorSuggestions } from '@/types/colorSuggestions';
 
 export const generalColorSuggestions = {

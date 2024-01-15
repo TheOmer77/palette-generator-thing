@@ -1,13 +1,14 @@
 import { useContext, type ComponentPropsWithoutRef } from 'react';
 
-import { ListItem, Radio, RadioGroupContext } from '@/components/general';
+import { ListItem, ListItemIcon } from '@/components/ui/List';
+import { Radio, RadioGroupContext } from '@/components/ui/Radio';
 
-interface RadioListItemProps extends ComponentPropsWithoutRef<typeof ListItem> {
+type RadioListItemProps = ComponentPropsWithoutRef<typeof ListItem> & {
   checked?: boolean;
   disabled?: boolean;
   children?: string;
   value?: string;
-}
+};
 
 const RadioListItem = ({
   checked = false,
@@ -31,15 +32,11 @@ const RadioListItem = ({
       aria-disabled={disabled}
       aria-label={children}
     >
-      <Radio
-        value={value}
-        checked={checked}
-        disabled={disabled}
-        className='z-10 me-4'
-        asChild
-      >
-        <span />
-      </Radio>
+      <ListItemIcon>
+        <Radio value={value} checked={checked} disabled={disabled} asChild>
+          <span />
+        </Radio>
+      </ListItemIcon>
       {children}
     </ListItem>
   );

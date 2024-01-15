@@ -9,34 +9,34 @@ import {
   type FocusEventHandler,
 } from 'react';
 import { formatHex, modeRgb, useMode as loadMode } from 'culori/fn';
+import { Dice5Icon } from 'lucide-react';
 
+import { IconButton } from '@/components/ui/IconButton';
+import { Input, type InputProps } from '@/components/ui/Input';
+import { Tooltip } from '@/components/ui/Tooltip';
 import {
-  IconButton,
-  Input,
-  Tooltip,
-  type InputProps,
-} from '@/components/general';
-import { RandomIcon } from '@/assets/icons';
-import { autoAddHexHash, isValidHexColor, randomHexColor } from '@/utils';
+  autoAddHexHash,
+  isValidHexColor,
+  randomHexColor,
+} from '@/lib/colorUtils';
 
 loadMode(modeRgb);
 
-export interface ColorInputProps
-  extends Omit<
-    InputProps,
-    | 'asChild'
-    | 'endAdornment'
-    | 'onChange'
-    | 'ref'
-    | 'startAdornment'
-    | 'type'
-    | 'value'
-  > {
+export type ColorInputProps = Omit<
+  InputProps,
+  | 'asChild'
+  | 'endAdornment'
+  | 'onChange'
+  | 'ref'
+  | 'startAdornment'
+  | 'type'
+  | 'value'
+> & {
   value?: string;
   onChange?: (newValue: string) => void;
   withAlpha?: boolean;
   withRandomBtn?: boolean;
-}
+};
 
 export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
   (
@@ -101,12 +101,12 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         {...(withRandomBtn
           ? {
               endAdornment: (
-                <Tooltip title='Generate random color'>
+                <Tooltip content='Generate random color'>
                   <IconButton
                     aria-label='Generate random color'
                     onClick={() => onChange?.(randomHexColor())}
                   >
-                    <RandomIcon />
+                    <Dice5Icon />
                   </IconButton>
                 </Tooltip>
               ),

@@ -3,11 +3,12 @@ import {
   ToolbarToggleGroup,
   ToolbarToggleItem,
 } from '@radix-ui/react-toolbar';
+import { CheckIcon } from 'lucide-react';
 
-import { IconButton, ListItem } from '@/components/general';
-import { DoneIcon } from '@/assets/icons';
-import { isHexColorLight } from '@/utils';
-import type { ColorSuggestions } from '@/types';
+import { IconButton } from '@/components/ui/IconButton';
+import { ListItem } from '@/components/ui/List';
+import { isHexColorLight } from '@/lib/colorUtils';
+import type { ColorSuggestions } from '@/types/colorSuggestions';
 
 const ColorSuggestionsBox = <T extends ColorSuggestions>({
   baseColor,
@@ -40,7 +41,7 @@ const ColorSuggestionsBox = <T extends ColorSuggestions>({
                 className={isHexColorLight(color) ? 'text-black' : 'text-white'}
                 style={{ backgroundColor: color }}
               >
-                {value === suggestionName && <DoneIcon />}
+                {value === suggestionName && <CheckIcon />}
               </IconButton>
             </ToolbarToggleItem>
           </ListItem>

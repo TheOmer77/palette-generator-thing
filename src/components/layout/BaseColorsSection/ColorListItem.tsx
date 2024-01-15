@@ -1,14 +1,14 @@
 import {
   AccordionListItem,
-  ListItemText,
   type AccordionListItemProps,
-} from '@/components/general';
+} from '@/components/ui/AccordionList';
+import { ListItemText } from '@/components/ui/List';
 
-interface ColorListItemProps extends AccordionListItemProps {
+type ColorListItemProps = AccordionListItemProps & {
   value: string;
   color: string;
   title: string;
-}
+};
 
 const ColorListItem = ({
   value,

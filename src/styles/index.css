@@ -2,9 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply overflow-x-hidden bg-white text-neutral-900 scrollbar-thin
+@layer base {
+  :root {
+    --color-background: 255 255 255;
+    --color-foreground: var(--color-neutral-900);
+    --color-card: var(--color-neutral-50);
+    --color-card-foreground: var(--color-neutral-900);
+    --color-popover: 255 255 255;
+    --color-popover-foreground: var(--color-neutral-900);
+    --color-secondary: var(--color-neutral-100);
+    --color-secondary-foreground: var(--color-neutral-800);
+    --color-muted: var(--color-neutral-300);
+    --color-muted-foreground: var(--color-neutral-600);
+    --color-accent: var(--color-neutral-100);
+    --color-accent-foreground: var(--color-neutral-900);
+    --color-border: var(--color-neutral-100);
+    --color-input: var(--color-neutral-100);
+    --color-ring: var(--color-primary-600);
+
+    --border-radius: 0.5rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background: var(--color-neutral-950);
+      --color-foreground: var(--color-neutral-100);
+      --color-card: var(--color-neutral-900);
+      --color-card-foreground: var(--color-neutral-100);
+      --color-popover: var(--color-neutral-900);
+      --color-popover-foreground: var(--color-neutral-100);
+      --color-secondary: var(--color-neutral-800);
+      --color-secondary-foreground: var(--color-neutral-200);
+      --color-muted: var(--color-neutral-700);
+      --color-muted-foreground: var(--color-neutral-400);
+      --color-accent: var(--color-neutral-800);
+      --color-accent-foreground: var(--color-neutral-100);
+      --color-border: var(--color-neutral-800);
+      --color-input: var(--color-neutral-800);
+      --color-ring: var(--color-primary-300);
+    }
+  }
+  @media print {
+    :root {
+      --color-background: 255 255 255;
+      --color-foreground: var(--color-neutral-900);
+      --color-card: var(--color-neutral-50);
+      --color-card-foreground: var(--color-neutral-900);
+      --color-popover: 255 255 255;
+      --color-popover-foreground: var(--color-neutral-900);
+      --color-secondary: var(--color-neutral-100);
+      --color-secondary-foreground: var(--color-neutral-800);
+      --color-muted: var(--color-neutral-300);
+      --color-muted-foreground: var(--color-neutral-600);
+      --color-accent: var(--color-neutral-100);
+      --color-accent-foreground: var(--color-neutral-900);
+      --color-border: var(--color-neutral-100);
+      --color-input: var(--color-neutral-100);
+      --color-ring: var(--color-primary-600);
+    }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply overflow-x-hidden bg-background text-foreground scrollbar-thin
 scrollbar-thumb-neutral-500/30 selection:bg-primary-500/30
-selection:text-primary-950 dark:bg-neutral-950 dark:text-neutral-100
-dark:selection:text-primary-50 print:text-neutral-900;
+selection:text-primary-950 dark:selection:text-primary-50;
+  }
+}
+.lucide {
+  @apply h-em w-em;
 }

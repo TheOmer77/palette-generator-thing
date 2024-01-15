@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-// import { randomHexColor } from '@/utils';
-import type { GlobalState } from '@/types';
+// import { randomHexColor } from '@/lib/colorUtils';
+import type { GlobalState } from '@/types/globalState';
 
 export const initialState: GlobalState = {
   baseColors: {

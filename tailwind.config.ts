@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import scrollbar from 'tailwind-scrollbar';
+import animate from 'tailwindcss-animate';
 import plugin from 'tailwindcss/plugin';
 
 //@ts-expect-error Javascript only, no type decleration
@@ -39,7 +40,7 @@ const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
         width: '100%',
         height: '100%',
         zIndex: '1',
-        transition: 'background-color 100ms cubic-bezier(0.4, 0, 0.2, 1)',
+        transition: 'background-color 75ms cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
   });
@@ -49,69 +50,127 @@ const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
   );
 });
 
-const config: Config = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+const config = {
+  content: ['./src/**/*.{ts,tsx}'],
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: { '2xl': '1400px' },
+    },
     extend: {
       animation: {
-        fadein: 'fadein 200ms',
-        fadeout: 'fadeout 200ms',
-        'fadeout-fast': 'fadeout 150ms',
-        slidein: 'slidein 200ms',
-        slideout: 'slideout 200ms',
-        slideDown: 'slideDown 200ms',
-        slideUp: 'slideUp 200ms',
-        slideDownAndFade: 'slideDownAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
-        slideLeftAndFade: 'slideLeftAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
-        slideUpAndFade: 'slideUpAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
-        slideRightAndFade:
-          'slideRightAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'collapse-in': 'collapse-in 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'collapse-out': 'collapse-out 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'fade-in': 'fade-in 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'fade-out': 'fade-out 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'slide-in': 'slide-in 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'slide-out': 'slide-out 300ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'tooltip-in': 'tooltip-in 150ms cubic-bezier(0.2, 1, 0.4, 1)',
+        'tooltip-out': 'fade-out 150ms cubic-bezier(0.2, 1, 0.4, 1)',
+      },
+      borderRadius: {
+        lg: 'var(--border-radius)',
+        md: 'calc(var(--border-radius) - 2px)',
+        sm: 'calc(var(--border-radius) - 4px)',
       },
       fontFamily: {
         sans: ['var(--font-family)', 'sans-serif'],
         mono: ['var(--font-family-mono)', 'monospace'],
       },
+      height: { screen: '100dvh' },
       keyframes: {
-        fadein: { from: { opacity: '0' }, to: { opacity: '1' } },
-        fadeout: { from: { opacity: '1' }, to: { opacity: '0' } },
-        slidein: {
-          from: { transform: 'translateY(100%)' },
-          to: { transform: 'translateY(0%)' },
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
-        slideout: {
-          from: { transform: 'translateY(0%)' },
-          to: { transform: 'translateY(100%)' },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
-        slideDown: {
+        'collapse-in': {
           from: { height: '0' },
           to: { height: 'var(--radix-collapsible-content-height)' },
         },
-        slideUp: {
+        'collapse-out': {
           from: { height: 'var(--radix-collapsible-content-height)' },
           to: { height: '0' },
         },
-        slideDownAndFade: {
-          from: { opacity: '0', transform: 'translateY(-2px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
+        'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
+        'fade-out': { from: { opacity: '1' }, to: { opacity: '0' } },
+        'slide-in': {
+          from: {
+            transform: `translate(
+  var(--slide-translate-origin-x, 0%),
+  var(--slide-translate-origin-y, 0%)
+)`,
+          },
+          to: { transform: 'translate(0%, 0%)' },
         },
-        slideLeftAndFade: {
-          from: { opacity: '0', transform: 'translateX(2px)' },
-          to: { opacity: '1', transform: 'translateX(0)' },
+        'slide-out': {
+          from: { transform: 'translate(0%, 0%)' },
+          to: {
+            transform: `translate(
+  var(--slide-translate-origin-x, 0%),
+  var(--slide-translate-origin-y, 0%)
+)`,
+          },
         },
-        slideUpAndFade: {
-          from: { opacity: '0', transform: 'translateY(2px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
+        'tooltip-in': {
+          from: {
+            opacity: '0',
+            transform: `translate(
+  var(--slide-translate-origin-x, 0%),
+  var(--slide-translate-origin-y, 0%)
+)`,
+          },
+          to: { opacity: '1', transform: 'translate(0%, 0%)' },
         },
-        slideRightAndFade: {
-          from: { opacity: '0', transform: 'translateX(-2px)' },
-          to: { opacity: '1', transform: 'translateX(0)' },
+        'zoom-in': {
+          from: {
+            opacity: '0',
+            transform: `translate(
+  var(--zoom-translate-x, 0%),
+  var(--zoom-translate-y, 0%)
+) scale(0.95)`,
+          },
+          to: {
+            opacity: '1',
+            transform: `translate(
+  var(--zoom-translate-x, 0%),
+  var(--zoom-translate-y, 0%)
+) scale(1)`,
+          },
+        },
+        'zoom-out': {
+          from: {
+            opacity: '1',
+            transform: `translate(
+  var(--zoom-translate-x, 0%),
+  var(--zoom-translate-y, 0%)
+) scale(1)`,
+          },
+          to: {
+            opacity: '0',
+            transform: `translate(
+  var(--zoom-translate-x, 0%),
+  var(--zoom-translate-y, 0%)
+) scale(0.95)`,
+          },
         },
       },
+      maxHeight: { screen: '100dvh' },
+      screens: { '2xl': '1440px' },
+      spacing: { em: '1em', inherit: 'inherit' },
     },
     colors: {
+      inherit: 'inherit',
       white: '#fff',
       black: '#000',
       transparent: 'transparent',
+
       ...['primary', 'neutral', 'danger'].reduce(
         (obj, colorName) => ({
           ...obj,
@@ -120,14 +179,39 @@ const config: Config = {
               ...obj,
               [shade]: `rgb(var(--color-${colorName}-${shade}) / <alpha-value>)`,
             }),
-            {}
+            {
+              DEFAULT: `rgb(var(--color-${colorName}-main))`,
+              foreground: `rgb(var(--color-${colorName}-contrast))`,
+            }
           ),
         }),
         {}
       ),
+
+      border: 'rgb(var(--color-border))',
+      input: 'rgb(var(--color-input))',
+      ring: 'rgb(var(--color-ring))',
+      background: 'rgb(var(--color-background))',
+      foreground: 'rgb(var(--color-foreground))',
+      muted: {
+        DEFAULT: 'rgb(var(--color-muted))',
+        foreground: 'rgb(var(--color-muted-foreground))',
+      },
+      accent: {
+        DEFAULT: 'rgb(var(--color-accent))',
+        foreground: 'rgb(var(--color-accent-foreground))',
+      },
+      popover: {
+        DEFAULT: 'rgb(var(--color-popover))',
+        foreground: 'rgb(var(--color-popover-foreground))',
+      },
+      card: {
+        DEFAULT: 'rgb(var(--color-card))',
+        foreground: 'rgb(var(--color-card-foreground))',
+      },
     },
   },
-  plugins: [scrollbar, customPlugin],
-};
+  plugins: [scrollbar, animate, customPlugin],
+} satisfies Config;
 
 export default config;

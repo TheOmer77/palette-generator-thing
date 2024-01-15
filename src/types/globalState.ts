@@ -3,10 +3,10 @@ import type {
   DangerColorSuggestion,
   GeneralColorSuggestion,
   NeutralColorSuggestion,
-} from './colorSuggestions';
+} from './defaultSuggestions';
 import type { AnyStringWithAutocomplete } from './utils';
 
-export interface GlobalState {
+export type GlobalState = {
   baseColors: {
     /** Any hex color. */
     primary: string;
@@ -30,4 +30,4 @@ export interface GlobalState {
      * If format is `none` or `custom`, has no effect. */
     colorFormat: keyof typeof colorFormats;
   };
-}
+};

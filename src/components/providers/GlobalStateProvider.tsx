@@ -7,7 +7,7 @@ import {
   GlobalStateContext,
   initialState,
 } from '@/contexts/globalState';
-import type { GlobalState } from '@/types';
+import type { GlobalState } from '@/types/globalState';
 
 const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
   const [globalState, _setGlobalState] = useState(initialState);
