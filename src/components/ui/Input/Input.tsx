@@ -44,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <div
         className={cn(
           `relative flex h-12 items-center gap-2 rounded-lg bg-background px-1`,
-          typeof helperText === 'string' && helperText.length > 0 && `mb-7`,
+          typeof helperText === 'string' && helperText.length > 0 && `mb-5`,
           className
         )}
       >
@@ -102,7 +102,7 @@ peer-aria-[invalid=true]:ring-danger'
         />
         {typeof helperText === 'string' && helperText.length > 0 && (
           <span
-            className='absolute top-[3.75rem] select-none text-xs
+            className='absolute top-[3.25rem] select-none text-xs
 text-muted-foreground peer-invalid:text-danger-600
 peer-aria-[invalid=true]:text-danger-600 dark:text-neutral-300
 dark:peer-invalid:text-danger-300
