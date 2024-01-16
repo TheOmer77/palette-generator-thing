@@ -95,7 +95,7 @@ export const getClosestShade = (
         : closestShade;
 };
 
-export const getContrastShade = (hexColor: string, shade?: number) => {
+export const getForegroundShade = (hexColor: string, shade?: number) => {
   if (!shade) return isHexColorLight(hexColor) ? 950 : 50;
   const paletteShade = getPaletteShade(hexColor, shade);
   return isHexColorLight(paletteShade) ? 950 : 50;

@@ -1,7 +1,7 @@
 import {
   generatePalette,
   getClosestShade,
-  getContrastShade,
+  getForegroundShade,
 } from './colorUtils';
 import {
   MAX_MAIN_SHADE,
@@ -25,7 +25,7 @@ export const generateCssCode = (
         }),
         lightShade = mainShade - 100,
         darkShade = mainShade + 100,
-        contrastShade = getContrastShade(baseColors[key], mainShade);
+        foregroundShade = getForegroundShade(baseColors[key], mainShade);
       return `/* ${key} */
 ${generatePalette(baseColors[key])
   .map(
@@ -39,7 +39,7 @@ ${generatePalette(baseColors[key])
   --color-${key}-main: var(--color-${key}-${mainShade});
   --color-${key}-light: var(--color-${key}-${lightShade});
   --color-${key}-dark: var(--color-${key}-${darkShade});
-  --color-${key}-contrast: var(--color-${key}-${contrastShade});`;
+  --color-${key}-foreground: var(--color-${key}-${foregroundShade});`;
     })
     .join('\n\n  ')}
 }`;
@@ -58,7 +58,7 @@ export const generateScssCode = (
         }),
         lightShade = mainShade - 100,
         darkShade = mainShade + 100,
-        contrastShade = getContrastShade(baseColors[key], mainShade);
+        foregroundShade = getForegroundShade(baseColors[key], mainShade);
       return `// ${key}
 ${generatePalette(baseColors[key])
   .map(
@@ -72,7 +72,7 @@ ${generatePalette(baseColors[key])
 $color-${key}-main: $color-${key}-${mainShade};
 $color-${key}-light: $color-${key}-${lightShade};
 $color-${key}-dark: $color-${key}-${darkShade};
-$color-${key}-contrast: $color-${key}-${contrastShade};`;
+$color-${key}-foreground: $color-${key}-${foregroundShade};`;
     })
     .join('\n\n')}`;
 
@@ -90,7 +90,7 @@ ${Object.keys(baseColors)
       }),
       lightShade = mainShade - 100,
       darkShade = mainShade + 100,
-      contrastShade = getContrastShade(baseColors[key], mainShade);
+      foregroundShade = getForegroundShade(baseColors[key], mainShade);
     const palette = generatePalette(baseColors[key]);
     return `  "${key}": {
 ${palette
@@ -110,8 +110,8 @@ ${palette
     "dark": "${colorFormats[colorFormat]?.toString?.(
       palette[shades.findIndex(el => el === darkShade)]
     )}",
-    "contrast": "${colorFormats[colorFormat]?.toString?.(
-      palette[shades.findIndex(el => el === contrastShade)]
+    "foreground": "${colorFormats[colorFormat]?.toString?.(
+      palette[shades.findIndex(el => el === foregroundShade)]
     )}"
   }`;
   })
