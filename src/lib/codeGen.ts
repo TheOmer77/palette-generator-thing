@@ -64,29 +64,34 @@ export const generateJsonCode = (
   baseColors: Record<string, string>,
   colorFormat: keyof typeof colorFormats
 ) =>
-  `{
-${Object.entries(baseColors)
-  .map(([baseColorKey, baseColor]) => {
-    const palette = generatePalette(baseColor),
-      tokenShades = getTokenShades(baseColor);
+  JSON.stringify(
+    Object.entries(baseColors).reduce((obj, [baseColorKey, baseColor]) => {
+      const palette = generatePalette(baseColor),
+        tokenShades = getTokenShades(baseColor);
 
-    return `  "${baseColorKey}"
-${palette
-  .map(
-    (color, index) =>
-      `    "${shades[index]}": "${colorFormats[colorFormat].formatColor(color)}",`
-  )
-  .join('\n')}
-${Object.entries(tokenShades)
-  .map(
-    ([tokenShadeKey, tokenShade]) =>
-      // JSON can't have vars mapped to other vars, so duplicating them
-      `    "${tokenShadeKey}": "${colorFormats[colorFormat].formatColor(
-        palette[shades.findIndex(shade => shade === tokenShade)]
-      )}"`
-  )
-  .join(',\n')}
-  }`;
-  })
-  .join(',\n')}
-}`;
+      return {
+        ...obj,
+        [baseColorKey]: {
+          ...palette.reduce(
+            (paletteObj, color, index) => ({
+              ...paletteObj,
+              [shades[index]]: colorFormats[colorFormat].formatColor(color),
+            }),
+            {}
+          ),
+          // JSON can't have vars referencing other vars, so duplicating them
+          ...Object.entries(tokenShades).reduce(
+            (tokensObj, [tokenShadeKey, tokenShade]) => ({
+              ...tokensObj,
+              [tokenShadeKey]: colorFormats[colorFormat].formatColor(
+                palette[shades.findIndex(shade => shade === tokenShade)]
+              ),
+            }),
+            {}
+          ),
+        },
+      };
+    }, {}),
+    undefined,
+    2
+  );
