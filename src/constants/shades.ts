@@ -2,8 +2,11 @@ import { calculateSteps, getStepDifference } from '@/lib/calculateSteps';
 
 export const MIN_SHADE = 0,
   MAX_SHADE = 1000;
-export const MIN_MAIN_SHADE = 200,
-  MAX_MAIN_SHADE = 800;
+export const MIN_MAIN_SHADE = 100,
+  MAX_MAIN_SHADE = 900;
+export const MIN_ACTIVE_SHADE = 50,
+  MAX_ACTIVE_SHADE = 950;
+
 const minL = 0,
   maxL = 100;
 

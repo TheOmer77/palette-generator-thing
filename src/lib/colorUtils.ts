@@ -29,8 +29,10 @@ import {
   REDDISH_MIN_DANGER_HUE,
 } from '@/constants/hslDefaults';
 import {
+  MAX_ACTIVE_SHADE,
   MAX_MAIN_SHADE,
   MAX_SHADE,
+  MIN_ACTIVE_SHADE,
   MIN_MAIN_SHADE,
   shades,
   shadesLightnessValues,
@@ -106,14 +108,16 @@ export const getTokenShades = (hexColor: string) => {
     minShade: MIN_MAIN_SHADE,
     maxShade: MAX_MAIN_SHADE,
   });
-  // TODO: Active shade, which is either light or dark
-  // light = main - 100, dark = main + 100
-  // TODO: Use white (shade 0?) instead of shade 50
-  const foreground = isHexColorLight(getPaletteColor(hexColor, main))
-    ? 950
-    : 50;
 
-  return { main, foreground };
+  const isMainShadeLight = isHexColorLight(getPaletteColor(hexColor, main));
+  const active = Math.min(
+    Math.max(main + (isMainShadeLight ? 100 : -100), MIN_ACTIVE_SHADE),
+    MAX_ACTIVE_SHADE
+  );
+  // TODO: Use white (shade 0?) instead of shade 50
+  const foreground = isMainShadeLight ? 950 : 50;
+
+  return { main, active, foreground };
 };
 
 export const getColorVariantFn =
