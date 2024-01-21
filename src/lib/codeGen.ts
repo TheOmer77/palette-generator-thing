@@ -64,7 +64,7 @@ export const generateJsonCode = (
   baseColors: Record<string, string>,
   colorFormat: keyof typeof colorFormats
 ) =>
-  `:root {
+  `{
 ${Object.entries(baseColors)
   .map(([baseColorKey, baseColor]) => {
     const palette = generatePalette(baseColor),
