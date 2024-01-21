@@ -1,100 +1,90 @@
-import {
-  generatePalette,
-  getClosestShade,
-  getForegroundShade,
-} from './colorUtils';
-import {
-  MAX_MAIN_SHADE,
-  MIN_MAIN_SHADE,
-  colorFormats,
-  shades,
-} from '@/constants';
-
-// TODO: Active shade, which is either light or dark
-// lightShade = mainShade - 100,
-// darkShade = mainShade + 100,
+import { generatePalette, getTokenShades } from './colorUtils';
+import { colorFormats, shades } from '@/constants';
 
 export const generateCssCode = (
-  baseColors: { [colorName: string]: string },
-  colorFormat: keyof typeof colorFormats = 'hex'
+  baseColors: Record<string, string>,
+  colorFormat: keyof typeof colorFormats
 ) =>
   `:root {
-  ${Object.keys(baseColors)
-    .map((key: keyof typeof baseColors) => {
-      const mainShade = getClosestShade(baseColors[key], {
-          minShade: MIN_MAIN_SHADE,
-          maxShade: MAX_MAIN_SHADE,
-        }),
-        foregroundShade = getForegroundShade(baseColors[key], mainShade);
-      return `/* ${key} */
-${generatePalette(baseColors[key])
-  .map(
-    (color, index) =>
-      `  --color-${key}-${shades[index]}: ${colorFormats[
-        colorFormat
-      ]?.toString?.(color)};`
-  )
-  .join('\n')}
-  
-  --color-${key}-main: var(--color-${key}-${mainShade});
-  --color-${key}-foreground: var(--color-${key}-${foregroundShade});`;
-    })
-    .join('\n\n  ')}
-}`;
+${Object.entries(baseColors)
+  .map(([baseColorKey, baseColor]) => {
+    const palette = generatePalette(baseColor),
+      tokenShades = getTokenShades(baseColor);
 
-export const generateScssCode = (
-  baseColors: { [colorName: string]: string },
-  colorFormat: keyof typeof colorFormats = 'hex'
-) =>
-  `${Object.keys(baseColors)
-    .map((key: keyof typeof baseColors) => {
-      const mainShade = getClosestShade(baseColors[key], {
-          minShade: MIN_MAIN_SHADE,
-          maxShade: MAX_MAIN_SHADE,
-        }),
-        foregroundShade = getForegroundShade(baseColors[key], mainShade);
-      return `// ${key}
-${generatePalette(baseColors[key])
-  .map(
-    (color, index) =>
-      `$color-${key}-${shades[index]}: ${colorFormats[colorFormat]?.toString?.(
-        color
-      )};`
-  )
-  .join('\n')}
-  
-$color-${key}-main: $color-${key}-${mainShade};
-$color-${key}-foreground: $color-${key}-${foregroundShade};`;
-    })
-    .join('\n\n')}`;
-
-export const generateJsonCode = (
-  baseColors: { [colorName: string]: string },
-  colorFormat: keyof typeof colorFormats = 'hex'
-) => `{
-${Object.keys(baseColors)
-  .map(key => {
-    const mainShade = getClosestShade(baseColors[key], {
-        minShade: MIN_MAIN_SHADE,
-        maxShade: MAX_MAIN_SHADE,
-      }),
-      foregroundShade = getForegroundShade(baseColors[key], mainShade);
-    const palette = generatePalette(baseColors[key]);
-    return `  "${key}": {
+    return `  /* ${baseColorKey} */
 ${palette
   .map(
     (color, index) =>
-      `    "${shades[index]}": "${colorFormats[colorFormat]?.toString?.(
-        color
+      `  --color-${baseColorKey}-${shades[index]}: ${colorFormats[
+        colorFormat
+      ].toString(color)};`
+  )
+  .join('\n')}
+  
+${Object.entries(tokenShades)
+  .map(
+    ([tokenShadeKey, tokenShade]) =>
+      `  --color-${baseColorKey}-${tokenShadeKey}: var(--color-${baseColorKey}-${tokenShade});`
+  )
+  .join('\n')}`;
+  })
+  .join('\n\n')}
+}`;
+
+export const generateScssCode = (
+  baseColors: Record<string, string>,
+  colorFormat: keyof typeof colorFormats
+) =>
+  `${Object.entries(baseColors)
+    .map(([baseColorKey, baseColor]) => {
+      const palette = generatePalette(baseColor),
+        tokenShades = getTokenShades(baseColor);
+
+      return `// ${baseColorKey}
+${palette
+  .map(
+    (color, index) =>
+      `$color-${baseColorKey}-${shades[index]}: ${colorFormats[
+        colorFormat
+      ].toString(color)};`
+  )
+  .join('\n')}
+  
+${Object.entries(tokenShades)
+  .map(
+    ([tokenShadeKey, tokenShade]) =>
+      `$color-${baseColorKey}-${tokenShadeKey}: $color-${baseColorKey}-${tokenShade};`
+  )
+  .join('\n')}`;
+    })
+    .join('\n\n')}
+}`;
+
+export const generateJsonCode = (
+  baseColors: Record<string, string>,
+  colorFormat: keyof typeof colorFormats
+) =>
+  `:root {
+${Object.entries(baseColors)
+  .map(([baseColorKey, baseColor]) => {
+    const palette = generatePalette(baseColor),
+      tokenShades = getTokenShades(baseColor);
+
+    return `  "${baseColorKey}"
+${palette
+  .map(
+    (color, index) =>
+      `    "${shades[index]}": "${colorFormats[colorFormat].toString(color)}",`
+  )
+  .join('\n')}
+${Object.entries(tokenShades)
+  .map(
+    ([tokenShadeKey, tokenShade]) =>
+      `    "${tokenShadeKey}": "${colorFormats[colorFormat]?.toString?.(
+        palette[shades.findIndex(shade => shade === tokenShade)]
       )}"`
   )
-  .join(',\n')},
-    "main": "${colorFormats[colorFormat]?.toString?.(
-      palette[shades.findIndex(el => el === mainShade)]
-    )}",
-    "foreground": "${colorFormats[colorFormat]?.toString?.(
-      palette[shades.findIndex(el => el === foregroundShade)]
-    )}"
+  .join(',\n')}
   }`;
   })
   .join(',\n')}

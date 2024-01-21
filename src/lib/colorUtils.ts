@@ -14,6 +14,7 @@ import {
 } from 'culori/fn';
 
 import { calculateSteps } from './calculateSteps';
+import { FALLBACK_COLOR } from '@/constants/fallbackColor';
 import {
   DEFAULT_DANGER_HUE,
   MAX_DANGER_HUE,
@@ -27,8 +28,13 @@ import {
   REDDISH_MAX_DANGER_HUE,
   REDDISH_MIN_DANGER_HUE,
 } from '@/constants/hslDefaults';
-import { FALLBACK_COLOR } from '@/constants/fallbackColor';
-import { MAX_SHADE, shades, shadesLightnessValues } from '@/constants/shades';
+import {
+  MAX_MAIN_SHADE,
+  MAX_SHADE,
+  MIN_MAIN_SHADE,
+  shades,
+  shadesLightnessValues,
+} from '@/constants/shades';
 
 const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),
@@ -61,7 +67,7 @@ export const autoAddHexHash = (value: string) =>
 
 export const randomHexColor = () => formatHex(random());
 
-export const getPaletteShade = (baseColor: string, shade: number) => {
+export const getPaletteColor = (baseColor: string, shade: number) => {
   const { h, s } = okhsl(
     parseHex(baseColor) ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
@@ -95,10 +101,19 @@ export const getClosestShade = (
         : closestShade;
 };
 
-export const getForegroundShade = (hexColor: string, shade?: number) => {
-  if (!shade) return isHexColorLight(hexColor) ? 950 : 50;
-  const paletteShade = getPaletteShade(hexColor, shade);
-  return isHexColorLight(paletteShade) ? 950 : 50;
+export const getTokenShades = (hexColor: string) => {
+  const main = getClosestShade(hexColor, {
+    minShade: MIN_MAIN_SHADE,
+    maxShade: MAX_MAIN_SHADE,
+  });
+  // TODO: Active shade, which is either light or dark
+  // light = main - 100, dark = main + 100
+  // TODO: Use white (shade 0?) instead of shade 50
+  const foreground = isHexColorLight(getPaletteColor(hexColor, main))
+    ? 950
+    : 50;
+
+  return { main, foreground };
 };
 
 export const getColorVariantFn =
