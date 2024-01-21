@@ -17,7 +17,7 @@ ${palette
     (color, index) =>
       `  --color-${baseColorKey}-${shades[index]}: ${colorFormats[
         colorFormat
-      ].toString(color)};`
+      ].formatColor(color)};`
   )
   .join('\n')}
   
@@ -46,7 +46,7 @@ ${palette
     (color, index) =>
       `$color-${baseColorKey}-${shades[index]}: ${colorFormats[
         colorFormat
-      ].toString(color)};`
+      ].formatColor(color)};`
   )
   .join('\n')}
   
@@ -74,13 +74,14 @@ ${Object.entries(baseColors)
 ${palette
   .map(
     (color, index) =>
-      `    "${shades[index]}": "${colorFormats[colorFormat].toString(color)}",`
+      `    "${shades[index]}": "${colorFormats[colorFormat].formatColor(color)}",`
   )
   .join('\n')}
 ${Object.entries(tokenShades)
   .map(
     ([tokenShadeKey, tokenShade]) =>
-      `    "${tokenShadeKey}": "${colorFormats[colorFormat]?.toString?.(
+      // JSON can't have vars mapped to other vars, so duplicating them
+      `    "${tokenShadeKey}": "${colorFormats[colorFormat].formatColor(
         palette[shades.findIndex(shade => shade === tokenShade)]
       )}"`
   )
