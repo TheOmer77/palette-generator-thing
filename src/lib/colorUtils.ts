@@ -83,6 +83,7 @@ export const generatePalette = (baseColor: string) => {
     parseHex(baseColor) ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
 
+  // TODO: Use DEFAULT_NEUTRAL_CURVE for neutral palette, DEFAULT_CURVE for others
   return shadesLightnessValues.map(shade =>
     formatHex(rgb({ mode: 'okhsl', h, s, l: shade / 100 }))
   );
