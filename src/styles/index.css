@@ -16,9 +16,9 @@
     --color-muted-foreground: var(--color-neutral-600);
     --color-accent: var(--color-neutral-100);
     --color-accent-foreground: var(--color-neutral-900);
-    --color-border: var(--color-neutral-100);
-    --color-input: var(--color-neutral-100);
-    --color-ring: var(--color-primary-600);
+    --color-border: var(--color-neutral-200);
+    --color-input: var(--color-neutral-200);
+    --color-ring: var(--color-primary-main);
 
     --border-radius: 0.5rem;
   }
@@ -38,7 +38,6 @@
       --color-accent-foreground: var(--color-neutral-100);
       --color-border: var(--color-neutral-800);
       --color-input: var(--color-neutral-800);
-      --color-ring: var(--color-primary-300);
     }
   }
   @media print {
@@ -55,9 +54,8 @@
       --color-muted-foreground: var(--color-neutral-600);
       --color-accent: var(--color-neutral-100);
       --color-accent-foreground: var(--color-neutral-900);
-      --color-border: var(--color-neutral-100);
-      --color-input: var(--color-neutral-100);
-      --color-ring: var(--color-primary-600);
+      --color-border: var(--color-neutral-200);
+      --color-input: var(--color-neutral-200);
     }
   }
 }
