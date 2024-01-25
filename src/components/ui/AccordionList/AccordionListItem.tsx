@@ -44,7 +44,10 @@ export const AccordionListItem = forwardRef<
       >
         {title}
         <ListItemIcon
-          className={cn('me-0 ms-auto duration-200', open && 'rotate-180')}
+          className={cn(
+            'me-0 ms-auto shrink-0 duration-200',
+            open && 'rotate-180'
+          )}
         >
           <ChevronDownIcon />
         </ListItemIcon>

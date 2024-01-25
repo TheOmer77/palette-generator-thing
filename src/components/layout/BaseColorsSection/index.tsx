@@ -287,7 +287,8 @@ export const BaseColorsSection = forwardRef<
         const colorIsSuggestion = generalColorSuggestionNames.includes(value),
           colorIsCustom = !generalColorSuggestionNames.includes(value);
         const nameIsReserved =
-            typeof name === 'string' && RESERVED_COLOR_NAMES.includes(name),
+            typeof name === 'string' &&
+            RESERVED_COLOR_NAMES.includes(toCamelCase(name)),
           nameIsDuplicate =
             typeof name === 'string' &&
             name.length > 0 &&

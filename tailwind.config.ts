@@ -181,7 +181,8 @@ const config = {
             }),
             {
               DEFAULT: `rgb(var(--color-${colorName}-main))`,
-              foreground: `rgb(var(--color-${colorName}-contrast))`,
+              active: `rgb(var(--color-${colorName}-active))`,
+              foreground: `rgb(var(--color-${colorName}-foreground))`,
             }
           ),
         }),

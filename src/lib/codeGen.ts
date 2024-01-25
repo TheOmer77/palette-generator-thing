@@ -1,119 +1,97 @@
-import {
-  generatePalette,
-  getClosestShade,
-  getContrastShade,
-} from './colorUtils';
-import {
-  MAX_MAIN_SHADE,
-  MIN_MAIN_SHADE,
-  colorFormats,
-  shades,
-} from '@/constants';
+import { generatePalette, getTokenShades } from './colorUtils';
+import { colorFormats, shades } from '@/constants';
 
 export const generateCssCode = (
-  baseColors: {
-    [colorName: string]: string;
-  },
+  baseColors: Record<string, string>,
   colorFormat: keyof typeof colorFormats = 'hex'
 ) =>
   `:root {
-  ${Object.keys(baseColors)
-    .map((key: keyof typeof baseColors) => {
-      const mainShade = getClosestShade(baseColors[key], {
-          minShade: MIN_MAIN_SHADE,
-          maxShade: MAX_MAIN_SHADE,
-        }),
-        lightShade = mainShade - 100,
-        darkShade = mainShade + 100,
-        contrastShade = getContrastShade(baseColors[key], mainShade);
-      return `/* ${key} */
-${generatePalette(baseColors[key])
-  .map(
-    (color, index) =>
-      `  --color-${key}-${shades[index]}: ${colorFormats[
-        colorFormat
-      ]?.toString?.(color)};`
-  )
-  .join('\n')}
-  
-  --color-${key}-main: var(--color-${key}-${mainShade});
-  --color-${key}-light: var(--color-${key}-${lightShade});
-  --color-${key}-dark: var(--color-${key}-${darkShade});
-  --color-${key}-contrast: var(--color-${key}-${contrastShade});`;
-    })
-    .join('\n\n  ')}
-}`;
+${Object.entries(baseColors)
+  .map(([baseColorKey, baseColor]) => {
+    const palette = generatePalette(baseColor),
+      tokenShades = getTokenShades(baseColor);
 
-export const generateScssCode = (
-  baseColors: {
-    [colorName: string]: string;
-  },
-  colorFormat: keyof typeof colorFormats = 'hex'
-) =>
-  `${Object.keys(baseColors)
-    .map((key: keyof typeof baseColors) => {
-      const mainShade = getClosestShade(baseColors[key], {
-          minShade: MIN_MAIN_SHADE,
-          maxShade: MAX_MAIN_SHADE,
-        }),
-        lightShade = mainShade - 100,
-        darkShade = mainShade + 100,
-        contrastShade = getContrastShade(baseColors[key], mainShade);
-      return `// ${key}
-${generatePalette(baseColors[key])
-  .map(
-    (color, index) =>
-      `$color-${key}-${shades[index]}: ${colorFormats[colorFormat]?.toString?.(
-        color
-      )};`
-  )
-  .join('\n')}
-  
-$color-${key}-main: $color-${key}-${mainShade};
-$color-${key}-light: $color-${key}-${lightShade};
-$color-${key}-dark: $color-${key}-${darkShade};
-$color-${key}-contrast: $color-${key}-${contrastShade};`;
-    })
-    .join('\n\n')}`;
-
-export const generateJsonCode = (
-  baseColors: {
-    [colorName: string]: string;
-  },
-  colorFormat: keyof typeof colorFormats = 'hex'
-) => `{
-${Object.keys(baseColors)
-  .map(key => {
-    const mainShade = getClosestShade(baseColors[key], {
-        minShade: MIN_MAIN_SHADE,
-        maxShade: MAX_MAIN_SHADE,
-      }),
-      lightShade = mainShade - 100,
-      darkShade = mainShade + 100,
-      contrastShade = getContrastShade(baseColors[key], mainShade);
-    const palette = generatePalette(baseColors[key]);
-    return `  "${key}": {
+    return `  /* ${baseColorKey} */
 ${palette
   .map(
     (color, index) =>
-      `    "${shades[index]}": "${colorFormats[colorFormat]?.toString?.(
-        color
-      )}"`
+      `  --color-${baseColorKey}-${shades[index]}: ${colorFormats[
+        colorFormat
+      ].formatColor(color)};`
   )
-  .join(',\n')},
-    "main": "${colorFormats[colorFormat]?.toString?.(
-      palette[shades.findIndex(el => el === mainShade)]
-    )}",
-    "light": "${colorFormats[colorFormat]?.toString?.(
-      palette[shades.findIndex(el => el === lightShade)]
-    )}",
-    "dark": "${colorFormats[colorFormat]?.toString?.(
-      palette[shades.findIndex(el => el === darkShade)]
-    )}",
-    "contrast": "${colorFormats[colorFormat]?.toString?.(
-      palette[shades.findIndex(el => el === contrastShade)]
-    )}"
-  }`;
+  .join('\n')}
+  
+${Object.entries(tokenShades)
+  .map(
+    ([tokenShadeKey, tokenShade]) =>
+      `  --color-${baseColorKey}-${tokenShadeKey}: var(--color-${baseColorKey}-${tokenShade});`
+  )
+  .join('\n')}`;
   })
-  .join(',\n')}
+  .join('\n\n')}
 }`;
+
+export const generateScssCode = (
+  baseColors: Record<string, string>,
+  colorFormat: keyof typeof colorFormats = 'hex'
+) =>
+  `${Object.entries(baseColors)
+    .map(([baseColorKey, baseColor]) => {
+      const palette = generatePalette(baseColor),
+        tokenShades = getTokenShades(baseColor);
+
+      return `// ${baseColorKey}
+${palette
+  .map(
+    (color, index) =>
+      `$color-${baseColorKey}-${shades[index]}: ${colorFormats[
+        colorFormat
+      ].formatColor(color)};`
+  )
+  .join('\n')}
+  
+${Object.entries(tokenShades)
+  .map(
+    ([tokenShadeKey, tokenShade]) =>
+      `$color-${baseColorKey}-${tokenShadeKey}: $color-${baseColorKey}-${tokenShade};`
+  )
+  .join('\n')}`;
+    })
+    .join('\n\n')}
+}`;
+
+export const generateJsonCode = (
+  baseColors: Record<string, string>,
+  colorFormat: keyof typeof colorFormats = 'hex'
+) =>
+  JSON.stringify(
+    Object.entries(baseColors).reduce((obj, [baseColorKey, baseColor]) => {
+      const palette = generatePalette(baseColor),
+        tokenShades = getTokenShades(baseColor);
+
+      return {
+        ...obj,
+        [baseColorKey]: {
+          ...palette.reduce(
+            (paletteObj, color, index) => ({
+              ...paletteObj,
+              [shades[index]]: colorFormats[colorFormat].formatColor(color),
+            }),
+            {}
+          ),
+          // JSON can't have vars referencing other vars, so duplicating them
+          ...Object.entries(tokenShades).reduce(
+            (tokensObj, [tokenShadeKey, tokenShade]) => ({
+              ...tokensObj,
+              [tokenShadeKey]: colorFormats[colorFormat].formatColor(
+                palette[shades.findIndex(shade => shade === tokenShade)]
+              ),
+            }),
+            {}
+          ),
+        },
+      };
+    }, {}),
+    undefined,
+    2
+  );

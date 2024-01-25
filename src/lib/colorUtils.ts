@@ -14,6 +14,7 @@ import {
 } from 'culori/fn';
 
 import { calculateSteps } from './calculateSteps';
+import { FALLBACK_COLOR } from '@/constants/fallbackColor';
 import {
   DEFAULT_DANGER_HUE,
   MAX_DANGER_HUE,
@@ -27,8 +28,15 @@ import {
   REDDISH_MAX_DANGER_HUE,
   REDDISH_MIN_DANGER_HUE,
 } from '@/constants/hslDefaults';
-import { FALLBACK_COLOR } from '@/constants/fallbackColor';
-import { MAX_SHADE, shades, shadesLightnessValues } from '@/constants/shades';
+import {
+  MAX_ACTIVE_SHADE,
+  MAX_MAIN_SHADE,
+  MAX_SHADE,
+  MIN_ACTIVE_SHADE,
+  MIN_MAIN_SHADE,
+  shades,
+  shadesLightnessValues,
+} from '@/constants/shades';
 
 const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),
@@ -61,7 +69,7 @@ export const autoAddHexHash = (value: string) =>
 
 export const randomHexColor = () => formatHex(random());
 
-export const getPaletteShade = (baseColor: string, shade: number) => {
+export const getPaletteColor = (baseColor: string, shade: number) => {
   const { h, s } = okhsl(
     parseHex(baseColor) ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
@@ -75,6 +83,7 @@ export const generatePalette = (baseColor: string) => {
     parseHex(baseColor) ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
 
+  // TODO: Use DEFAULT_NEUTRAL_CURVE for neutral palette, DEFAULT_CURVE for others
   return shadesLightnessValues.map(shade =>
     formatHex(rgb({ mode: 'okhsl', h, s, l: shade / 100 }))
   );
@@ -95,10 +104,21 @@ export const getClosestShade = (
         : closestShade;
 };
 
-export const getContrastShade = (hexColor: string, shade?: number) => {
-  if (!shade) return isHexColorLight(hexColor) ? 950 : 50;
-  const paletteShade = getPaletteShade(hexColor, shade);
-  return isHexColorLight(paletteShade) ? 950 : 50;
+export const getTokenShades = (hexColor: string) => {
+  const main = getClosestShade(hexColor, {
+    minShade: MIN_MAIN_SHADE,
+    maxShade: MAX_MAIN_SHADE,
+  });
+
+  const isMainShadeLight = isHexColorLight(getPaletteColor(hexColor, main));
+  const active = Math.min(
+    Math.max(main + (isMainShadeLight ? 100 : -100), MIN_ACTIVE_SHADE),
+    MAX_ACTIVE_SHADE
+  );
+  // TODO: Use white (shade 0?) instead of shade 50
+  const foreground = isMainShadeLight ? 950 : 50;
+
+  return { main, active, foreground };
 };
 
 export const getColorVariantFn =
