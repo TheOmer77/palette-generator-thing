@@ -3,7 +3,7 @@ import { colorFormats, shades } from '@/constants';
 
 export const generateCssCode = (
   baseColors: Record<string, string>,
-  colorFormat: keyof typeof colorFormats
+  colorFormat: keyof typeof colorFormats = 'hex'
 ) =>
   `:root {
 ${Object.entries(baseColors)
@@ -33,7 +33,7 @@ ${Object.entries(tokenShades)
 
 export const generateScssCode = (
   baseColors: Record<string, string>,
-  colorFormat: keyof typeof colorFormats
+  colorFormat: keyof typeof colorFormats = 'hex'
 ) =>
   `${Object.entries(baseColors)
     .map(([baseColorKey, baseColor]) => {
@@ -62,7 +62,7 @@ ${Object.entries(tokenShades)
 
 export const generateJsonCode = (
   baseColors: Record<string, string>,
-  colorFormat: keyof typeof colorFormats
+  colorFormat: keyof typeof colorFormats = 'hex'
 ) =>
   JSON.stringify(
     Object.entries(baseColors).reduce((obj, [baseColorKey, baseColor]) => {
