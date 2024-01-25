@@ -22,7 +22,7 @@ export const Options = () => {
   return (
     <>
       <Sidebar className='hidden md:flex print:hidden print:md:flex'>
-        <Header className='p-2' />
+        <Header className='px-4 py-2' />
         <AccordionList
           className='flex-grow overflow-y-auto pb-2 scrollbar-thin
         scrollbar-thumb-neutral-500/30 print:hidden'
