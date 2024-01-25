@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useCallback, type ComponentPropsWithoutRef } from 'react';
+import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 
 import ColorListItem from './ColorListItem';
@@ -12,7 +12,8 @@ import { ListItem, ListItemIcon, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import { ColorInput } from '@/components/colors';
-import { useGlobalState, useTheme } from '@/hooks';
+import { useBaseColors } from '@/store/useBaseColors';
+import { useTheme } from '@/hooks';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
 import {
@@ -28,7 +29,6 @@ import type {
   GeneralColorSuggestion,
   NeutralColorSuggestion,
 } from '@/types/defaultSuggestions';
-import type { AnyStringWithAutocomplete } from '@/types/utils';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 
@@ -36,88 +36,34 @@ export const BaseColorsSection = forwardRef<
   HTMLElement,
   ComponentPropsWithoutRef<'section'>
 >((props, ref) => {
-  const [{ baseColors }, setGlobalState] = useGlobalState();
-  const themeColors = useTheme();
+  const {
+      primary,
+      neutral,
+      danger,
+      extras,
+      setPrimary,
+      setNeutral,
+      setDanger,
+      addExtraColor,
+      removeExtraColor,
+      renameExtraColor,
+      setExtraColor,
+    } = useBaseColors(),
+    themeColors = useTheme();
 
-  const neutralIsAuto = typeof baseColors.neutral === 'undefined',
+  const neutralIsAuto = typeof neutral === 'undefined',
     neutralIsSuggestion =
-      typeof baseColors.neutral === 'string' &&
-      neutralColorSuggestionNames.includes(baseColors.neutral),
+      typeof neutral === 'string' &&
+      neutralColorSuggestionNames.includes(neutral),
     neutralIsCustom =
-      typeof baseColors.neutral === 'string' &&
-      !neutralColorSuggestionNames.includes(baseColors.neutral);
-  const dangerIsAuto = typeof baseColors.danger === 'undefined',
+      typeof neutral === 'string' &&
+      !neutralColorSuggestionNames.includes(neutral);
+  const dangerIsAuto = typeof danger === 'undefined',
     dangerIsSuggestion =
-      typeof baseColors.danger === 'string' &&
-      dangerColorSuggestionNames.includes(baseColors.danger),
+      typeof danger === 'string' && dangerColorSuggestionNames.includes(danger),
     dangerIsCustom =
-      typeof baseColors.danger === 'string' &&
-      !dangerColorSuggestionNames.includes(baseColors.danger);
-
-  const addExtraColor = useCallback(
-    () =>
-      setGlobalState({
-        baseColors: {
-          ...baseColors,
-          extras: [
-            ...(baseColors.extras || []),
-            {
-              name: '',
-              value:
-                generalColorSuggestionNames[
-                  (baseColors.extras?.length || 0) %
-                    generalColorSuggestionNames.length
-                ],
-            },
-          ],
-        },
-      }),
-    [baseColors, setGlobalState]
-  );
-
-  const removeExtraColor = useCallback<(index: number) => void>(
-    index =>
-      setGlobalState({
-        baseColors: {
-          ...baseColors,
-          extras: baseColors.extras?.filter?.((_, i) => i !== index),
-        },
-      }),
-    [baseColors, setGlobalState]
-  );
-
-  const renameExtraColor = useCallback<
-    (index: number, newName: string) => void
-  >(
-    (index, newName) =>
-      setGlobalState({
-        baseColors: {
-          ...baseColors,
-          extras: baseColors.extras?.map?.((color, i) =>
-            i === index ? { ...color, name: newName } : color
-          ),
-        },
-      }),
-    [baseColors, setGlobalState]
-  );
-
-  const updateExtraColor = useCallback<
-    (
-      index: number,
-      newValue: AnyStringWithAutocomplete<GeneralColorSuggestion>
-    ) => void
-  >(
-    (index, newValue) =>
-      setGlobalState({
-        baseColors: {
-          ...baseColors,
-          extras: baseColors.extras?.map?.((color, i) =>
-            i === index ? { ...color, value: newValue } : color
-          ),
-        },
-      }),
-    [baseColors, setGlobalState]
-  );
+      typeof danger === 'string' &&
+      !dangerColorSuggestionNames.includes(danger);
 
   return (
     <section {...props} ref={ref}>
@@ -133,12 +79,8 @@ export const BaseColorsSection = forwardRef<
           <ListItem asChild>
             <ColorInput
               id='input-primary-color'
-              value={baseColors.primary}
-              onChange={newColor => {
-                setGlobalState({
-                  baseColors: { ...baseColors, primary: newColor },
-                });
-              }}
+              value={primary}
+              onChange={setPrimary}
               withRandomBtn
             />
           </ListItem>
@@ -160,17 +102,13 @@ export const BaseColorsSection = forwardRef<
           ((newValue === 'auto' && !neutralIsAuto) ||
             (newValue === 'suggestions' && !neutralIsSuggestion) ||
             (newValue === 'custom' && !neutralIsCustom)) &&
-          setGlobalState({
-            baseColors: {
-              ...baseColors,
-              neutral:
-                newValue === 'suggestions'
-                  ? neutralColorSuggestionNames[0]
-                  : newValue === 'custom'
-                    ? getAutoNeutralColor(baseColors.primary)
-                    : undefined,
-            },
-          })
+          setNeutral(
+            newValue === 'suggestions'
+              ? neutralColorSuggestionNames[0]
+              : newValue === 'custom'
+                ? getAutoNeutralColor(primary)
+                : undefined
+          )
         }
       >
         <ColorListItem
@@ -182,14 +120,10 @@ export const BaseColorsSection = forwardRef<
           <RadioListItem value='suggestions'>Suggestions</RadioListItem>
           <Collapsible open={neutralIsSuggestion}>
             <ColorSuggestionsBox
-              baseColor={baseColors.primary}
+              baseColor={primary}
               colorSuggestions={neutralColorSuggestions}
-              value={baseColors.neutral as NeutralColorSuggestion}
-              onValueChange={suggestionName =>
-                setGlobalState({
-                  baseColors: { ...baseColors, neutral: suggestionName },
-                })
-              }
+              value={neutral as NeutralColorSuggestion}
+              onValueChange={setNeutral}
             />
           </Collapsible>
           <RadioListItem value='custom'>Custom</RadioListItem>
@@ -198,12 +132,8 @@ export const BaseColorsSection = forwardRef<
               <ListItem asChild>
                 <ColorInput
                   id='input-neutral-color'
-                  value={baseColors.neutral || ''}
-                  onChange={newColor => {
-                    setGlobalState({
-                      baseColors: { ...baseColors, neutral: newColor },
-                    });
-                  }}
+                  value={neutral || ''}
+                  onChange={setNeutral}
                   withRandomBtn
                 />
               </ListItem>
@@ -227,17 +157,13 @@ export const BaseColorsSection = forwardRef<
           ((newValue === 'auto' && !dangerIsAuto) ||
             (newValue === 'suggestions' && !dangerIsSuggestion) ||
             (newValue === 'custom' && !dangerIsCustom)) &&
-          setGlobalState({
-            baseColors: {
-              ...baseColors,
-              danger:
-                newValue === 'suggestions'
-                  ? dangerColorSuggestionNames[0]
-                  : newValue === 'custom'
-                    ? getAutoDangerColor(baseColors.primary)
-                    : undefined,
-            },
-          })
+          setDanger(
+            newValue === 'suggestions'
+              ? dangerColorSuggestionNames[0]
+              : newValue === 'custom'
+                ? getAutoDangerColor(primary)
+                : undefined
+          )
         }
       >
         <ColorListItem
@@ -250,14 +176,10 @@ export const BaseColorsSection = forwardRef<
           <RadioListItem value='suggestions'>Suggestions</RadioListItem>
           <Collapsible open={dangerIsSuggestion}>
             <ColorSuggestionsBox
-              baseColor={baseColors.primary}
+              baseColor={primary}
               colorSuggestions={dangerColorSuggestions}
-              value={baseColors.danger as DangerColorSuggestion}
-              onValueChange={suggestionName =>
-                setGlobalState({
-                  baseColors: { ...baseColors, danger: suggestionName },
-                })
-              }
+              value={danger as DangerColorSuggestion}
+              onValueChange={setPrimary}
             />
           </Collapsible>
           <RadioListItem value='custom'>Custom</RadioListItem>
@@ -266,12 +188,8 @@ export const BaseColorsSection = forwardRef<
               <ListItem asChild>
                 <ColorInput
                   id='input-danger-color'
-                  value={baseColors.danger || ''}
-                  onChange={newColor => {
-                    setGlobalState({
-                      baseColors: { ...baseColors, danger: newColor },
-                    });
-                  }}
+                  value={danger || ''}
+                  onChange={setDanger}
                   withRandomBtn
                 />
               </ListItem>
@@ -281,7 +199,7 @@ export const BaseColorsSection = forwardRef<
       </RadioGroup>
 
       <Separator />
-      {baseColors.extras?.map(({ name, value }, index) => {
+      {extras.map(({ name, value }, index) => {
         const id = `extra${index + 1}`,
           title = name || `Extra ${index + 1}`;
         const colorIsSuggestion = generalColorSuggestionNames.includes(value),
@@ -292,8 +210,7 @@ export const BaseColorsSection = forwardRef<
           nameIsDuplicate =
             typeof name === 'string' &&
             name.length > 0 &&
-            Array.isArray(baseColors.extras) &&
-            baseColors.extras.filter(
+            extras.filter(
               ({ name: n }) =>
                 typeof n === 'string' &&
                 toCamelCase(n).toLowerCase() === toCamelCase(name).toLowerCase()
@@ -328,26 +245,26 @@ export const BaseColorsSection = forwardRef<
               onValueChange={newValue =>
                 ((newValue === 'suggestions' && !colorIsSuggestion) ||
                   (newValue === 'custom' && !colorIsCustom)) &&
-                updateExtraColor(
+                setExtraColor(
                   index,
                   newValue === 'suggestions'
                     ? generalColorSuggestionNames[
                         index % generalColorSuggestionNames.length
                       ]
-                    : generalColorSuggestions[
-                        value as GeneralColorSuggestion
-                      ]?.(baseColors.primary)
+                    : generalColorSuggestions[value as GeneralColorSuggestion](
+                        primary
+                      )
                 )
               }
             >
               <RadioListItem value='suggestions'>Suggestions</RadioListItem>
               <Collapsible open={colorIsSuggestion}>
                 <ColorSuggestionsBox
-                  baseColor={baseColors.primary}
+                  baseColor={primary}
                   colorSuggestions={generalColorSuggestions}
                   value={value as GeneralColorSuggestion}
                   onValueChange={suggestionName =>
-                    updateExtraColor(index, suggestionName)
+                    setExtraColor(index, suggestionName)
                   }
                 />
               </Collapsible>
@@ -357,9 +274,7 @@ export const BaseColorsSection = forwardRef<
                   <ColorInput
                     id={`input-extra-color-${index}`}
                     value={value || ''}
-                    onChange={newColor => {
-                      updateExtraColor(index, newColor);
-                    }}
+                    onChange={newColor => setExtraColor(index, newColor)}
                     withRandomBtn
                   />
                 </div>
