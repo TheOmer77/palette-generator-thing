@@ -3,13 +3,17 @@ import {
   formatHex,
   formatHsl,
   formatRgb,
+  modeLab,
   modeLch,
+  modeOklab,
   modeOklch,
   useMode as loadMode,
 } from 'culori/fn';
 import type { ColorFormat } from '@/types/codeGen';
 
-const lch = loadMode(modeLch),
+const lab = loadMode(modeLab),
+  oklab = loadMode(modeOklab),
+  lch = loadMode(modeLch),
   oklch = loadMode(modeOklch);
 
 export const codeFormats = {
@@ -42,6 +46,24 @@ export const colorFormats = {
     formatColor: color =>
       (formatHsl(color) as string).replaceAll(',', '').slice(4, -1),
   },
+  lab: {
+    displayName: 'LAB',
+    formatColor: color =>
+      `lab(${(formatCss(lab(color)) as string)
+        .slice(4, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' ')})`,
+  },
+  labRaw: {
+    displayName: 'LAB (Raw)',
+    formatColor: color =>
+      (formatCss(lab(color)) as string)
+        .slice(4, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' '),
+  },
   lch: {
     displayName: 'LCH',
     formatColor: color =>
@@ -56,6 +78,24 @@ export const colorFormats = {
     formatColor: color =>
       (formatCss(lch(color)) as string)
         .slice(4, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' '),
+  },
+  oklab: {
+    displayName: 'OKLAB',
+    formatColor: color =>
+      `oklab(${(formatCss(oklab(color)) as string)
+        .slice(6, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' ')})`,
+  },
+  oklabRaw: {
+    displayName: 'OKLAB (Raw)',
+    formatColor: color =>
+      (formatCss(oklab(color)) as string)
+        .slice(6, -1)
         .split(' ')
         .map(num => Math.round(Number(num) * 100) / 100)
         .join(' '),
