@@ -53,7 +53,7 @@ active:after:duration-0`,
         >
           <Icon
             className={cn(
-              'absolute end-2 text-lg print:hidden',
+              'absolute end-2 print:hidden',
               isHexColorLight(value) ? 'text-black/60' : 'text-white/60'
             )}
           />
