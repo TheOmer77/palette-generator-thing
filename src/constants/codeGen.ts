@@ -3,13 +3,15 @@ import {
   formatHex,
   formatHsl,
   formatRgb,
+  modeLab,
   modeLch,
   modeOklch,
   useMode as loadMode,
 } from 'culori/fn';
 import type { ColorFormat } from '@/types/codeGen';
 
-const lch = loadMode(modeLch),
+const lab = loadMode(modeLab),
+  lch = loadMode(modeLch),
   oklch = loadMode(modeOklch);
 
 export const codeFormats = {
@@ -41,6 +43,24 @@ export const colorFormats = {
     displayName: 'HSL (Raw)',
     formatColor: color =>
       (formatHsl(color) as string).replaceAll(',', '').slice(4, -1),
+  },
+  lab: {
+    displayName: 'LAB',
+    formatColor: color =>
+      `lab(${(formatCss(lab(color)) as string)
+        .slice(4, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' ')})`,
+  },
+  labRaw: {
+    displayName: 'LAB (Raw)',
+    formatColor: color =>
+      (formatCss(lab(color)) as string)
+        .slice(4, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' '),
   },
   lch: {
     displayName: 'LCH',
