@@ -31,10 +31,13 @@ export type BaseColorsSetters = {
   setDanger: (danger: BaseColorsState['danger']) => void;
   addExtraColor: () => void;
   removeExtraColor: (index: number) => void;
-  renameExtraColor: (index: number, newName: string) => void;
+  renameExtraColor: (
+    index: number,
+    newName: NonNullable<BaseColorsState['extras'][number]['name']>
+  ) => void;
   setExtraColor: (
     index: number,
-    newValue: AnyStringWithAutocomplete<GeneralColorSuggestion>
+    newValue: BaseColorsState['extras'][number]['value']
   ) => void;
 };
 
