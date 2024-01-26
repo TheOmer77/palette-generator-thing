@@ -179,7 +179,7 @@ export const BaseColorsSection = forwardRef<
               baseColor={primary}
               colorSuggestions={dangerColorSuggestions}
               value={danger as DangerColorSuggestion}
-              onValueChange={setPrimary}
+              onValueChange={setDanger}
             />
           </Collapsible>
           <RadioListItem value='custom'>Custom</RadioListItem>
