@@ -10,12 +10,12 @@ export type CodeGenState = {
   colorFormat: keyof typeof colorFormats;
 };
 
-export type CodeGenSetters = {
+export type CodeGenActions = {
   setFormat: (format: CodeGenState['format']) => void;
   setColorFormat: (colorFormat: CodeGenState['colorFormat']) => void;
 };
 
-export type CodeGenStore = CodeGenState & CodeGenSetters;
+export type CodeGenStore = CodeGenState & CodeGenActions;
 
 export const useCodeGen = create<CodeGenStore>(set => ({
   format: 'none',
