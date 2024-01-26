@@ -1,18 +1,8 @@
 import { createContext } from 'react';
 
-// import { randomHexColor } from '@/lib/colorUtils';
 import type { GlobalState } from '@/types/globalState';
 
 export const initialState: GlobalState = {
-  baseColors: {
-    // TEMPORARY HARDCODED VALUE
-    primary: '#1740ea',
-    // TODO: Uncomment the line below when it doesn't cause a hydration error
-    // primary: randomHexColor(),
-    neutral: undefined,
-    danger: undefined,
-    extras: [],
-  },
   codeGen: {
     format: 'none',
     colorFormat: 'hex',
