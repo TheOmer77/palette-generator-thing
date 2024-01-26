@@ -68,8 +68,8 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
               ref={ref}
               className={cn(
                 `max-h-[calc(100dvh-6.5rem)] overflow-auto p-4 text-sm
-leading-relaxed scrollbar-thin scrollbar-thumb-neutral-500/30
-md:max-h-[calc(100dvh-4.5rem)] print:max-h-none md:print:max-h-none`,
+leading-relaxed md:max-h-[calc(100dvh-4.5rem)] print:max-h-none
+md:print:max-h-none`,
                 className
               )}
             >

@@ -25,8 +25,7 @@ export const Options = () => {
       <Sidebar className='hidden md:flex print:hidden print:md:flex'>
         <Header className='px-4 py-2' />
         <AccordionList
-          className='flex-grow overflow-y-auto pb-2 scrollbar-thin
-scrollbar-thumb-neutral-500/30 print:hidden'
+          className='flex-grow overflow-y-auto pb-2 print:hidden'
           value={openItem}
           onValueChange={handleValueChange}
         >
@@ -40,8 +39,7 @@ scrollbar-thumb-neutral-500/30 print:hidden'
         onOpenChange={open => !open && setOpenItem(null)}
       >
         <AccordionList
-          className='pb-2 scrollbar-thin
-scrollbar-thumb-neutral-500/30 print:hidden'
+          className='pb-2'
           value={openItem}
           onValueChange={handleValueChange}
         >
