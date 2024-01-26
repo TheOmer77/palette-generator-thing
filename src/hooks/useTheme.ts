@@ -16,7 +16,7 @@ import type {
   NeutralColorSuggestion,
 } from '@/types/defaultSuggestions';
 
-const useTheme = () => {
+export const useTheme = () => {
   const { primary, neutral, danger, extras } = useBaseColors();
 
   const selectedNeutral = useMemo(
@@ -59,5 +59,3 @@ const useTheme = () => {
     extras: selectedExtras,
   };
 };
-
-export default useTheme;
