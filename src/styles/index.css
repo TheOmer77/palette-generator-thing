@@ -40,6 +40,7 @@
       --color-accent-foreground: var(--color-neutral-100);
       --color-border: var(--color-neutral-800);
       --color-input: var(--color-neutral-800);
+      --color-ring: var(--color-primary-300);
     }
   }
   @media print {
