@@ -63,7 +63,10 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             getLineProps,
             getTokenProps,
           }) => (
-            <ScrollArea className='h-[calc(100dvh-6.5rem)] md:h-[calc(100dvh-4.5rem)]'>
+            <ScrollArea
+              className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-6.5rem)]
+md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-4.5rem)]'
+            >
               <pre
                 {...props}
                 style={{ ...prismStyle, ...style }}
