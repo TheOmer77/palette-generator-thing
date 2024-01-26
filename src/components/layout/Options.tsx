@@ -9,11 +9,12 @@ import { CodeGenSection } from './CodeGenSection';
 import { SheetWithFab } from './SheetWithFab';
 import { Sidebar } from './Sidebar';
 import { AccordionList } from '@/components/ui/AccordionList';
-import type { GlobalState } from '@/types/globalState';
+import type { BaseColorsState } from '@/store/useBaseColors';
+import type { CodeGenState } from '@/store/useCodeGen';
 
 export const Options = () => {
   const [openItem, setOpenItem] = useState<
-    keyof GlobalState['baseColors'] | keyof GlobalState['codeGen'] | null
+    keyof BaseColorsState | keyof CodeGenState | null
   >(null);
 
   const handleValueChange = (newValue: string | null) =>
@@ -25,7 +26,7 @@ export const Options = () => {
         <Header className='px-4 py-2' />
         <AccordionList
           className='flex-grow overflow-y-auto pb-2 scrollbar-thin
-        scrollbar-thumb-neutral-500/30 print:hidden'
+scrollbar-thumb-neutral-500/30 print:hidden'
           value={openItem}
           onValueChange={handleValueChange}
         >
@@ -40,7 +41,7 @@ export const Options = () => {
       >
         <AccordionList
           className='pb-2 scrollbar-thin
-        scrollbar-thumb-neutral-500/30 print:hidden'
+scrollbar-thumb-neutral-500/30 print:hidden'
           value={openItem}
           onValueChange={handleValueChange}
         >

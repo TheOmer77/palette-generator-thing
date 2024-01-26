@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { Figtree, Fira_Code } from 'next/font/google';
 import clsx from 'clsx';
 
-import GlobalStateProvider from '@/components/providers/GlobalStateProvider';
 import { ThemeStyle } from '@/components/layout';
 import '@/styles/index.css';
 
@@ -23,18 +22,14 @@ export const metadata: Metadata = {
   description: 'App to generate color palettes.',
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
-  return (
-    <GlobalStateProvider>
-      <html lang='en' className={clsx(font.variable, fontMono.variable)}>
-        <head>
-          <meta name='color-scheme' content='light dark' />
-          <ThemeStyle />
-        </head>
-        <body>{children}</body>
-      </html>
-    </GlobalStateProvider>
-  );
-};
+const RootLayout = ({ children }: { children: ReactNode }) => (
+  <html lang='en' className={clsx(font.variable, fontMono.variable)}>
+    <head>
+      <meta name='color-scheme' content='light dark' />
+      <ThemeStyle />
+    </head>
+    <body>{children}</body>
+  </html>
+);
 
 export default RootLayout;

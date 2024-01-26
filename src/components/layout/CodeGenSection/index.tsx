@@ -7,14 +7,14 @@ import { AccordionListItem } from '@/components/ui/AccordionList';
 import { Collapsible } from '@/components/ui/Collapsible';
 import { ListItemText, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
-import { useGlobalState } from '@/hooks';
+import { useCodeGen } from '@/store/useCodeGen';
 import { codeFormats, colorFormats } from '@/constants';
 
 export const CodeGenSection = forwardRef<
   HTMLElement,
   ComponentPropsWithoutRef<'section'>
 >((props, ref) => {
-  const [{ codeGen }, setGlobalState] = useGlobalState();
+  const { format, colorFormat, setFormat, setColorFormat } = useCodeGen();
 
   return (
     <section {...props} ref={ref}>
@@ -23,21 +23,14 @@ export const CodeGenSection = forwardRef<
       </ListSubheader>
       <RadioGroup
         asChild
-        value={codeGen.format}
-        onValueChange={newValue =>
-          setGlobalState({
-            codeGen: {
-              ...codeGen,
-              format: newValue as typeof codeGen.format,
-            },
-          })
-        }
+        value={format}
+        onValueChange={value => setFormat(value as typeof format)}
       >
         <AccordionListItem
           title={
             <ListItemText
               primary='Format'
-              secondary={codeFormats[codeGen.format].displayName}
+              secondary={codeFormats[format].displayName}
             />
           }
           value='codeGen-format'
@@ -50,26 +43,17 @@ export const CodeGenSection = forwardRef<
           ))}
         </AccordionListItem>
       </RadioGroup>
-      <Collapsible open={!['none', 'custom'].includes(codeGen.format)}>
+      <Collapsible open={!['none', 'custom'].includes(format)}>
         <RadioGroup
           asChild
-          value={codeGen.colorFormat}
-          onValueChange={newValue =>
-            setGlobalState({
-              codeGen: {
-                ...codeGen,
-                colorFormat: newValue as typeof codeGen.colorFormat,
-              },
-            })
-          }
+          value={colorFormat}
+          onValueChange={value => setColorFormat(value as typeof colorFormat)}
         >
           <AccordionListItem
             title={
               <ListItemText
                 primary='Color format'
-                secondary={
-                  colorFormats[codeGen.colorFormat]?.displayName || 'None'
-                }
+                secondary={colorFormats[colorFormat]?.displayName || 'None'}
               />
             }
             value='codeGen-colorFormat'

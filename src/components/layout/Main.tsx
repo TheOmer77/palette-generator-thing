@@ -6,7 +6,8 @@ import { Header } from './Header';
 import { ColorBlock, ColorGrid } from '@/components/colors';
 import { CodeBlock } from '@/components/ui/CodeBlock';
 import { H2, H3 } from '@/components/ui/Headings';
-import { useGlobalState, useTheme } from '@/hooks';
+import { useTheme } from '@/hooks';
+import { useCodeGen } from '@/store/useCodeGen';
 import {
   generateCssCode,
   generateJsonCode,
@@ -18,7 +19,7 @@ import { codeFormats, shades } from '@/constants';
 
 export const Main = () => {
   const { primary, neutral, danger, extras } = useTheme();
-  const [{ codeGen }] = useGlobalState();
+  const { format, colorFormat } = useCodeGen();
 
   const colorGrids = useMemo(() => {
     const grids = [
@@ -67,17 +68,17 @@ export const Main = () => {
       }
     );
 
-    switch (codeGen.format) {
+    switch (format) {
       case 'css':
-        return generateCssCode(palettes, codeGen.colorFormat);
+        return generateCssCode(palettes, colorFormat);
       case 'scss':
-        return generateScssCode(palettes, codeGen.colorFormat);
+        return generateScssCode(palettes, colorFormat);
       case 'json':
-        return generateJsonCode(palettes, codeGen.colorFormat);
+        return generateJsonCode(palettes, colorFormat);
       default:
         return '';
     }
-  }, [codeGen.colorFormat, codeGen.format, danger, extras, neutral, primary]);
+  }, [colorFormat, format, danger, extras, neutral, primary]);
 
   return (
     <main
@@ -102,15 +103,13 @@ export const Main = () => {
         </div>
       ))}
 
-      {codeGen.format !== 'none' && (
+      {format !== 'none' && (
         <>
           <H2 className='break-before-page'>
-            {codeFormats[codeGen.format].displayName} code
+            {codeFormats[format].displayName} code
           </H2>
           <CodeBlock
-            language={
-              !['none', 'custom'].includes(codeGen.format) ? codeGen.format : ''
-            }
+            language={!['none', 'custom'].includes(format) ? format : ''}
           >
             {themeCode}
           </CodeBlock>

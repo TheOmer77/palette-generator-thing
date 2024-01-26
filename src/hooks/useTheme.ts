@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import useGlobalState from './useGlobalState';
+import { useBaseColors } from '@/store/useBaseColors';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
 import {
   dangerColorSuggestionNames,
@@ -16,12 +16,8 @@ import type {
   NeutralColorSuggestion,
 } from '@/types/defaultSuggestions';
 
-const useTheme = () => {
-  const [
-    {
-      baseColors: { primary, neutral, danger, extras },
-    },
-  ] = useGlobalState();
+export const useTheme = () => {
+  const { primary, neutral, danger, extras } = useBaseColors();
 
   const selectedNeutral = useMemo(
       () =>
@@ -63,5 +59,3 @@ const useTheme = () => {
     extras: selectedExtras,
   };
 };
-
-export default useTheme;
