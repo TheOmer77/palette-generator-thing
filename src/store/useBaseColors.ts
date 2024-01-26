@@ -25,7 +25,7 @@ export type BaseColorsState = {
   }[];
 };
 
-export type BaseColorsSetters = {
+export type BaseColorsActions = {
   setPrimary: (primary: BaseColorsState['primary']) => void;
   setNeutral: (neutral: BaseColorsState['neutral']) => void;
   setDanger: (danger: BaseColorsState['danger']) => void;
@@ -41,7 +41,7 @@ export type BaseColorsSetters = {
   ) => void;
 };
 
-export type BaseColorsStore = BaseColorsState & BaseColorsSetters;
+export type BaseColorsStore = BaseColorsState & BaseColorsActions;
 
 // TODO: Store this state in URL
 export const useBaseColors = create<BaseColorsStore>(set => ({
