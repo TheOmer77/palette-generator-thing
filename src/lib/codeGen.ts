@@ -57,8 +57,7 @@ ${Object.entries(tokenShades)
   )
   .join('\n')}`;
     })
-    .join('\n\n')}
-}`;
+    .join('\n\n')}`;
 
 export const generateJsonCode = (
   baseColors: Record<string, string>,
