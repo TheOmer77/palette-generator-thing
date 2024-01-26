@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
+import { generalColorSuggestionNames } from '@/constants';
 import type {
   DangerColorSuggestion,
   GeneralColorSuggestion,
   NeutralColorSuggestion,
 } from '@/types/defaultSuggestions';
 import type { AnyStringWithAutocomplete } from '@/types/utils';
-import { generalColorSuggestionNames } from '@/constants';
 
 export type BaseColorsState = {
   /** Any hex color. */
