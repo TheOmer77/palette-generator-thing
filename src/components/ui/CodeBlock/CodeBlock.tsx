@@ -10,6 +10,7 @@ import { Highlight, Prism } from 'prism-react-renderer';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
 import { IconButton } from '../IconButton';
+import { ScrollArea, ScrollBar } from '../ScrollArea';
 import { Tooltip } from '../Tooltip';
 import { cn } from '@/lib/utils';
 
@@ -62,25 +63,24 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             getLineProps,
             getTokenProps,
           }) => (
-            <pre
-              {...props}
-              style={{ ...prismStyle, ...style }}
-              ref={ref}
-              className={cn(
-                `max-h-[calc(100dvh-6.5rem)] overflow-auto p-4 text-sm
-leading-relaxed md:max-h-[calc(100dvh-4.5rem)] print:max-h-none
-md:print:max-h-none`,
-                className
-              )}
-            >
-              {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })}>
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token })} />
-                  ))}
-                </div>
-              ))}
-            </pre>
+            <ScrollArea className='h-[calc(100dvh-6.5rem)] md:h-[calc(100dvh-4.5rem)]'>
+              <pre
+                {...props}
+                style={{ ...prismStyle, ...style }}
+                ref={ref}
+                className={cn(`p-4 text-sm leading-relaxed`, className)}
+              >
+                {tokens.map((line, i) => (
+                  <div key={i} {...getLineProps({ line })}>
+                    {line.map((token, key) => (
+                      <span key={key} {...getTokenProps({ token })} />
+                    ))}
+                  </div>
+                ))}
+              </pre>
+              <ScrollBar orientation='vertical' />
+              <ScrollBar orientation='horizontal' />
+            </ScrollArea>
           )}
         </Highlight>
       </div>
