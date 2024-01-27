@@ -24,7 +24,7 @@ const ColorListItem = ({
     title={
       <>
         <div
-          className='me-3 h-8 w-8 rounded-lg'
+          className='me-3 h-8 w-8 shrink-0 rounded-lg'
           style={{ backgroundColor: color }}
         />
         <ListItemText primary={title} secondary={color} />

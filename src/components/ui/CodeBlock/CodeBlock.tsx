@@ -10,6 +10,7 @@ import { Highlight, Prism } from 'prism-react-renderer';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
 import { IconButton } from '../IconButton';
+import { ScrollArea, ScrollBar } from '../ScrollArea';
 import { Tooltip } from '../Tooltip';
 import { cn } from '@/lib/utils';
 
@@ -62,25 +63,27 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             getLineProps,
             getTokenProps,
           }) => (
-            <pre
-              {...props}
-              style={{ ...prismStyle, ...style }}
-              ref={ref}
-              className={cn(
-                `max-h-[calc(100dvh-6.5rem)] overflow-auto p-4 text-sm
-leading-relaxed scrollbar-thin scrollbar-thumb-neutral-500/30
-md:max-h-[calc(100dvh-4.5rem)] print:max-h-none md:print:max-h-none`,
-                className
-              )}
+            <ScrollArea
+              className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-6.5rem)]
+md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-4.5rem)]'
             >
-              {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })}>
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token })} />
-                  ))}
-                </div>
-              ))}
-            </pre>
+              <pre
+                {...props}
+                style={{ ...prismStyle, ...style }}
+                ref={ref}
+                className={cn(`p-4 text-sm leading-relaxed`, className)}
+              >
+                {tokens.map((line, i) => (
+                  <div key={i} {...getLineProps({ line })}>
+                    {line.map((token, key) => (
+                      <span key={key} {...getTokenProps({ token })} />
+                    ))}
+                  </div>
+                ))}
+              </pre>
+              <ScrollBar orientation='vertical' />
+              <ScrollBar orientation='horizontal' />
+            </ScrollArea>
           )}
         </Highlight>
       </div>

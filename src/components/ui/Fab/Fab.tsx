@@ -18,7 +18,7 @@ export const Fab = forwardRef<HTMLButtonElement, FabProps>(
       {...props}
       ref={ref}
       className={cn(
-        `fixed bottom-4 end-4 z-10 flex h-14 cursor-default select-none
+        `fixed bottom-4 end-4 z-20 flex h-14 cursor-default select-none
 items-center justify-center gap-3 self-center overflow-hidden rounded-lg
 bg-primary-50 text-sm font-medium text-primary-800 shadow shadow-primary-800/50
 state-layer hover:state-layer-primary-500/10 focus-visible:bg-primary-100

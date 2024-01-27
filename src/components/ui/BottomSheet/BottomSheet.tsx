@@ -11,6 +11,7 @@ import {
 } from '@radix-ui/react-dialog';
 
 import { H2 } from '../Headings';
+import { ScrollArea } from '../ScrollArea';
 import { cn } from '@/lib/utils';
 
 export type BottomSheetProps = ComponentPropsWithoutRef<'div'> &
@@ -40,11 +41,16 @@ dark:bg-card`,
           )}
         >
           {title && (
-            <DialogTitle asChild className='m-0 px-4 py-3'>
+            <DialogTitle
+              asChild
+              className='m-0 flex h-[3.75rem] flex-row items-center px-4'
+            >
               <H2>{title}</H2>
             </DialogTitle>
           )}
-          <div className='overflow-y-auto'>{children}</div>
+          <ScrollArea className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-7.75rem)]'>
+            {children}
+          </ScrollArea>
         </DialogContent>
       </DialogPortal>
     </Dialog>

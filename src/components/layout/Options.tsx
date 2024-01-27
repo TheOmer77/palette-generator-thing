@@ -9,6 +9,7 @@ import { CodeGenSection } from './CodeGenSection';
 import { SheetWithFab } from './SheetWithFab';
 import { Sidebar } from './Sidebar';
 import { AccordionList } from '@/components/ui/AccordionList';
+import { ScrollArea } from '@/components/ui/ScrollArea';
 import type { BaseColorsState } from '@/store/useBaseColors';
 import type { CodeGenState } from '@/store/useCodeGen';
 
@@ -24,15 +25,12 @@ export const Options = () => {
     <>
       <Sidebar className='hidden md:flex print:hidden print:md:flex'>
         <Header className='px-4 py-2' />
-        <AccordionList
-          className='flex-grow overflow-y-auto pb-2 scrollbar-thin
-scrollbar-thumb-neutral-500/30 print:hidden'
-          value={openItem}
-          onValueChange={handleValueChange}
-        >
-          <BaseColorsSection />
-          <CodeGenSection />
-        </AccordionList>
+        <ScrollArea className='flex-grow pb-2 print:hidden'>
+          <AccordionList value={openItem} onValueChange={handleValueChange}>
+            <BaseColorsSection />
+            <CodeGenSection />
+          </AccordionList>
+        </ScrollArea>
       </Sidebar>
       <SheetWithFab
         label='Options'
@@ -40,8 +38,7 @@ scrollbar-thumb-neutral-500/30 print:hidden'
         onOpenChange={open => !open && setOpenItem(null)}
       >
         <AccordionList
-          className='pb-2 scrollbar-thin
-scrollbar-thumb-neutral-500/30 print:hidden'
+          className='pb-2'
           value={openItem}
           onValueChange={handleValueChange}
         >
