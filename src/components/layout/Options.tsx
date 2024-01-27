@@ -9,7 +9,7 @@ import { CodeGenSection } from './CodeGenSection';
 import { SheetWithFab } from './SheetWithFab';
 import { Sidebar } from './Sidebar';
 import { AccordionList } from '@/components/ui/AccordionList';
-import { ScrollArea } from '@/components//ui/ScrollArea';
+import { ScrollArea } from '@/components/ui/ScrollArea';
 import type { BaseColorsState } from '@/store/useBaseColors';
 import type { CodeGenState } from '@/store/useCodeGen';
 
