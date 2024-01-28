@@ -34,6 +34,10 @@ export const useBaseColors = () => {
     neutral: _2,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setNeutral: _3,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    danger: _4,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    setDanger: _5,
     ...rest
   } = OLD_useBaseColors();
 
@@ -49,7 +53,8 @@ export const useBaseColors = () => {
   );
 
   const primary = colorFromSearchParam(searchParams.get('primary')) as string,
-    neutral = colorFromSearchParam(searchParams.get('neutral'));
+    neutral = colorFromSearchParam(searchParams.get('neutral')),
+    danger = colorFromSearchParam(searchParams.get('danger'));
 
   const setPrimary = useCallback(
       (primary: BaseColorsState['primary']) =>
@@ -60,7 +65,22 @@ export const useBaseColors = () => {
       (neutral: BaseColorsState['neutral']) =>
         setSearchParam('neutral', colorToSearchParam(neutral)),
       [setSearchParam]
+    ),
+    setDanger = useCallback(
+      (danger: BaseColorsState['danger']) =>
+        setSearchParam('danger', colorToSearchParam(danger)),
+      [setSearchParam]
     );
 
-  return { primary, neutral, setPrimary, setNeutral, ...rest };
+  return {
+    primary,
+    neutral,
+    danger,
+
+    setPrimary,
+    setNeutral,
+    setDanger,
+
+    ...rest,
+  };
 };
