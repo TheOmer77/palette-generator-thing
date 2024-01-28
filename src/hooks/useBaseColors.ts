@@ -49,7 +49,7 @@ export const useBaseColors = () => {
     [searchParams]
   );
 
-  const primary = colorFromSearchParam(searchParams.get('primary')),
+  const primary = colorFromSearchParam(searchParams.get('primary')) as string,
     neutral = colorFromSearchParam(searchParams.get('neutral'));
 
   const setPrimary = useCallback(
