@@ -14,7 +14,6 @@ const colorToSearchParam = (hexColor?: string) =>
       : hexColor
     : null;
 
-// TODO: Add param for allowed values other than hex colors
 const colorFromSearchParam = (paramColor: string | null) =>
   typeof paramColor === 'string'
     ? typeof parseHex(paramColor) !== 'undefined'
