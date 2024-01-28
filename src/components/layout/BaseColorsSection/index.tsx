@@ -12,7 +12,7 @@ import { ListItem, ListItemIcon, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import { ColorInput } from '@/components/colors';
-import { useBaseColors } from '@/store/useBaseColors';
+import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
