@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 
 import { Header } from './Header';
 import { ColorBlock, ColorGrid } from '@/components/colors';
@@ -17,7 +17,7 @@ import { generatePalette } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
 import { codeFormats, shades } from '@/constants';
 
-export const Main = () => {
+const MainContent = () => {
   const { primary, neutral, danger, extras } = useTheme();
   const { format, colorFormat } = useCodeGen();
 
@@ -118,3 +118,9 @@ export const Main = () => {
     </main>
   );
 };
+
+export const Main = () => (
+  <Suspense>
+    <MainContent />
+  </Suspense>
+);
