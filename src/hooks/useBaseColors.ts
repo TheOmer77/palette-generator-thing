@@ -107,6 +107,23 @@ export const useBaseColors = () => {
         });
       },
       [updateSearchParams]
+    ),
+    setExtraColor = useCallback(
+      (index: number, newValue: string) => {
+        if (newValue.includes('-')) return;
+        updateSearchParams(params => {
+          const prevExtras = params.getAll('extra');
+          params.delete('extra');
+          prevExtras
+            .map((value, i) =>
+              i === index
+                ? `${value.split('-')[0]}-${colorToSearchParam(newValue)}`
+                : value
+            )
+            .forEach(value => params.append('extra', value));
+        });
+      },
+      [updateSearchParams]
     );
 
   return {
@@ -121,5 +138,6 @@ export const useBaseColors = () => {
     addExtraColor,
     removeExtraColor,
     renameExtraColor,
+    setExtraColor,
   };
 };
