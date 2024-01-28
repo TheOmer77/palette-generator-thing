@@ -71,7 +71,7 @@ export const randomHexColor = () => formatHex(random());
 
 export const getPaletteColor = (baseColor: string, shade: number) => {
   const { h, s } = okhsl(
-    parseHex(baseColor) ? baseColor : FALLBACK_COLOR
+    parseHex(baseColor || '') ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
   const l = shadesLightnessValues[shades.findIndex(sh => sh === shade)] / 100;
 
@@ -80,7 +80,7 @@ export const getPaletteColor = (baseColor: string, shade: number) => {
 
 export const generatePalette = (baseColor: string) => {
   const { h, s } = okhsl(
-    parseHex(baseColor) ? baseColor : FALLBACK_COLOR
+    parseHex(baseColor || '') ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
 
   // TODO: Use DEFAULT_NEUTRAL_CURVE for neutral palette, DEFAULT_CURVE for others
