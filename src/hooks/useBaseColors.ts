@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { parseHex } from 'culori/fn';
@@ -26,20 +27,25 @@ export const useBaseColors = () => {
 
   // TODO: Get rid of this, once I don't need it anymore
   const {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     primary: _0,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setPrimary: _1,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     neutral: _2,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setNeutral: _3,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     danger: _4,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setDanger: _5,
+    extras: _6,
     ...rest
   } = OLD_useBaseColors();
+
+  const primary = colorFromSearchParam(searchParams.get('primary')) as string,
+    neutral = colorFromSearchParam(searchParams.get('neutral')),
+    danger = colorFromSearchParam(searchParams.get('danger'));
+
+  // Format in URL: name-value,
+  const extras = searchParams.getAll('extra').map(value => ({
+    name: value.split('-')[0],
+    value: colorFromSearchParam(value.split('-')[1]),
+  }));
 
   const setSearchParam = useCallback(
     (key: string, value: string | null) => {
@@ -51,10 +57,6 @@ export const useBaseColors = () => {
     },
     [searchParams]
   );
-
-  const primary = colorFromSearchParam(searchParams.get('primary')) as string,
-    neutral = colorFromSearchParam(searchParams.get('neutral')),
-    danger = colorFromSearchParam(searchParams.get('danger'));
 
   const setPrimary = useCallback(
       (primary: BaseColorsState['primary']) =>
@@ -76,6 +78,7 @@ export const useBaseColors = () => {
     primary,
     neutral,
     danger,
+    extras,
 
     setPrimary,
     setNeutral,
