@@ -1,4 +1,4 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import {
   useBaseColors as OLD_useBaseColors,
@@ -7,9 +7,7 @@ import {
 import { useCallback } from 'react';
 
 export const useBaseColors = () => {
-  const router = useRouter(),
-    pathname = usePathname(),
-    searchParams = useSearchParams();
+  const searchParams = useSearchParams();
 
   // TODO: Get rid of this, once I don't need it anymore
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -17,13 +15,13 @@ export const useBaseColors = () => {
 
   const setSearchParam = useCallback(
     (key: string, value: string | null) => {
-      const newParams = new URLSearchParams(searchParams.toString());
-      if (value === null) newParams.delete(key);
-      else newParams.set(key, value);
+      const params = new URLSearchParams(searchParams.toString());
+      if (value === null) params.delete(key);
+      else params.set(key, value);
 
-      router.replace(`${pathname}?${newParams.toString()}`);
+      window.history.replaceState(null, '', `?${params.toString()}`);
     },
-    [pathname, router, searchParams]
+    [searchParams]
   );
 
   const primary = `#${searchParams.get('primary')}`;
