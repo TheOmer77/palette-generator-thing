@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 
-import { useTheme } from '@/hooks';
+import { useTheme } from '@/hooks/useTheme';
 import { generateCssCode } from '@/lib/codeGen';
 
 export const ThemeStyle = () => {

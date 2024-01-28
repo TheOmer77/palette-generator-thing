@@ -13,7 +13,7 @@ import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import { ColorInput } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
-import { useTheme } from '@/hooks';
+import { useTheme } from '@/hooks/useTheme';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
 import {

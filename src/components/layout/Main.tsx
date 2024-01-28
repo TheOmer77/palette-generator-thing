@@ -6,7 +6,7 @@ import { Header } from './Header';
 import { ColorBlock, ColorGrid } from '@/components/colors';
 import { CodeBlock } from '@/components/ui/CodeBlock';
 import { H2, H3 } from '@/components/ui/Headings';
-import { useTheme } from '@/hooks';
+import { useTheme } from '@/hooks/useTheme';
 import { useCodeGen } from '@/store/useCodeGen';
 import {
   generateCssCode,
