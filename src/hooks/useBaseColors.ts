@@ -26,20 +26,6 @@ const colorFromSearchParam = (paramColor: string | null) =>
 export const useBaseColors = () => {
   const searchParams = useSearchParams();
 
-  // TODO: Get rid of this, once I don't need it anymore
-  const {
-    primary: _0,
-    setPrimary: _1,
-    neutral: _2,
-    setNeutral: _3,
-    danger: _4,
-    setDanger: _5,
-    extras: _6,
-    addExtraColor: _7,
-    removeExtraColor: _8,
-    ...rest
-  } = OLD_useBaseColors();
-
   const primary = colorFromSearchParam(searchParams.get('primary')) as string,
     neutral = colorFromSearchParam(searchParams.get('neutral')),
     danger = colorFromSearchParam(searchParams.get('danger'));
@@ -106,6 +92,21 @@ export const useBaseColors = () => {
             .forEach(value => params.append('extra', value));
         }),
       [updateSearchParams]
+    ),
+    renameExtraColor = useCallback(
+      (index: number, newName: string) => {
+        if (newName.includes('-') || newName.length > 20) return;
+        updateSearchParams(params => {
+          const prevExtras = params.getAll('extra');
+          params.delete('extra');
+          prevExtras
+            .map((value, i) =>
+              i === index ? `${newName}-${value.split('-')[1]}` : value
+            )
+            .forEach(value => params.append('extra', value));
+        });
+      },
+      [updateSearchParams]
     );
 
   return {
@@ -119,7 +120,6 @@ export const useBaseColors = () => {
     setDanger,
     addExtraColor,
     removeExtraColor,
-
-    ...rest,
+    renameExtraColor,
   };
 };
