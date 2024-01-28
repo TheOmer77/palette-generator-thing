@@ -7,6 +7,7 @@ import {
   useBaseColors as OLD_useBaseColors,
   type BaseColorsState,
 } from '@/store/useBaseColors';
+import { generalColorSuggestionNames } from '@/constants';
 
 const colorToSearchParam = (hexColor?: string) =>
   typeof hexColor === 'string'
@@ -34,6 +35,8 @@ export const useBaseColors = () => {
     danger: _4,
     setDanger: _5,
     extras: _6,
+    addExtraColor: _7,
+    removeExtraColor: _8,
     ...rest
   } = OLD_useBaseColors();
 
@@ -79,6 +82,32 @@ export const useBaseColors = () => {
       [setSearchParam]
     );
 
+  const addExtraColor = useCallback(
+      () =>
+        updateSearchParams(params =>
+          params.append(
+            'extra',
+            `-${colorToSearchParam(
+              generalColorSuggestionNames[
+                extras.length % generalColorSuggestionNames.length
+              ]
+            )}`
+          )
+        ),
+      [extras.length, updateSearchParams]
+    ),
+    removeExtraColor = useCallback(
+      (index: number) =>
+        updateSearchParams(params => {
+          const prevExtras = params.getAll('extra');
+          params.delete('extra');
+          prevExtras
+            .filter((_, i) => i !== index)
+            .forEach(value => params.append('extra', value));
+        }),
+      [updateSearchParams]
+    );
+
   return {
     primary,
     neutral,
@@ -88,6 +117,8 @@ export const useBaseColors = () => {
     setPrimary,
     setNeutral,
     setDanger,
+    addExtraColor,
+    removeExtraColor,
 
     ...rest,
   };
