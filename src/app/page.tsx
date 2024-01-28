@@ -1,24 +1,40 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { parseHex } from 'culori/fn';
 
 import { Main, Options } from '@/components/layout';
-import { randomHexColor } from '@/lib/colorUtils';
+import { isValidHexColor, randomHexColor } from '@/lib/colorUtils';
+import { neutralColorSuggestionNames } from '@/constants';
 
-const HomePage = ({ searchParams }: { searchParams: { primary?: string } }) => {
+type PropsWithBaseColorsParams = {
+  searchParams: { primary?: string; neutral?: string };
+};
+
+const HomePage = ({ searchParams }: PropsWithBaseColorsParams) => {
   const url = headers().get('x-url')?.split('?')[0];
 
   const validParams = {
     primary:
       typeof searchParams.primary === 'string' &&
-      parseHex(searchParams.primary || '')
+      isValidHexColor(searchParams.primary)
         ? searchParams.primary
         : randomHexColor().slice(1),
+    neutral:
+      typeof searchParams.neutral === 'string' &&
+      (isValidHexColor(searchParams.neutral) ||
+        neutralColorSuggestionNames.includes(searchParams.neutral))
+        ? searchParams.neutral
+        : undefined,
   };
 
   Object.entries(validParams).forEach(([key, value]) => {
     if (value !== searchParams[key as keyof typeof validParams])
-      redirect(`${url}?${new URLSearchParams(validParams)}`);
+      redirect(
+        `${url}?${new URLSearchParams(
+          Object.entries(validParams)
+            .filter(entry => typeof entry[1] === 'string')
+            .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {})
+        ).toString()}`
+      );
   });
 
   return (
