@@ -47,16 +47,21 @@ export const useBaseColors = () => {
     value: colorFromSearchParam(value.split('-')[1]),
   }));
 
-  const setSearchParam = useCallback(
-    (key: string, value: string | null) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value === null) params.delete(key);
-      else params.set(key, value);
-
-      window.history.replaceState(null, '', `?${params.toString()}`);
-    },
-    [searchParams]
-  );
+  const updateSearchParams = useCallback(
+      (cb: (params: URLSearchParams) => void) => {
+        const params = new URLSearchParams(searchParams.toString());
+        cb(params);
+        window.history.replaceState(null, '', `?${params.toString()}`);
+      },
+      [searchParams]
+    ),
+    setSearchParam = useCallback(
+      (key: string, value: string | null) =>
+        updateSearchParams(params =>
+          value === null ? params.delete(key) : params.set(key, value)
+        ),
+      [updateSearchParams]
+    );
 
   const setPrimary = useCallback(
       (primary: BaseColorsState['primary']) =>
