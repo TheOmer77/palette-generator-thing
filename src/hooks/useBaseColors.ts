@@ -1,13 +1,47 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { parseHex } from 'culori/fn';
 
-import {
-  useBaseColors as OLD_useBaseColors,
-  type BaseColorsState,
-} from '@/store/useBaseColors';
 import { generalColorSuggestionNames } from '@/constants';
+import type { AnyStringWithAutocomplete } from '@/types/utils';
+import type {
+  DangerColorSuggestion,
+  GeneralColorSuggestion,
+  NeutralColorSuggestion,
+} from '@/types/defaultSuggestions';
+
+export type BaseColorsState = {
+  /** Any hex color. */
+  primary: string;
+  /** Any of the neutral suggested color names, or any hex color.
+   * If undefined, auto choose. */
+  neutral?: AnyStringWithAutocomplete<NeutralColorSuggestion>;
+  /** Any of the neutral danger color names, or any hex color.
+   * If undefined, auto choose. */
+  danger?: AnyStringWithAutocomplete<DangerColorSuggestion>;
+  /** Extra colors, each can have a name and its value can be any of the
+   * general suggested color names, or any hex color. */
+  extras: {
+    name?: string;
+    value: AnyStringWithAutocomplete<GeneralColorSuggestion>;
+  }[];
+};
+
+export type BaseColorsActions = {
+  setPrimary: (primary: BaseColorsState['primary']) => void;
+  setNeutral: (neutral: BaseColorsState['neutral']) => void;
+  setDanger: (danger: BaseColorsState['danger']) => void;
+  addExtraColor: () => void;
+  removeExtraColor: (index: number) => void;
+  renameExtraColor: (
+    index: number,
+    newName: NonNullable<BaseColorsState['extras'][number]['name']>
+  ) => void;
+  setExtraColor: (
+    index: number,
+    newValue: BaseColorsState['extras'][number]['value']
+  ) => void;
+};
 
 const colorToSearchParam = (hexColor?: string) =>
   typeof hexColor === 'string'
@@ -94,8 +128,13 @@ export const useBaseColors = () => {
       [updateSearchParams]
     ),
     renameExtraColor = useCallback(
-      (index: number, newName: string) => {
-        if (newName.includes('-') || newName.length > 20) return;
+      (index: number, newName: BaseColorsState['extras'][number]['name']) => {
+        if (
+          typeof newName !== 'string' ||
+          newName.includes('-') ||
+          newName.length > 20
+        )
+          return;
         updateSearchParams(params => {
           const prevExtras = params.getAll('extra');
           params.delete('extra');
@@ -109,7 +148,7 @@ export const useBaseColors = () => {
       [updateSearchParams]
     ),
     setExtraColor = useCallback(
-      (index: number, newValue: string) => {
+      (index: number, newValue: BaseColorsState['extras'][number]['value']) => {
         if (newValue.includes('-')) return;
         updateSearchParams(params => {
           const prevExtras = params.getAll('extra');
@@ -139,5 +178,5 @@ export const useBaseColors = () => {
     removeExtraColor,
     renameExtraColor,
     setExtraColor,
-  };
+  } satisfies BaseColorsState & BaseColorsActions;
 };
