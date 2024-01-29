@@ -97,7 +97,7 @@ export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
   const sortedParamsTuples = [...paramsTuples].sort(([keyA], [keyB]) =>
       keyA > keyB ? 1 : keyA < keyB ? -1 : 0
     ),
-    sortedValidParamsTuples = [...sortedParamsTuples].sort(([keyA], [keyB]) =>
+    sortedValidParamsTuples = [...validParamsTuples].sort(([keyA], [keyB]) =>
       keyA > keyB ? 1 : keyA < keyB ? -1 : 0
     );
 
