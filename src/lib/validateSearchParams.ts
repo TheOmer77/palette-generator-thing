@@ -51,7 +51,7 @@ const validateExtraColorParam = (
  */
 export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
   const url = headers().get('x-url')?.split('?')[0];
-  const paramsAsTuples = Object.entries(searchParams).reduce(
+  const paramsTuples = Object.entries(searchParams).reduce(
     (acc: [string, string][], [key, value]) => {
       if (typeof value === 'undefined') return acc;
       return [
@@ -64,7 +64,7 @@ export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
     []
   );
 
-  const validParams = [
+  const validParamsTuples = [
     [
       'primary',
       validateColorParam(searchParams.primary, {
@@ -84,24 +84,29 @@ export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
       }),
     ],
     ...(Array.isArray(searchParams.extra)
-      ? searchParams.extra.map(value => [
-          'extra',
-          validateExtraColorParam(value, {
-            extraAllowedValues: generalColorSuggestionNames,
-          }),
-        ])
-      : [
-          [
-            'extra',
-            validateExtraColorParam(searchParams.extra, {
-              extraAllowedValues: generalColorSuggestionNames,
-            }),
-          ],
-        ]),
+      ? searchParams.extra
+      : [searchParams.extra]
+    ).map(value => [
+      'extra',
+      validateExtraColorParam(value, {
+        extraAllowedValues: generalColorSuggestionNames,
+      }),
+    ]),
   ].filter(([, value]) => typeof value === 'string') as [string, string][];
 
-  const originalParamsStr = new URLSearchParams(paramsAsTuples).toString(),
-    validParamsStr = new URLSearchParams(validParams).toString();
-  if (originalParamsStr !== validParamsStr)
+  const sortedParamsTuples = [...paramsTuples].sort(([keyA], [keyB]) =>
+      keyA > keyB ? 1 : keyA < keyB ? -1 : 0
+    ),
+    sortedValidParamsTuples = [...sortedParamsTuples].sort(([keyA], [keyB]) =>
+      keyA > keyB ? 1 : keyA < keyB ? -1 : 0
+    );
+
+  const sortedParamsStr = new URLSearchParams(sortedParamsTuples).toString(),
+    validParamsStr = new URLSearchParams(validParamsTuples).toString(),
+    sortedValidParamsStr = new URLSearchParams(
+      sortedValidParamsTuples
+    ).toString();
+
+  if (sortedParamsStr !== sortedValidParamsStr)
     redirect(`${url}?${validParamsStr}`);
 };
