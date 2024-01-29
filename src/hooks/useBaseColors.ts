@@ -2,7 +2,8 @@ import { useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { parseHex } from 'culori/fn';
 
-import { generalColorSuggestionNames } from '@/constants';
+import { generalColorSuggestionNames } from '@/constants/colorSuggestions';
+import { BASE_COLOR_NAME_LIMIT } from '@/constants/baseColors';
 import type { AnyStringWithAutocomplete } from '@/types/utils';
 import type {
   DangerColorSuggestion,
@@ -132,7 +133,7 @@ export const useBaseColors = () => {
         if (
           typeof newName !== 'string' ||
           newName.includes('-') ||
-          newName.length > 20
+          newName.length > BASE_COLOR_NAME_LIMIT
         )
           return;
         updateSearchParams(params => {

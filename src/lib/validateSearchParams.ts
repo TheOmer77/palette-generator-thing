@@ -6,7 +6,8 @@ import {
   dangerColorSuggestionNames,
   generalColorSuggestionNames,
   neutralColorSuggestionNames,
-} from '@/constants';
+} from '@/constants/colorSuggestions';
+import { BASE_COLOR_NAME_LIMIT } from '@/constants/baseColors';
 import type { BaseColorsSearchParams } from '@/types/searchParams';
 
 const validateColorParam = (
@@ -33,7 +34,7 @@ const validateExtraColorParam = (
 
   const [name, colorValue] = value.split('-');
   if (
-    name.length > 20 ||
+    name.length > BASE_COLOR_NAME_LIMIT ||
     !validateColorParam(colorValue, { extraAllowedValues })
   )
     return;
