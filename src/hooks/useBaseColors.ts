@@ -33,7 +33,7 @@ export const useBaseColors = () => {
   // Format in URL: name-value,
   const extras = searchParams.getAll('extra').map(value => ({
     name: value.split('-')[0],
-    value: colorFromSearchParam(value.split('-')[1]),
+    value: colorFromSearchParam(value.split('-')[1]) || '',
   }));
 
   const updateSearchParams = useCallback(
