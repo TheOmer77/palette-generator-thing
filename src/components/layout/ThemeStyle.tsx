@@ -1,11 +1,11 @@
 'use client';
 
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 
-import { useTheme } from '@/hooks';
+import { useTheme } from '@/hooks/useTheme';
 import { generateCssCode } from '@/lib/codeGen';
 
-export const ThemeStyle = () => {
+const ThemeStyleContent = () => {
   const { primary, neutral, danger } = useTheme();
 
   const themeCss = useMemo(
@@ -15,3 +15,9 @@ export const ThemeStyle = () => {
 
   return <style>{themeCss}</style>;
 };
+
+export const ThemeStyle = () => (
+  <Suspense>
+    <ThemeStyleContent />
+  </Suspense>
+);

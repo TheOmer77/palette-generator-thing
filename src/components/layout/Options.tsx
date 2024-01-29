@@ -10,7 +10,7 @@ import { SheetWithFab } from './SheetWithFab';
 import { Sidebar } from './Sidebar';
 import { AccordionList } from '@/components/ui/AccordionList';
 import { ScrollArea } from '@/components/ui/ScrollArea';
-import type { BaseColorsState } from '@/store/useBaseColors';
+import type { BaseColorsState } from '@/hooks/useBaseColors';
 import type { CodeGenState } from '@/store/useCodeGen';
 
 export const Options = () => {

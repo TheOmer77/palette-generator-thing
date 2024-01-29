@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useBaseColors } from '@/store/useBaseColors';
+import { useBaseColors } from '@/hooks/useBaseColors';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
 import {
   dangerColorSuggestionNames,

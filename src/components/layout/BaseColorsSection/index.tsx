@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, type ComponentPropsWithoutRef } from 'react';
+import { forwardRef, type ComponentPropsWithoutRef, Suspense } from 'react';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 
 import ColorListItem from './ColorListItem';
@@ -12,8 +12,8 @@ import { ListItem, ListItemIcon, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import { ColorInput } from '@/components/colors';
-import { useBaseColors } from '@/store/useBaseColors';
-import { useTheme } from '@/hooks';
+import { useBaseColors } from '@/hooks/useBaseColors';
+import { useTheme } from '@/hooks/useTheme';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
 import {
@@ -32,7 +32,7 @@ import type {
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 
-export const BaseColorsSection = forwardRef<
+const BaseColorsSectionContent = forwardRef<
   HTMLElement,
   ComponentPropsWithoutRef<'section'>
 >((props, ref) => {
@@ -298,4 +298,14 @@ export const BaseColorsSection = forwardRef<
     </section>
   );
 });
+BaseColorsSectionContent.displayName = 'BaseColorsSectionContent';
+
+export const BaseColorsSection = forwardRef<
+  HTMLElement,
+  ComponentPropsWithoutRef<'section'>
+>((props, ref) => (
+  <Suspense>
+    <BaseColorsSectionContent {...props} ref={ref} />
+  </Suspense>
+));
 BaseColorsSection.displayName = 'BaseColorsSection';
