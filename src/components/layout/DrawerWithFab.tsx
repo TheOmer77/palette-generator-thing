@@ -12,17 +12,17 @@ import {
 } from '@/components/ui/Drawer';
 import { Fab } from '@/components/ui/Fab';
 
-export type SheetWithFabProps = DrawerProps & {
+export type DrawerWithFabProps = DrawerProps & {
   label: string;
   fabIcon?: ReactNode;
 };
 
-export const SheetWithFab = ({
+export const DrawerWithFab = ({
   label,
   fabIcon,
   children,
   ...props
-}: SheetWithFabProps) => (
+}: DrawerWithFabProps) => (
   <Drawer {...props}>
     <DrawerTrigger asChild>
       <Fab icon={fabIcon} className='flex md:hidden print:hidden'>

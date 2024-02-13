@@ -6,7 +6,7 @@ import { SlidersHorizontalIcon } from 'lucide-react';
 import { Header } from './Header';
 import { BaseColorsSection } from './BaseColorsSection';
 import { CodeGenSection } from './CodeGenSection';
-import { SheetWithFab } from './SheetWithFab';
+import { DrawerWithFab } from './DrawerWithFab';
 import { Sidebar } from './Sidebar';
 import { AccordionList } from '@/components/ui/AccordionList';
 import { ScrollArea } from '@/components/ui/ScrollArea';
@@ -32,7 +32,7 @@ export const Options = () => {
           </AccordionList>
         </ScrollArea>
       </Sidebar>
-      <SheetWithFab
+      <DrawerWithFab
         label='Options'
         fabIcon={<SlidersHorizontalIcon />}
         onOpenChange={open => !open && setOpenItem(null)}
@@ -45,7 +45,7 @@ export const Options = () => {
           <BaseColorsSection />
           <CodeGenSection />
         </AccordionList>
-      </SheetWithFab>
+      </DrawerWithFab>
     </>
   );
 };
