@@ -1,14 +1,18 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import {
-  BottomSheet,
-  type BottomSheetProps,
-} from '@/components/ui/BottomSheet';
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  type DrawerProps,
+} from '@/components/ui/Drawer';
 import { Fab } from '@/components/ui/Fab';
 
-export type SheetWithFabProps = BottomSheetProps & {
+export type SheetWithFabProps = DrawerProps & {
   label: string;
   fabIcon?: ReactNode;
 };
@@ -16,33 +20,20 @@ export type SheetWithFabProps = BottomSheetProps & {
 export const SheetWithFab = ({
   label,
   fabIcon,
-  onOpenChange,
   children,
   ...props
-}: SheetWithFabProps) => {
-  const [sheetOpen, setSheetOpen] = useState(false);
-
-  return (
-    <>
-      <Fab
-        icon={fabIcon}
-        onClick={() => setSheetOpen(true)}
-        className='flex md:hidden print:hidden'
-      >
+}: SheetWithFabProps) => (
+  <Drawer {...props}>
+    <DrawerTrigger asChild>
+      <Fab icon={fabIcon} className='flex md:hidden print:hidden'>
         {label}
       </Fab>
-      <BottomSheet
-        {...props}
-        title={label}
-        open={sheetOpen}
-        onOpenChange={open => {
-          setSheetOpen(open);
-          onOpenChange?.(open);
-        }}
-        className='print:hidden'
-      >
-        {children}
-      </BottomSheet>
-    </>
-  );
-};
+    </DrawerTrigger>
+    <DrawerContent className='print:hidden'>
+      <DrawerHeader className='py-2.5'>
+        <DrawerTitle className='text-xl'>{label}</DrawerTitle>
+      </DrawerHeader>
+      {children}
+    </DrawerContent>
+  </Drawer>
+);
