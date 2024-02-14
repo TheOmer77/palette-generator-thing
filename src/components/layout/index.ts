@@ -3,6 +3,7 @@ export * from './CodeGenSection';
 export * from './DrawerWithFab';
 export * from './Header';
 export * from './Main';
-export * from './Options';
+export * from './OptionsDrawer';
+export * from './OptionsSidebar';
 export * from './Sidebar';
 export * from './ThemeStyle';
