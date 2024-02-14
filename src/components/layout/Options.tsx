@@ -37,14 +37,16 @@ export const Options = () => {
         fabIcon={<SlidersHorizontalIcon />}
         onOpenChange={open => !open && setOpenItem(null)}
       >
-        <AccordionList
-          className='pb-2'
-          value={openItem}
-          onValueChange={handleValueChange}
-        >
-          <BaseColorsSection />
-          <CodeGenSection />
-        </AccordionList>
+        <ScrollArea className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-7.75rem)]'>
+          <AccordionList
+            className='pb-2'
+            value={openItem}
+            onValueChange={handleValueChange}
+          >
+            <BaseColorsSection />
+            <CodeGenSection />
+          </AccordionList>
+        </ScrollArea>
       </DrawerWithFab>
     </>
   );
