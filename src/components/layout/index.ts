@@ -1,6 +1,5 @@
 export * from './BaseColorsSection';
 export * from './CodeGenSection';
-export * from './DrawerWithFab';
 export * from './Header';
 export * from './Main';
 export * from './OptionsDrawer';
