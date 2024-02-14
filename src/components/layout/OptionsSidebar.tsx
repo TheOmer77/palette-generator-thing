@@ -4,12 +4,12 @@ import { useState } from 'react';
 
 import { AccordionList } from '@/components/ui/AccordionList';
 import { ScrollArea } from '@/components/ui/ScrollArea';
+import { Sidebar } from '@/components/ui/Sidebar';
 import type { BaseColorsState } from '@/hooks/useBaseColors';
 import type { CodeGenState } from '@/store/useCodeGen';
 import { Header } from './Header';
 import { BaseColorsSection } from './BaseColorsSection';
 import { CodeGenSection } from './CodeGenSection';
-import { Sidebar } from './Sidebar';
 
 export const OptionsSidebar = () => {
   const [openItem, setOpenItem] = useState<
