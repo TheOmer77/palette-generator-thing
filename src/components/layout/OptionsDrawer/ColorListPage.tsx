@@ -6,28 +6,34 @@ import {
   type ComponentPropsWithoutRef,
   type ElementRef,
 } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { PlusIcon } from 'lucide-react';
 
+import ColorListItem from './ColorListItem';
 import { DrawerHeader, DrawerTitle } from '@/components/ui/Drawer';
 import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Separator } from '@/components/ui/Separator';
 import { useTheme } from '@/hooks/useTheme';
-import ColorListItem from './ColorListItem';
+import {
+  MODAL_BASECOLORS_EDIT,
+  MODAL_SEARCH_KEY,
+} from '@/constants/modalSearchParams';
 
 export const ColorListPage = forwardRef<
   ElementRef<'div'>,
   ComponentPropsWithoutRef<'div'>
 >((props, ref) => {
+  const searchParams = useSearchParams();
   const { primary, neutral, danger, extras } = useTheme();
 
   const handleItemClick = useCallback(
-    // UNFINISHED
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (itemId: 'primary' | 'neutral' | 'danger' | `extra${number}`) => {
-      // TODO: Display item's relevant page
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(MODAL_SEARCH_KEY, `${MODAL_BASECOLORS_EDIT}${itemId}`);
+      window.history.pushState(null, '', `?${params.toString()}`);
     },
-    []
+    [searchParams]
   );
 
   return (
