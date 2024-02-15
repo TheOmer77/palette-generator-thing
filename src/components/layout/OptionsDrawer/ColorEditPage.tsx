@@ -16,13 +16,13 @@ export type ColorEditPageProps = ComponentPropsWithoutRef<'div'> & {
 export const ColorEditPage = forwardRef<ElementRef<'div'>, ColorEditPageProps>(
   ({ title, children, ...props }, ref) => (
     <div {...props} ref={ref}>
-      <DrawerHeader className='flex h-14 flex-row items-center gap-4 py-0'>
+      <DrawerHeader className='flex h-16 flex-row items-center gap-4 py-0'>
         <IconButton onClick={() => window.history.back()}>
           <ArrowLeftIcon />
         </IconButton>
         <DrawerTitle className='text-xl'>{title}</DrawerTitle>
       </DrawerHeader>
-      <ScrollArea className='[&>[data-radix-scroll-area-viewport]]:h-[calc(100dvh-3.5rem)]'>
+      <ScrollArea className='[&>[data-radix-scroll-area-viewport]]:h-[calc(100dvh-4rem)]'>
         {children}
       </ScrollArea>
     </div>
