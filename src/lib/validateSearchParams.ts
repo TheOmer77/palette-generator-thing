@@ -51,7 +51,7 @@ const validateExtraColorParam = (
  * @param searchParams Search params to validate.
  */
 export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
-  const url = headers().get('x-url')?.split('?')[0];
+  const pathname = headers().get('x-pathname');
   const paramsTuples = Object.entries(searchParams).reduce(
     (acc: [string, string][], [key, value]) => {
       if (typeof value === 'undefined') return acc;
@@ -109,5 +109,5 @@ export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
     ).toString();
 
   if (sortedParamsStr !== sortedValidParamsStr)
-    redirect(`${url}?${validParamsStr}`);
+    redirect(`${pathname}?${validParamsStr}`);
 };
