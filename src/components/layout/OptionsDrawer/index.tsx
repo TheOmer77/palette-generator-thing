@@ -12,7 +12,7 @@ import { ColorListPage } from './ColorListPage';
 import { ColorEditPage } from './ColorEditPage';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/Drawer';
 import { Fab } from '@/components/ui/Fab';
-import { useBaseColors } from '@/hooks/useBaseColors';
+import { useTheme } from '@/hooks/useTheme';
 import {
   MODAL_BASECOLORS_EDIT,
   MODAL_BASECOLORS_LIST,
@@ -23,7 +23,7 @@ export const OptionsDrawer = () => {
   const searchParams = useSearchParams();
   const modalSearchParam = searchParams.get(MODAL_SEARCH_KEY);
 
-  const { extras } = useBaseColors();
+  const { primary, neutral, danger, extras } = useTheme();
 
   const isDrawerOpen = useMemo(
     () =>
@@ -79,22 +79,28 @@ export const OptionsDrawer = () => {
           {/* Pages below are dummy pages for now
             TODO: Replace dummy drawer pages with the actual pages */}
           <TransitionSwitchItem value='primary'>
-            <ColorEditPage title='Primary'>Primary edit page TBD</ColorEditPage>
+            <ColorEditPage title='Primary' color={primary}>
+              Primary edit page TBD
+            </ColorEditPage>
           </TransitionSwitchItem>
           <TransitionSwitchItem value='neutral'>
-            <ColorEditPage title='Neutral'>Neutral edit page TBD</ColorEditPage>
+            <ColorEditPage title='Neutral' color={neutral}>
+              Neutral edit page TBD
+            </ColorEditPage>
           </TransitionSwitchItem>
           <TransitionSwitchItem value='danger'>
-            <ColorEditPage title='Danger'>Danger edit page TBD</ColorEditPage>
+            <ColorEditPage title='Danger' color={danger}>
+              Danger edit page TBD
+            </ColorEditPage>
           </TransitionSwitchItem>
-          {extras.map(({ name }, index) => {
+          {extras.map(({ name, value }, index) => {
             const title = name || `Extra ${index + 1}`;
             return (
               <TransitionSwitchItem
                 key={`extra${index}`}
                 value={`extra${index}`}
               >
-                <ColorEditPage title={title}>
+                <ColorEditPage title={title} color={value}>
                   {title} edit page TBD
                 </ColorEditPage>
               </TransitionSwitchItem>
