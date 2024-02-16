@@ -71,7 +71,10 @@ export const OptionsDrawer = () => {
               : 'list'
           }
           autoAdjustHeight
-          className='w-full'
+          className='relative w-full transition-[height] duration-300
+[&>*]:absolute [&>*]:start-0 [&>*]:top-0 [&>*]:w-full
+[&>[data-state=active]]:animate-in [&>[data-state=active]]:fade-in
+[&>[data-state=inactive]]:animate-out [&>[data-state=inactive]]:fade-out'
         >
           <TransitionSwitchItem value='list'>
             <ColorListPage />
