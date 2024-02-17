@@ -10,6 +10,7 @@ import {
 
 import { ColorListPage } from './ColorListPage';
 import { ColorEditPage } from './ColorEditPage';
+import { PrimaryColorEditPage } from './PrimaryColorEditPage';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/Drawer';
 import { Fab } from '@/components/ui/Fab';
 import { useTheme } from '@/hooks/useTheme';
@@ -23,7 +24,7 @@ export const OptionsDrawer = () => {
   const searchParams = useSearchParams();
   const modalSearchParam = searchParams.get(MODAL_SEARCH_KEY);
 
-  const { primary, neutral, danger, extras } = useTheme();
+  const { neutral, danger, extras } = useTheme();
 
   const isDrawerOpen = useMemo(
     () =>
@@ -79,13 +80,11 @@ export const OptionsDrawer = () => {
           <TransitionSwitchItem value='list'>
             <ColorListPage />
           </TransitionSwitchItem>
+          <TransitionSwitchItem value='primary'>
+            <PrimaryColorEditPage />
+          </TransitionSwitchItem>
           {/* Pages below are dummy pages for now
             TODO: Replace dummy drawer pages with the actual pages */}
-          <TransitionSwitchItem value='primary'>
-            <ColorEditPage title='Primary' color={primary}>
-              Primary edit page TBD
-            </ColorEditPage>
-          </TransitionSwitchItem>
           <TransitionSwitchItem value='neutral'>
             <ColorEditPage title='Neutral' color={neutral}>
               Neutral edit page TBD
