@@ -1,8 +1,8 @@
 import {
   forwardRef,
+  useMemo,
   type ComponentPropsWithoutRef,
   type ElementRef,
-  useMemo,
 } from 'react';
 import { ArrowLeftIcon } from 'lucide-react';
 
@@ -19,6 +19,7 @@ export type ColorEditPageProps = ComponentPropsWithoutRef<'div'> & {
 export const ColorEditPage = forwardRef<ElementRef<'div'>, ColorEditPageProps>(
   ({ title, color, children, ...props }, ref) => {
     const palette = useMemo(() => generatePalette(color), [color]);
+
     return (
       <div {...props} ref={ref}>
         <DrawerHeader className='flex h-16 flex-row items-center gap-4 py-0'>
@@ -29,11 +30,16 @@ export const ColorEditPage = forwardRef<ElementRef<'div'>, ColorEditPageProps>(
         </DrawerHeader>
         <div className='mx-4 mb-4 grid h-12 grid-cols-11 overflow-hidden rounded-lg'>
           {palette.map((backgroundColor, index) => (
-            <span key={index} style={{ backgroundColor }} />
+            <span
+              key={index}
+              style={{ backgroundColor }}
+              className='transition-[background-color]'
+            />
           ))}
         </div>
         <ScrollArea
-          className='[&>[data-radix-scroll-area-viewport]]:h-[calc(100dvh-8rem)]
+          className='[&>[data-radix-scroll-area-viewport]>div]:space-y-4
+[&>[data-radix-scroll-area-viewport]]:h-[calc(100dvh-8rem)]
 [&>[data-radix-scroll-area-viewport]]:px-4'
         >
           {children}
