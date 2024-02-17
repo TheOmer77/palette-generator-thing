@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useEventListener } from 'usehooks-ts';
 import { SlidersHorizontalIcon } from 'lucide-react';
 import {
   TransitionSwitch,
@@ -14,6 +15,7 @@ import { PrimaryColorEditPage } from './PrimaryColorEditPage';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/Drawer';
 import { Fab } from '@/components/ui/Fab';
 import { useTheme } from '@/hooks/useTheme';
+import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import {
   MODAL_BASECOLORS_EDIT,
   MODAL_BASECOLORS_LIST,
@@ -25,6 +27,7 @@ export const OptionsDrawer = () => {
   const modalSearchParam = searchParams.get(MODAL_SEARCH_KEY);
 
   const { neutral, danger, extras } = useTheme();
+  const { saveToSearchParams } = useOptionsDrawer();
 
   const isDrawerOpen = useMemo(
     () =>
@@ -43,12 +46,15 @@ export const OptionsDrawer = () => {
         params.set(MODAL_SEARCH_KEY, MODAL_BASECOLORS_LIST);
         return window.history.pushState(null, '', `?${params.toString()}`);
       }
+
       if (searchParams.get(MODAL_SEARCH_KEY)?.startsWith(MODAL_BASECOLORS_EDIT))
         return window.history.go(-2);
       window.history.back();
     },
     [isDrawerOpen, searchParams]
   );
+
+  useEventListener('popstate', () => saveToSearchParams(true));
 
   return (
     <Drawer

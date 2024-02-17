@@ -15,6 +15,7 @@ import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Separator } from '@/components/ui/Separator';
 import { useTheme } from '@/hooks/useTheme';
+import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import {
   MODAL_BASECOLORS_EDIT,
   MODAL_SEARCH_KEY,
@@ -26,6 +27,7 @@ export const ColorListPage = forwardRef<
 >((props, ref) => {
   const searchParams = useSearchParams();
   const { primary, neutral, danger, extras } = useTheme();
+  const drawerState = useOptionsDrawer();
 
   const handleItemClick = useCallback(
     (itemId: 'primary' | 'neutral' | 'danger' | `extra${number}`) => {
@@ -45,7 +47,7 @@ export const ColorListPage = forwardRef<
         <List className='pb-2'>
           <ColorListItem
             title='Primary'
-            color={primary}
+            color={drawerState.primary || primary}
             onClick={() => handleItemClick('primary')}
           />
           <ColorListItem
