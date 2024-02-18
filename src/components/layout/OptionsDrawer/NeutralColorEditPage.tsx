@@ -9,7 +9,7 @@ import React, {
 import { ColorEditPage } from './ColorEditPage';
 import RadioListItem from '../RadioListItem';
 import { Collapsible } from '@/components/ui/Collapsible';
-import { List, ListItem } from '@/components/ui/List';
+import { List, ListItem, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { ColorInput, ColorSuggestionsBox } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
@@ -20,6 +20,7 @@ import {
   neutralColorSuggestions,
 } from '@/constants/colorSuggestions';
 import type { NeutralColorSuggestion } from '@/types/defaultSuggestions';
+import { Separator } from '@/components/ui/Separator';
 
 export const NeutralColorEditPage = forwardRef<
   ElementRef<typeof ColorEditPage>,
@@ -85,7 +86,12 @@ export const NeutralColorEditPage = forwardRef<
           <RadioListItem value='suggestions'>Suggestions</RadioListItem>
           <RadioListItem value='custom'>Custom</RadioListItem>
 
+          <Collapsible asChild open={neutralIsSuggestion || neutralIsCustom}>
+            <Separator />
+          </Collapsible>
+
           <Collapsible open={neutralIsSuggestion}>
+            <ListSubheader>Suggestions</ListSubheader>
             <ColorSuggestionsBox
               baseColor={primary}
               colorSuggestions={neutralColorSuggestions}
