@@ -62,8 +62,12 @@ export const useBaseColors = () => {
   const searchParams = useSearchParams();
 
   const primary = colorFromSearchParam(searchParams.get('primary')) as string,
-    neutral = colorFromSearchParam(searchParams.get('neutral')),
-    danger = colorFromSearchParam(searchParams.get('danger'));
+    neutral = colorFromSearchParam(
+      searchParams.get('neutral')
+    ) satisfies BaseColorsState['neutral'],
+    danger = colorFromSearchParam(
+      searchParams.get('danger')
+    ) satisfies BaseColorsState['danger'];
 
   // Format in URL: name-value,
   const extras = searchParams.getAll('extra').map(value => ({

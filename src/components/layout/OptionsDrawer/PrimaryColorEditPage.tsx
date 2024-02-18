@@ -22,12 +22,12 @@ export const PrimaryColorEditPage = forwardRef<
   const [pickerValue, setPickerValue] = useState(initialPrimary);
 
   const handlePickerEnd = useCallback(() => {
-    if (pickerValue !== primary) setPrimary?.(pickerValue);
+    if (pickerValue !== primary) setPrimary(pickerValue);
   }, [pickerValue, primary, setPrimary]);
 
   const handleInputChange = useCallback(
     (value: string) => {
-      setPrimary?.(value);
+      setPrimary(value);
       setPickerValue(value);
     },
     [setPrimary]
