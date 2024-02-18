@@ -51,14 +51,14 @@ const BaseColorsSectionContent = forwardRef<
     } = useBaseColors(),
     themeColors = useTheme();
 
-  const neutralIsAuto = typeof neutral === 'undefined',
+  const neutralIsAuto = neutral === null,
     neutralIsSuggestion =
       typeof neutral === 'string' &&
       neutralColorSuggestionNames.includes(neutral),
     neutralIsCustom =
       typeof neutral === 'string' &&
       !neutralColorSuggestionNames.includes(neutral);
-  const dangerIsAuto = typeof danger === 'undefined',
+  const dangerIsAuto = danger === null,
     dangerIsSuggestion =
       typeof danger === 'string' && dangerColorSuggestionNames.includes(danger),
     dangerIsCustom =
@@ -107,7 +107,7 @@ const BaseColorsSectionContent = forwardRef<
               ? neutralColorSuggestionNames[0]
               : newValue === 'custom'
                 ? getAutoNeutralColor(primary)
-                : undefined
+                : null
           )
         }
       >
@@ -162,7 +162,7 @@ const BaseColorsSectionContent = forwardRef<
               ? dangerColorSuggestionNames[0]
               : newValue === 'custom'
                 ? getAutoDangerColor(primary)
-                : undefined
+                : null
           )
         }
       >

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useDebugValue } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { parseHex } from 'culori/fn';
 
@@ -16,10 +16,10 @@ export type BaseColorsState = {
   primary: string;
   /** Any of the neutral suggested color names, or any hex color.
    * If undefined, auto choose. */
-  neutral?: AnyStringWithAutocomplete<NeutralColorSuggestion>;
+  neutral: AnyStringWithAutocomplete<NeutralColorSuggestion> | null;
   /** Any of the neutral danger color names, or any hex color.
    * If undefined, auto choose. */
-  danger?: AnyStringWithAutocomplete<DangerColorSuggestion>;
+  danger: AnyStringWithAutocomplete<DangerColorSuggestion> | null;
   /** Extra colors, each can have a name and its value can be any of the
    * general suggested color names, or any hex color. */
   extras: {
@@ -44,7 +44,7 @@ export type BaseColorsActions = {
   ) => void;
 };
 
-const colorToSearchParam = (hexColor?: string) =>
+const colorToSearchParam = (hexColor: string | null) =>
   typeof hexColor === 'string'
     ? hexColor.startsWith('#')
       ? hexColor.slice(1)
@@ -56,7 +56,7 @@ const colorFromSearchParam = (paramColor: string | null) =>
     ? typeof parseHex(paramColor) !== 'undefined'
       ? `#${paramColor}`
       : paramColor
-    : undefined;
+    : null;
 
 export const useBaseColors = () => {
   const searchParams = useSearchParams();
@@ -165,6 +165,8 @@ export const useBaseColors = () => {
       },
       [updateSearchParams]
     );
+
+  useDebugValue({ primary, neutral, danger, extras });
 
   return {
     primary,
