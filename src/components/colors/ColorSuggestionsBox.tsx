@@ -10,7 +10,7 @@ import { ListItem } from '@/components/ui/List';
 import { isHexColorLight } from '@/lib/colorUtils';
 import type { ColorSuggestions } from '@/types/colorSuggestions';
 
-const ColorSuggestionsBox = <T extends ColorSuggestions>({
+export const ColorSuggestionsBox = <T extends ColorSuggestions>({
   baseColor,
   colorSuggestions,
   value,
@@ -50,5 +50,3 @@ const ColorSuggestionsBox = <T extends ColorSuggestions>({
     </ToolbarToggleGroup>
   </Toolbar>
 );
-
-export default ColorSuggestionsBox;

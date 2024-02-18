@@ -8,12 +8,10 @@ import React, {
 
 import { ColorEditPage } from './ColorEditPage';
 import RadioListItem from '../RadioListItem';
-// TODO: Move this file
-import ColorSuggestionsBox from '../BaseColorsSection/ColorSuggestionsBox';
 import { Collapsible } from '@/components/ui/Collapsible';
 import { List, ListItem } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
-import { ColorInput } from '@/components/colors';
+import { ColorInput, ColorSuggestionsBox } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { getAutoNeutralColor } from '@/lib/colorUtils';

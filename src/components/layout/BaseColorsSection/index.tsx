@@ -4,14 +4,13 @@ import { forwardRef, type ComponentPropsWithoutRef, Suspense } from 'react';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 
 import ColorListItem from './ColorListItem';
-import ColorSuggestionsBox from './ColorSuggestionsBox';
 import RadioListItem from '../RadioListItem';
 import { Collapsible } from '@/components/ui/Collapsible';
 import { Input } from '@/components/ui/Input';
 import { ListItem, ListItemIcon, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
-import { ColorInput } from '@/components/colors';
+import { ColorInput, ColorSuggestionsBox } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
