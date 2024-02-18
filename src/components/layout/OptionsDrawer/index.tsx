@@ -56,7 +56,10 @@ export const OptionsDrawer = () => {
     [isDrawerOpen, searchParams]
   );
 
-  useEventListener('popstate', () => saveToSearchParams(true));
+  useEventListener(
+    'popstate',
+    () => modalSearchParam === null && saveToSearchParams(true)
+  );
 
   return (
     <Drawer

@@ -2,7 +2,11 @@ import { create } from 'zustand';
 
 import type { BaseColorsActions, BaseColorsState } from '@/hooks/useBaseColors';
 
-export type OptionsDrawerActions = Partial<BaseColorsActions> & {
+// This Pick is temporary as not everything is implemented yet
+export type OptionsDrawerActions = Pick<
+  BaseColorsActions,
+  'setPrimary' | 'setNeutral'
+> & {
   saveToSearchParams: (resetState?: boolean) => void;
 };
 
@@ -11,11 +15,20 @@ export type OptionsDrawerStore = Partial<BaseColorsState> &
 
 export const useOptionsDrawer = create<OptionsDrawerStore>((set, get) => ({
   setPrimary: primary => set({ primary }),
-  saveToSearchParams: (resetState = false) => {
-    const { primary } = get();
+  setNeutral: neutral => set({ neutral }),
 
+  saveToSearchParams: (resetState = false) => {
+    const { primary, neutral } = get();
     const params = new URLSearchParams(window.location.search);
-    typeof primary === 'string' && params.set('primary', primary.slice(1));
+
+    if (typeof primary === 'string') params.set('primary', primary.slice(1));
+
+    if (typeof neutral === 'string')
+      params.set(
+        'neutral',
+        neutral.startsWith('#') ? neutral.slice(1) : neutral
+      );
+    if (neutral === null) params.delete('neutral');
 
     window.history.replaceState(null, '', `?${params.toString()}`);
 
@@ -25,7 +38,7 @@ export const useOptionsDrawer = create<OptionsDrawerStore>((set, get) => ({
           Object.entries(state).reduce(
             (obj, [key, value]) => ({
               ...obj,
-              ...(['primary'].includes(key) ? {} : { [key]: value }),
+              ...(['primary', 'neutral'].includes(key) ? {} : { [key]: value }),
             }),
             {}
           ),
