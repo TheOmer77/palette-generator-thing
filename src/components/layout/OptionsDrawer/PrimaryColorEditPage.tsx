@@ -5,6 +5,7 @@ import {
   type ComponentPropsWithoutRef,
   type ElementRef,
 } from 'react';
+import { useDebounceCallback } from 'usehooks-ts';
 
 import { ColorEditPage } from './ColorEditPage';
 import { ColorPicker } from '@/components/ui/ColorPicker';
@@ -21,9 +22,15 @@ export const PrimaryColorEditPage = forwardRef<
 
   const [pickerValue, setPickerValue] = useState(initialPrimary);
 
-  const handlePickerEnd = useCallback(() => {
-    if (pickerValue !== primary) setPrimary(pickerValue);
-  }, [pickerValue, primary, setPrimary]);
+  const debounceValue = useDebounceCallback(setPrimary, 200);
+
+  const handlePickerChange = useCallback(
+    (value: string) => {
+      setPickerValue(value);
+      if (pickerValue !== primary) debounceValue(pickerValue);
+    },
+    [debounceValue, pickerValue, primary]
+  );
 
   const handleInputChange = useCallback(
     (value: string) => {
@@ -40,13 +47,7 @@ export const PrimaryColorEditPage = forwardRef<
       title='Primary'
       color={primary || initialPrimary}
     >
-      <ColorPicker
-        value={pickerValue}
-        onChange={setPickerValue}
-        onMouseUp={handlePickerEnd}
-        onTouchEnd={handlePickerEnd}
-        onKeyUp={handlePickerEnd}
-      />
+      <ColorPicker value={pickerValue} onChange={handlePickerChange} />
       <ColorInput
         value={pickerValue}
         onChange={handleInputChange}
