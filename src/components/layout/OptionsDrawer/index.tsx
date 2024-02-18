@@ -21,12 +21,14 @@ import {
   MODAL_BASECOLORS_LIST,
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
+import { NeutralColorEditPage } from './NeutralColorEditPage';
+import { DangerColorEditPage } from './DangerColorEditPage';
 
 export const OptionsDrawer = () => {
   const searchParams = useSearchParams();
   const modalSearchParam = searchParams.get(MODAL_SEARCH_KEY);
 
-  const { neutral, danger, extras } = useTheme();
+  const { extras } = useTheme();
   const { saveToSearchParams } = useOptionsDrawer();
 
   const isDrawerOpen = useMemo(
@@ -89,18 +91,14 @@ export const OptionsDrawer = () => {
           <TransitionSwitchItem value='primary'>
             <PrimaryColorEditPage />
           </TransitionSwitchItem>
-          {/* Pages below are dummy pages for now
-            TODO: Replace dummy drawer pages with the actual pages */}
           <TransitionSwitchItem value='neutral'>
-            <ColorEditPage title='Neutral' color={neutral}>
-              Neutral edit page TBD
-            </ColorEditPage>
+            <NeutralColorEditPage />
           </TransitionSwitchItem>
           <TransitionSwitchItem value='danger'>
-            <ColorEditPage title='Danger' color={danger}>
-              Danger edit page TBD
-            </ColorEditPage>
+            <DangerColorEditPage />
           </TransitionSwitchItem>
+          {/* Pages below are dummy pages for now
+            TODO: Replace dummy drawer pages with the actual pages */}
           {extras.map(({ name, value }, index) => {
             const title = name || `Extra ${index + 1}`;
             return (
