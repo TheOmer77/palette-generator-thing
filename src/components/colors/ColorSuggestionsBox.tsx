@@ -2,6 +2,7 @@ import {
   Toolbar,
   ToolbarToggleGroup,
   ToolbarToggleItem,
+  type ToolbarProps,
 } from '@radix-ui/react-toolbar';
 import { CheckIcon } from 'lucide-react';
 
@@ -9,19 +10,25 @@ import { IconButton } from '@/components/ui/IconButton';
 import { ListItem } from '@/components/ui/List';
 import { isHexColorLight } from '@/lib/colorUtils';
 import type { ColorSuggestions } from '@/types/colorSuggestions';
+import { cn } from '@/lib/utils';
+
+export type ColorSuggestionsBoxProps<T extends ColorSuggestions> =
+  ToolbarProps & {
+    baseColor: string;
+    colorSuggestions: T;
+    value?: keyof T;
+    onValueChange?: (suggestionName: keyof T) => void;
+  };
 
 export const ColorSuggestionsBox = <T extends ColorSuggestions>({
   baseColor,
   colorSuggestions,
   value,
   onValueChange,
-}: {
-  baseColor: string;
-  colorSuggestions: T;
-  value?: keyof T;
-  onValueChange?: (suggestionName: keyof T) => void;
-}) => (
-  <Toolbar className='py-2 pe-4 ps-[3.25rem]'>
+  className,
+  ...props
+}: ColorSuggestionsBoxProps<T>) => (
+  <Toolbar {...props} className={cn('p-2', className)}>
     <ToolbarToggleGroup
       type='single'
       value={value as string}
@@ -32,8 +39,8 @@ export const ColorSuggestionsBox = <T extends ColorSuggestions>({
       }
       className='flex flex-row flex-wrap gap-2'
     >
-      {Object.keys(colorSuggestions).map(suggestionName => {
-        const color = colorSuggestions[suggestionName as keyof T]?.(baseColor);
+      {Object.entries(colorSuggestions).map(([suggestionName, variantFn]) => {
+        const color = variantFn(baseColor);
         return (
           <ListItem asChild key={suggestionName}>
             <ToolbarToggleItem asChild value={suggestionName}>

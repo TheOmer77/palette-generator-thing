@@ -123,6 +123,7 @@ const BaseColorsSectionContent = forwardRef<
               colorSuggestions={neutralColorSuggestions}
               value={neutral as NeutralColorSuggestion}
               onValueChange={setNeutral}
+              className='pe-4 ps-[3.25rem]'
             />
           </Collapsible>
           <RadioListItem value='custom'>Custom</RadioListItem>
@@ -179,6 +180,7 @@ const BaseColorsSectionContent = forwardRef<
               colorSuggestions={dangerColorSuggestions}
               value={danger as DangerColorSuggestion}
               onValueChange={setDanger}
+              className='pe-4 ps-[3.25rem]'
             />
           </Collapsible>
           <RadioListItem value='custom'>Custom</RadioListItem>
@@ -265,6 +267,7 @@ const BaseColorsSectionContent = forwardRef<
                   onValueChange={suggestionName =>
                     setExtraColor(index, suggestionName)
                   }
+                  className='pe-4 ps-[3.25rem]'
                 />
               </Collapsible>
               <RadioListItem value='custom'>Custom</RadioListItem>
