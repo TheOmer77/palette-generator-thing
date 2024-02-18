@@ -21,7 +21,6 @@ export const DangerColorEditPage = forwardRef<
       ref={ref}
       title='Danger'
       color={danger || initialDanger}
-      onColorSave={setDanger}
     >
       Danger edit page TBD
     </ColorEditPage>

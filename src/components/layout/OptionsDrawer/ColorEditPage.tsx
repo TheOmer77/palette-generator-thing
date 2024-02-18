@@ -17,18 +17,16 @@ import { generatePalette } from '@/lib/colorUtils';
 export type ColorEditPageProps = ComponentPropsWithoutRef<'div'> & {
   title: string;
   color: string;
-  onColorSave?: (color: string) => void;
 };
 
 export const ColorEditPage = forwardRef<ElementRef<'div'>, ColorEditPageProps>(
-  ({ title, color, onColorSave, children, ...props }, ref) => {
+  ({ title, color, children, ...props }, ref) => {
     const { saveToSearchParams } = useOptionsDrawer();
     const palette = useMemo(() => generatePalette(color), [color]);
 
     const handleColorSave = useCallback(() => {
-      onColorSave?.(color);
       saveToSearchParams();
-    }, [color, onColorSave, saveToSearchParams]);
+    }, [saveToSearchParams]);
 
     useEventListener('popstate', handleColorSave);
 

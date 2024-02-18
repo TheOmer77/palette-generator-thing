@@ -39,7 +39,6 @@ export const PrimaryColorEditPage = forwardRef<
       ref={ref}
       title='Primary'
       color={primary || initialPrimary}
-      onColorSave={setPrimary}
     >
       <ColorPicker
         value={pickerValue}
