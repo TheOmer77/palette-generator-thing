@@ -26,7 +26,11 @@ shadow-neutral-900/50 dark:bg-card`,
       )}
       {...props}
     >
-      <div className='mx-auto mt-4 h-1 w-10 rounded-full bg-muted' />
+      <div
+        data-drawer-handle=''
+        className='mx-auto mt-4 h-1 w-10 rounded-full bg-muted
+transition-[height,margin]'
+      />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPrimitive.Portal>

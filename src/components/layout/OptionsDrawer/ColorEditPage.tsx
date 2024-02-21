@@ -39,8 +39,8 @@ export const ColorEditPage = forwardRef<ElementRef<'div'>, ColorEditPageProps>(
         </div>
         <ScrollArea
           className='[&>[data-radix-scroll-area-viewport]>div]:space-y-4
-[&>[data-radix-scroll-area-viewport]]:h-[calc(100dvh-8rem)]
-[&>[data-radix-scroll-area-viewport]]:px-4'
+[&>[data-radix-scroll-area-viewport]]:px-4
+[&>[data-radix-scroll-area-viewport]]:pb-4'
         >
           {children}
         </ScrollArea>
