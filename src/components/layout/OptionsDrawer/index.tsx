@@ -71,9 +71,10 @@ export const OptionsDrawer = () => {
     [isDrawerOpen, searchParams]
   );
 
-  useEventListener('popstate', () =>
-    saveToSearchParams(modalSearchParam === null)
-  );
+  useEventListener('popstate', () => {
+    saveToSearchParams(modalSearchParam === null);
+    drawerEl?.style.removeProperty('transition');
+  });
 
   useLayoutEffect(() => {
     if (!drawerEl || modalSearchParam !== MODAL_BASECOLORS_LIST) return;
