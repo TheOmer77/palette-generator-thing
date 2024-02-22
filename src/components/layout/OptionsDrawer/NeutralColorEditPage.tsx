@@ -9,9 +9,10 @@ import React, {
 import { ColorEditPage } from './ColorEditPage';
 import RadioListItem from '../RadioListItem';
 import { Collapsible } from '@/components/ui/Collapsible';
-import { List, ListItem, ListSubheader } from '@/components/ui/List';
+import { List, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
-import { ColorInput, ColorSuggestionsBox } from '@/components/colors';
+import { Separator } from '@/components/ui/Separator';
+import { ColorSuggestionsBox } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { getAutoNeutralColor } from '@/lib/colorUtils';
@@ -20,7 +21,7 @@ import {
   neutralColorSuggestions,
 } from '@/constants/colorSuggestions';
 import type { NeutralColorSuggestion } from '@/types/defaultSuggestions';
-import { Separator } from '@/components/ui/Separator';
+import { DebouncedColorPicker } from './DebouncedColorPicker';
 
 export const NeutralColorEditPage = forwardRef<
   ElementRef<typeof ColorEditPage>,
@@ -101,14 +102,10 @@ export const NeutralColorEditPage = forwardRef<
           </Collapsible>
           <Collapsible open={neutralIsCustom}>
             <div className='p-2'>
-              <ListItem asChild>
-                <ColorInput
-                  id='input-neutral-color'
-                  value={neutral || ''}
-                  onChange={setNeutral}
-                  withRandomBtn
-                />
-              </ListItem>
+              <DebouncedColorPicker
+                initialValue={neutral || ''}
+                onChange={setNeutral}
+              />
             </div>
           </Collapsible>
         </List>
