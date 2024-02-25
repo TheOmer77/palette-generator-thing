@@ -5,7 +5,7 @@ import type { BaseColorsActions, BaseColorsState } from '@/hooks/useBaseColors';
 // This Pick is temporary as not everything is implemented yet
 export type OptionsDrawerActions = Pick<
   BaseColorsActions,
-  'setPrimary' | 'setNeutral'
+  'setPrimary' | 'setNeutral' | 'setDanger'
 > & {
   saveToSearchParams: (resetState?: boolean) => void;
 };
@@ -16,9 +16,10 @@ export type OptionsDrawerStore = Partial<BaseColorsState> &
 export const useOptionsDrawer = create<OptionsDrawerStore>((set, get) => ({
   setPrimary: primary => set({ primary }),
   setNeutral: neutral => set({ neutral }),
+  setDanger: danger => set({ danger }),
 
   saveToSearchParams: (resetState = false) => {
-    const { primary, neutral } = get();
+    const { primary, neutral, danger } = get();
     const params = new URLSearchParams(window.location.search);
 
     if (typeof primary === 'string') params.set('primary', primary.slice(1));
@@ -30,6 +31,10 @@ export const useOptionsDrawer = create<OptionsDrawerStore>((set, get) => ({
       );
     if (neutral === null) params.delete('neutral');
 
+    if (typeof danger === 'string')
+      params.set('danger', danger.startsWith('#') ? danger.slice(1) : danger);
+    if (danger === null) params.delete('danger');
+
     window.history.replaceState(null, '', `?${params.toString()}`);
 
     if (resetState)
@@ -38,7 +43,9 @@ export const useOptionsDrawer = create<OptionsDrawerStore>((set, get) => ({
           Object.entries(state).reduce(
             (obj, [key, value]) => ({
               ...obj,
-              ...(['primary', 'neutral'].includes(key) ? {} : { [key]: value }),
+              ...(['primary', 'neutral', 'danger'].includes(key)
+                ? {}
+                : { [key]: value }),
             }),
             {}
           ),
