@@ -40,7 +40,7 @@ export const ColorListPage = forwardRef<
 
   return (
     <div {...props} ref={ref}>
-      <DrawerHeader className='py-2.5'>
+      <DrawerHeader className='flex h-12 flex-row items-center gap-4 py-0 md:h-16'>
         <DrawerTitle className='text-xl'>Options</DrawerTitle>
       </DrawerHeader>
       <ScrollArea className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-7.75rem)]'>

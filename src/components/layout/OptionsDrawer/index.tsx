@@ -2,8 +2,8 @@
 
 import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useEventListener } from 'usehooks-ts';
-import { SlidersHorizontalIcon } from 'lucide-react';
+import { useEventListener, useMediaQuery } from 'usehooks-ts';
+import { SlidersHorizontalIcon, XIcon } from 'lucide-react';
 import {
   TransitionSwitch,
   TransitionSwitchItem,
@@ -14,7 +14,12 @@ import { ColorEditPage } from './ColorEditPage';
 import { PrimaryColorEditPage } from './PrimaryColorEditPage';
 import { NeutralColorEditPage } from './NeutralColorEditPage';
 import { DangerColorEditPage } from './DangerColorEditPage';
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/Drawer';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerTrigger,
+} from '@/components/ui/Drawer';
 import { Fab } from '@/components/ui/Fab';
 import { useTheme } from '@/hooks/useTheme';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
@@ -24,6 +29,7 @@ import {
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
 import { cn } from '@/lib/utils';
+import { IconButton } from '@/components/ui/IconButton';
 
 export const OptionsDrawer = () => {
   const searchParams = useSearchParams();
@@ -31,6 +37,8 @@ export const OptionsDrawer = () => {
 
   const { extras } = useTheme();
   const { saveToSearchParams } = useOptionsDrawer();
+
+  const matchesMd = useMediaQuery('(min-width: 768px)');
 
   const [drawerEl, setDrawerEl] = useState<HTMLDivElement>();
 
@@ -126,7 +134,8 @@ export const OptionsDrawer = () => {
     <Drawer
       open={isDrawerOpen}
       onOpenChange={setDrawerOpen}
-      dismissible={modalSearchParam === MODAL_BASECOLORS_LIST}
+      dismissible={modalSearchParam === MODAL_BASECOLORS_LIST && !matchesMd}
+      direction={matchesMd ? 'right' : 'bottom'}
     >
       <DrawerTrigger asChild>
         <Fab
@@ -138,14 +147,21 @@ export const OptionsDrawer = () => {
       </DrawerTrigger>
       <DrawerContent
         className={cn(
-          `h-[--children-height] max-h-full print:hidden
-[&[vaul-drawer]]:[transition-property:transform,height,border-radius]`,
+          `h-[--children-height] max-h-full md:me-0 md:h-full md:w-80
+md:rounded-e-none md:rounded-s-lg print:hidden md:[&>[data-drawer-handle]]:hidden
+[&[vaul-drawer]]:[transition-property:transform,height,border-radius]
+md:[&[vaul-drawer]]:[transition-property:transform]`,
           modalSearchParam?.startsWith(MODAL_BASECOLORS_EDIT) &&
             `h-full rounded-none [&>[data-drawer-handle]]:mt-0
 [&>[data-drawer-handle]]:h-0`
         )}
         ref={drawerRef}
       >
+        <DrawerClose asChild className='absolute end-2 top-3 hidden md:flex'>
+          <IconButton>
+            <XIcon />
+          </IconButton>
+        </DrawerClose>
         <TransitionSwitch
           value={transitionSwitchValue}
           autoAdjustHeight
