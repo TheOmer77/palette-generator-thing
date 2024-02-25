@@ -88,7 +88,7 @@ export const ColorPicker = ({
       className={cn(
         /* Using String.raw due to underscores in targeted classnames
         https://github.com/tailwindlabs/tailwindcss/issues/8881#issuecomment-1208600668 */
-        String.raw`mx-auto flex h-full w-full max-w-sm gap-4
+        String.raw`mx-auto flex h-full w-full max-w-xs gap-4
 [&_.react-colorful>:not(.react-colorful\_\_saturation)]:hidden
 [&_.react-colorful\_\_interactive:focus_.react-colorful\_\_pointer]:scale-100
 [&_.react-colorful\_\_pointer]:h-5 [&_.react-colorful\_\_pointer]:w-5
