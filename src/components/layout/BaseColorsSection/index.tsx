@@ -30,6 +30,8 @@ import type {
 } from '@/types/defaultSuggestions';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
+const ERROR_RESERVED_NAME = 'This name is reserved.',
+  ERROR_DUPLICATE_NAME = "This name can't be used by multiple colors.";
 
 const BaseColorsSectionContent = forwardRef<
   HTMLElement,
@@ -231,15 +233,16 @@ const BaseColorsSectionContent = forwardRef<
                   value={name || ''}
                   onChange={e => renameExtraColor(index, e.target.value)}
                   invalid={nameIsReserved || nameIsDuplicate}
-                  helperText={
-                    nameIsReserved
-                      ? 'This name is reserved.'
-                      : nameIsDuplicate
-                        ? "This name can't be used by multiple colors."
-                        : undefined
-                  }
                 />
               </ListItem>
+              {(nameIsReserved || nameIsDuplicate) && (
+                <div
+                  className='mt-1 w-full select-none px-1 text-xs
+text-danger-600 dark:text-danger-300'
+                >
+                  {nameIsReserved ? ERROR_RESERVED_NAME : ERROR_DUPLICATE_NAME}
+                </div>
+              )}
             </div>
             <RadioGroup
               value={colorIsSuggestion ? 'suggestions' : 'custom'}
