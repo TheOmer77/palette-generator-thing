@@ -91,12 +91,18 @@ const config = {
           to: { height: '0' },
         },
         'collapse-in': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-collapsible-content-height)' },
+          from: { height: '0', overflow: 'hidden' },
+          to: {
+            height: 'var(--radix-collapsible-content-height)',
+            overflow: 'hidden',
+          },
         },
         'collapse-out': {
-          from: { height: 'var(--radix-collapsible-content-height)' },
-          to: { height: '0' },
+          from: {
+            height: 'var(--radix-collapsible-content-height)',
+            overflow: 'hidden',
+          },
+          to: { height: '0', overflow: 'hidden' },
         },
         'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
         'fade-out': { from: { opacity: '1' }, to: { opacity: '0' } },
