@@ -164,8 +164,10 @@ md:[&[vaul-drawer]]:[transition-property:transform]`,
         </DrawerClose>
         <TransitionSwitch
           value={transitionSwitchValue}
-          autoAdjustHeight
-          className='relative w-full duration-300 [&>*]:absolute [&>*]:start-0
+          autoAdjustHeight={
+            modalSearchParam === MODAL_BASECOLORS_LIST && !matchesMd
+          }
+          className='relative h-full w-full duration-300 [&>*]:absolute [&>*]:start-0
 [&>*]:top-0 [&>*]:w-full [&>[data-state=active]]:animate-in
 [&>[data-state=active]]:fade-in [&>[data-state=inactive]]:animate-out
 [&>[data-state=inactive]]:fade-out'
