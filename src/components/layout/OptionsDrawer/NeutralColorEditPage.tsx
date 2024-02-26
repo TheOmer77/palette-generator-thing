@@ -101,7 +101,7 @@ export const NeutralColorEditPage = forwardRef<
             />
           </Collapsible>
           <Collapsible open={neutralIsCustom}>
-            <div className='p-2'>
+            <div className='mt-2'>
               <DebouncedColorPicker
                 initialValue={neutral || ''}
                 onChange={setNeutral}

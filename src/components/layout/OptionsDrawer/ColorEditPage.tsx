@@ -49,9 +49,7 @@ rounded-lg'
           ))}
         </div>
         <ScrollArea
-          className='flex-grow
-[&>[data-radix-scroll-area-viewport]>div]:space-y-4
-[&>[data-radix-scroll-area-viewport]]:px-4
+          className='flex-grow [&>[data-radix-scroll-area-viewport]]:px-4
 [&>[data-radix-scroll-area-viewport]]:pb-4'
         >
           {children}

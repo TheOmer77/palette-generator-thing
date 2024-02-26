@@ -100,7 +100,7 @@ export const DangerColorEditPage = forwardRef<
             />
           </Collapsible>
           <Collapsible open={dangerIsCustom}>
-            <div className='p-2'>
+            <div className='mt-2'>
               <DebouncedColorPicker
                 initialValue={danger || ''}
                 onChange={setDanger}
