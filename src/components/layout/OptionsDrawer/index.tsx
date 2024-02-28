@@ -10,10 +10,10 @@ import {
 } from '@theomer77/react-transition-switch';
 
 import { ColorListPage } from './ColorListPage';
-import { ColorEditPage } from './ColorEditPage';
 import { PrimaryColorEditPage } from './PrimaryColorEditPage';
 import { NeutralColorEditPage } from './NeutralColorEditPage';
 import { DangerColorEditPage } from './DangerColorEditPage';
+import { ExtraColorEditPage } from './ExtraColorEditPage';
 import {
   Drawer,
   DrawerClose,
@@ -21,6 +21,7 @@ import {
   DrawerTrigger,
 } from '@/components/ui/Drawer';
 import { Fab } from '@/components/ui/Fab';
+import { IconButton } from '@/components/ui/IconButton';
 import { useTheme } from '@/hooks/useTheme';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import {
@@ -29,7 +30,6 @@ import {
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
 import { cn } from '@/lib/utils';
-import { IconButton } from '@/components/ui/IconButton';
 
 export const OptionsDrawer = () => {
   const searchParams = useSearchParams();
@@ -186,21 +186,11 @@ md:[&[vaul-drawer]]:[transition-property:transform]`,
           <TransitionSwitchItem value='danger'>
             <DangerColorEditPage />
           </TransitionSwitchItem>
-          {/* Pages below are dummy pages for now
-            TODO: Replace dummy drawer pages with the actual pages */}
-          {extras.map(({ name, value }, index) => {
-            const title = name || `Extra ${index + 1}`;
-            return (
-              <TransitionSwitchItem
-                key={`extra${index}`}
-                value={`extra${index}`}
-              >
-                <ColorEditPage title={title} color={value}>
-                  {title} edit page TBD
-                </ColorEditPage>
-              </TransitionSwitchItem>
-            );
-          })}
+          {[...Array(extras.length).keys()].map(index => (
+            <TransitionSwitchItem key={`extra${index}`} value={`extra${index}`}>
+              <ExtraColorEditPage index={index} />
+            </TransitionSwitchItem>
+          ))}
         </TransitionSwitch>
       </DrawerContent>
     </Drawer>
