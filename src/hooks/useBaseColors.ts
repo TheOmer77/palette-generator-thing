@@ -1,6 +1,5 @@
 import { useCallback, useDebugValue } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { parseHex } from 'culori/fn';
 
 import { generalColorSuggestionNames } from '@/constants/colorSuggestions';
 import { BASE_COLOR_NAME_LIMIT } from '@/constants/baseColors';
@@ -10,6 +9,10 @@ import type {
   GeneralColorSuggestion,
   NeutralColorSuggestion,
 } from '@/types/defaultSuggestions';
+import {
+  colorFromSearchParam,
+  colorToSearchParam,
+} from '@/lib/parseSearchParams';
 
 export type BaseColorsState = {
   /** Any hex color. */
@@ -43,20 +46,6 @@ export type BaseColorsActions = {
     newValue: BaseColorsState['extras'][number]['value']
   ) => void;
 };
-
-const colorToSearchParam = (hexColor: string | null) =>
-  typeof hexColor === 'string'
-    ? hexColor.startsWith('#')
-      ? hexColor.slice(1)
-      : hexColor
-    : null;
-
-const colorFromSearchParam = (paramColor: string | null) =>
-  typeof paramColor === 'string'
-    ? typeof parseHex(paramColor) !== 'undefined'
-      ? `#${paramColor}`
-      : paramColor
-    : null;
 
 export const useBaseColors = () => {
   const searchParams = useSearchParams();
