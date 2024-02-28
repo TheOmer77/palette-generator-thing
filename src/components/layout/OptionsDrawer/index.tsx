@@ -79,6 +79,33 @@ export const OptionsDrawer = () => {
     [isDrawerOpen, searchParams]
   );
 
+  const updateDrawerHeight = useCallback(() => {
+    if (!drawerEl) return;
+    const childrenHeight = [...drawerEl.children]
+      .slice(1)
+      .reduce((height, node) => {
+        const nodeHeight =
+          node.clientHeight +
+          Number(getComputedStyle(node).marginTop.slice(0, -2)) +
+          Number(getComputedStyle(node).marginBottom.slice(0, -2));
+        const nodeChildrenHeight = [...node.children]
+          .filter(
+            childNode => childNode.getAttribute('data-state') !== 'inactive'
+          )
+          .reduce(
+            (height, childNode) =>
+              height +
+              childNode.clientHeight +
+              Number(getComputedStyle(childNode).marginTop.slice(0, -2)) +
+              Number(getComputedStyle(childNode).marginBottom.slice(0, -2)),
+            0
+          );
+
+        return height + (nodeChildrenHeight || nodeHeight);
+      }, 20);
+    drawerEl.style.setProperty('--children-height', `${childrenHeight}px`);
+  }, [drawerEl]);
+
   useEventListener('popstate', () => {
     saveToSearchParams(modalSearchParam === null);
     drawerEl?.style.removeProperty('transition');
@@ -87,32 +114,7 @@ export const OptionsDrawer = () => {
   useLayoutEffect(() => {
     if (!drawerEl || modalSearchParam !== MODAL_BASECOLORS_LIST) return;
 
-    const resizeObserver = new ResizeObserver(([entry]) => {
-      if (!entry?.target) return;
-      const childrenHeight = [...entry.target.children]
-        .slice(1)
-        .reduce((height, node) => {
-          const nodeHeight =
-            node.clientHeight +
-            Number(getComputedStyle(node).marginTop.slice(0, -2)) +
-            Number(getComputedStyle(node).marginBottom.slice(0, -2));
-          const nodeChildrenHeight = [...node.children]
-            .filter(
-              childNode => childNode.getAttribute('data-state') !== 'inactive'
-            )
-            .reduce(
-              (height, childNode) =>
-                height +
-                childNode.clientHeight +
-                Number(getComputedStyle(childNode).marginTop.slice(0, -2)) +
-                Number(getComputedStyle(childNode).marginBottom.slice(0, -2)),
-              0
-            );
-
-          return height + (nodeChildrenHeight || nodeHeight);
-        }, 20);
-      drawerEl.style.setProperty('--children-height', `${childrenHeight}px`);
-    });
+    const resizeObserver = new ResizeObserver(updateDrawerHeight);
     resizeObserver.observe(drawerEl);
 
     const styleObserver = new MutationObserver(mutations =>
@@ -128,7 +130,7 @@ export const OptionsDrawer = () => {
       resizeObserver.disconnect();
       styleObserver.disconnect();
     };
-  }, [drawerEl, isDrawerOpen, modalSearchParam]);
+  }, [drawerEl, extras, modalSearchParam, updateDrawerHeight]);
 
   return (
     <Drawer

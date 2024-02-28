@@ -14,6 +14,7 @@ import { DrawerHeader, DrawerTitle } from '@/components/ui/Drawer';
 import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Separator } from '@/components/ui/Separator';
+import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import {
@@ -26,6 +27,7 @@ export const ColorListPage = forwardRef<
   ComponentPropsWithoutRef<'div'>
 >((props, ref) => {
   const searchParams = useSearchParams();
+  const { addExtraColor } = useBaseColors();
   const { primary, neutral, danger, extras } = useTheme();
   const drawerState = useOptionsDrawer();
 
@@ -37,6 +39,11 @@ export const ColorListPage = forwardRef<
     },
     [searchParams]
   );
+
+  const handleAddExtraClick = useCallback(() => {
+    drawerState.addExtraColor();
+    addExtraColor();
+  }, [addExtraColor, drawerState]);
 
   return (
     <div {...props} ref={ref}>
@@ -73,7 +80,7 @@ export const ColorListPage = forwardRef<
               />
             );
           })}
-          <ListItem>
+          <ListItem onClick={handleAddExtraClick}>
             <ListItemIcon>
               <PlusIcon />
             </ListItemIcon>
