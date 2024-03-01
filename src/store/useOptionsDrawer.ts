@@ -7,16 +7,26 @@ import {
 } from '@/lib/parseSearchParams';
 import { generalColorSuggestionNames } from '@/constants';
 
-// This Pick is temporary as not everything is implemented yet
-export type OptionsDrawerActions = Pick<
+// This Omit is temporary as not everything is implemented yet
+export type OptionsDrawerActions = Omit<
   BaseColorsActions,
-  'setPrimary' | 'setNeutral' | 'setDanger' | 'addExtraColor'
+  'removeExtraColor' | 'setExtraColor'
 > & {
   saveToSearchParams: (resetState?: boolean) => void;
 };
 
 export type OptionsDrawerStore = Partial<BaseColorsState> &
   OptionsDrawerActions;
+
+const getCurrentExtras = (state: OptionsDrawerStore) => {
+  const paramsExtras = new URLSearchParams(window.location.search)
+    .getAll('extra')
+    .map(value => ({
+      name: value.split('-')[0],
+      value: colorFromSearchParam(value.split('-')[1]) || '',
+    }));
+  return state.extras || paramsExtras;
+};
 
 export const useOptionsDrawer = create<OptionsDrawerStore>((set, get) => ({
   setPrimary: primary => set({ primary }),
@@ -25,13 +35,7 @@ export const useOptionsDrawer = create<OptionsDrawerStore>((set, get) => ({
 
   addExtraColor: () =>
     set(state => {
-      const params = new URLSearchParams(window.location.search),
-        paramsExtras = params.getAll('extra').map(value => ({
-          name: value.split('-')[0],
-          value: colorFromSearchParam(value.split('-')[1]) || '',
-        })),
-        currentExtras = state.extras || paramsExtras;
-
+      const currentExtras = getCurrentExtras(state);
       return {
         extras: [
           ...currentExtras,
@@ -45,6 +49,12 @@ export const useOptionsDrawer = create<OptionsDrawerStore>((set, get) => ({
         ],
       };
     }),
+  renameExtraColor: (index, newName) =>
+    set(state => ({
+      extras: getCurrentExtras(state).map((color, i) =>
+        i === index ? { ...color, name: newName } : color
+      ),
+    })),
 
   saveToSearchParams: (resetState = false) => {
     const { primary, neutral, danger, extras } = get();
