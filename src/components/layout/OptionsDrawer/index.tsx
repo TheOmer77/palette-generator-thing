@@ -107,7 +107,13 @@ export const OptionsDrawer = () => {
   }, [drawerEl]);
 
   useEventListener('popstate', () => {
-    saveToSearchParams(modalSearchParam === null);
+    /* Modal search param at the time this event is called,
+    NOT THE SAME as the one from useSearchParams! */
+    const newModalSearchParam = new URLSearchParams(window.location.search).get(
+      MODAL_SEARCH_KEY
+    );
+
+    saveToSearchParams(newModalSearchParam === null);
     drawerEl?.style.removeProperty('transition');
   });
 
