@@ -10,7 +10,7 @@ import { generalColorSuggestionNames } from '@/constants';
 // This Omit is temporary as not everything is implemented yet
 export type OptionsDrawerActions = Omit<
   BaseColorsActions,
-  'removeExtraColor' | 'setExtraColor'
+  'removeExtraColor'
 > & {
   saveToSearchParams: (resetState?: boolean) => void;
 };
@@ -53,6 +53,12 @@ export const useOptionsDrawer = create<OptionsDrawerStore>((set, get) => ({
     set(state => ({
       extras: getCurrentExtras(state).map((color, i) =>
         i === index ? { ...color, name: newName } : color
+      ),
+    })),
+  setExtraColor: (index, newValue) =>
+    set(state => ({
+      extras: getCurrentExtras(state).map((color, i) =>
+        i === index ? { ...color, value: newValue } : color
       ),
     })),
 
