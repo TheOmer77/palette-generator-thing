@@ -4,18 +4,20 @@ import {
   type ComponentPropsWithoutRef,
   type ElementRef,
 } from 'react';
+import { TrashIcon } from 'lucide-react';
 
 import { ColorEditPage } from './ColorEditPage';
 import { DebouncedColorPicker } from './DebouncedColorPicker';
 import RadioListItem from '../RadioListItem';
 import { Collapsible } from '@/components/ui/Collapsible';
 import { Input } from '@/components/ui/Input';
-import { List, ListItem } from '@/components/ui/List';
+import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import { ColorSuggestionsBox } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
+import { cn } from '@/lib/utils';
 import {
   generalColorSuggestionNames,
   generalColorSuggestions,
@@ -29,10 +31,11 @@ type ExtraColorEditPageProps = ComponentPropsWithoutRef<'div'> & {
 export const ExtraColorEditPage = forwardRef<
   ElementRef<typeof ColorEditPage>,
   ExtraColorEditPageProps
->(({ index, ...props }, ref) => {
+>(({ index, className, ...props }, ref) => {
   const { primary, extras: baseExtras } = useBaseColors(),
     {
       extras: editedExtras,
+      removeExtraColor,
       renameExtraColor,
       setExtraColor,
     } = useOptionsDrawer();
@@ -63,11 +66,31 @@ export const ExtraColorEditPage = forwardRef<
     [colorIsCustom, colorIsSuggestion, index, primary, setExtraColor, value]
   );
 
+  const handleRemove = useCallback(() => {
+    setTimeout(() => removeExtraColor(index), 90);
+    window.history.back();
+  }, [index, removeExtraColor]);
+
   return (
-    <ColorEditPage {...props} ref={ref} title={title} color={themeValue}>
+    <ColorEditPage
+      {...props}
+      ref={ref}
+      title={title}
+      color={themeValue}
+      className={cn(
+        `[&_[data-radix-scroll-area-viewport]]:pb-[4.5rem]
+[&_[data-scroll-bar]]:z-10`,
+        className
+      )}
+    >
       <List
-        className='px-0 [&>li:first-of-type]:mb-2
-[&>li:first-of-type]:mt-[2px]'
+        className='px-0 [&>li:first-of-type]:mb-2 [&>li:first-of-type]:mt-[2px]
+[&>li:last-of-type]:absolute [&>li:last-of-type]:inset-x-0
+[&>li:last-of-type]:bottom-0 [&>li:last-of-type]:z-10
+[&>li:last-of-type]:flex [&>li:last-of-type]:h-14
+[&>li:last-of-type]:flex-row [&>li:last-of-type]:items-center
+[&>li:last-of-type]:bg-background [&>li:last-of-type]:px-4
+md:[&>li:last-of-type]:rounded-es-lg dark:[&>li:last-of-type]:bg-card'
       >
         <ListItem asChild>
           <Input
@@ -100,6 +123,12 @@ export const ExtraColorEditPage = forwardRef<
             />
           </div>
         </Collapsible>
+        <ListItem onClick={handleRemove}>
+          <ListItemIcon>
+            <TrashIcon />
+          </ListItemIcon>
+          Remove
+        </ListItem>
       </List>
     </ColorEditPage>
   );

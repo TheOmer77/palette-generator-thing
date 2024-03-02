@@ -62,7 +62,7 @@ export const useBaseColors = () => {
   const extras = searchParams.getAll('extra').map(value => ({
     name: value.split('-')[0],
     value: colorFromSearchParam(value.split('-')[1]) || '',
-  }));
+  })) satisfies BaseColorsState['extras'];
 
   const updateSearchParams = useCallback(
       (cb: (params: URLSearchParams) => void) => {

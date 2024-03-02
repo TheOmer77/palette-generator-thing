@@ -21,15 +21,27 @@ import {
   MODAL_BASECOLORS_EDIT,
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
+import {
+  generalColorSuggestionNames,
+  generalColorSuggestions,
+} from '@/constants';
+import type { GeneralColorSuggestion } from '@/types/defaultSuggestions';
 
 export const ColorListPage = forwardRef<
   ElementRef<'div'>,
   ComponentPropsWithoutRef<'div'>
 >((props, ref) => {
   const searchParams = useSearchParams();
-  const { addExtraColor } = useBaseColors();
-  const { primary, neutral, danger, extras } = useTheme();
+  const { addExtraColor, extras: baseExtras } = useBaseColors();
+  const { primary, neutral, danger } = useTheme();
   const drawerState = useOptionsDrawer();
+
+  const extras = (drawerState.extras || baseExtras).map(({ name, value }) => ({
+    name,
+    value: generalColorSuggestionNames.includes(value)
+      ? generalColorSuggestions[value as GeneralColorSuggestion]?.(primary)
+      : value,
+  }));
 
   const handleItemClick = useCallback(
     (itemId: 'primary' | 'neutral' | 'danger' | `extra${number}`) => {
