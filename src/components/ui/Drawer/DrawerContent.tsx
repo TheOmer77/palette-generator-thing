@@ -21,7 +21,7 @@ export const DrawerContent = forwardRef<
       className={cn(
         `fixed inset-x-0 bottom-0 z-50 mx-auto mt-24 flex h-auto w-dvw
 max-w-screen-sm flex-col rounded-t-lg bg-background shadow
-shadow-neutral-900/50 dark:bg-card`,
+shadow-neutral-900/50 focus-visible:outline-none dark:bg-card`,
         className
       )}
       {...props}
