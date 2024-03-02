@@ -4,16 +4,14 @@ import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useEventListener, useMediaQuery } from 'usehooks-ts';
 import { SlidersHorizontalIcon, XIcon } from 'lucide-react';
-import {
-  TransitionSwitch,
-  TransitionSwitchItem,
-} from '@theomer77/react-transition-switch';
+import { TransitionSwitchItem } from '@theomer77/react-transition-switch';
 
 import { ColorListPage } from './ColorListPage';
 import { PrimaryColorEditPage } from './PrimaryColorEditPage';
 import { NeutralColorEditPage } from './NeutralColorEditPage';
 import { DangerColorEditPage } from './DangerColorEditPage';
 import { ExtraColorEditPage } from './ExtraColorEditPage';
+import SharedAxisX from '../SharedAxisX';
 import {
   Drawer,
   DrawerClose,
@@ -170,15 +168,12 @@ md:[&[vaul-drawer]]:[transition-property:transform]`,
             <XIcon />
           </IconButton>
         </DrawerClose>
-        <TransitionSwitch
+        <SharedAxisX
           value={transitionSwitchValue}
           autoAdjustHeight={
             modalSearchParam === MODAL_BASECOLORS_LIST && !matchesMd
           }
-          className='relative h-full w-full duration-300 [&>*]:absolute [&>*]:start-0
-[&>*]:top-0 [&>*]:w-full [&>[data-state=active]]:animate-in
-[&>[data-state=active]]:fade-in [&>[data-state=inactive]]:animate-out
-[&>[data-state=inactive]]:fade-out'
+          className='h-full w-full [&>*]:w-full'
         >
           <TransitionSwitchItem value='list'>
             <ColorListPage />
@@ -197,7 +192,7 @@ md:[&[vaul-drawer]]:[transition-property:transform]`,
               <ExtraColorEditPage index={index} />
             </TransitionSwitchItem>
           ))}
-        </TransitionSwitch>
+        </SharedAxisX>
       </DrawerContent>
     </Drawer>
   );
