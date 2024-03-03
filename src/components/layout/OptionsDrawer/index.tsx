@@ -154,12 +154,13 @@ export const OptionsDrawer = () => {
       </DrawerTrigger>
       <DrawerContent
         className={cn(
-          `h-[--children-height] max-h-full md:me-0 md:h-full md:w-80
-md:rounded-e-none md:rounded-s-lg print:hidden md:[&>[data-drawer-handle]]:hidden
-[&[vaul-drawer]]:[transition-property:transform,height,border-radius]
+          `h-[--children-height] max-h-[--children-height] md:me-0 md:h-full
+md:w-80 md:rounded-e-none md:rounded-s-lg print:hidden
+md:[&>[data-drawer-handle]]:hidden
+[&[vaul-drawer]]:[transition-property:transform,height,max-height,border-radius]
 md:[&[vaul-drawer]]:[transition-property:transform]`,
           modalSearchParam?.startsWith(MODAL_BASECOLORS_EDIT) &&
-            `h-full rounded-none [&>[data-drawer-handle]]:mt-0
+            `h-full max-h-full rounded-none [&>[data-drawer-handle]]:mt-0
 [&>[data-drawer-handle]]:h-0`
         )}
         ref={drawerRef}
