@@ -201,6 +201,10 @@ const config = {
       ring: 'rgb(var(--color-ring))',
       background: 'rgb(var(--color-background))',
       foreground: 'rgb(var(--color-foreground))',
+      secondary: {
+        DEFAULT: 'rgb(var(--color-secondary))',
+        foreground: 'rgb(var(--color-secondary-foreground))',
+      },
       muted: {
         DEFAULT: 'rgb(var(--color-muted))',
         foreground: 'rgb(var(--color-muted-foreground))',
