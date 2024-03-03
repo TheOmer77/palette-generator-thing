@@ -115,7 +115,10 @@ export const ExtraColorEditPage = forwardRef<
           />
         </TabsContent>
       </Tabs>
-      <List className='absolute inset-x-0 bottom-0 z-10 h-14 justify-center'>
+      <List
+        className='absolute inset-x-0 bottom-0 z-10 h-14 justify-center
+bg-background dark:bg-card'
+      >
         <ListItem onClick={handleRemove}>
           <ListItemIcon>
             <TrashIcon />
