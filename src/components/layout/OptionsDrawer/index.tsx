@@ -113,6 +113,7 @@ export const OptionsDrawer = () => {
 
     saveToSearchParams(newModalSearchParam === null);
     drawerEl?.style.removeProperty('transition');
+    drawerEl?.style.removeProperty('height');
   });
 
   useLayoutEffect(() => {
