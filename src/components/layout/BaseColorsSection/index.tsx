@@ -10,7 +10,11 @@ import { Input } from '@/components/ui/Input';
 import { ListItem, ListItemIcon, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
-import { ColorInput, ColorSuggestionsBox } from '@/components/colors';
+import {
+  ColorInput,
+  ColorSuggestion,
+  ColorSuggestionsBox,
+} from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
@@ -121,12 +125,18 @@ const BaseColorsSectionContent = forwardRef<
           <RadioListItem value='suggestions'>Suggestions</RadioListItem>
           <Collapsible open={neutralIsSuggestion}>
             <ColorSuggestionsBox
-              baseColor={primary}
-              colorSuggestions={neutralColorSuggestions}
               value={neutral as NeutralColorSuggestion}
               onValueChange={setNeutral}
               className='pe-4 ps-[3.25rem]'
-            />
+            >
+              {Object.entries(neutralColorSuggestions).map(
+                ([value, variantFn]) => (
+                  <ListItem key={value} asChild>
+                    <ColorSuggestion value={value} color={variantFn(primary)} />
+                  </ListItem>
+                )
+              )}
+            </ColorSuggestionsBox>
           </Collapsible>
           <RadioListItem value='custom'>Custom</RadioListItem>
           <Collapsible open={neutralIsCustom}>
@@ -178,12 +188,18 @@ const BaseColorsSectionContent = forwardRef<
           <RadioListItem value='suggestions'>Suggestions</RadioListItem>
           <Collapsible open={dangerIsSuggestion}>
             <ColorSuggestionsBox
-              baseColor={primary}
-              colorSuggestions={dangerColorSuggestions}
               value={danger as DangerColorSuggestion}
               onValueChange={setDanger}
               className='pe-4 ps-[3.25rem]'
-            />
+            >
+              {Object.entries(dangerColorSuggestions).map(
+                ([value, variantFn]) => (
+                  <ListItem key={value} asChild>
+                    <ColorSuggestion value={value} color={variantFn(primary)} />
+                  </ListItem>
+                )
+              )}
+            </ColorSuggestionsBox>
           </Collapsible>
           <RadioListItem value='custom'>Custom</RadioListItem>
           <Collapsible open={dangerIsCustom}>
@@ -264,14 +280,23 @@ text-danger-600 dark:text-danger-300'
               <RadioListItem value='suggestions'>Suggestions</RadioListItem>
               <Collapsible open={colorIsSuggestion}>
                 <ColorSuggestionsBox
-                  baseColor={primary}
-                  colorSuggestions={generalColorSuggestions}
                   value={value as GeneralColorSuggestion}
                   onValueChange={suggestionName =>
                     setExtraColor(index, suggestionName)
                   }
                   className='pe-4 ps-[3.25rem]'
-                />
+                >
+                  {Object.entries(generalColorSuggestions).map(
+                    ([value, variantFn]) => (
+                      <ListItem key={value} asChild>
+                        <ColorSuggestion
+                          value={value}
+                          color={variantFn(primary)}
+                        />
+                      </ListItem>
+                    )
+                  )}
+                </ColorSuggestionsBox>
               </Collapsible>
               <RadioListItem value='custom'>Custom</RadioListItem>
               <Collapsible open={colorIsCustom}>

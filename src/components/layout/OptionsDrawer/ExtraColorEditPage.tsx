@@ -11,10 +11,15 @@ import { DebouncedColorPicker } from './DebouncedColorPicker';
 import RadioListItem from '../RadioListItem';
 import { Collapsible } from '@/components/ui/Collapsible';
 import { Input } from '@/components/ui/Input';
-import { List, ListItem, ListItemIcon } from '@/components/ui/List';
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListSubheader,
+} from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
-import { ColorSuggestionsBox } from '@/components/colors';
+import { ColorSuggestion, ColorSuggestionsBox } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { cn } from '@/lib/utils';
@@ -106,14 +111,24 @@ md:[&>li:last-of-type]:rounded-es-lg dark:[&>li:last-of-type]:bg-card'
         <Separator />
         <Collapsible open={colorIsSuggestion}>
           <ColorSuggestionsBox
-            baseColor={primary}
-            colorSuggestions={generalColorSuggestions}
             value={value as GeneralColorSuggestion}
             onValueChange={suggestionName =>
               setExtraColor(index, suggestionName)
             }
-            className='pe-4 ps-[3.25rem]'
-          />
+          >
+            <ListSubheader className='col-span-full px-0'>
+              Suggestions
+            </ListSubheader>
+            {Object.entries(generalColorSuggestions).map(
+              ([value, variantFn]) => (
+                <ColorSuggestion
+                  key={value}
+                  value={value}
+                  color={variantFn(primary)}
+                />
+              )
+            )}
+          </ColorSuggestionsBox>
         </Collapsible>
         <Collapsible open={colorIsCustom}>
           <div className='mt-2'>

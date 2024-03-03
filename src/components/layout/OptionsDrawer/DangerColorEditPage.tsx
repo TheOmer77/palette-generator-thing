@@ -12,7 +12,7 @@ import { Collapsible } from '@/components/ui/Collapsible';
 import { List, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
-import { ColorSuggestionsBox } from '@/components/colors';
+import { ColorSuggestion, ColorSuggestionsBox } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { getAutoDangerColor } from '@/lib/colorUtils';
@@ -91,13 +91,23 @@ export const DangerColorEditPage = forwardRef<
           </Collapsible>
 
           <Collapsible open={dangerIsSuggestion}>
-            <ListSubheader>Suggestions</ListSubheader>
             <ColorSuggestionsBox
-              baseColor={primary}
-              colorSuggestions={dangerColorSuggestions}
               value={danger as DangerColorSuggestion}
               onValueChange={setDanger}
-            />
+            >
+              <ListSubheader className='col-span-full px-0'>
+                Suggestions
+              </ListSubheader>
+              {Object.entries(dangerColorSuggestions).map(
+                ([value, variantFn]) => (
+                  <ColorSuggestion
+                    key={value}
+                    value={value}
+                    color={variantFn(primary)}
+                  />
+                )
+              )}
+            </ColorSuggestionsBox>
           </Collapsible>
           <Collapsible open={dangerIsCustom}>
             <div className='mt-2'>

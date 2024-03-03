@@ -12,7 +12,7 @@ import { Collapsible } from '@/components/ui/Collapsible';
 import { List, ListSubheader } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
-import { ColorSuggestionsBox } from '@/components/colors';
+import { ColorSuggestion, ColorSuggestionsBox } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { getAutoNeutralColor } from '@/lib/colorUtils';
@@ -92,13 +92,23 @@ export const NeutralColorEditPage = forwardRef<
           </Collapsible>
 
           <Collapsible open={neutralIsSuggestion}>
-            <ListSubheader>Suggestions</ListSubheader>
             <ColorSuggestionsBox
-              baseColor={primary}
-              colorSuggestions={neutralColorSuggestions}
               value={neutral as NeutralColorSuggestion}
               onValueChange={setNeutral}
-            />
+            >
+              <ListSubheader className='col-span-full px-0'>
+                Suggestions
+              </ListSubheader>
+              {Object.entries(neutralColorSuggestions).map(
+                ([value, variantFn]) => (
+                  <ColorSuggestion
+                    key={value}
+                    value={value}
+                    color={variantFn(primary)}
+                  />
+                )
+              )}
+            </ColorSuggestionsBox>
           </Collapsible>
           <Collapsible open={neutralIsCustom}>
             <div className='mt-2'>
