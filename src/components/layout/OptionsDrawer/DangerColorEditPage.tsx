@@ -7,11 +7,9 @@ import React, {
 } from 'react';
 
 import { ColorEditPage } from './ColorEditPage';
-import RadioListItem from '../RadioListItem';
-import { Collapsible } from '@/components/ui/Collapsible';
-import { List, ListSubheader } from '@/components/ui/List';
-import { RadioGroup } from '@/components/ui/Radio';
-import { Separator } from '@/components/ui/Separator';
+import { DebouncedColorPicker } from './DebouncedColorPicker';
+import { ListSubheader } from '@/components/ui/List';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { ColorSuggestion, ColorSuggestionsBox } from '@/components/colors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
@@ -21,7 +19,6 @@ import {
   dangerColorSuggestions,
 } from '@/constants/colorSuggestions';
 import type { DangerColorSuggestion } from '@/types/defaultSuggestions';
-import { DebouncedColorPicker } from './DebouncedColorPicker';
 
 export const DangerColorEditPage = forwardRef<
   ElementRef<typeof ColorEditPage>,
@@ -39,86 +36,58 @@ export const DangerColorEditPage = forwardRef<
       typeof danger === 'string' &&
       !dangerColorSuggestionNames.includes(danger);
 
-  const themeDanger = dangerIsSuggestion
-    ? dangerColorSuggestions[danger as DangerColorSuggestion]?.(primary)
-    : dangerIsAuto
-      ? getAutoDangerColor(primary)
-      : danger;
-
-  const radioValue = useMemo(
+  const themeDanger = useMemo(
     () =>
-      dangerIsAuto
-        ? 'auto'
-        : dangerIsSuggestion
-          ? 'suggestions'
-          : dangerIsCustom
-            ? 'custom'
-            : undefined,
-    [dangerIsAuto, dangerIsCustom, dangerIsSuggestion]
+      dangerIsSuggestion
+        ? dangerColorSuggestions[danger as DangerColorSuggestion]?.(primary)
+        : dangerIsAuto
+          ? getAutoDangerColor(primary)
+          : danger,
+    [danger, dangerIsAuto, dangerIsSuggestion, primary]
   );
-  const handleRadioValueChange = useCallback(
-    (newValue?: string) => {
-      if (
-        (newValue === 'auto' && !dangerIsAuto) ||
-        (newValue === 'suggestions' && !dangerIsSuggestion) ||
-        (newValue === 'custom' && !dangerIsCustom)
-      )
-        setDanger(
-          newValue === 'suggestions'
-            ? dangerColorSuggestionNames[0]
-            : newValue === 'custom'
-              ? getAutoDangerColor(primary)
-              : null
-        );
+
+  const handleValueChange = useCallback(
+    (newValue: string) => {
+      if (danger === newValue) return;
+      setDanger(newValue === 'auto' ? null : newValue);
     },
-    [dangerIsAuto, dangerIsCustom, dangerIsSuggestion, primary, setDanger]
+    [danger, setDanger]
   );
 
   return (
     <ColorEditPage {...props} ref={ref} title='Danger' color={themeDanger}>
-      <RadioGroup
-        asChild
-        value={radioValue}
-        onValueChange={handleRadioValueChange}
-      >
-        <List className='px-0'>
-          <RadioListItem value='auto'>Auto</RadioListItem>
-          <RadioListItem value='suggestions'>Suggestions</RadioListItem>
-          <RadioListItem value='custom'>Custom</RadioListItem>
-
-          <Collapsible asChild open={dangerIsSuggestion || dangerIsCustom}>
-            <Separator />
-          </Collapsible>
-
-          <Collapsible open={dangerIsSuggestion}>
-            <ColorSuggestionsBox
-              value={danger as DangerColorSuggestion}
-              onValueChange={setDanger}
-            >
-              <ListSubheader className='col-span-full px-0'>
-                Suggestions
-              </ListSubheader>
-              {Object.entries(dangerColorSuggestions).map(
-                ([value, variantFn]) => (
-                  <ColorSuggestion
-                    key={value}
-                    value={value}
-                    color={variantFn(primary)}
-                  />
-                )
-              )}
-            </ColorSuggestionsBox>
-          </Collapsible>
-          <Collapsible open={dangerIsCustom}>
-            <div className='mt-2'>
-              <DebouncedColorPicker
-                initialValue={danger || ''}
-                onChange={setDanger}
-              />
-            </div>
-          </Collapsible>
-        </List>
-      </RadioGroup>
+      <Tabs defaultValue={dangerIsCustom ? 'custom' : 'suggestions'}>
+        <TabsList className='grid w-full grid-cols-2'>
+          <TabsTrigger value='suggestions'>Suggestions</TabsTrigger>
+          <TabsTrigger value='custom'>Custom</TabsTrigger>
+        </TabsList>
+        <TabsContent value='suggestions'>
+          <ColorSuggestionsBox
+            value={danger || 'auto'}
+            onValueChange={handleValueChange}
+            className='p-0 [&>span]:col-span-full [&>span]:px-1'
+          >
+            <ListSubheader>Auto</ListSubheader>
+            <ColorSuggestion value='auto' color={getAutoDangerColor(primary)} />
+            <ListSubheader>Danger suggestions</ListSubheader>
+            {Object.entries(dangerColorSuggestions).map(
+              ([value, variantFn]) => (
+                <ColorSuggestion
+                  key={value}
+                  value={value}
+                  color={variantFn(primary)}
+                />
+              )
+            )}
+          </ColorSuggestionsBox>
+        </TabsContent>
+        <TabsContent value='custom'>
+          <DebouncedColorPicker
+            initialValue={themeDanger}
+            onChange={handleValueChange}
+          />
+        </TabsContent>
+      </Tabs>
     </ColorEditPage>
   );
 });
