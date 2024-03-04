@@ -2,19 +2,15 @@
 
 import { useState } from 'react';
 
+import { Header } from './Header';
+import { BaseColorsSection } from './BaseColorsSection';
 import { AccordionList } from '@/components/ui/AccordionList';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Sidebar } from '@/components/ui/Sidebar';
 import type { BaseColorsState } from '@/hooks/useBaseColors';
-import type { CodeGenState } from '@/store/useCodeGen';
-import { Header } from './Header';
-import { BaseColorsSection } from './BaseColorsSection';
-import { CodeGenSection } from './CodeGenSection';
 
 export const OptionsSidebar = () => {
-  const [openItem, setOpenItem] = useState<
-    keyof BaseColorsState | keyof CodeGenState | null
-  >(null);
+  const [openItem, setOpenItem] = useState<keyof BaseColorsState | null>(null);
 
   const handleValueChange = (newValue: string | null) =>
     setOpenItem(newValue as typeof openItem);
@@ -25,7 +21,6 @@ export const OptionsSidebar = () => {
       <ScrollArea className='flex-grow pb-2 print:hidden'>
         <AccordionList value={openItem} onValueChange={handleValueChange}>
           <BaseColorsSection />
-          <CodeGenSection />
         </AccordionList>
       </ScrollArea>
     </Sidebar>
