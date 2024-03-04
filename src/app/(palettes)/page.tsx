@@ -1,4 +1,6 @@
-import { Main, OptionsDrawer, OptionsSidebar } from '@/components/layout';
+import { PalettesMain } from './main';
+import { PalettesSidebar } from './sidebar';
+import { OptionsDrawer } from '@/components/layout';
 import { validateSearchParams } from '@/lib/validateSearchParams';
 import type { PropsWithSearchParams } from '@/types/searchParams';
 
@@ -6,9 +8,9 @@ const HomePage = ({ searchParams }: PropsWithSearchParams) => {
   validateSearchParams(searchParams);
   return (
     <>
-      <OptionsSidebar />
+      <PalettesSidebar />
       <OptionsDrawer />
-      <Main />
+      <PalettesMain />
     </>
   );
 };

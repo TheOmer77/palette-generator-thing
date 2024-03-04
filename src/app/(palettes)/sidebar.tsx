@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 
-import { Header } from './Header';
-import { BaseColorsSection } from './BaseColorsSection';
 import { AccordionList } from '@/components/ui/AccordionList';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Sidebar } from '@/components/ui/Sidebar';
+import { Header } from '@/components/layout/Header';
+import { BaseColorsSection } from '@/components/layout/BaseColorsSection';
 import type { BaseColorsState } from '@/hooks/useBaseColors';
 
-export const OptionsSidebar = () => {
+export const PalettesSidebar = () => {
   const [openItem, setOpenItem] = useState<keyof BaseColorsState | null>(null);
 
   const handleValueChange = (newValue: string | null) =>

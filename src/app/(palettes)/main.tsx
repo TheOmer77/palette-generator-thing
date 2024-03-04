@@ -2,9 +2,9 @@
 
 import { Suspense, useMemo } from 'react';
 
-import { Header } from './Header';
 import { H2, H3 } from '@/components/ui/Headings';
 import { ColorBlock, ColorGrid } from '@/components/colors';
+import { Header } from '@/components/layout/Header';
 import { useTheme } from '@/hooks/useTheme';
 import { generatePalette } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
@@ -71,7 +71,7 @@ const MainContent = () => {
   );
 };
 
-export const Main = () => (
+export const PalettesMain = () => (
   <Suspense>
     <MainContent />
   </Suspense>
