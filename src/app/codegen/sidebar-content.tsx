@@ -1,26 +1,18 @@
 'use client';
 
-import { forwardRef, type ComponentPropsWithoutRef } from 'react';
-
-import RadioListItem from '../RadioListItem';
 import { AccordionListItem } from '@/components/ui/AccordionList';
 import { Collapsible } from '@/components/ui/Collapsible';
-import { ListItemText, ListSubheader } from '@/components/ui/List';
+import { ListItemText } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
+import RadioListItem from '@/components/layout/RadioListItem';
 import { useCodeGen } from '@/store/useCodeGen';
 import { codeFormats, colorFormats } from '@/constants';
 
-export const CodeGenSection = forwardRef<
-  HTMLElement,
-  ComponentPropsWithoutRef<'section'>
->((props, ref) => {
+export const CodeGenSidebarContent = () => {
   const { format, colorFormat, setFormat, setColorFormat } = useCodeGen();
 
   return (
-    <section {...props} ref={ref}>
-      <ListSubheader className='bg-background md:bg-card dark:bg-card'>
-        Generated code
-      </ListSubheader>
+    <>
       <RadioGroup
         asChild
         value={format}
@@ -66,7 +58,6 @@ export const CodeGenSection = forwardRef<
           </AccordionListItem>
         </RadioGroup>
       </Collapsible>
-    </section>
+    </>
   );
-});
-CodeGenSection.displayName = 'CodeGenSection';
+};

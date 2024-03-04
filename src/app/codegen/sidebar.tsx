@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 
+import { CodeGenSidebarContent } from './sidebar-content';
 import { AccordionList } from '@/components/ui/AccordionList';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Sidebar } from '@/components/ui/Sidebar';
 import { Header } from '@/components/layout/Header';
-import { CodeGenSection } from '@/components/layout/CodeGenSection';
 import type { CodeGenState } from '@/store/useCodeGen';
 
 export const CodeGenSidebar = () => {
@@ -20,7 +20,7 @@ export const CodeGenSidebar = () => {
       <Header className='px-4 py-2' />
       <ScrollArea className='flex-grow pb-2 print:hidden'>
         <AccordionList value={openItem} onValueChange={handleValueChange}>
-          <CodeGenSection />
+          <CodeGenSidebarContent />
         </AccordionList>
       </ScrollArea>
     </Sidebar>
