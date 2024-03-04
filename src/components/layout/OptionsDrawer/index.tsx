@@ -155,7 +155,7 @@ export const OptionsDrawer = () => {
       <DrawerContent
         className={cn(
           `h-[--children-height] max-h-[--children-height] md:me-0 md:h-full
-md:w-80 md:rounded-e-none md:rounded-s-lg print:hidden
+md:max-h-full md:w-80 md:rounded-e-none md:rounded-s-lg print:hidden
 md:[&>[data-drawer-handle]]:hidden
 [&[vaul-drawer]]:[transition-property:transform,height,max-height,border-radius]
 md:[&[vaul-drawer]]:[transition-property:transform]`,
