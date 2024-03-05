@@ -1,13 +1,14 @@
 'use client';
 
-import { forwardRef, type ComponentPropsWithoutRef, Suspense } from 'react';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 
-import ColorListItem from './ColorListItem';
-import RadioListItem from '../RadioListItem';
+import {
+  AccordionListItem,
+  type AccordionListItemProps,
+} from '@/components/ui/AccordionList';
 import { Collapsible } from '@/components/ui/Collapsible';
 import { Input } from '@/components/ui/Input';
-import { ListItem, ListItemIcon, ListSubheader } from '@/components/ui/List';
+import { ListItem, ListItemIcon, ListItemText } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import {
@@ -15,6 +16,7 @@ import {
   ColorSuggestion,
   ColorSuggestionsBox,
 } from '@/components/colors';
+import RadioListItem from '@/components/layout/RadioListItem';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
@@ -37,10 +39,36 @@ const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 const ERROR_RESERVED_NAME = 'This name is reserved.',
   ERROR_DUPLICATE_NAME = "This name can't be used by multiple colors.";
 
-const BaseColorsSectionContent = forwardRef<
-  HTMLElement,
-  ComponentPropsWithoutRef<'section'>
->((props, ref) => {
+type ColorListItemProps = AccordionListItemProps & {
+  value: string;
+  color: string;
+  title: string;
+};
+
+const ColorListItem = ({
+  value,
+  color,
+  title,
+  ...props
+}: ColorListItemProps) => (
+  <AccordionListItem
+    {...props}
+    value={value}
+    // Hex color has spaces so it's read correctly by screen readers
+    aria-label={`${title} - ${color.split('').join(' ')}`}
+    title={
+      <>
+        <div
+          className='me-3 h-8 w-8 shrink-0 rounded-lg'
+          style={{ backgroundColor: color }}
+        />
+        <ListItemText primary={title} secondary={color} />
+      </>
+    }
+  />
+);
+
+export const PalettesSidebarContent = () => {
   const {
       primary,
       neutral,
@@ -71,10 +99,7 @@ const BaseColorsSectionContent = forwardRef<
       !dangerColorSuggestionNames.includes(danger);
 
   return (
-    <section {...props} ref={ref}>
-      <ListSubheader className='bg-background md:bg-card dark:bg-card'>
-        Base colors
-      </ListSubheader>
+    <>
       <ColorListItem
         value='primary'
         color={themeColors.primary}
@@ -325,17 +350,6 @@ text-danger-600 dark:text-danger-300'
         </ListItemIcon>
         Add extra color
       </ListItem>
-    </section>
+    </>
   );
-});
-BaseColorsSectionContent.displayName = 'BaseColorsSectionContent';
-
-export const BaseColorsSection = forwardRef<
-  HTMLElement,
-  ComponentPropsWithoutRef<'section'>
->((props, ref) => (
-  <Suspense>
-    <BaseColorsSectionContent {...props} ref={ref} />
-  </Suspense>
-));
-BaseColorsSection.displayName = 'BaseColorsSection';
+};

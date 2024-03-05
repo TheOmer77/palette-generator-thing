@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 
+import { PalettesSidebarContent } from './sidebar-content';
 import { AccordionList } from '@/components/ui/AccordionList';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Sidebar } from '@/components/ui/Sidebar';
 import { Header } from '@/components/layout/Header';
-import { BaseColorsSection } from '@/components/layout/BaseColorsSection';
 import type { BaseColorsState } from '@/hooks/useBaseColors';
 
 export const PalettesSidebar = () => {
@@ -20,7 +20,7 @@ export const PalettesSidebar = () => {
       <Header className='px-4 py-2' />
       <ScrollArea className='flex-grow pb-2 print:hidden'>
         <AccordionList value={openItem} onValueChange={handleValueChange}>
-          <BaseColorsSection />
+          <PalettesSidebarContent />
         </AccordionList>
       </ScrollArea>
     </Sidebar>
