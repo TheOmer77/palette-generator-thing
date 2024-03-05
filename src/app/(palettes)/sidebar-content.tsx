@@ -1,6 +1,8 @@
 'use client';
 
-import { PlusIcon, TrashIcon } from 'lucide-react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { CodeIcon, PlusIcon, TrashIcon } from 'lucide-react';
 
 import {
   AccordionListItem,
@@ -83,6 +85,7 @@ export const PalettesSidebarContent = () => {
       setExtraColor,
     } = useBaseColors(),
     themeColors = useTheme();
+  const searchParams = useSearchParams();
 
   const neutralIsAuto = neutral === null,
     neutralIsSuggestion =
@@ -106,7 +109,7 @@ export const PalettesSidebarContent = () => {
         title='Primary'
       >
         <div className='p-2'>
-          <ListItem asChild>
+          <ListItem asChild unstyled>
             <ColorInput
               id='input-primary-color'
               value={primary}
@@ -166,7 +169,7 @@ export const PalettesSidebarContent = () => {
           <RadioListItem value='custom'>Custom</RadioListItem>
           <Collapsible open={neutralIsCustom}>
             <div className='p-2'>
-              <ListItem asChild>
+              <ListItem asChild unstyled>
                 <ColorInput
                   id='input-neutral-color'
                   value={neutral || ''}
@@ -229,7 +232,7 @@ export const PalettesSidebarContent = () => {
           <RadioListItem value='custom'>Custom</RadioListItem>
           <Collapsible open={dangerIsCustom}>
             <div className='p-2'>
-              <ListItem asChild>
+              <ListItem asChild unstyled>
                 <ColorInput
                   id='input-danger-color'
                   value={danger || ''}
@@ -268,7 +271,7 @@ export const PalettesSidebarContent = () => {
             title={title}
           >
             <div className='m-2'>
-              <ListItem asChild>
+              <ListItem asChild unstyled>
                 <Input
                   label='Name'
                   value={name || ''}
@@ -348,8 +351,23 @@ text-danger-600 dark:text-danger-300'
         <ListItemIcon>
           <PlusIcon />
         </ListItemIcon>
-        Add extra color
+        <ListItemText primary='Add extra color' />
       </ListItem>
+
+      {/* Temporary until site nav is implemented */}
+      <div
+        className='absolute inset-x-0 bottom-0 z-10 flex h-14 flex-col
+justify-center bg-card px-2'
+      >
+        <ListItem asChild>
+          <Link href={`/codegen?${searchParams.toString()}`} scroll={false}>
+            <ListItemIcon>
+              <CodeIcon />
+            </ListItemIcon>
+            <ListItemText primary='Export as code' />
+          </Link>
+        </ListItem>
+      </div>
     </>
   );
 };
