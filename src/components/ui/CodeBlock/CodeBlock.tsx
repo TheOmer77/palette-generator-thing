@@ -65,7 +65,7 @@ export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
           }) => (
             <ScrollArea
               className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-6.5rem)]
-md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-4.5rem)]'
+md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-5rem)]'
             >
               <pre
                 {...props}
