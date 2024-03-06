@@ -1,1 +1,1 @@
-export { Select, SelectGroup, SelectValue } from '@radix-ui/react-select';
+export { SelectGroup } from '@radix-ui/react-select';
