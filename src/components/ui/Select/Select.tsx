@@ -3,18 +3,17 @@
 import { forwardRef, type ElementRef } from 'react';
 import {
   Select as SelectRoot,
-  SelectValue,
   type SelectProps as SelectRootProps,
   type SelectTriggerProps,
 } from '@radix-ui/react-select';
 
 import { SelectContent } from './SelectContent';
 import { SelectTrigger } from './SelectTrigger';
+import type { SelectExtraProps } from './types';
 
 export type SelectProps = SelectRootProps &
-  SelectTriggerProps & {
-    label?: string;
-  };
+  SelectTriggerProps &
+  SelectExtraProps;
 
 export const Select = forwardRef<ElementRef<typeof SelectTrigger>, SelectProps>(
   (
@@ -30,7 +29,6 @@ export const Select = forwardRef<ElementRef<typeof SelectTrigger>, SelectProps>(
       autoComplete,
       disabled,
       required,
-      label,
       children,
       ...props
     },
@@ -49,9 +47,7 @@ export const Select = forwardRef<ElementRef<typeof SelectTrigger>, SelectProps>(
       disabled={disabled}
       required={required}
     >
-      <SelectTrigger {...props} ref={ref}>
-        <SelectValue placeholder={label} />
-      </SelectTrigger>
+      <SelectTrigger {...props} ref={ref} />
       <SelectContent>{children}</SelectContent>
     </SelectRoot>
   )
