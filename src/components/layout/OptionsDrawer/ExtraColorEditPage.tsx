@@ -73,7 +73,7 @@ export const ExtraColorEditPage = forwardRef<
       color={themeValue}
       className={cn(
         `[&_[data-radix-scroll-area-viewport]]:pb-[4.5rem]
-[&_[data-radix-scroll-area-viewport]]:pt-[2px] [&_[data-scroll-bar]]:z-10`,
+[&_[data-radix-scroll-area-viewport]]:pt-[1px] [&_[data-scroll-bar]]:z-10`,
         className
       )}
     >
