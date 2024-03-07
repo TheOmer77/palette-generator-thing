@@ -38,12 +38,14 @@ export const SelectTrigger = forwardRef<
       aria-invalid={invalid}
       className={cn(
         `group relative flex h-12 w-full cursor-default items-center
-justify-between rounded-md bg-background px-3 text-sm shadow ring-1 ring-input
-transition-shadow duration-100 placeholder:text-muted-foreground
-aria-expanded:ring-2 aria-expanded:ring-ring
-aria-[invalid=true]:ring-input-invalid hover:ring-input-hover
-aria-[invalid=true]:hover:ring-input-invalid focus:outline-none focus:ring-2
-focus:ring-ring aria-[invalid=true]:focus:ring-input-invalid disabled:opacity-50
+justify-between rounded-md border border-input bg-background px-3 text-sm shadow
+ring-0 ring-input transition-[box-shadow,border-color] duration-100
+placeholder:text-muted-foreground aria-expanded:border-ring aria-expanded:ring-1
+aria-expanded:ring-ring aria-[invalid=true]:border-input-invalid
+aria-[invalid=true]:ring-input-invalid focus:border-ring focus:outline-none
+focus:ring-1 focus:ring-ring aria-[invalid=true]:focus:border-input-invalid
+aria-[invalid=true]:focus:ring-input-invalid disabled:opacity-50
+[&:not(:focus):not([aria-invalid=true])]:hover:border-input-hover
 [&>[data-select-value]]:select-none [&>span]:line-clamp-1`,
         label && '[&>[data-select-value]]:pt-4',
         className

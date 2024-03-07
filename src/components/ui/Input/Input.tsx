@@ -36,13 +36,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           aria-label={ariaLabel || label}
           aria-invalid={invalid}
           className={cn(
-            `peer h-12 w-full rounded-lg bg-background px-3 text-sm
-text-foreground shadow ring-1 ring-input transition-shadow duration-100
-autofill-override-background invalid:ring-input-invalid
-aria-[invalid=true]:ring-input-invalid hover:ring-input-hover
-invalid:hover:ring-input-invalid aria-[invalid=true]:hover:ring-input-invalid
-focus:outline-none focus:ring-2 focus:ring-ring invalid:focus:ring-input-invalid
-aria-[invalid=true]:focus:ring-input-invalid`,
+            `peer h-12 w-full rounded-lg border border-input bg-background px-3
+text-sm text-foreground shadow ring-0 ring-input
+transition-[box-shadow,border-color] duration-100 invalid:border-input-invalid
+invalid:ring-input-invalid aria-[invalid=true]:border-input-invalid
+aria-[invalid=true]:ring-input-invalid focus:border-ring focus:outline-none
+focus:ring-1 invalid:focus:border-input-invalid
+aria-[invalid=true]:focus:border-input-invalid
+[&:focus:not(:invalid):not([aria-invalid=true])]:ring-ring
+[&:hover:not(:focus):not(:invalid):not([aria-invalid=true])]:border-input-hover`,
             label &&
               'pt-4 placeholder:opacity-0 placeholder:transition-opacity',
             placeholder && 'focus:placeholder:opacity-100',
