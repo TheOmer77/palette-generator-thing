@@ -70,7 +70,14 @@ const MainContent = () => {
           ))}
         </Select>
       </div>
-      <CodeBlock language={format}>{themeCode}</CodeBlock>
+      <CodeBlock
+        language={format}
+        className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-11.75rem)]
+sm:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-8.25rem)]
+md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-5rem)]'
+      >
+        {themeCode}
+      </CodeBlock>
     </main>
   );
 };
