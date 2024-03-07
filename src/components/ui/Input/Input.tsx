@@ -37,7 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           aria-invalid={invalid}
           className={cn(
             `peer h-12 w-full rounded-lg bg-background px-3 text-sm
-text-foreground ring-1 ring-input transition-shadow duration-100
+text-foreground shadow ring-1 ring-input transition-shadow duration-100
 autofill-override-background invalid:ring-input-invalid
 aria-[invalid=true]:ring-input-invalid hover:ring-input-hover
 invalid:hover:ring-input-invalid aria-[invalid=true]:hover:ring-input-invalid

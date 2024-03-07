@@ -38,7 +38,7 @@ export const SelectTrigger = forwardRef<
       aria-invalid={invalid}
       className={cn(
         `group relative flex h-12 w-full cursor-default items-center
-justify-between rounded-md bg-background px-3 text-sm ring-1 ring-input
+justify-between rounded-md bg-background px-3 text-sm shadow ring-1 ring-input
 transition-shadow duration-100 placeholder:text-muted-foreground
 aria-expanded:ring-2 aria-expanded:ring-ring
 aria-[invalid=true]:ring-input-invalid hover:ring-input-hover
