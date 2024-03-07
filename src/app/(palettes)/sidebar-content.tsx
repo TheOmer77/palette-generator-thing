@@ -159,7 +159,7 @@ export const PalettesSidebarContent = () => {
             >
               {Object.entries(neutralColorSuggestions).map(
                 ([value, variantFn]) => (
-                  <ListItem key={value} asChild>
+                  <ListItem key={value} asChild unstyled>
                     <ColorSuggestion value={value} color={variantFn(primary)} />
                   </ListItem>
                 )
@@ -222,7 +222,7 @@ export const PalettesSidebarContent = () => {
             >
               {Object.entries(dangerColorSuggestions).map(
                 ([value, variantFn]) => (
-                  <ListItem key={value} asChild>
+                  <ListItem key={value} asChild unstyled>
                     <ColorSuggestion value={value} color={variantFn(primary)} />
                   </ListItem>
                 )
@@ -316,7 +316,7 @@ text-danger-600 dark:text-danger-300'
                 >
                   {Object.entries(generalColorSuggestions).map(
                     ([value, variantFn]) => (
-                      <ListItem key={value} asChild>
+                      <ListItem key={value} asChild unstyled>
                         <ColorSuggestion
                           value={value}
                           color={variantFn(primary)}
