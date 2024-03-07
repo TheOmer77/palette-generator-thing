@@ -37,12 +37,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           aria-invalid={invalid}
           className={cn(
             `peer h-12 w-full rounded-lg bg-background px-3 text-sm
-text-foreground ring-1 ring-input transition-shadow autofill-override-background
-invalid:ring-danger-600 aria-[invalid=true]:ring-danger-600 focus:outline-none
-focus:ring-2 focus:ring-ring invalid:focus:ring-danger-600
-aria-[invalid=true]:focus:ring-danger-600 dark:invalid:ring-danger-300
-dark:aria-[invalid=true]:ring-danger-300 dark:invalid:focus:ring-danger-300
-dark:aria-[invalid=true]:focus:ring-danger-300`,
+text-foreground ring-1 ring-input transition-shadow duration-100
+autofill-override-background invalid:ring-input-invalid
+aria-[invalid=true]:ring-input-invalid hover:ring-input-hover
+invalid:hover:ring-input-invalid aria-[invalid=true]:hover:ring-input-invalid
+focus:outline-none focus:ring-2 focus:ring-ring invalid:focus:ring-input-invalid
+aria-[invalid=true]:focus:ring-input-invalid`,
             label &&
               'pt-4 placeholder:opacity-0 placeholder:transition-opacity',
             placeholder && 'focus:placeholder:opacity-100',
@@ -55,12 +55,11 @@ dark:aria-[invalid=true]:focus:ring-danger-300`,
             aria-hidden
             className='pointer-events-none absolute bottom-0 start-0 flex h-12
 select-none flex-row items-center px-3 text-sm text-muted-foreground
-transition-[font-size,transform,color] peer-invalid:text-danger
-peer-focus:-translate-y-2.5 peer-focus:text-xs peer-focus:text-primary-500
+transition-[font-size,transform,color] peer-invalid:text-input-invalid
+peer-focus:-translate-y-2.5 peer-focus:text-xs peer-focus:text-ring
 peer-[:not(:placeholder-shown)]:-translate-y-2.5
-peer-[:not(:placeholder-shown)]:text-xs peer-aria-[invalid=true]:text-danger
-dark:peer-invalid:text-danger-300 dark:peer-focus:text-primary-300
-dark:peer-aria-[invalid=true]:text-danger-300'
+peer-[:not(:placeholder-shown)]:text-xs
+peer-aria-[invalid=true]:text-input-invalid'
           >
             {label}
           </label>

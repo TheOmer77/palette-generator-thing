@@ -39,11 +39,11 @@ export const SelectTrigger = forwardRef<
       className={cn(
         `group relative flex h-12 w-full cursor-default items-center
 justify-between rounded-md bg-background px-3 text-sm ring-1 ring-input
-transition-shadow placeholder:text-muted-foreground aria-expanded:ring-2
-aria-expanded:ring-ring aria-[invalid=true]:ring-danger-600 focus:outline-none
-focus:ring-2 focus:ring-ring aria-[invalid=true]:focus:ring-danger-600
-disabled:opacity-50 dark:aria-[invalid=true]:ring-danger-300
-dark:aria-[invalid=true]:focus:ring-danger-300
+transition-shadow duration-100 placeholder:text-muted-foreground
+aria-expanded:ring-2 aria-expanded:ring-ring
+aria-[invalid=true]:ring-input-invalid hover:ring-input-hover
+aria-[invalid=true]:hover:ring-input-invalid focus:outline-none focus:ring-2
+focus:ring-ring aria-[invalid=true]:focus:ring-input-invalid disabled:opacity-50
 [&>[data-select-value]]:select-none [&>span]:line-clamp-1`,
         label && '[&>[data-select-value]]:pt-4',
         className
@@ -57,13 +57,9 @@ dark:aria-[invalid=true]:focus:ring-danger-300
           className='pointer-events-none absolute bottom-0 start-0 flex h-12
 select-none flex-row items-center px-3 text-sm text-muted-foreground
 transition-[font-size,transform,color] group-focus:-translate-y-2.5
-group-focus:text-xs group-focus:text-primary-500 peer-invalid:text-danger
-group-aria-expanded:-translate-y-2.5 group-aria-expanded:text-xs
-group-aria-expanded:text-primary-500 group-aria-[invalid]:text-danger-600
-peer-aria-[invalid=true]:text-danger dark:group-focus:text-primary-300
-dark:peer-invalid:text-danger-300 dark:group-aria-expanded:text-primary-300
-dark:group-aria-[invalid]:text-danger-300
-dark:peer-aria-[invalid=true]:text-danger-300
+group-focus:text-xs group-focus:text-ring group-aria-expanded:-translate-y-2.5
+group-aria-expanded:text-xs group-aria-expanded:text-ring
+group-aria-[invalid]:text-input-invalid
 [[data-select-value]:not(:empty)~&]:-translate-y-2.5
 [[data-select-value]:not(:empty)~&]:text-xs'
         >

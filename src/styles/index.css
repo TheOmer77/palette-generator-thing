@@ -18,7 +18,9 @@
     --color-accent-foreground: var(--color-neutral-900);
     --color-border: var(--color-neutral-200);
     --color-input: var(--color-neutral-200);
-    --color-ring: var(--color-primary-main);
+    --color-input-hover: var(--color-neutral-400);
+    --color-input-invalid: var(--color-danger-600);
+    --color-ring: var(--color-primary-600);
 
     --border-radius: 0.5rem;
     --scrollbar-height: 0.75rem;
@@ -40,6 +42,8 @@
       --color-accent-foreground: var(--color-neutral-100);
       --color-border: var(--color-neutral-800);
       --color-input: var(--color-neutral-800);
+      --color-input-hover: var(--color-neutral-600);
+      --color-input-invalid: var(--color-danger-300);
       --color-ring: var(--color-primary-300);
     }
   }
@@ -59,6 +63,9 @@
       --color-accent-foreground: var(--color-neutral-900);
       --color-border: var(--color-neutral-200);
       --color-input: var(--color-neutral-200);
+      --color-input-hover: var(--color-neutral-400);
+      --color-input-invalid: var(--color-danger-600);
+      --color-ring: var(--color-primary-600);
     }
   }
 }

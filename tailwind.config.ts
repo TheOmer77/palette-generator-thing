@@ -197,7 +197,6 @@ const config = {
       ),
 
       border: 'rgb(var(--color-border))',
-      input: 'rgb(var(--color-input))',
       ring: 'rgb(var(--color-ring))',
       background: 'rgb(var(--color-background))',
       foreground: 'rgb(var(--color-foreground))',
@@ -220,6 +219,11 @@ const config = {
       card: {
         DEFAULT: 'rgb(var(--color-card))',
         foreground: 'rgb(var(--color-card-foreground))',
+      },
+      input: {
+        DEFAULT: 'rgb(var(--color-input))',
+        hover: 'rgb(var(--color-input-hover))',
+        invalid: 'rgb(var(--color-input-invalid))',
       },
     },
   },
