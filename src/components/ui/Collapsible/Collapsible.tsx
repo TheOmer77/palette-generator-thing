@@ -21,7 +21,7 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(
           asChild
           ref={ref}
           className={cn(
-            `overflow-hidden data-[state=closed]:animate-collapse-out
+            `data-[state=closed]:animate-collapse-out
 data-[state=open]:animate-collapse-in`,
             className
           )}

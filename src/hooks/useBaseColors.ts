@@ -1,6 +1,5 @@
-import { useCallback } from 'react';
+import { useCallback, useDebugValue } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { parseHex } from 'culori/fn';
 
 import { generalColorSuggestionNames } from '@/constants/colorSuggestions';
 import { BASE_COLOR_NAME_LIMIT } from '@/constants/baseColors';
@@ -10,16 +9,20 @@ import type {
   GeneralColorSuggestion,
   NeutralColorSuggestion,
 } from '@/types/defaultSuggestions';
+import {
+  colorFromSearchParam,
+  colorToSearchParam,
+} from '@/lib/parseSearchParams';
 
 export type BaseColorsState = {
   /** Any hex color. */
   primary: string;
   /** Any of the neutral suggested color names, or any hex color.
    * If undefined, auto choose. */
-  neutral?: AnyStringWithAutocomplete<NeutralColorSuggestion>;
+  neutral: AnyStringWithAutocomplete<NeutralColorSuggestion> | null;
   /** Any of the neutral danger color names, or any hex color.
    * If undefined, auto choose. */
-  danger?: AnyStringWithAutocomplete<DangerColorSuggestion>;
+  danger: AnyStringWithAutocomplete<DangerColorSuggestion> | null;
   /** Extra colors, each can have a name and its value can be any of the
    * general suggested color names, or any hex color. */
   extras: {
@@ -44,32 +47,22 @@ export type BaseColorsActions = {
   ) => void;
 };
 
-const colorToSearchParam = (hexColor?: string) =>
-  typeof hexColor === 'string'
-    ? hexColor.startsWith('#')
-      ? hexColor.slice(1)
-      : hexColor
-    : null;
-
-const colorFromSearchParam = (paramColor: string | null) =>
-  typeof paramColor === 'string'
-    ? typeof parseHex(paramColor) !== 'undefined'
-      ? `#${paramColor}`
-      : paramColor
-    : undefined;
-
 export const useBaseColors = () => {
   const searchParams = useSearchParams();
 
   const primary = colorFromSearchParam(searchParams.get('primary')) as string,
-    neutral = colorFromSearchParam(searchParams.get('neutral')),
-    danger = colorFromSearchParam(searchParams.get('danger'));
+    neutral = colorFromSearchParam(
+      searchParams.get('neutral')
+    ) satisfies BaseColorsState['neutral'],
+    danger = colorFromSearchParam(
+      searchParams.get('danger')
+    ) satisfies BaseColorsState['danger'];
 
   // Format in URL: name-value,
   const extras = searchParams.getAll('extra').map(value => ({
     name: value.split('-')[0],
     value: colorFromSearchParam(value.split('-')[1]) || '',
-  }));
+  })) satisfies BaseColorsState['extras'];
 
   const updateSearchParams = useCallback(
       (cb: (params: URLSearchParams) => void) => {
@@ -165,6 +158,8 @@ export const useBaseColors = () => {
       },
       [updateSearchParams]
     );
+
+  useDebugValue({ primary, neutral, danger, extras });
 
   return {
     primary,

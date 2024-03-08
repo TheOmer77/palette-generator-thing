@@ -89,7 +89,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       setInternalValue(autoAddHexHash(value?.toLowerCase?.() || ''));
     }, [value]);
 
-    return (
+    const baseInput = (
       <Input
         {...props}
         ref={ref}
@@ -98,21 +98,24 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         onChange={handleChange}
         onBlur={handleBlur}
         invalid={invalid}
-        {...(withRandomBtn
-          ? {
-              endAdornment: (
-                <Tooltip content='Generate random color'>
-                  <IconButton
-                    aria-label='Generate random color'
-                    onClick={() => onChange?.(randomHexColor())}
-                  >
-                    <Dice5Icon />
-                  </IconButton>
-                </Tooltip>
-              ),
-            }
-          : {})}
       />
+    );
+
+    return withRandomBtn ? (
+      <div className='relative'>
+        {baseInput}
+        <Tooltip content='Generate random color'>
+          <IconButton
+            className='absolute bottom-1 end-1'
+            aria-label='Generate random color'
+            onClick={() => onChange?.(randomHexColor())}
+          >
+            <Dice5Icon />
+          </IconButton>
+        </Tooltip>
+      </div>
+    ) : (
+      baseInput
     );
   }
 );

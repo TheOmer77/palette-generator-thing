@@ -18,7 +18,7 @@ export type CodeGenActions = {
 export type CodeGenStore = CodeGenState & CodeGenActions;
 
 export const useCodeGen = create<CodeGenStore>(set => ({
-  format: 'none',
+  format: 'css',
   colorFormat: 'hex',
 
   setFormat: format => set({ format }),

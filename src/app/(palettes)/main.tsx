@@ -2,24 +2,16 @@
 
 import { Suspense, useMemo } from 'react';
 
-import { Header } from './Header';
-import { ColorBlock, ColorGrid } from '@/components/colors';
-import { CodeBlock } from '@/components/ui/CodeBlock';
 import { H2, H3 } from '@/components/ui/Headings';
+import { ColorBlock, ColorGrid } from '@/components/colors';
+import { Header } from '@/components/layout/Header';
 import { useTheme } from '@/hooks/useTheme';
-import { useCodeGen } from '@/store/useCodeGen';
-import {
-  generateCssCode,
-  generateJsonCode,
-  generateScssCode,
-} from '@/lib/codeGen';
 import { generatePalette } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
-import { codeFormats, shades } from '@/constants';
+import { shades } from '@/constants';
 
 const MainContent = () => {
   const { primary, neutral, danger, extras } = useTheme();
-  const { format, colorFormat } = useCodeGen();
 
   const colorGrids = useMemo(() => {
     const grids = [
@@ -53,33 +45,6 @@ const MainContent = () => {
     ) as typeof grids;
   }, [danger, extras, neutral, primary]);
 
-  const themeCode = useMemo(() => {
-    const palettes = extras.reduce(
-      (obj, { name, value }, index) => ({
-        ...obj,
-        [typeof name === 'string' && name.length > 0
-          ? toCamelCase(name)
-          : `extra${index + 1}`]: value,
-      }),
-      {
-        primary,
-        neutral,
-        danger,
-      }
-    );
-
-    switch (format) {
-      case 'css':
-        return generateCssCode(palettes, colorFormat);
-      case 'scss':
-        return generateScssCode(palettes, colorFormat);
-      case 'json':
-        return generateJsonCode(palettes, colorFormat);
-      default:
-        return '';
-    }
-  }, [colorFormat, format, danger, extras, neutral, primary]);
-
   return (
     <main
       className='p-4 md:ps-[21rem] [&>*]:mx-auto [&>*]:w-full
@@ -102,24 +67,11 @@ const MainContent = () => {
           </ColorGrid>
         </div>
       ))}
-
-      {format !== 'none' && (
-        <>
-          <H2 className='break-before-page'>
-            {codeFormats[format].displayName} code
-          </H2>
-          <CodeBlock
-            language={!['none', 'custom'].includes(format) ? format : ''}
-          >
-            {themeCode}
-          </CodeBlock>
-        </>
-      )}
     </main>
   );
 };
 
-export const Main = () => (
+export const PalettesMain = () => (
   <Suspense>
     <MainContent />
   </Suspense>

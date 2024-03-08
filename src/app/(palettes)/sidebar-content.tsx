@@ -1,17 +1,24 @@
 'use client';
 
-import { forwardRef, type ComponentPropsWithoutRef, Suspense } from 'react';
-import { PlusIcon, TrashIcon } from 'lucide-react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { CodeIcon, PlusIcon, TrashIcon } from 'lucide-react';
 
-import ColorListItem from './ColorListItem';
-import ColorSuggestionsBox from './ColorSuggestionsBox';
-import RadioListItem from '../RadioListItem';
+import {
+  AccordionListItem,
+  type AccordionListItemProps,
+} from '@/components/ui/AccordionList';
 import { Collapsible } from '@/components/ui/Collapsible';
 import { Input } from '@/components/ui/Input';
-import { ListItem, ListItemIcon, ListSubheader } from '@/components/ui/List';
+import { ListItem, ListItemIcon, ListItemText } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
-import { ColorInput } from '@/components/colors';
+import {
+  ColorInput,
+  ColorSuggestion,
+  ColorSuggestionsBox,
+} from '@/components/colors';
+import RadioListItem from '@/components/layout/RadioListItem';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
 import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
@@ -31,11 +38,39 @@ import type {
 } from '@/types/defaultSuggestions';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
+const ERROR_RESERVED_NAME = 'This name is reserved.',
+  ERROR_DUPLICATE_NAME = "This name can't be used by multiple colors.";
 
-const BaseColorsSectionContent = forwardRef<
-  HTMLElement,
-  ComponentPropsWithoutRef<'section'>
->((props, ref) => {
+type ColorListItemProps = AccordionListItemProps & {
+  value: string;
+  color: string;
+  title: string;
+};
+
+const ColorListItem = ({
+  value,
+  color,
+  title,
+  ...props
+}: ColorListItemProps) => (
+  <AccordionListItem
+    {...props}
+    value={value}
+    // Hex color has spaces so it's read correctly by screen readers
+    aria-label={`${title} - ${color.split('').join(' ')}`}
+    title={
+      <>
+        <div
+          className='me-3 h-8 w-8 shrink-0 rounded-lg'
+          style={{ backgroundColor: color }}
+        />
+        <ListItemText primary={title} secondary={color} />
+      </>
+    }
+  />
+);
+
+export const PalettesSidebarContent = () => {
   const {
       primary,
       neutral,
@@ -50,15 +85,16 @@ const BaseColorsSectionContent = forwardRef<
       setExtraColor,
     } = useBaseColors(),
     themeColors = useTheme();
+  const searchParams = useSearchParams();
 
-  const neutralIsAuto = typeof neutral === 'undefined',
+  const neutralIsAuto = neutral === null,
     neutralIsSuggestion =
       typeof neutral === 'string' &&
       neutralColorSuggestionNames.includes(neutral),
     neutralIsCustom =
       typeof neutral === 'string' &&
       !neutralColorSuggestionNames.includes(neutral);
-  const dangerIsAuto = typeof danger === 'undefined',
+  const dangerIsAuto = danger === null,
     dangerIsSuggestion =
       typeof danger === 'string' && dangerColorSuggestionNames.includes(danger),
     dangerIsCustom =
@@ -66,17 +102,14 @@ const BaseColorsSectionContent = forwardRef<
       !dangerColorSuggestionNames.includes(danger);
 
   return (
-    <section {...props} ref={ref}>
-      <ListSubheader className='bg-background md:bg-card dark:bg-card'>
-        Base colors
-      </ListSubheader>
+    <>
       <ColorListItem
         value='primary'
         color={themeColors.primary}
         title='Primary'
       >
         <div className='p-2'>
-          <ListItem asChild>
+          <ListItem asChild unstyled>
             <ColorInput
               id='input-primary-color'
               value={primary}
@@ -107,7 +140,7 @@ const BaseColorsSectionContent = forwardRef<
               ? neutralColorSuggestionNames[0]
               : newValue === 'custom'
                 ? getAutoNeutralColor(primary)
-                : undefined
+                : null
           )
         }
       >
@@ -120,16 +153,23 @@ const BaseColorsSectionContent = forwardRef<
           <RadioListItem value='suggestions'>Suggestions</RadioListItem>
           <Collapsible open={neutralIsSuggestion}>
             <ColorSuggestionsBox
-              baseColor={primary}
-              colorSuggestions={neutralColorSuggestions}
               value={neutral as NeutralColorSuggestion}
               onValueChange={setNeutral}
-            />
+              className='pe-4 ps-[3.25rem]'
+            >
+              {Object.entries(neutralColorSuggestions).map(
+                ([value, variantFn]) => (
+                  <ListItem key={value} asChild unstyled>
+                    <ColorSuggestion value={value} color={variantFn(primary)} />
+                  </ListItem>
+                )
+              )}
+            </ColorSuggestionsBox>
           </Collapsible>
           <RadioListItem value='custom'>Custom</RadioListItem>
           <Collapsible open={neutralIsCustom}>
             <div className='p-2'>
-              <ListItem asChild>
+              <ListItem asChild unstyled>
                 <ColorInput
                   id='input-neutral-color'
                   value={neutral || ''}
@@ -162,7 +202,7 @@ const BaseColorsSectionContent = forwardRef<
               ? dangerColorSuggestionNames[0]
               : newValue === 'custom'
                 ? getAutoDangerColor(primary)
-                : undefined
+                : null
           )
         }
       >
@@ -176,16 +216,23 @@ const BaseColorsSectionContent = forwardRef<
           <RadioListItem value='suggestions'>Suggestions</RadioListItem>
           <Collapsible open={dangerIsSuggestion}>
             <ColorSuggestionsBox
-              baseColor={primary}
-              colorSuggestions={dangerColorSuggestions}
               value={danger as DangerColorSuggestion}
               onValueChange={setDanger}
-            />
+              className='pe-4 ps-[3.25rem]'
+            >
+              {Object.entries(dangerColorSuggestions).map(
+                ([value, variantFn]) => (
+                  <ListItem key={value} asChild unstyled>
+                    <ColorSuggestion value={value} color={variantFn(primary)} />
+                  </ListItem>
+                )
+              )}
+            </ColorSuggestionsBox>
           </Collapsible>
           <RadioListItem value='custom'>Custom</RadioListItem>
           <Collapsible open={dangerIsCustom}>
             <div className='p-2'>
-              <ListItem asChild>
+              <ListItem asChild unstyled>
                 <ColorInput
                   id='input-danger-color'
                   value={danger || ''}
@@ -224,21 +271,22 @@ const BaseColorsSectionContent = forwardRef<
             title={title}
           >
             <div className='m-2'>
-              <ListItem asChild>
+              <ListItem asChild unstyled>
                 <Input
                   label='Name'
                   value={name || ''}
                   onChange={e => renameExtraColor(index, e.target.value)}
                   invalid={nameIsReserved || nameIsDuplicate}
-                  helperText={
-                    nameIsReserved
-                      ? 'This name is reserved.'
-                      : nameIsDuplicate
-                        ? "This name can't be used by multiple colors."
-                        : undefined
-                  }
                 />
               </ListItem>
+              {(nameIsReserved || nameIsDuplicate) && (
+                <div
+                  className='mt-1 w-full select-none px-1 text-xs
+text-danger-600 dark:text-danger-300'
+                >
+                  {nameIsReserved ? ERROR_RESERVED_NAME : ERROR_DUPLICATE_NAME}
+                </div>
+              )}
             </div>
             <RadioGroup
               value={colorIsSuggestion ? 'suggestions' : 'custom'}
@@ -260,13 +308,23 @@ const BaseColorsSectionContent = forwardRef<
               <RadioListItem value='suggestions'>Suggestions</RadioListItem>
               <Collapsible open={colorIsSuggestion}>
                 <ColorSuggestionsBox
-                  baseColor={primary}
-                  colorSuggestions={generalColorSuggestions}
                   value={value as GeneralColorSuggestion}
                   onValueChange={suggestionName =>
                     setExtraColor(index, suggestionName)
                   }
-                />
+                  className='pe-4 ps-[3.25rem]'
+                >
+                  {Object.entries(generalColorSuggestions).map(
+                    ([value, variantFn]) => (
+                      <ListItem key={value} asChild unstyled>
+                        <ColorSuggestion
+                          value={value}
+                          color={variantFn(primary)}
+                        />
+                      </ListItem>
+                    )
+                  )}
+                </ColorSuggestionsBox>
               </Collapsible>
               <RadioListItem value='custom'>Custom</RadioListItem>
               <Collapsible open={colorIsCustom}>
@@ -293,19 +351,23 @@ const BaseColorsSectionContent = forwardRef<
         <ListItemIcon>
           <PlusIcon />
         </ListItemIcon>
-        Add extra color
+        <span>Add extra color</span>
       </ListItem>
-    </section>
-  );
-});
-BaseColorsSectionContent.displayName = 'BaseColorsSectionContent';
 
-export const BaseColorsSection = forwardRef<
-  HTMLElement,
-  ComponentPropsWithoutRef<'section'>
->((props, ref) => (
-  <Suspense>
-    <BaseColorsSectionContent {...props} ref={ref} />
-  </Suspense>
-));
-BaseColorsSection.displayName = 'BaseColorsSection';
+      {/* Temporary until site nav is implemented */}
+      <div
+        className='absolute inset-x-0 bottom-0 z-10 flex h-14 flex-col
+        justify-center bg-card px-2'
+      >
+        <ListItem asChild>
+          <Link href={`/codegen?${searchParams.toString()}`} scroll={false}>
+            <ListItemIcon>
+              <CodeIcon />
+            </ListItemIcon>
+            <span>Export as code</span>
+          </Link>
+        </ListItem>
+      </div>
+    </>
+  );
+};

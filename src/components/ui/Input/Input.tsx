@@ -1,22 +1,12 @@
-'use client';
-
-import {
-  forwardRef,
-  useState,
-  useEffect,
-  type ComponentPropsWithoutRef,
-  type ReactNode,
-} from 'react';
-import { Primitive } from '@radix-ui/react-primitive';
+import { forwardRef, type ComponentPropsWithoutRef } from 'react';
+import { Slot } from '@radix-ui/react-slot';
 
 import { cn } from '@/lib/utils';
 
-export type InputProps = ComponentPropsWithoutRef<typeof Primitive.input> & {
+export type InputProps = ComponentPropsWithoutRef<'input'> & {
   label?: string;
   invalid?: boolean;
-  helperText?: string;
-  startAdornment?: ReactNode;
-  endAdornment?: ReactNode;
+  asChild?: boolean;
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -24,92 +14,57 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       id,
       value,
-      onChange,
       label,
+      placeholder,
+      'aria-label': ariaLabel,
       invalid,
-      helperText,
-      startAdornment,
-      endAdornment,
+      asChild,
       className,
       ...props
     },
     ref
   ) => {
-    const [uncontrolledHasValue, setUncontrolledHasValue] = useState(false);
-    useEffect(() => {
-      if (value && uncontrolledHasValue) setUncontrolledHasValue(false);
-    }, [uncontrolledHasValue, value]);
-
+    const Comp = asChild ? Slot : 'input';
     return (
-      <div
-        className={cn(
-          `relative flex h-12 items-center gap-2 rounded-lg bg-background px-1`,
-          typeof helperText === 'string' && helperText.length > 0 && `mb-5`,
-          className
-        )}
-      >
-        {startAdornment &&
-          (label ? (
-            <div className='flex h-full flex-row items-center gap-2 pt-4'>
-              {startAdornment}
-            </div>
-          ) : (
-            startAdornment
-          ))}
-        <Primitive.input
+      <div className='relative'>
+        <Comp
           {...props}
           ref={ref}
           id={id}
           value={value}
-          aria-label={label}
+          placeholder={placeholder || label}
+          aria-label={ariaLabel || label}
           aria-invalid={invalid}
           className={cn(
-            `peer h-full flex-grow bg-transparent px-2 text-sm
-text-foreground autofill-override-background focus-visible:outline-none`,
+            `peer h-12 w-full rounded-lg border border-input bg-background px-3
+text-sm text-foreground shadow ring-0 ring-input
+transition-[box-shadow,border-color] duration-100 invalid:border-input-invalid
+invalid:ring-input-invalid aria-[invalid=true]:border-input-invalid
+aria-[invalid=true]:ring-input-invalid focus:border-ring focus:outline-none
+focus:ring-1 invalid:focus:border-input-invalid
+aria-[invalid=true]:focus:border-input-invalid
+[&:focus:not(:invalid):not([aria-invalid=true])]:ring-ring
+[&:hover:not(:focus):not(:invalid):not([aria-invalid=true])]:border-input-hover`,
             label &&
-              `pt-4 placeholder:opacity-0 placeholder:transition-opacity
-focus:placeholder:opacity-100`
+              'pt-4 placeholder:opacity-0 placeholder:transition-opacity',
+            placeholder && 'focus:placeholder:opacity-100',
+            className
           )}
-          onChange={e => {
-            if (!value) setUncontrolledHasValue(!!e.target.value);
-            onChange?.(e);
-          }}
         />
-        {endAdornment}
         {label && (
           <label
             htmlFor={id}
             aria-hidden
-            className={cn(
-              `pointer-events-none absolute select-none px-2 text-sm
-text-muted-foreground transition-[font-size,transform,color]
-peer-invalid:text-danger-600 peer-focus:-translate-y-2.5 peer-focus:text-xs
-peer-focus:text-primary-500 peer-aria-[invalid=true]:text-danger-600
-dark:peer-invalid:text-danger-300 dark:peer-focus:text-primary-300
-dark:peer-aria-[invalid=true]:text-danger-300`,
-              (startAdornment || value || (!value && uncontrolledHasValue)) &&
-                '-translate-y-2.5 text-xs'
-            )}
+            className='pointer-events-none absolute bottom-0 start-0 flex h-12
+select-none flex-row items-center px-3 text-sm text-muted-foreground
+transition-[font-size,transform,color] peer-invalid:text-input-invalid
+peer-focus:-translate-y-2.5 peer-focus:text-xs peer-focus:text-ring
+peer-[:not(:placeholder-shown)]:-translate-y-2.5
+peer-[:not(:placeholder-shown)]:text-xs
+peer-aria-[invalid=true]:text-input-invalid'
           >
             {label}
           </label>
-        )}
-        <div
-          className='input-outline pointer-events-none absolute start-0 top-0
-h-full w-full rounded-lg ring-1 ring-input transition-shadow
-peer-invalid:ring-danger peer-focus:ring-2 peer-focus:ring-ring
-peer-aria-[invalid=true]:ring-danger'
-        />
-        {typeof helperText === 'string' && helperText.length > 0 && (
-          <span
-            className='absolute top-[3.25rem] select-none text-xs
-text-muted-foreground peer-invalid:text-danger-600
-peer-aria-[invalid=true]:text-danger-600 dark:text-neutral-300
-dark:peer-invalid:text-danger-300
-dark:peer-aria-[invalid=true]:text-danger-300'
-          >
-            {helperText}
-          </span>
         )}
       </div>
     );

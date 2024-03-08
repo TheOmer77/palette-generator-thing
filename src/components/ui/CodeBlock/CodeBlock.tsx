@@ -1,11 +1,7 @@
 'use client';
 
-import {
-  forwardRef,
-  useCallback,
-  useState,
-  type ComponentPropsWithoutRef,
-} from 'react';
+import { forwardRef, useCallback, useState, type ElementRef } from 'react';
+import type { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { Highlight, Prism } from 'prism-react-renderer';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
@@ -20,74 +16,60 @@ import '@/styles/prism.css';
 require('prismjs/components/prism-scss');
 require('prismjs/components/prism-json');
 
-export type CodeBlockProps = Omit<
-  ComponentPropsWithoutRef<'pre'>,
-  'children'
-> & {
+export type CodeBlockProps = Omit<ScrollAreaProps, 'children'> & {
   children: string;
   language?: string;
 };
 
-export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
-  ({ language = '', style, children, ...props }, ref) => {
-    const [justCopied, setJustCopied] = useState(false);
+export const CodeBlock = forwardRef<
+  ElementRef<typeof ScrollArea>,
+  CodeBlockProps
+>(({ language = '', className, children, ...props }, ref) => {
+  const [justCopied, setJustCopied] = useState(false);
 
-    const copyCode = useCallback(() => {
-      if (justCopied) return;
+  const copyCode = useCallback(() => {
+    if (justCopied) return;
 
-      navigator.clipboard.writeText(children);
-      setJustCopied(true);
-      setTimeout(() => setJustCopied(false), 1500);
-    }, [children, justCopied]);
+    navigator.clipboard.writeText(children);
+    setJustCopied(true);
+    setTimeout(() => setJustCopied(false), 1500);
+  }, [children, justCopied]);
 
-    return (
-      <div className='relative overflow-hidden rounded-lg bg-card'>
-        <Tooltip content='Copy code'>
-          <IconButton
-            aria-label='Copy code'
-            className='absolute end-2 top-2 print:hidden'
-            onClick={copyCode}
-          >
-            {justCopied ? <CheckIcon /> : <CopyIcon />}
-          </IconButton>
-        </Tooltip>
-        <Highlight
-          language={language}
-          code={children}
-          theme={{ plain: {}, styles: [] }}
+  return (
+    <Highlight
+      language={language}
+      code={children}
+      theme={{ plain: {}, styles: [] }}
+    >
+      {({ className: preClassname, tokens, getLineProps, getTokenProps }) => (
+        <ScrollArea
+          {...props}
+          ref={ref}
+          className={cn('relative rounded-lg bg-card', className)}
         >
-          {({
-            className,
-            style: prismStyle,
-            tokens,
-            getLineProps,
-            getTokenProps,
-          }) => (
-            <ScrollArea
-              className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-6.5rem)]
-md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-4.5rem)]'
+          <Tooltip content='Copy code'>
+            <IconButton
+              aria-label='Copy code'
+              className='absolute end-2 top-2 print:hidden'
+              onClick={copyCode}
             >
-              <pre
-                {...props}
-                style={{ ...prismStyle, ...style }}
-                ref={ref}
-                className={cn(`p-4 text-sm leading-relaxed`, className)}
-              >
-                {tokens.map((line, i) => (
-                  <div key={i} {...getLineProps({ line })}>
-                    {line.map((token, key) => (
-                      <span key={key} {...getTokenProps({ token })} />
-                    ))}
-                  </div>
+              {justCopied ? <CheckIcon /> : <CopyIcon />}
+            </IconButton>
+          </Tooltip>
+          <pre className={cn('p-4 text-sm leading-relaxed', preClassname)}>
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({ line })}>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token })} />
                 ))}
-              </pre>
-              <ScrollBar orientation='vertical' />
-              <ScrollBar orientation='horizontal' />
-            </ScrollArea>
-          )}
-        </Highlight>
-      </div>
-    );
-  }
-);
+              </div>
+            ))}
+          </pre>
+          <ScrollBar orientation='vertical' />
+          <ScrollBar orientation='horizontal' />
+        </ScrollArea>
+      )}
+    </Highlight>
+  );
+});
 CodeBlock.displayName = 'CodeBlock';

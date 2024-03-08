@@ -12,52 +12,52 @@ import {
 } from './common';
 import { cn } from '@/lib/utils';
 
-// eslint-disable-next-line react/display-name
-const ListItemButton = forwardRef<
-  HTMLButtonElement,
+export type ListItemProps = ScopedProps<
   ComponentPropsWithoutRef<typeof Primitive.button>
->(({ asChild, className, ...props }, ref) => (
-  <Primitive.button
-    {...props}
-    ref={ref}
-    asChild={asChild}
-    className={cn(
-      !asChild &&
-        `flex min-h-10 w-full cursor-default select-none items-center
+> & { unstyled?: boolean };
+
+export const ListItem = forwardRef<HTMLButtonElement, ListItemProps>(
+  ({ __scopeList, asChild, unstyled, className, ...props }, ref) => {
+    const context = useListContext(LIST_ITEM_NAME, __scopeList);
+    const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeList);
+    const disabled = context.disabled || props.disabled;
+    const rovingFocusItemRef = useRef<HTMLDivElement>(null);
+
+    const itemButton = (
+      <Primitive.button
+        {...props}
+        ref={ref}
+        disabled={disabled}
+        asChild={asChild}
+        className={cn(
+          !unstyled &&
+            `flex min-h-10 w-full cursor-default select-none items-center
 rounded-lg px-4 py-2 text-start text-sm outline-none
 transition-[background-color] duration-100 state-layer
 focus-visible:outline-none focus-visible:state-layer-muted/30
 active:bg-muted/30 active:duration-0
-enabled:hover:state-layer-muted/30 disabled:text-muted [&>*]:z-10`,
-      className
-    )}
-  />
-));
+disabled:text-muted [&:not(:disabled)]:hover:state-layer-muted/30 [&>*]:z-10`,
+          className
+        )}
+      />
+    );
 
-export const ListItem = forwardRef<
-  HTMLButtonElement,
-  ScopedProps<ComponentPropsWithoutRef<typeof Primitive.button>>
->(({ __scopeList, ...props }, ref) => {
-  const context = useListContext(LIST_ITEM_NAME, __scopeList);
-  const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeList);
-  const disabled = context.disabled || props.disabled;
-  const rovingFocusItemRef = useRef<HTMLDivElement>(null);
-
-  return (
-    <li className='p-0'>
-      {context.rovingFocus ? (
-        <RovingFocusGroupItem
-          asChild
-          {...rovingFocusGroupScope}
-          focusable={!disabled}
-          ref={rovingFocusItemRef}
-        >
-          <ListItemButton {...props} ref={ref} disabled={disabled} />
-        </RovingFocusGroupItem>
-      ) : (
-        <ListItemButton {...props} ref={ref} disabled={disabled} />
-      )}
-    </li>
-  );
-});
+    return (
+      <li className='p-0'>
+        {context.rovingFocus ? (
+          <RovingFocusGroupItem
+            asChild
+            {...rovingFocusGroupScope}
+            focusable={!disabled}
+            ref={rovingFocusItemRef}
+          >
+            {itemButton}
+          </RovingFocusGroupItem>
+        ) : (
+          itemButton
+        )}
+      </li>
+    );
+  }
+);
 ListItem.displayName = LIST_ITEM_NAME;

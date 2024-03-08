@@ -16,10 +16,11 @@ const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
   matchUtilities(
     {
       'autofill-override': value => ({
+        '--tw-autofill-override-bg': toColorValue(value),
         '&:-webkit-autofill': {
-          WebkitBoxShadow: `0 0 0px 1000px ${toColorValue(
-            value
-          )} inset !important`,
+          WebkitBoxShadow: `0 0 0px 1000px var(--tw-autofill-override-bg) inset,
+var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+var(--tw-shadow, 0 0 #0000) !important`,
         },
       }),
     },
@@ -91,12 +92,18 @@ const config = {
           to: { height: '0' },
         },
         'collapse-in': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-collapsible-content-height)' },
+          from: { height: '0', overflow: 'hidden' },
+          to: {
+            height: 'var(--radix-collapsible-content-height)',
+            overflow: 'hidden',
+          },
         },
         'collapse-out': {
-          from: { height: 'var(--radix-collapsible-content-height)' },
-          to: { height: '0' },
+          from: {
+            height: 'var(--radix-collapsible-content-height)',
+            overflow: 'hidden',
+          },
+          to: { height: '0', overflow: 'hidden' },
         },
         'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
         'fade-out': { from: { opacity: '1' }, to: { opacity: '0' } },
@@ -190,10 +197,13 @@ const config = {
       ),
 
       border: 'rgb(var(--color-border))',
-      input: 'rgb(var(--color-input))',
       ring: 'rgb(var(--color-ring))',
       background: 'rgb(var(--color-background))',
       foreground: 'rgb(var(--color-foreground))',
+      secondary: {
+        DEFAULT: 'rgb(var(--color-secondary))',
+        foreground: 'rgb(var(--color-secondary-foreground))',
+      },
       muted: {
         DEFAULT: 'rgb(var(--color-muted))',
         foreground: 'rgb(var(--color-muted-foreground))',
@@ -209,6 +219,11 @@ const config = {
       card: {
         DEFAULT: 'rgb(var(--color-card))',
         foreground: 'rgb(var(--color-card-foreground))',
+      },
+      input: {
+        DEFAULT: 'rgb(var(--color-input))',
+        hover: 'rgb(var(--color-input-hover))',
+        invalid: 'rgb(var(--color-input-invalid))',
       },
     },
   },

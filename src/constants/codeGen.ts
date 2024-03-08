@@ -17,7 +17,6 @@ const lab = loadMode(modeLab),
   oklch = loadMode(modeOklch);
 
 export const codeFormats = {
-  none: { displayName: 'None' },
   css: { displayName: 'CSS' },
   scss: { displayName: 'SCSS' },
   json: { displayName: 'JSON' },
