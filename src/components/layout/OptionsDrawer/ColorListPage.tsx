@@ -12,12 +12,7 @@ import { CodeIcon, PlusIcon } from 'lucide-react';
 
 import ColorListItem from './ColorListItem';
 import { DrawerHeader, DrawerTitle } from '@/components/ui/Drawer';
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '@/components/ui/List';
+import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Separator } from '@/components/ui/Separator';
 import { useBaseColors } from '@/hooks/useBaseColors';
@@ -102,7 +97,7 @@ export const ColorListPage = forwardRef<
             <ListItemIcon>
               <PlusIcon />
             </ListItemIcon>
-            <ListItemText primary='Add extra color' />
+            <span>Add extra color</span>
           </ListItem>
 
           {/* Temporary until site nav is implemented */}
@@ -111,7 +106,7 @@ export const ColorListPage = forwardRef<
               <ListItemIcon>
                 <CodeIcon />
               </ListItemIcon>
-              <ListItemText primary='Export as code' />
+              <span>Export as code</span>
             </Link>
           </ListItem>
         </List>

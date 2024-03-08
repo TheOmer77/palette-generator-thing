@@ -351,20 +351,20 @@ text-danger-600 dark:text-danger-300'
         <ListItemIcon>
           <PlusIcon />
         </ListItemIcon>
-        <ListItemText primary='Add extra color' />
+        <span>Add extra color</span>
       </ListItem>
 
       {/* Temporary until site nav is implemented */}
       <div
         className='absolute inset-x-0 bottom-0 z-10 flex h-14 flex-col
-justify-center bg-card px-2'
+        justify-center bg-card px-2'
       >
         <ListItem asChild>
           <Link href={`/codegen?${searchParams.toString()}`} scroll={false}>
             <ListItemIcon>
               <CodeIcon />
             </ListItemIcon>
-            <ListItemText primary='Export as code' />
+            <span>Export as code</span>
           </Link>
         </ListItem>
       </div>

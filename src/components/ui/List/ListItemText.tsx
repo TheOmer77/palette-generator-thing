@@ -2,8 +2,8 @@ import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 import { cn } from '@/lib/utils';
 
 export type ListItemTextProps = ComponentPropsWithoutRef<'div'> & {
-  primary?: string;
-  secondary?: string;
+  primary: string;
+  secondary: string;
 };
 
 export const ListItemText = forwardRef<HTMLDivElement, ListItemTextProps>(
