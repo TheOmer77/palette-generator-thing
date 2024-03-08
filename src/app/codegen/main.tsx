@@ -5,6 +5,7 @@ import { Suspense, useMemo } from 'react';
 import { CodeBlock } from '@/components/ui/CodeBlock';
 import { H2 } from '@/components/ui/Headings';
 import { Select, SelectItem } from '@/components/ui/Select';
+import { Header } from '@/components/layout/Header';
 import { useTheme } from '@/hooks/useTheme';
 import { useCodeGen } from '@/store/useCodeGen';
 import {
@@ -44,13 +45,16 @@ const MainContent = () => {
 
   return (
     <main
-      className='p-4 md:ps-[21rem] [&>*]:mx-auto [&>*]:w-full
+      className='p-4 md:ps-[21rem] print:ps-4 [&>*]:mx-auto [&>*]:w-full
 [&>*]:max-w-screen-lg'
     >
-      <H2 className='break-before-page'>
-        {codeFormats[format].displayName} code
-      </H2>
-      <div className='mb-2 grid grid-cols-1 gap-2 sm:grid-cols-2 md:hidden'>
+      <Header className='mb-6 hidden print:block' />
+
+      <H2>{codeFormats[format].displayName} code</H2>
+      <div
+        className='mb-2 grid grid-cols-1 gap-2 sm:grid-cols-2 md:hidden
+print:hidden'
+      >
         <Select label='Format' value={format} onValueChange={setFormat}>
           {Object.entries(codeFormats).map(([key, { displayName }]) => (
             <SelectItem key={key} value={key}>
@@ -74,7 +78,8 @@ const MainContent = () => {
         language={format}
         className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-11.75rem)]
 sm:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-8.25rem)]
-md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-5rem)]'
+md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-5rem)]
+print:[&>[data-radix-scroll-area-viewport]]:max-h-none'
       >
         {themeCode}
       </CodeBlock>

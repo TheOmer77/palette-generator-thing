@@ -16,7 +16,7 @@ export const CodeGenSidebar = () => {
     setOpenItem(newValue as typeof openItem);
 
   return (
-    <Sidebar className='hidden md:flex print:hidden print:md:flex'>
+    <Sidebar className='hidden md:flex print:hidden'>
       <Header className='px-4 py-2' />
       <ScrollArea className='flex-grow pb-2 print:hidden'>
         <AccordionList value={openItem} onValueChange={handleValueChange}>
