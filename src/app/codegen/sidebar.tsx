@@ -17,7 +17,7 @@ export const CodeGenSidebar = () => {
 
   return (
     <Sidebar className='hidden md:flex print:hidden'>
-      <Header className='px-4 py-2' />
+      <Header className='mb-2 px-4 py-2' />
       <ScrollArea className='flex-grow pb-2 print:hidden'>
         <AccordionList value={openItem} onValueChange={handleValueChange}>
           <CodeGenSidebarContent />
