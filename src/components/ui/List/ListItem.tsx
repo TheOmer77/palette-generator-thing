@@ -19,6 +19,7 @@ import { cn } from '@/lib/utils';
 
 export type ListItemProps = ScopedProps<ComponentPropsWithoutRef<'button'>> & {
   asChild?: boolean;
+  // TODO: Remove unstyled prop when no longer using accordions in sidebar
   unstyled?: boolean;
 };
 
@@ -46,13 +47,15 @@ active:duration-0 disabled:text-muted md:min-h-10 md:text-sm
           className
         )}
       >
-        {Children.map(children, child =>
-          typeof child === 'string' || typeof child === 'number' ? (
-            <span>{child}</span>
-          ) : (
-            child
-          )
-        )}
+        {asChild
+          ? children
+          : Children.map(children, child =>
+              typeof child === 'string' || typeof child === 'number' ? (
+                <span>{child}</span>
+              ) : (
+                child
+              )
+            )}
       </ItemComp>
     );
 
