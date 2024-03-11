@@ -3,7 +3,7 @@
 import { Suspense, useMemo } from 'react';
 
 import { CodeBlock } from '@/components/ui/CodeBlock';
-import { H2 } from '@/components/ui/Headings';
+import { H1 } from '@/components/ui/Headings';
 import { Select, SelectItem } from '@/components/ui/Select';
 import { Header } from '@/components/layout/Header';
 import { useTheme } from '@/hooks/useTheme';
@@ -50,7 +50,7 @@ const MainContent = () => {
     >
       <Header className='mb-6 hidden print:block' />
 
-      <H2>{codeFormats[format].displayName} code</H2>
+      <H1>{codeFormats[format].displayName} code</H1>
       <div
         className='mb-2 grid grid-cols-1 gap-2 sm:grid-cols-2 md:hidden
 print:hidden'

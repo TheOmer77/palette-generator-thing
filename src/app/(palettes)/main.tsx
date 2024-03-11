@@ -2,7 +2,7 @@
 
 import { Suspense, useMemo } from 'react';
 
-import { H2, H3 } from '@/components/ui/Headings';
+import { H1, H2 } from '@/components/ui/Headings';
 import { ColorBlock, ColorGrid } from '@/components/colors';
 import { Header } from '@/components/layout/Header';
 import { useTheme } from '@/hooks/useTheme';
@@ -52,10 +52,10 @@ const MainContent = () => {
     >
       <Header className='mb-6 block md:hidden' />
 
-      <H2>Palettes</H2>
+      <H1>Palettes</H1>
       {colorGrids.map(({ id, title, palette }) => (
         <div key={id} className='break-inside-avoid'>
-          <H3>{title}</H3>
+          <H2>{title}</H2>
           <ColorGrid>
             {palette.map((color, index) => (
               <ColorBlock
