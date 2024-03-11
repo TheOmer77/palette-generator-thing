@@ -1,8 +1,13 @@
 'use client';
 
-import { forwardRef, useRef, type ComponentPropsWithoutRef } from 'react';
+import {
+  Children,
+  forwardRef,
+  useRef,
+  type ComponentPropsWithoutRef,
+} from 'react';
 import { RovingFocusGroupItem } from '@radix-ui/react-roving-focus';
-import { Primitive } from '@radix-ui/react-primitive';
+import { Slot } from '@radix-ui/react-slot';
 
 import {
   LIST_ITEM_NAME,
@@ -12,23 +17,24 @@ import {
 } from './common';
 import { cn } from '@/lib/utils';
 
-export type ListItemProps = ScopedProps<
-  ComponentPropsWithoutRef<typeof Primitive.button>
-> & { unstyled?: boolean };
+export type ListItemProps = ScopedProps<ComponentPropsWithoutRef<'button'>> & {
+  asChild?: boolean;
+  unstyled?: boolean;
+};
 
 export const ListItem = forwardRef<HTMLButtonElement, ListItemProps>(
-  ({ __scopeList, asChild, unstyled, className, ...props }, ref) => {
+  ({ __scopeList, asChild, unstyled, className, children, ...props }, ref) => {
     const context = useListContext(LIST_ITEM_NAME, __scopeList);
     const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeList);
     const disabled = context.disabled || props.disabled;
     const rovingFocusItemRef = useRef<HTMLDivElement>(null);
 
+    const ItemComp = asChild ? Slot : 'button';
     const itemButton = (
-      <Primitive.button
+      <ItemComp
         {...props}
         ref={ref}
         disabled={disabled}
-        asChild={asChild}
         className={cn(
           !unstyled &&
             `flex min-h-12 w-full cursor-default select-none items-center
@@ -39,7 +45,15 @@ active:duration-0 disabled:text-muted md:min-h-10 md:text-sm
 [&:not(:disabled)]:hover:state-layer-muted/30 [&>*]:z-10`,
           className
         )}
-      />
+      >
+        {Children.map(children, child =>
+          typeof child === 'string' || typeof child === 'number' ? (
+            <span>{child}</span>
+          ) : (
+            child
+          )
+        )}
+      </ItemComp>
     );
 
     return (
