@@ -145,10 +145,8 @@ export const OptionsDrawer = () => {
       direction={matchesMd ? 'right' : 'bottom'}
     >
       <DrawerTrigger asChild>
-        <Fab
-          icon={<SlidersHorizontalIcon />}
-          className='flex md:hidden print:hidden'
-        >
+        <Fab className='md:hidden print:hidden'>
+          <SlidersHorizontalIcon />
           Options
         </Fab>
       </DrawerTrigger>
