@@ -9,9 +9,13 @@ export type ListItemTextProps = ComponentPropsWithoutRef<'div'> & {
 export const ListItemText = forwardRef<HTMLDivElement, ListItemTextProps>(
   ({ primary, secondary, className, ...props }, ref) => (
     <div {...props} ref={ref} className={cn(`flex flex-col`, className)}>
-      {primary && <span className='text-sm text-foreground'>{primary}</span>}
+      {primary && (
+        <span className='text-base text-foreground md:text-sm'>{primary}</span>
+      )}
       {secondary && (
-        <span className='text-xs text-muted-foreground'>{secondary}</span>
+        <span className='text-sm text-muted-foreground md:text-xs'>
+          {secondary}
+        </span>
       )}
     </div>
   )

@@ -31,12 +31,12 @@ export const ListItem = forwardRef<HTMLButtonElement, ListItemProps>(
         asChild={asChild}
         className={cn(
           !unstyled &&
-            `flex min-h-10 w-full cursor-default select-none items-center
-rounded-lg px-4 py-2 text-start text-sm outline-none
+            `flex min-h-12 w-full cursor-default select-none items-center
+rounded-lg px-4 py-2 text-start text-base outline-none
 transition-[background-color] duration-100 state-layer
-focus-visible:outline-none focus-visible:state-layer-muted/30
-active:bg-muted/30 active:duration-0
-disabled:text-muted [&:not(:disabled)]:hover:state-layer-muted/30 [&>*]:z-10`,
+focus-visible:outline-none focus-visible:state-layer-muted/30 active:bg-muted/30
+active:duration-0 disabled:text-muted md:min-h-10 md:text-sm
+[&:not(:disabled)]:hover:state-layer-muted/30 [&>*]:z-10`,
           className
         )}
       />

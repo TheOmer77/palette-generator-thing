@@ -10,7 +10,7 @@ export const ListItemIcon = forwardRef<
     {...props}
     ref={ref}
     asChild
-    className={cn(`me-4 text-lg`, className)}
+    className={cn(`me-6 text-lg md:me-4 md:text-base`, className)}
   >
     {children}
   </Primitive.svg>
