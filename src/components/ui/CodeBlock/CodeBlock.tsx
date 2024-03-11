@@ -45,7 +45,7 @@ export const CodeBlock = forwardRef<
         <ScrollArea
           {...props}
           ref={ref}
-          className={cn('relative rounded-lg bg-card', className)}
+          className={cn('relative grid rounded-lg bg-card', className)}
         >
           <Tooltip content='Copy code'>
             <IconButton

@@ -45,8 +45,8 @@ const MainContent = () => {
 
   return (
     <main
-      className='p-4 md:ps-[21rem] print:ps-4 [&>*]:mx-auto [&>*]:w-full
-[&>*]:max-w-screen-lg'
+      className='flex max-h-dvh min-h-dvh flex-col p-4 md:ps-[21rem] print:ps-4 [&>*]:mx-auto
+[&>*]:w-full [&>*]:max-w-screen-lg'
     >
       <Header className='mb-6 hidden print:block' />
 
@@ -74,13 +74,7 @@ print:hidden'
           ))}
         </Select>
       </div>
-      <CodeBlock
-        language={format}
-        className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-11.75rem)]
-sm:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-8.25rem)]
-md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-5rem)]
-print:[&>[data-radix-scroll-area-viewport]]:max-h-none'
-      >
+      <CodeBlock language={format} className='grow'>
         {themeCode}
       </CodeBlock>
     </main>
