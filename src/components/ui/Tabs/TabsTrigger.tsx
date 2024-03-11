@@ -18,7 +18,7 @@ export const TabsTrigger = forwardRef<
     className={cn(
       `inline-flex cursor-default items-center justify-center whitespace-nowrap
 rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all
-state-layer data-[state=active]:bg-background
+duration-100 state-layer data-[state=active]:bg-background
 data-[state=active]:text-foreground data-[state=active]:shadow-sm
 hover:state-layer-foreground/5 focus-visible:outline-none focus-visible:ring-2
 focus-visible:ring-ring focus-visible:ring-offset-2 active:bg-foreground/10
