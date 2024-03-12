@@ -1,8 +1,8 @@
 import { forwardRef, useCallback, useState, type ElementRef } from 'react';
 import { useDebounceCallback } from 'usehooks-ts';
 
+import { ColorInput, type ColorInputProps } from '@/components/ui/ColorInput';
 import { ColorPicker } from '@/components/ui/ColorPicker';
-import { ColorInput, type ColorInputProps } from '@/components/colors';
 import { cn } from '@/lib/utils';
 
 type DebouncedColorPickerProps = Omit<ColorInputProps, 'value'> & {

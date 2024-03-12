@@ -9,15 +9,15 @@ import {
   type AccordionListItemProps,
 } from '@/components/ui/AccordionList';
 import { Collapsible } from '@/components/ui/Collapsible';
+import { ColorInput } from '@/components/ui/ColorInput';
 import { Input } from '@/components/ui/Input';
 import { ListItem, ListItemIcon, ListItemText } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import {
-  ColorInput,
   ColorSuggestion,
   ColorSuggestionsBox,
-} from '@/components/colors';
+} from '@/components/layout/ColorSuggestions';
 import RadioListItem from '@/components/layout/RadioListItem';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
