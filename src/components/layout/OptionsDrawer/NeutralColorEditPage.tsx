@@ -10,7 +10,10 @@ import { ColorEditPage } from './ColorEditPage';
 import { DebouncedColorPicker } from './DebouncedColorPicker';
 import { ListSubheader } from '@/components/ui/List';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
-import { ColorSuggestion, ColorSuggestionsBox } from '@/components/colors';
+import {
+  ColorSuggestion,
+  ColorSuggestionsBox,
+} from '@/components/layout/ColorSuggestions';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { getAutoNeutralColor } from '@/lib/colorUtils';
