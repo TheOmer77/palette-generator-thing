@@ -1,6 +1,6 @@
 import { PalettesMain } from './main';
 import { PalettesSidebar } from './sidebar';
-import { OptionsDrawer } from '@/components/layout';
+import { OptionsDrawer } from '@/components/layout/OptionsDrawer';
 import { validateSearchParams } from '@/lib/validateSearchParams';
 import type { PropsWithSearchParams } from '@/types/searchParams';
 
