@@ -9,7 +9,7 @@ export const H2 = forwardRef<
     {...props}
     ref={ref}
     className={cn(
-      `mb-2 select-none text-3xl font-bold tracking-tight`,
+      'mb-2 select-none text-xl font-medium text-muted-foreground',
       className
     )}
   >

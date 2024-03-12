@@ -1,19 +1,19 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 import { cn } from '@/lib/utils';
 
-export const H3 = forwardRef<
+export const H1 = forwardRef<
   HTMLHeadingElement,
-  ComponentPropsWithoutRef<'h3'>
+  ComponentPropsWithoutRef<'h1'>
 >(({ children, className, ...props }, ref) => (
-  <h3
+  <h1
     {...props}
     ref={ref}
     className={cn(
-      'mb-2 select-none text-lg font-medium text-muted-foreground',
+      `mb-2 select-none text-3xl font-bold tracking-tight`,
       className
     )}
   >
     {children}
-  </h3>
+  </h1>
 ));
-H3.displayName = 'H3';
+H1.displayName = 'H1';

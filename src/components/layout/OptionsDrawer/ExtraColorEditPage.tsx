@@ -16,7 +16,10 @@ import {
   ListSubheader,
 } from '@/components/ui/List';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
-import { ColorSuggestion, ColorSuggestionsBox } from '@/components/colors';
+import {
+  ColorSuggestion,
+  ColorSuggestionsBox,
+} from '@/components/layout/ColorSuggestions';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { cn } from '@/lib/utils';
@@ -116,8 +119,8 @@ export const ExtraColorEditPage = forwardRef<
         </TabsContent>
       </Tabs>
       <List
-        className='absolute inset-x-0 bottom-0 z-10 h-14 justify-center
-bg-background dark:bg-card'
+        className='absolute inset-x-0 bottom-0 z-10 justify-center
+bg-background p-2 dark:bg-card'
       >
         <ListItem onClick={handleRemove}>
           <ListItemIcon>

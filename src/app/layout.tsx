@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Figtree, Fira_Code } from 'next/font/google';
 import clsx from 'clsx';
 
-import { ThemeStyle } from '@/components/layout';
+import { ThemeStyle } from '@/components/layout/ThemeStyle';
 import '@/styles/index.css';
 
 const font = Figtree({

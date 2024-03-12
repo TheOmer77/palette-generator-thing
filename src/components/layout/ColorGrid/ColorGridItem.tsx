@@ -15,7 +15,7 @@ export type ColorBlockProps = ComponentPropsWithoutRef<'button'> & {
   label?: string;
 };
 
-export const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
+export const ColorGridItem = forwardRef<HTMLButtonElement, ColorBlockProps>(
   ({ value, label, style, ...props }, ref) => {
     const [justCopied, setJustCopied] = useState(false);
     const Icon = justCopied ? CheckIcon : CopyIcon;
@@ -53,24 +53,26 @@ active:after:duration-0`,
         >
           <Icon
             className={cn(
-              'absolute end-2 print:hidden',
+              'absolute end-2 text-lg md:text-base print:hidden',
               isHexColorLight(value) ? 'text-black/60' : 'text-white/60'
             )}
           />
           {label && (
             <span
               className={cn(
-                `mt-1 text-xs leading-4`,
+                `mt-1 text-sm leading-4 md:text-xs print:text-xs`,
                 isHexColorLight(value) ? 'text-black/60' : 'text-white/60'
               )}
             >
               {label}
             </span>
           )}
-          <span className='text-base font-medium'>{value}</span>
+          <span className='text-lg font-medium md:text-base print:text-base'>
+            {value}
+          </span>
         </button>
       </Tooltip>
     );
   }
 );
-ColorBlock.displayName = 'ColorBlock';
+ColorGridItem.displayName = 'ColorGridItem';

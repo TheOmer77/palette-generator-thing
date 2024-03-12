@@ -3,7 +3,7 @@
 import { Suspense, useMemo } from 'react';
 
 import { CodeBlock } from '@/components/ui/CodeBlock';
-import { H2 } from '@/components/ui/Headings';
+import { H1 } from '@/components/ui/Headings';
 import { Select, SelectItem } from '@/components/ui/Select';
 import { Header } from '@/components/layout/Header';
 import { useTheme } from '@/hooks/useTheme';
@@ -45,12 +45,12 @@ const MainContent = () => {
 
   return (
     <main
-      className='p-4 md:ps-[21rem] print:ps-4 [&>*]:mx-auto [&>*]:w-full
-[&>*]:max-w-screen-lg'
+      className='flex max-h-dvh min-h-dvh flex-col p-4 md:ps-[21rem] print:ps-4 [&>*]:mx-auto
+[&>*]:w-full [&>*]:max-w-screen-lg'
     >
       <Header className='mb-6 hidden print:block' />
 
-      <H2>{codeFormats[format].displayName} code</H2>
+      <H1>{codeFormats[format].displayName} code</H1>
       <div
         className='mb-2 grid grid-cols-1 gap-2 sm:grid-cols-2 md:hidden
 print:hidden'
@@ -74,13 +74,7 @@ print:hidden'
           ))}
         </Select>
       </div>
-      <CodeBlock
-        language={format}
-        className='[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-11.75rem)]
-sm:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-8.25rem)]
-md:[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-5rem)]
-print:[&>[data-radix-scroll-area-viewport]]:max-h-none'
-      >
+      <CodeBlock language={format} className='grow'>
         {themeCode}
       </CodeBlock>
     </main>
