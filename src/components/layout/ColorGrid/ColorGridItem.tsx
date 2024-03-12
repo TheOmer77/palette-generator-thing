@@ -60,14 +60,16 @@ active:after:duration-0`,
           {label && (
             <span
               className={cn(
-                `mt-1 text-sm leading-4 md:text-xs`,
+                `mt-1 text-sm leading-4 md:text-xs print:text-xs`,
                 isHexColorLight(value) ? 'text-black/60' : 'text-white/60'
               )}
             >
               {label}
             </span>
           )}
-          <span className='text-lg font-medium md:text-base'>{value}</span>
+          <span className='text-lg font-medium md:text-base print:text-base'>
+            {value}
+          </span>
         </button>
       </Tooltip>
     );
