@@ -3,7 +3,7 @@
 import { Suspense, useMemo } from 'react';
 
 import { H1, H2 } from '@/components/ui/Headings';
-import { ColorBlock, ColorGrid } from '@/components/colors';
+import { ColorGridItem, ColorGrid } from '@/components/layout/ColorGrid';
 import { Header } from '@/components/layout/Header';
 import { useTheme } from '@/hooks/useTheme';
 import { generatePalette } from '@/lib/colorUtils';
@@ -58,7 +58,7 @@ const MainContent = () => {
           <H2>{title}</H2>
           <ColorGrid>
             {palette.map((color, index) => (
-              <ColorBlock
+              <ColorGridItem
                 key={color}
                 value={color}
                 label={shades[index].toString()}

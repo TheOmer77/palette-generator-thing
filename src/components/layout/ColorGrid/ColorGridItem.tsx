@@ -15,7 +15,7 @@ export type ColorBlockProps = ComponentPropsWithoutRef<'button'> & {
   label?: string;
 };
 
-export const ColorBlock = forwardRef<HTMLButtonElement, ColorBlockProps>(
+export const ColorGridItem = forwardRef<HTMLButtonElement, ColorBlockProps>(
   ({ value, label, style, ...props }, ref) => {
     const [justCopied, setJustCopied] = useState(false);
     const Icon = justCopied ? CheckIcon : CopyIcon;
@@ -73,4 +73,4 @@ active:after:duration-0`,
     );
   }
 );
-ColorBlock.displayName = 'ColorBlock';
+ColorGridItem.displayName = 'ColorGridItem';
