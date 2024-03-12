@@ -3,13 +3,13 @@ import { cn } from '@/lib/utils';
 
 export const H1 = forwardRef<
   HTMLHeadingElement,
-  ComponentPropsWithoutRef<'h2'>
+  ComponentPropsWithoutRef<'h1'>
 >(({ children, className, ...props }, ref) => (
   <h1
     {...props}
     ref={ref}
     className={cn(
-      `mb-2 select-none text-4xl font-bold tracking-tight md:text-3xl`,
+      `mb-2 select-none text-3xl font-bold tracking-tight`,
       className
     )}
   >
