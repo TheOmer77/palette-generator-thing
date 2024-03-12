@@ -24,7 +24,7 @@ shadow-primary-800/50 transition-[color,background-color] duration-100
 state-layer hover:state-layer-primary-500/10 focus-visible:bg-primary-100
 focus-visible:outline-none active:bg-primary-100 active:duration-0 md:text-sm
 dark:bg-primary-800 dark:text-primary-200 dark:focus-visible:bg-primary-700
-dark:active:bg-primary-700 [&>svg]:text-lg md:[&>svg]:text-base`,
+dark:active:bg-primary-700 [&>*]:z-10 [&>svg]:text-lg md:[&>svg]:text-base`,
         className
       )}
     >

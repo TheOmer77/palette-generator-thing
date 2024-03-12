@@ -147,7 +147,7 @@ export const OptionsDrawer = () => {
       <DrawerTrigger asChild>
         <Fab className='md:hidden print:hidden'>
           <SlidersHorizontalIcon />
-          Options
+          <span>Options</span>
         </Fab>
       </DrawerTrigger>
       <DrawerContent
