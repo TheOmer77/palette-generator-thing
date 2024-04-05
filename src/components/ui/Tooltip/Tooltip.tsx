@@ -29,7 +29,7 @@ export const Tooltip = ({
         <TooltipContent
           side={side}
           className={cn(
-            `z-30 select-none rounded-lg bg-popover p-2 text-xs leading-none
+            `z-[60] select-none rounded-lg bg-popover p-2 text-xs leading-none
 text-popover-foreground shadow-sm shadow-neutral-950/25
 will-change-[transform,opacity] data-[state=closed]:animate-tooltip-out
 data-[state=delayed-open]:animate-tooltip-in
