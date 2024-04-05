@@ -1,23 +1,21 @@
 'use client';
 
+import { Fragment } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { CodeIcon, PlusIcon, TrashIcon } from 'lucide-react';
 
-import {
-  AccordionListItem,
-  type AccordionListItemProps,
-} from '@/components/ui/AccordionList';
 import { Collapsible } from '@/components/ui/Collapsible';
 import { ColorInput } from '@/components/ui/ColorInput';
 import { Input } from '@/components/ui/Input';
-import { ListItem, ListItemIcon, ListItemText } from '@/components/ui/List';
+import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import {
   ColorSuggestion,
   ColorSuggestionsBox,
 } from '@/components/layout/ColorSuggestions';
+import ColorListItem from '@/components/layout/OptionsDrawer/ColorListItem';
 import RadioListItem from '@/components/layout/RadioListItem';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
@@ -40,35 +38,6 @@ import type {
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 const ERROR_RESERVED_NAME = 'This name is reserved.',
   ERROR_DUPLICATE_NAME = "This name can't be used by multiple colors.";
-
-type ColorListItemProps = AccordionListItemProps & {
-  value: string;
-  color: string;
-  title: string;
-};
-
-const ColorListItem = ({
-  value,
-  color,
-  title,
-  ...props
-}: ColorListItemProps) => (
-  <AccordionListItem
-    {...props}
-    value={value}
-    // Hex color has spaces so it's read correctly by screen readers
-    aria-label={`${title} - ${color.split('').join(' ')}`}
-    title={
-      <>
-        <div
-          className='me-3 h-8 w-8 shrink-0 rounded-lg'
-          style={{ backgroundColor: color }}
-        />
-        <ListItemText primary={title} secondary={color} />
-      </>
-    }
-  />
-);
 
 export const PalettesSidebarContent = () => {
   const {
@@ -102,26 +71,30 @@ export const PalettesSidebarContent = () => {
       !dangerColorSuggestionNames.includes(danger);
 
   return (
-    <>
+    <List>
       <ColorListItem
         value='primary'
         color={themeColors.primary}
         title='Primary'
-      >
-        <div className='p-2'>
-          <ListItem asChild unstyled>
-            <ColorInput
-              id='input-primary-color'
-              value={primary}
-              onChange={setPrimary}
-              withRandomBtn
-            />
-          </ListItem>
-        </div>
-      </ColorListItem>
+      />
 
+      <div className='p-2'>
+        <ListItem asChild unstyled>
+          <ColorInput
+            id='input-primary-color'
+            value={primary}
+            onChange={setPrimary}
+            withRandomBtn
+          />
+        </ListItem>
+      </div>
+
+      <ColorListItem
+        value='neutral'
+        color={themeColors.neutral}
+        title='Neutral'
+      />
       <RadioGroup
-        asChild
         value={
           neutralIsAuto
             ? 'auto'
@@ -144,46 +117,40 @@ export const PalettesSidebarContent = () => {
           )
         }
       >
-        <ColorListItem
-          value='neutral'
-          color={themeColors.neutral}
-          title='Neutral'
-        >
-          <RadioListItem value='auto'>Auto</RadioListItem>
-          <RadioListItem value='suggestions'>Suggestions</RadioListItem>
-          <Collapsible open={neutralIsSuggestion}>
-            <ColorSuggestionsBox
-              value={neutral as NeutralColorSuggestion}
-              onValueChange={setNeutral}
-              className='pe-4 ps-[3.25rem]'
-            >
-              {Object.entries(neutralColorSuggestions).map(
-                ([value, variantFn]) => (
-                  <ListItem key={value} asChild unstyled>
-                    <ColorSuggestion value={value} color={variantFn(primary)} />
-                  </ListItem>
-                )
-              )}
-            </ColorSuggestionsBox>
-          </Collapsible>
-          <RadioListItem value='custom'>Custom</RadioListItem>
-          <Collapsible open={neutralIsCustom}>
-            <div className='p-2'>
-              <ListItem asChild unstyled>
-                <ColorInput
-                  id='input-neutral-color'
-                  value={neutral || ''}
-                  onChange={setNeutral}
-                  withRandomBtn
-                />
-              </ListItem>
-            </div>
-          </Collapsible>
-        </ColorListItem>
+        <RadioListItem value='auto'>Auto</RadioListItem>
+        <RadioListItem value='suggestions'>Suggestions</RadioListItem>
+        <Collapsible open={neutralIsSuggestion}>
+          <ColorSuggestionsBox
+            value={neutral as NeutralColorSuggestion}
+            onValueChange={setNeutral}
+            className='pe-4 ps-[3.25rem]'
+          >
+            {Object.entries(neutralColorSuggestions).map(
+              ([value, variantFn]) => (
+                <ListItem key={value} asChild unstyled>
+                  <ColorSuggestion value={value} color={variantFn(primary)} />
+                </ListItem>
+              )
+            )}
+          </ColorSuggestionsBox>
+        </Collapsible>
+        <RadioListItem value='custom'>Custom</RadioListItem>
+        <Collapsible open={neutralIsCustom}>
+          <div className='p-2'>
+            <ListItem asChild unstyled>
+              <ColorInput
+                id='input-neutral-color'
+                value={neutral || ''}
+                onChange={setNeutral}
+                withRandomBtn
+              />
+            </ListItem>
+          </div>
+        </Collapsible>
       </RadioGroup>
 
+      <ColorListItem value='danger' color={themeColors.danger} title='Danger' />
       <RadioGroup
-        asChild
         value={
           dangerIsAuto
             ? 'auto'
@@ -206,43 +173,36 @@ export const PalettesSidebarContent = () => {
           )
         }
       >
-        <ColorListItem
-          value='danger'
-          color={themeColors.danger}
-          title='Danger'
-          role='radiogroup'
-        >
-          <RadioListItem value='auto'>Auto</RadioListItem>
-          <RadioListItem value='suggestions'>Suggestions</RadioListItem>
-          <Collapsible open={dangerIsSuggestion}>
-            <ColorSuggestionsBox
-              value={danger as DangerColorSuggestion}
-              onValueChange={setDanger}
-              className='pe-4 ps-[3.25rem]'
-            >
-              {Object.entries(dangerColorSuggestions).map(
-                ([value, variantFn]) => (
-                  <ListItem key={value} asChild unstyled>
-                    <ColorSuggestion value={value} color={variantFn(primary)} />
-                  </ListItem>
-                )
-              )}
-            </ColorSuggestionsBox>
-          </Collapsible>
-          <RadioListItem value='custom'>Custom</RadioListItem>
-          <Collapsible open={dangerIsCustom}>
-            <div className='p-2'>
-              <ListItem asChild unstyled>
-                <ColorInput
-                  id='input-danger-color'
-                  value={danger || ''}
-                  onChange={setDanger}
-                  withRandomBtn
-                />
-              </ListItem>
-            </div>
-          </Collapsible>
-        </ColorListItem>
+        <RadioListItem value='auto'>Auto</RadioListItem>
+        <RadioListItem value='suggestions'>Suggestions</RadioListItem>
+        <Collapsible open={dangerIsSuggestion}>
+          <ColorSuggestionsBox
+            value={danger as DangerColorSuggestion}
+            onValueChange={setDanger}
+            className='pe-4 ps-[3.25rem]'
+          >
+            {Object.entries(dangerColorSuggestions).map(
+              ([value, variantFn]) => (
+                <ListItem key={value} asChild unstyled>
+                  <ColorSuggestion value={value} color={variantFn(primary)} />
+                </ListItem>
+              )
+            )}
+          </ColorSuggestionsBox>
+        </Collapsible>
+        <RadioListItem value='custom'>Custom</RadioListItem>
+        <Collapsible open={dangerIsCustom}>
+          <div className='p-2'>
+            <ListItem asChild unstyled>
+              <ColorInput
+                id='input-danger-color'
+                value={danger || ''}
+                onChange={setDanger}
+                withRandomBtn
+              />
+            </ListItem>
+          </div>
+        </Collapsible>
       </RadioGroup>
 
       <Separator />
@@ -264,12 +224,12 @@ export const PalettesSidebarContent = () => {
             ).length > 1;
 
         return (
-          <ColorListItem
-            key={id}
-            value={id}
-            color={themeColors.extras[index].value}
-            title={title}
-          >
+          <Fragment key={id}>
+            <ColorListItem
+              value={id}
+              color={themeColors.extras[index].value}
+              title={title}
+            />
             <div className='m-2'>
               <ListItem asChild unstyled>
                 <Input
@@ -344,7 +304,7 @@ text-danger-600 dark:text-danger-300'
               </ListItemIcon>
               Remove
             </ListItem>
-          </ColorListItem>
+          </Fragment>
         );
       })}
       <ListItem onClick={addExtraColor} className='mb-2'>
@@ -368,6 +328,6 @@ text-danger-600 dark:text-danger-300'
           </Link>
         </ListItem>
       </div>
-    </>
+    </List>
   );
 };
