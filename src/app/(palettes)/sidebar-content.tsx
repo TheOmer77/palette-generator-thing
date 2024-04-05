@@ -88,121 +88,143 @@ export const PalettesSidebarContent = () => {
         </PopoverContent>
       </Popover>
 
-      <ColorListItem
-        value='neutral'
-        color={themeColors.neutral}
-        title='Neutral'
-      />
-      <RadioGroup
-        value={
-          neutralIsAuto
-            ? 'auto'
-            : neutralIsSuggestion
-              ? 'suggestions'
-              : neutralIsCustom
-                ? 'custom'
-                : undefined
-        }
-        onValueChange={newValue =>
-          ((newValue === 'auto' && !neutralIsAuto) ||
-            (newValue === 'suggestions' && !neutralIsSuggestion) ||
-            (newValue === 'custom' && !neutralIsCustom)) &&
-          setNeutral(
-            newValue === 'suggestions'
-              ? neutralColorSuggestionNames[0]
-              : newValue === 'custom'
-                ? getAutoNeutralColor(primary)
-                : null
-          )
-        }
-      >
-        <RadioListItem value='auto'>Auto</RadioListItem>
-        <RadioListItem value='suggestions'>Suggestions</RadioListItem>
-        <Collapsible open={neutralIsSuggestion}>
-          <ColorSuggestionsBox
-            value={neutral as NeutralColorSuggestion}
-            onValueChange={setNeutral}
-            className='pe-4 ps-[3.25rem]'
-          >
-            {Object.entries(neutralColorSuggestions).map(
-              ([value, variantFn]) => (
-                <ListItem key={value} asChild unstyled>
-                  <ColorSuggestion value={value} color={variantFn(primary)} />
-                </ListItem>
+      <Popover modal>
+        <PopoverTrigger asChild>
+          <ColorListItem
+            value='neutral'
+            color={themeColors.neutral}
+            title='Neutral'
+          />
+        </PopoverTrigger>
+        <PopoverContent side='right' align='start'>
+          <RadioGroup
+            value={
+              neutralIsAuto
+                ? 'auto'
+                : neutralIsSuggestion
+                  ? 'suggestions'
+                  : neutralIsCustom
+                    ? 'custom'
+                    : undefined
+            }
+            onValueChange={newValue =>
+              ((newValue === 'auto' && !neutralIsAuto) ||
+                (newValue === 'suggestions' && !neutralIsSuggestion) ||
+                (newValue === 'custom' && !neutralIsCustom)) &&
+              setNeutral(
+                newValue === 'suggestions'
+                  ? neutralColorSuggestionNames[0]
+                  : newValue === 'custom'
+                    ? getAutoNeutralColor(primary)
+                    : null
               )
-            )}
-          </ColorSuggestionsBox>
-        </Collapsible>
-        <RadioListItem value='custom'>Custom</RadioListItem>
-        <Collapsible open={neutralIsCustom}>
-          <div className='p-2'>
-            <ListItem asChild unstyled>
-              <ColorInput
-                id='input-neutral-color'
-                value={neutral || ''}
-                onChange={setNeutral}
-                withRandomBtn
-              />
-            </ListItem>
-          </div>
-        </Collapsible>
-      </RadioGroup>
+            }
+          >
+            <RadioListItem value='auto'>Auto</RadioListItem>
+            <RadioListItem value='suggestions'>Suggestions</RadioListItem>
+            <Collapsible open={neutralIsSuggestion}>
+              <ColorSuggestionsBox
+                value={neutral as NeutralColorSuggestion}
+                onValueChange={setNeutral}
+                className='pe-4 ps-[3.25rem]'
+              >
+                {Object.entries(neutralColorSuggestions).map(
+                  ([value, variantFn]) => (
+                    <ListItem key={value} asChild unstyled>
+                      <ColorSuggestion
+                        value={value}
+                        color={variantFn(primary)}
+                      />
+                    </ListItem>
+                  )
+                )}
+              </ColorSuggestionsBox>
+            </Collapsible>
+            <RadioListItem value='custom'>Custom</RadioListItem>
+            <Collapsible open={neutralIsCustom}>
+              <div className='p-2'>
+                <ListItem asChild unstyled>
+                  <ColorInput
+                    id='input-neutral-color'
+                    value={neutral || ''}
+                    onChange={setNeutral}
+                    withRandomBtn
+                  />
+                </ListItem>
+              </div>
+            </Collapsible>
+          </RadioGroup>
+        </PopoverContent>
+      </Popover>
 
-      <ColorListItem value='danger' color={themeColors.danger} title='Danger' />
-      <RadioGroup
-        value={
-          dangerIsAuto
-            ? 'auto'
-            : dangerIsSuggestion
-              ? 'suggestions'
-              : dangerIsCustom
-                ? 'custom'
-                : undefined
-        }
-        onValueChange={newValue =>
-          ((newValue === 'auto' && !dangerIsAuto) ||
-            (newValue === 'suggestions' && !dangerIsSuggestion) ||
-            (newValue === 'custom' && !dangerIsCustom)) &&
-          setDanger(
-            newValue === 'suggestions'
-              ? dangerColorSuggestionNames[0]
-              : newValue === 'custom'
-                ? getAutoDangerColor(primary)
-                : null
-          )
-        }
-      >
-        <RadioListItem value='auto'>Auto</RadioListItem>
-        <RadioListItem value='suggestions'>Suggestions</RadioListItem>
-        <Collapsible open={dangerIsSuggestion}>
-          <ColorSuggestionsBox
-            value={danger as DangerColorSuggestion}
-            onValueChange={setDanger}
-            className='pe-4 ps-[3.25rem]'
-          >
-            {Object.entries(dangerColorSuggestions).map(
-              ([value, variantFn]) => (
-                <ListItem key={value} asChild unstyled>
-                  <ColorSuggestion value={value} color={variantFn(primary)} />
-                </ListItem>
+      <Popover modal>
+        <PopoverTrigger asChild>
+          <ColorListItem
+            value='danger'
+            color={themeColors.danger}
+            title='Danger'
+          />
+        </PopoverTrigger>
+        <PopoverContent side='right' align='start'>
+          <RadioGroup
+            value={
+              dangerIsAuto
+                ? 'auto'
+                : dangerIsSuggestion
+                  ? 'suggestions'
+                  : dangerIsCustom
+                    ? 'custom'
+                    : undefined
+            }
+            onValueChange={newValue =>
+              ((newValue === 'auto' && !dangerIsAuto) ||
+                (newValue === 'suggestions' && !dangerIsSuggestion) ||
+                (newValue === 'custom' && !dangerIsCustom)) &&
+              setDanger(
+                newValue === 'suggestions'
+                  ? dangerColorSuggestionNames[0]
+                  : newValue === 'custom'
+                    ? getAutoDangerColor(primary)
+                    : null
               )
-            )}
-          </ColorSuggestionsBox>
-        </Collapsible>
-        <RadioListItem value='custom'>Custom</RadioListItem>
-        <Collapsible open={dangerIsCustom}>
-          <div className='p-2'>
-            <ListItem asChild unstyled>
-              <ColorInput
-                id='input-danger-color'
-                value={danger || ''}
-                onChange={setDanger}
-                withRandomBtn
-              />
-            </ListItem>
-          </div>
-        </Collapsible>
-      </RadioGroup>
+            }
+          >
+            <RadioListItem value='auto'>Auto</RadioListItem>
+            <RadioListItem value='suggestions'>Suggestions</RadioListItem>
+            <Collapsible open={dangerIsSuggestion}>
+              <ColorSuggestionsBox
+                value={danger as DangerColorSuggestion}
+                onValueChange={setDanger}
+                className='pe-4 ps-[3.25rem]'
+              >
+                {Object.entries(dangerColorSuggestions).map(
+                  ([value, variantFn]) => (
+                    <ListItem key={value} asChild unstyled>
+                      <ColorSuggestion
+                        value={value}
+                        color={variantFn(primary)}
+                      />
+                    </ListItem>
+                  )
+                )}
+              </ColorSuggestionsBox>
+            </Collapsible>
+            <RadioListItem value='custom'>Custom</RadioListItem>
+            <Collapsible open={dangerIsCustom}>
+              <div className='p-2'>
+                <ListItem asChild unstyled>
+                  <ColorInput
+                    id='input-danger-color'
+                    value={danger || ''}
+                    onChange={setDanger}
+                    withRandomBtn
+                  />
+                </ListItem>
+              </div>
+            </Collapsible>
+          </RadioGroup>
+        </PopoverContent>
+      </Popover>
 
       <Separator />
       {extras.map(({ name, value }, index) => {
