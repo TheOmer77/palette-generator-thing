@@ -15,11 +15,11 @@ import {
   neutralColorSuggestionNames,
   neutralColorSuggestions,
 } from '@/constants/colorSuggestions';
-import type { NeutralColorSuggestion } from '@/types/defaultSuggestions';
 import {
   MODAL_BASECOLORS_EDIT,
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
+import type { NeutralColorSuggestion } from '@/types/defaultSuggestions';
 
 export const NeutralColorEditor = () => {
   const { primary, neutral: initialNeutral, setNeutral } = useBaseColors();
