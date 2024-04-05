@@ -2,12 +2,16 @@ import type { ComponentPropsWithoutRef } from 'react';
 
 import { ListItem, ListItemText } from '@/components/ui/List';
 
-type ColorListItemProps = ComponentPropsWithoutRef<typeof ListItem> & {
+export type ColorListItemProps = ComponentPropsWithoutRef<typeof ListItem> & {
   color: string;
   title: string;
 };
 
-const ColorListItem = ({ color, title, ...props }: ColorListItemProps) => (
+export const ColorListItem = ({
+  color,
+  title,
+  ...props
+}: ColorListItemProps) => (
   <ListItem
     {...props}
     // Hex color has spaces so it's read correctly by screen readers
@@ -20,5 +24,3 @@ const ColorListItem = ({ color, title, ...props }: ColorListItemProps) => (
     <ListItemText primary={title} secondary={color} />
   </ListItem>
 );
-
-export default ColorListItem;

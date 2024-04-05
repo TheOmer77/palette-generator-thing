@@ -11,11 +11,11 @@ import { Input } from '@/components/ui/Input';
 import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
+import { ColorListItem } from '@/components/layout/BaseColors';
 import {
   ColorSuggestion,
   ColorSuggestionsBox,
 } from '@/components/layout/ColorSuggestions';
-import ColorListItem from '@/components/layout/OptionsDrawer/ColorListItem';
 import RadioListItem from '@/components/layout/RadioListItem';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';

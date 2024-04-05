@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { CodeIcon, PlusIcon } from 'lucide-react';
 
-import ColorListItem from './ColorListItem';
+import { ColorListItem } from '@/components/layout/BaseColors';
 import { DrawerHeader, DrawerTitle } from '@/components/ui/Drawer';
 import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import { ScrollArea } from '@/components/ui/ScrollArea';
