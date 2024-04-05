@@ -18,6 +18,7 @@ import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import {
   ColorListItem,
+  NeutralColorEditor,
   PrimaryColorEditor,
 } from '@/components/layout/BaseColors';
 import {
@@ -27,20 +28,17 @@ import {
 import RadioListItem from '@/components/layout/RadioListItem';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
-import { getAutoDangerColor, getAutoNeutralColor } from '@/lib/colorUtils';
+import { getAutoDangerColor } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
 import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
   generalColorSuggestionNames,
   generalColorSuggestions,
-  neutralColorSuggestionNames,
-  neutralColorSuggestions,
 } from '@/constants';
 import type {
   DangerColorSuggestion,
   GeneralColorSuggestion,
-  NeutralColorSuggestion,
 } from '@/types/defaultSuggestions';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
@@ -50,10 +48,8 @@ const ERROR_RESERVED_NAME = 'This name is reserved.',
 export const PalettesSidebarContent = () => {
   const {
       primary,
-      neutral,
       danger,
       extras,
-      setNeutral,
       setDanger,
       addExtraColor,
       removeExtraColor,
@@ -63,13 +59,6 @@ export const PalettesSidebarContent = () => {
     themeColors = useTheme();
   const searchParams = useSearchParams();
 
-  const neutralIsAuto = neutral === null,
-    neutralIsSuggestion =
-      typeof neutral === 'string' &&
-      neutralColorSuggestionNames.includes(neutral),
-    neutralIsCustom =
-      typeof neutral === 'string' &&
-      !neutralColorSuggestionNames.includes(neutral);
   const dangerIsAuto = danger === null,
     dangerIsSuggestion =
       typeof danger === 'string' && dangerColorSuggestionNames.includes(danger),
@@ -97,63 +86,7 @@ export const PalettesSidebarContent = () => {
           />
         </PopoverTrigger>
         <PopoverContent side='right' align='start'>
-          <RadioGroup
-            value={
-              neutralIsAuto
-                ? 'auto'
-                : neutralIsSuggestion
-                  ? 'suggestions'
-                  : neutralIsCustom
-                    ? 'custom'
-                    : undefined
-            }
-            onValueChange={newValue =>
-              ((newValue === 'auto' && !neutralIsAuto) ||
-                (newValue === 'suggestions' && !neutralIsSuggestion) ||
-                (newValue === 'custom' && !neutralIsCustom)) &&
-              setNeutral(
-                newValue === 'suggestions'
-                  ? neutralColorSuggestionNames[0]
-                  : newValue === 'custom'
-                    ? getAutoNeutralColor(primary)
-                    : null
-              )
-            }
-          >
-            <RadioListItem value='auto'>Auto</RadioListItem>
-            <RadioListItem value='suggestions'>Suggestions</RadioListItem>
-            <Collapsible open={neutralIsSuggestion}>
-              <ColorSuggestionsBox
-                value={neutral as NeutralColorSuggestion}
-                onValueChange={setNeutral}
-                className='pe-4 ps-[3.25rem]'
-              >
-                {Object.entries(neutralColorSuggestions).map(
-                  ([value, variantFn]) => (
-                    <ListItem key={value} asChild unstyled>
-                      <ColorSuggestion
-                        value={value}
-                        color={variantFn(primary)}
-                      />
-                    </ListItem>
-                  )
-                )}
-              </ColorSuggestionsBox>
-            </Collapsible>
-            <RadioListItem value='custom'>Custom</RadioListItem>
-            <Collapsible open={neutralIsCustom}>
-              <div className='p-2'>
-                <ListItem asChild unstyled>
-                  <ColorInput
-                    id='input-neutral-color'
-                    value={neutral || ''}
-                    onChange={setNeutral}
-                    withRandomBtn
-                  />
-                </ListItem>
-              </div>
-            </Collapsible>
-          </RadioGroup>
+          <NeutralColorEditor />
         </PopoverContent>
       </Popover>
 

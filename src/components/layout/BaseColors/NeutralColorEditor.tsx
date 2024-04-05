@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { DebouncedColorPicker } from '@/components/layout/BaseColors';
 import { ListSubheader } from '@/components/ui/List';
@@ -15,13 +16,23 @@ import {
   neutralColorSuggestions,
 } from '@/constants/colorSuggestions';
 import type { NeutralColorSuggestion } from '@/types/defaultSuggestions';
+import {
+  MODAL_BASECOLORS_EDIT,
+  MODAL_SEARCH_KEY,
+} from '@/constants/modalSearchParams';
 
 export const NeutralColorEditor = () => {
-  const { primary, neutral: initialNeutral } = useBaseColors();
-  const { neutral: editedNeutral, setNeutral } = useOptionsDrawer();
+  const { primary, neutral: initialNeutral, setNeutral } = useBaseColors();
+  const { neutral: drawerNeutral, setNeutral: setDrawerNeutral } =
+    useOptionsDrawer();
+
+  const searchParams = useSearchParams(),
+    isDrawerEditor = searchParams
+      .get(MODAL_SEARCH_KEY)
+      ?.startsWith(MODAL_BASECOLORS_EDIT);
 
   const neutral =
-    typeof editedNeutral === 'undefined' ? initialNeutral : editedNeutral;
+    typeof drawerNeutral === 'undefined' ? initialNeutral : drawerNeutral;
   const neutralIsAuto = neutral === null,
     neutralIsSuggestion =
       typeof neutral === 'string' &&
@@ -43,9 +54,10 @@ export const NeutralColorEditor = () => {
   const handleValueChange = useCallback(
     (newValue: string) => {
       if (neutral === newValue) return;
-      setNeutral(newValue === 'auto' ? null : newValue);
+      const setValue = isDrawerEditor ? setDrawerNeutral : setNeutral;
+      setValue(newValue === 'auto' ? null : newValue);
     },
-    [neutral, setNeutral]
+    [isDrawerEditor, neutral, setDrawerNeutral, setNeutral]
   );
 
   return (
