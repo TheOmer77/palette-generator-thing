@@ -24,7 +24,7 @@ export const ColorSuggestion = forwardRef<
       <IconButton
         {...props}
         className={cn(
-          'group aspect-square h-auto w-full text-lg',
+          'group aspect-square h-auto w-full text-lg md:h-auto md:w-full',
           isHexColorLight(color) ? 'text-black' : 'text-white',
           className
         )}
