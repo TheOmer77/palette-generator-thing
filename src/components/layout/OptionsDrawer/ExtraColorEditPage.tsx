@@ -7,7 +7,7 @@ import {
 import { TrashIcon } from 'lucide-react';
 
 import { ColorEditPage } from './ColorEditPage';
-import { DebouncedColorPicker } from './DebouncedColorPicker';
+import { DebouncedColorPicker } from '@/components/layout/BaseColors';
 import { Input } from '@/components/ui/Input';
 import {
   List,

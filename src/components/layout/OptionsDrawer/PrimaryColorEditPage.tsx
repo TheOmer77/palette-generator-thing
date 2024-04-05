@@ -5,9 +5,9 @@ import {
 } from 'react';
 
 import { ColorEditPage } from './ColorEditPage';
+import { DebouncedColorPicker } from '@/components/layout/BaseColors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
-import { DebouncedColorPicker } from './DebouncedColorPicker';
 
 export const PrimaryColorEditPage = forwardRef<
   ElementRef<typeof ColorEditPage>,

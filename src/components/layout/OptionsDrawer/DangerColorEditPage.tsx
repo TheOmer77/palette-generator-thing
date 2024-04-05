@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 
 import { ColorEditPage } from './ColorEditPage';
-import { DebouncedColorPicker } from './DebouncedColorPicker';
+import { DebouncedColorPicker } from '@/components/layout/BaseColors';
 import { ListSubheader } from '@/components/ui/List';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import {
