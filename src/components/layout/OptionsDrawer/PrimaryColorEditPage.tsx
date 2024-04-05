@@ -5,7 +5,7 @@ import {
 } from 'react';
 
 import { ColorEditPage } from './ColorEditPage';
-import { DebouncedColorPicker } from '@/components/layout/BaseColors';
+import { PrimaryColorEditor } from '@/components/layout/BaseColors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 
@@ -14,19 +14,16 @@ export const PrimaryColorEditPage = forwardRef<
   ComponentPropsWithoutRef<'div'>
 >((props, ref) => {
   const { primary: initialPrimary } = useBaseColors();
-  const { primary, setPrimary } = useOptionsDrawer();
+  const { primary: drawerPrimary } = useOptionsDrawer();
 
   return (
     <ColorEditPage
       {...props}
       ref={ref}
       title='Primary'
-      color={primary || initialPrimary}
+      color={drawerPrimary || initialPrimary}
     >
-      <DebouncedColorPicker
-        initialValue={initialPrimary}
-        onChange={setPrimary}
-      />
+      <PrimaryColorEditor />
     </ColorEditPage>
   );
 });
