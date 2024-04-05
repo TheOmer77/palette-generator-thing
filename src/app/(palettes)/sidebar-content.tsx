@@ -9,9 +9,17 @@ import { Collapsible } from '@/components/ui/Collapsible';
 import { ColorInput } from '@/components/ui/ColorInput';
 import { Input } from '@/components/ui/Input';
 import { List, ListItem, ListItemIcon } from '@/components/ui/List';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/Popover';
 import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
-import { ColorListItem } from '@/components/layout/BaseColors';
+import {
+  ColorListItem,
+  PrimaryColorEditor,
+} from '@/components/layout/BaseColors';
 import {
   ColorSuggestion,
   ColorSuggestionsBox,
@@ -45,7 +53,6 @@ export const PalettesSidebarContent = () => {
       neutral,
       danger,
       extras,
-      setPrimary,
       setNeutral,
       setDanger,
       addExtraColor,
@@ -72,22 +79,14 @@ export const PalettesSidebarContent = () => {
 
   return (
     <List>
-      <ColorListItem
-        value='primary'
-        color={themeColors.primary}
-        title='Primary'
-      />
-
-      <div className='p-2'>
-        <ListItem asChild unstyled>
-          <ColorInput
-            id='input-primary-color'
-            value={primary}
-            onChange={setPrimary}
-            withRandomBtn
-          />
-        </ListItem>
-      </div>
+      <Popover modal>
+        <PopoverTrigger asChild>
+          <ColorListItem color={themeColors.primary} title='Primary' />
+        </PopoverTrigger>
+        <PopoverContent side='right' align='start'>
+          <PrimaryColorEditor />
+        </PopoverContent>
+      </Popover>
 
       <ColorListItem
         value='neutral'
