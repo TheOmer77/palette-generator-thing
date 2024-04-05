@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { DebouncedColorPicker } from '@/components/layout/BaseColors';
 import { ListSubheader } from '@/components/ui/List';
@@ -14,14 +15,24 @@ import {
   dangerColorSuggestionNames,
   dangerColorSuggestions,
 } from '@/constants/colorSuggestions';
+import {
+  MODAL_BASECOLORS_EDIT,
+  MODAL_SEARCH_KEY,
+} from '@/constants/modalSearchParams';
 import type { DangerColorSuggestion } from '@/types/defaultSuggestions';
 
 export const DangerColorEditor = () => {
-  const { primary, danger: initialDanger } = useBaseColors();
-  const { danger: editedDanger, setDanger } = useOptionsDrawer();
+  const { primary, danger: initialDanger, setDanger } = useBaseColors();
+  const { danger: drawerDanger, setDanger: setDrawerDanger } =
+    useOptionsDrawer();
+
+  const searchParams = useSearchParams(),
+    isDrawerEditor = searchParams
+      .get(MODAL_SEARCH_KEY)
+      ?.startsWith(MODAL_BASECOLORS_EDIT);
 
   const danger =
-    typeof editedDanger === 'undefined' ? initialDanger : editedDanger;
+    typeof drawerDanger === 'undefined' ? initialDanger : drawerDanger;
   const dangerIsAuto = danger === null,
     dangerIsSuggestion =
       typeof danger === 'string' && dangerColorSuggestionNames.includes(danger),
@@ -42,9 +53,10 @@ export const DangerColorEditor = () => {
   const handleValueChange = useCallback(
     (newValue: string) => {
       if (danger === newValue) return;
-      setDanger(newValue === 'auto' ? null : newValue);
+      const setValue = isDrawerEditor ? setDrawerDanger : setDanger;
+      setValue(newValue === 'auto' ? null : newValue);
     },
-    [danger, setDanger]
+    [danger, isDrawerEditor, setDanger, setDrawerDanger]
   );
 
   return (

@@ -18,6 +18,7 @@ import { RadioGroup } from '@/components/ui/Radio';
 import { Separator } from '@/components/ui/Separator';
 import {
   ColorListItem,
+  DangerColorEditor,
   NeutralColorEditor,
   PrimaryColorEditor,
 } from '@/components/layout/BaseColors';
@@ -28,18 +29,12 @@ import {
 import RadioListItem from '@/components/layout/RadioListItem';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
-import { getAutoDangerColor } from '@/lib/colorUtils';
 import { toCamelCase } from '@/lib/utils';
 import {
-  dangerColorSuggestionNames,
-  dangerColorSuggestions,
   generalColorSuggestionNames,
   generalColorSuggestions,
 } from '@/constants';
-import type {
-  DangerColorSuggestion,
-  GeneralColorSuggestion,
-} from '@/types/defaultSuggestions';
+import type { GeneralColorSuggestion } from '@/types/defaultSuggestions';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
 const ERROR_RESERVED_NAME = 'This name is reserved.',
@@ -48,9 +43,7 @@ const ERROR_RESERVED_NAME = 'This name is reserved.',
 export const PalettesSidebarContent = () => {
   const {
       primary,
-      danger,
       extras,
-      setDanger,
       addExtraColor,
       removeExtraColor,
       renameExtraColor,
@@ -58,13 +51,6 @@ export const PalettesSidebarContent = () => {
     } = useBaseColors(),
     themeColors = useTheme();
   const searchParams = useSearchParams();
-
-  const dangerIsAuto = danger === null,
-    dangerIsSuggestion =
-      typeof danger === 'string' && dangerColorSuggestionNames.includes(danger),
-    dangerIsCustom =
-      typeof danger === 'string' &&
-      !dangerColorSuggestionNames.includes(danger);
 
   return (
     <List>
@@ -99,63 +85,7 @@ export const PalettesSidebarContent = () => {
           />
         </PopoverTrigger>
         <PopoverContent side='right' align='start'>
-          <RadioGroup
-            value={
-              dangerIsAuto
-                ? 'auto'
-                : dangerIsSuggestion
-                  ? 'suggestions'
-                  : dangerIsCustom
-                    ? 'custom'
-                    : undefined
-            }
-            onValueChange={newValue =>
-              ((newValue === 'auto' && !dangerIsAuto) ||
-                (newValue === 'suggestions' && !dangerIsSuggestion) ||
-                (newValue === 'custom' && !dangerIsCustom)) &&
-              setDanger(
-                newValue === 'suggestions'
-                  ? dangerColorSuggestionNames[0]
-                  : newValue === 'custom'
-                    ? getAutoDangerColor(primary)
-                    : null
-              )
-            }
-          >
-            <RadioListItem value='auto'>Auto</RadioListItem>
-            <RadioListItem value='suggestions'>Suggestions</RadioListItem>
-            <Collapsible open={dangerIsSuggestion}>
-              <ColorSuggestionsBox
-                value={danger as DangerColorSuggestion}
-                onValueChange={setDanger}
-                className='pe-4 ps-[3.25rem]'
-              >
-                {Object.entries(dangerColorSuggestions).map(
-                  ([value, variantFn]) => (
-                    <ListItem key={value} asChild unstyled>
-                      <ColorSuggestionButton
-                        value={value}
-                        color={variantFn(primary)}
-                      />
-                    </ListItem>
-                  )
-                )}
-              </ColorSuggestionsBox>
-            </Collapsible>
-            <RadioListItem value='custom'>Custom</RadioListItem>
-            <Collapsible open={dangerIsCustom}>
-              <div className='p-2'>
-                <ListItem asChild unstyled>
-                  <ColorInput
-                    id='input-danger-color'
-                    value={danger || ''}
-                    onChange={setDanger}
-                    withRandomBtn
-                  />
-                </ListItem>
-              </div>
-            </Collapsible>
-          </RadioGroup>
+          <DangerColorEditor />
         </PopoverContent>
       </Popover>
 
