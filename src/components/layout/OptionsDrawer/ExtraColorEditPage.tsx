@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/List';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import {
-  ColorSuggestion,
+  ColorSuggestionButton,
   ColorSuggestionsBox,
 } from '@/components/layout/ColorSuggestions';
 import { useBaseColors } from '@/hooks/useBaseColors';
@@ -102,7 +102,7 @@ export const ExtraColorEditPage = forwardRef<
             <ListSubheader>Extra color suggestions</ListSubheader>
             {Object.entries(generalColorSuggestions).map(
               ([value, variantFn]) => (
-                <ColorSuggestion
+                <ColorSuggestionButton
                   key={value}
                   value={value}
                   color={variantFn(primary)}

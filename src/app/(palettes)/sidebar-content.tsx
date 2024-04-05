@@ -22,7 +22,7 @@ import {
   PrimaryColorEditor,
 } from '@/components/layout/BaseColors';
 import {
-  ColorSuggestion,
+  ColorSuggestionButton,
   ColorSuggestionsBox,
 } from '@/components/layout/ColorSuggestions';
 import RadioListItem from '@/components/layout/RadioListItem';
@@ -133,7 +133,7 @@ export const PalettesSidebarContent = () => {
                 {Object.entries(dangerColorSuggestions).map(
                   ([value, variantFn]) => (
                     <ListItem key={value} asChild unstyled>
-                      <ColorSuggestion
+                      <ColorSuggestionButton
                         value={value}
                         color={variantFn(primary)}
                       />
@@ -231,7 +231,7 @@ text-danger-600 dark:text-danger-300'
                   {Object.entries(generalColorSuggestions).map(
                     ([value, variantFn]) => (
                       <ListItem key={value} asChild unstyled>
-                        <ColorSuggestion
+                        <ColorSuggestionButton
                           value={value}
                           color={variantFn(primary)}
                         />

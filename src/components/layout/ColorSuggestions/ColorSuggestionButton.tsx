@@ -10,14 +10,14 @@ import { IconButton } from '@/components/ui/IconButton';
 import { isHexColorLight } from '@/lib/colorUtils';
 import { cn } from '@/lib/utils';
 
-export type ColorSuggestionProps = Omit<
+export type ColorSuggestionButtonProps = Omit<
   ComponentPropsWithoutRef<typeof IconButton>,
   'value'
 > & { value: string; color: string };
 
-export const ColorSuggestion = forwardRef<
+export const ColorSuggestionButton = forwardRef<
   ElementRef<typeof IconButton>,
-  ColorSuggestionProps
+  ColorSuggestionButtonProps
 >(({ value, color, className, ...props }, ref) => {
   return (
     <ToggleGroupItem asChild ref={ref} value={value}>
@@ -38,4 +38,4 @@ group-aria-checked:opacity-100'
     </ToggleGroupItem>
   );
 });
-ColorSuggestion.displayName = 'ColorSuggestion';
+ColorSuggestionButton.displayName = 'ColorSuggestionButton';

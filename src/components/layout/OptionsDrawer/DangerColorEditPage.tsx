@@ -11,7 +11,7 @@ import { DebouncedColorPicker } from '@/components/layout/BaseColors';
 import { ListSubheader } from '@/components/ui/List';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import {
-  ColorSuggestion,
+  ColorSuggestionButton,
   ColorSuggestionsBox,
 } from '@/components/layout/ColorSuggestions';
 import { useBaseColors } from '@/hooks/useBaseColors';
@@ -71,11 +71,14 @@ export const DangerColorEditPage = forwardRef<
             className='p-0 [&>span]:col-span-full [&>span]:px-1'
           >
             <ListSubheader>Auto</ListSubheader>
-            <ColorSuggestion value='auto' color={getAutoDangerColor(primary)} />
+            <ColorSuggestionButton
+              value='auto'
+              color={getAutoDangerColor(primary)}
+            />
             <ListSubheader>Danger suggestions</ListSubheader>
             {Object.entries(dangerColorSuggestions).map(
               ([value, variantFn]) => (
-                <ColorSuggestion
+                <ColorSuggestionButton
                   key={value}
                   value={value}
                   color={variantFn(primary)}
