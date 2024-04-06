@@ -1,6 +1,5 @@
 'use client';
 
-import { Fragment } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { CodeIcon, PlusIcon, TrashIcon } from 'lucide-react';
@@ -108,21 +107,26 @@ export const PalettesSidebarContent = () => {
             ).length > 1;
 
         return (
-          <Fragment key={id}>
-            <ColorListItem
-              value={id}
-              color={themeColors.extras[index].value}
-              title={title}
-            />
-            <div className='m-2'>
-              <ListItem asChild unstyled>
-                <Input
-                  label='Name'
-                  value={name || ''}
-                  onChange={e => renameExtraColor(index, e.target.value)}
-                  invalid={nameIsReserved || nameIsDuplicate}
-                />
-              </ListItem>
+          <Popover modal key={id}>
+            <PopoverTrigger asChild>
+              <ColorListItem
+                value={id}
+                color={themeColors.extras[index].value}
+                title={title}
+              />
+            </PopoverTrigger>
+            <PopoverContent
+              side='right'
+              align='start'
+              // TODO: Remove classname when using ExtraColorEditor
+              className='[&_li]:list-none'
+            >
+              <Input
+                label='Name'
+                value={name || ''}
+                onChange={e => renameExtraColor(index, e.target.value)}
+                invalid={nameIsReserved || nameIsDuplicate}
+              />
               {(nameIsReserved || nameIsDuplicate) && (
                 <div
                   className='mt-1 w-full select-none px-1 text-xs
@@ -131,64 +135,63 @@ text-danger-600 dark:text-danger-300'
                   {nameIsReserved ? ERROR_RESERVED_NAME : ERROR_DUPLICATE_NAME}
                 </div>
               )}
-            </div>
-            <RadioGroup
-              value={colorIsSuggestion ? 'suggestions' : 'custom'}
-              onValueChange={newValue =>
-                ((newValue === 'suggestions' && !colorIsSuggestion) ||
-                  (newValue === 'custom' && !colorIsCustom)) &&
-                setExtraColor(
-                  index,
-                  newValue === 'suggestions'
-                    ? generalColorSuggestionNames[
-                        index % generalColorSuggestionNames.length
-                      ]
-                    : generalColorSuggestions[value as GeneralColorSuggestion](
-                        primary
+              <RadioGroup
+                className='my-2'
+                value={colorIsSuggestion ? 'suggestions' : 'custom'}
+                onValueChange={newValue =>
+                  ((newValue === 'suggestions' && !colorIsSuggestion) ||
+                    (newValue === 'custom' && !colorIsCustom)) &&
+                  setExtraColor(
+                    index,
+                    newValue === 'suggestions'
+                      ? generalColorSuggestionNames[
+                          index % generalColorSuggestionNames.length
+                        ]
+                      : generalColorSuggestions[
+                          value as GeneralColorSuggestion
+                        ](primary)
+                  )
+                }
+              >
+                <RadioListItem value='suggestions'>Suggestions</RadioListItem>
+                <Collapsible open={colorIsSuggestion}>
+                  <ColorSuggestionsBox
+                    value={value as GeneralColorSuggestion}
+                    onValueChange={suggestionName =>
+                      setExtraColor(index, suggestionName)
+                    }
+                    className='pe-4 ps-[3.25rem]'
+                  >
+                    {Object.entries(generalColorSuggestions).map(
+                      ([value, variantFn]) => (
+                        <ListItem key={value} asChild unstyled>
+                          <ColorSuggestionButton
+                            value={value}
+                            color={variantFn(primary)}
+                          />
+                        </ListItem>
                       )
-                )
-              }
-            >
-              <RadioListItem value='suggestions'>Suggestions</RadioListItem>
-              <Collapsible open={colorIsSuggestion}>
-                <ColorSuggestionsBox
-                  value={value as GeneralColorSuggestion}
-                  onValueChange={suggestionName =>
-                    setExtraColor(index, suggestionName)
-                  }
-                  className='pe-4 ps-[3.25rem]'
-                >
-                  {Object.entries(generalColorSuggestions).map(
-                    ([value, variantFn]) => (
-                      <ListItem key={value} asChild unstyled>
-                        <ColorSuggestionButton
-                          value={value}
-                          color={variantFn(primary)}
-                        />
-                      </ListItem>
-                    )
-                  )}
-                </ColorSuggestionsBox>
-              </Collapsible>
-              <RadioListItem value='custom'>Custom</RadioListItem>
-              <Collapsible open={colorIsCustom}>
-                <div className='p-2'>
+                    )}
+                  </ColorSuggestionsBox>
+                </Collapsible>
+                <RadioListItem value='custom'>Custom</RadioListItem>
+                <Collapsible open={colorIsCustom}>
                   <ColorInput
                     id={`input-extra-color-${index}`}
                     value={value || ''}
                     onChange={newColor => setExtraColor(index, newColor)}
                     withRandomBtn
                   />
-                </div>
-              </Collapsible>
-            </RadioGroup>
-            <ListItem onClick={() => removeExtraColor(index)}>
-              <ListItemIcon>
-                <TrashIcon />
-              </ListItemIcon>
-              Remove
-            </ListItem>
-          </Fragment>
+                </Collapsible>
+              </RadioGroup>
+              <ListItem onClick={() => removeExtraColor(index)}>
+                <ListItemIcon>
+                  <TrashIcon />
+                </ListItemIcon>
+                Remove
+              </ListItem>
+            </PopoverContent>
+          </Popover>
         );
       })}
       <ListItem onClick={addExtraColor} className='mb-2'>
