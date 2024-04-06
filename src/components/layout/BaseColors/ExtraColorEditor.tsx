@@ -23,15 +23,16 @@ import {
   generalColorSuggestions,
 } from '@/constants';
 import {
+  ERROR_DUPLICATE_NAME,
+  ERROR_RESERVED_NAME,
+  BASE_COLOR_RESERVED_NAMES,
+} from '@/constants/baseColors';
+import {
   MODAL_BASECOLORS_EDIT,
   MODAL_BASECOLORS_LIST,
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
 import type { GeneralColorSuggestion } from '@/types/defaultSuggestions';
-
-const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
-const ERROR_RESERVED_NAME = 'This name is reserved.',
-  ERROR_DUPLICATE_NAME = "This name can't be used by multiple colors.";
 
 export type ExtraColorEditorProps = {
   index: number;
@@ -58,7 +59,7 @@ export const ExtraColorEditor = ({ index }: ExtraColorEditorProps) => {
     colorIsCustom = !generalColorSuggestionNames.includes(value);
   const nameIsReserved =
       typeof name === 'string' &&
-      RESERVED_COLOR_NAMES.includes(toCamelCase(name)),
+      BASE_COLOR_RESERVED_NAMES.includes(toCamelCase(name)),
     nameIsDuplicate =
       typeof name === 'string' &&
       name.length > 0 &&
