@@ -80,8 +80,8 @@ scrollbar-thumb-neutral-500/30;
   }
 
   body {
-    @apply mx-auto max-w-screen-2xl overflow-x-hidden bg-background
-text-foreground selection:bg-primary-500/30 selection:text-inherit;
+    @apply overflow-x-hidden bg-background text-foreground
+selection:bg-primary-500/30 selection:text-inherit;
   }
 }
 .lucide {
