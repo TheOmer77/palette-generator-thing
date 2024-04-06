@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { TrashIcon } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
 import { DebouncedColorPicker } from '@/components/layout/BaseColors';
 import { Input } from '@/components/ui/Input';
@@ -21,6 +22,11 @@ import {
   generalColorSuggestionNames,
   generalColorSuggestions,
 } from '@/constants';
+import {
+  MODAL_BASECOLORS_EDIT,
+  MODAL_BASECOLORS_LIST,
+  MODAL_SEARCH_KEY,
+} from '@/constants/modalSearchParams';
 import type { GeneralColorSuggestion } from '@/types/defaultSuggestions';
 
 const RESERVED_COLOR_NAMES = ['primary', 'neutral', 'danger'];
@@ -32,15 +38,21 @@ export type ExtraColorEditorProps = {
 };
 
 export const ExtraColorEditor = ({ index }: ExtraColorEditorProps) => {
-  const { primary, extras } = useBaseColors(),
+  const { primary, extras, removeExtraColor, renameExtraColor, setExtraColor } =
+      useBaseColors(),
     {
-      extras: editedExtras,
-      removeExtraColor,
-      renameExtraColor,
-      setExtraColor,
+      extras: drawerExtras,
+      removeExtraColor: removeDrawerExtraColor,
+      renameExtraColor: renameDrawerExtraColor,
+      setExtraColor: setDrawerExtraColor,
     } = useOptionsDrawer();
 
-  const { name, value } = editedExtras?.[index] || extras[index];
+  const { name, value } = drawerExtras?.[index] || extras[index];
+
+  const searchParams = useSearchParams(),
+    isDrawerEditor =
+      searchParams.get(MODAL_SEARCH_KEY) === MODAL_BASECOLORS_LIST ||
+      searchParams.get(MODAL_SEARCH_KEY)?.startsWith(MODAL_BASECOLORS_EDIT);
 
   const colorIsSuggestion = generalColorSuggestionNames.includes(value),
     colorIsCustom = !generalColorSuggestionNames.includes(value);
@@ -63,22 +75,36 @@ export const ExtraColorEditor = ({ index }: ExtraColorEditorProps) => {
   const handleValueChange = useCallback(
     (newValue: string) => {
       if (value === newValue) return;
-      setExtraColor(index, newValue);
+      const setValue = isDrawerEditor ? setDrawerExtraColor : setExtraColor;
+      setValue(index, newValue);
     },
-    [index, setExtraColor, value]
+    [index, isDrawerEditor, setDrawerExtraColor, setExtraColor, value]
+  );
+
+  const handleRename = useCallback(
+    (value: string) => {
+      const renameColor = isDrawerEditor
+        ? renameDrawerExtraColor
+        : renameExtraColor;
+      renameColor(index, value);
+    },
+    [index, isDrawerEditor, renameDrawerExtraColor, renameExtraColor]
   );
 
   const handleRemove = useCallback(() => {
-    setTimeout(() => removeExtraColor(index), 90);
+    const removeColor = isDrawerEditor
+      ? removeDrawerExtraColor
+      : removeExtraColor;
+    setTimeout(() => removeColor(index), 90);
     window.history.back();
-  }, [index, removeExtraColor]);
+  }, [index, isDrawerEditor, removeDrawerExtraColor, removeExtraColor]);
 
   return (
     <>
       <Input
         label='Name'
         value={name || ''}
-        onChange={e => renameExtraColor(index, e.target.value)}
+        onChange={e => handleRename(e.target.value)}
         invalid={nameIsReserved || nameIsDuplicate}
       />
       {(nameIsReserved || nameIsDuplicate) && (
