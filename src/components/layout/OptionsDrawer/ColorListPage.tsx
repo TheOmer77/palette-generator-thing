@@ -89,6 +89,7 @@ export const ColorListPage = forwardRef<
                 key={id}
                 title={title}
                 color={value}
+                extraColor
                 onClick={() => handleItemClick(id)}
               />
             );

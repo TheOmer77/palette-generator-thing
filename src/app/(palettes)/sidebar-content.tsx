@@ -75,6 +75,7 @@ export const PalettesSidebarContent = () => {
                 value={id}
                 color={themeColors.extras[index].value}
                 title={title}
+                extraColor
               />
             </PopoverTrigger>
             <PopoverContent side='right' align='start' className='pb-[3.75rem]'>
