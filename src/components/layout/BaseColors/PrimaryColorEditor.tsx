@@ -24,7 +24,7 @@ export const PrimaryColorEditor = () => {
     <DebouncedColorPicker
       initialValue={initialPrimary}
       onChange={isDrawerEditor ? setDrawerPrimary : setPrimary}
-      focusInput={isDrawerEditor}
+      focusInput={!isDrawerEditor}
     />
   );
 };

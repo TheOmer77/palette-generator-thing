@@ -91,7 +91,7 @@ export const DangerColorEditor = () => {
         <DebouncedColorPicker
           initialValue={themeDanger}
           onChange={handleValueChange}
-          focusInput={isDrawerEditor}
+          focusInput={!isDrawerEditor}
         />
       </TabsContent>
     </Tabs>

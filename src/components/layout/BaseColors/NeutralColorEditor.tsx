@@ -92,7 +92,7 @@ export const NeutralColorEditor = () => {
         <DebouncedColorPicker
           initialValue={themeNeutral}
           onChange={handleValueChange}
-          focusInput={isDrawerEditor}
+          focusInput={!isDrawerEditor}
         />
       </TabsContent>
     </Tabs>
