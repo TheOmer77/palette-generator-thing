@@ -7,32 +7,22 @@ import {
   useState,
   type ElementRef,
 } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 import { ColorInput, type ColorInputProps } from '@/components/ui/ColorInput';
 import { ColorPicker } from '@/components/ui/ColorPicker';
 import { cn } from '@/lib/utils';
-import {
-  MODAL_BASECOLORS_EDIT,
-  MODAL_BASECOLORS_LIST,
-  MODAL_SEARCH_KEY,
-} from '@/constants/modalSearchParams';
 
 type DebouncedColorPickerProps = Omit<ColorInputProps, 'value'> & {
   initialValue: ColorInputProps['value'];
+  focusInput?: boolean;
 };
 
 export const DebouncedColorPicker = forwardRef<
   ElementRef<typeof ColorInput>,
   DebouncedColorPickerProps
->(({ initialValue, onChange, className, ...props }, ref) => {
+>(({ initialValue, onChange, focusInput, className, ...props }, ref) => {
   const [pickerValue, setPickerValue] = useState(initialValue),
     [debouncedValue, setDebouncedValue] = useState(initialValue);
-
-  const searchParams = useSearchParams(),
-    isDrawerEditor =
-      searchParams.get(MODAL_SEARCH_KEY) === MODAL_BASECOLORS_LIST ||
-      searchParams.get(MODAL_SEARCH_KEY)?.startsWith(MODAL_BASECOLORS_EDIT);
 
   const innerRef = useRef<ElementRef<typeof ColorInput>>(null);
   useImperativeHandle(ref, () => innerRef.current!, []);
@@ -63,8 +53,8 @@ export const DebouncedColorPicker = forwardRef<
   }, [debouncedValue, initialValue, onChange]);
 
   useEffect(() => {
-    if (!isDrawerEditor) innerRef.current?.focus();
-  }, [isDrawerEditor]);
+    if (focusInput) innerRef.current?.focus();
+  }, [focusInput]);
 
   return (
     <>

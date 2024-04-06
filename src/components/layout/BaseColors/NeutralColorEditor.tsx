@@ -17,6 +17,7 @@ import {
 } from '@/constants/colorSuggestions';
 import {
   MODAL_BASECOLORS_EDIT,
+  MODAL_BASECOLORS_LIST,
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
 import type { NeutralColorSuggestion } from '@/types/defaultSuggestions';
@@ -27,9 +28,9 @@ export const NeutralColorEditor = () => {
     useOptionsDrawer();
 
   const searchParams = useSearchParams(),
-    isDrawerEditor = searchParams
-      .get(MODAL_SEARCH_KEY)
-      ?.startsWith(MODAL_BASECOLORS_EDIT);
+    isDrawerEditor =
+      searchParams.get(MODAL_SEARCH_KEY) === MODAL_BASECOLORS_LIST ||
+      searchParams.get(MODAL_SEARCH_KEY)?.startsWith(MODAL_BASECOLORS_EDIT);
 
   const neutral =
     typeof drawerNeutral === 'undefined' ? initialNeutral : drawerNeutral;
@@ -91,6 +92,7 @@ export const NeutralColorEditor = () => {
         <DebouncedColorPicker
           initialValue={themeNeutral}
           onChange={handleValueChange}
+          focusInput={isDrawerEditor}
         />
       </TabsContent>
     </Tabs>

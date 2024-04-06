@@ -17,6 +17,7 @@ import {
 } from '@/constants/colorSuggestions';
 import {
   MODAL_BASECOLORS_EDIT,
+  MODAL_BASECOLORS_LIST,
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
 import type { DangerColorSuggestion } from '@/types/defaultSuggestions';
@@ -27,9 +28,9 @@ export const DangerColorEditor = () => {
     useOptionsDrawer();
 
   const searchParams = useSearchParams(),
-    isDrawerEditor = searchParams
-      .get(MODAL_SEARCH_KEY)
-      ?.startsWith(MODAL_BASECOLORS_EDIT);
+    isDrawerEditor =
+      searchParams.get(MODAL_SEARCH_KEY) === MODAL_BASECOLORS_LIST ||
+      searchParams.get(MODAL_SEARCH_KEY)?.startsWith(MODAL_BASECOLORS_EDIT);
 
   const danger =
     typeof drawerDanger === 'undefined' ? initialDanger : drawerDanger;
@@ -90,6 +91,7 @@ export const DangerColorEditor = () => {
         <DebouncedColorPicker
           initialValue={themeDanger}
           onChange={handleValueChange}
+          focusInput={isDrawerEditor}
         />
       </TabsContent>
     </Tabs>
