@@ -88,6 +88,8 @@ const config = {
           'slide-out': `slide-out ${duration} ${timingFunction}`,
           'tooltip-in': `tooltip-in 150ms ${timingFunction}`,
           'tooltip-out': `fade-out 150ms ${timingFunction}`,
+          'zoom-in': `zoom-in ${duration} ${timingFunction}`,
+          'zoom-out': `zoom-out ${duration} ${timingFunction}`,
         };
       },
       borderRadius: {
