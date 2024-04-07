@@ -80,8 +80,6 @@ const config = {
   ${theme('transitionTimingFunction.DEFAULT')}
 )`;
         return {
-          'accordion-down': 'accordion-down 0.2s ease-out',
-          'accordion-up': 'accordion-up 0.2s ease-out',
           'collapse-in': `collapse-in ${duration} ${timingFunction}`,
           'collapse-out': `collapse-out ${duration} ${timingFunction}`,
           'fade-in': `fade-in ${duration} ${timingFunction}`,
@@ -103,14 +101,6 @@ const config = {
       },
       height: { screen: '100dvh' },
       keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
-        },
         'collapse-in': {
           from: { height: '0', overflow: 'hidden' },
           to: {
