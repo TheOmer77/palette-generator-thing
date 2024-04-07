@@ -11,55 +11,56 @@ import toColorValue from 'tailwindcss/lib/util/toColorValue';
 const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
 
 const animationVars = plugin(({ matchUtilities, theme }) => {
-  matchUtilities(
-    { duration: value => ({ '--animation-duration': value }) },
-    { values: theme('transitionDuration') }
-  );
-  matchUtilities(
-    { duration: value => ({ '--animation-timing-function': value }) },
-    { values: theme('transitionTimingFunction') }
-  );
-});
-const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
-  const themeColors = flattenColorPalette(theme('colors'));
-
-  matchUtilities(
-    {
-      'autofill-override': value => ({
-        '--tw-autofill-override-bg': toColorValue(value),
-        '&:-webkit-autofill': {
-          WebkitBoxShadow: `0 0 0px 1000px var(--tw-autofill-override-bg) inset,
-var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
-var(--tw-shadow, 0 0 #0000) !important`,
-        },
-      }),
-    },
-    { values: themeColors, type: 'color' }
-  );
-
-  addUtilities({
-    '.state-layer': {
-      position: 'relative',
-      overflow: 'hidden',
-      '&.fixed': { position: 'fixed' },
-      '&.absolute': { position: 'absolute' },
-      '&::after': {
-        content: '""',
-        position: 'absolute',
-        insetBlockStart: '0',
-        insetInlineStart: '0',
-        width: '100%',
-        height: '100%',
-        zIndex: '1',
-        transition: 'background-color 75ms cubic-bezier(0.4, 0, 0.2, 1)',
+    matchUtilities(
+      { duration: value => ({ '--animation-duration': value }) },
+      { values: theme('transitionDuration') }
+    );
+    matchUtilities(
+      { duration: value => ({ '--animation-timing-function': value }) },
+      { values: theme('transitionTimingFunction') }
+    );
+  }),
+  autofillOverride = plugin(({ matchUtilities, theme }) => {
+    const themeColors = flattenColorPalette(theme('colors'));
+    matchUtilities(
+      {
+        'autofill-override': value => ({
+          '--tw-autofill-override-bg': toColorValue(value),
+          '&:-webkit-autofill': {
+            WebkitBoxShadow: `0 0 0px 1000px var(--tw-autofill-override-bg) inset,
+  var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+  var(--tw-shadow, 0 0 #0000) !important`,
+          },
+        }),
       },
-    },
+      { values: themeColors, type: 'color' }
+    );
+  }),
+  stateLayer = plugin(({ addUtilities, matchUtilities, theme }) => {
+    const themeColors = flattenColorPalette(theme('colors'));
+    addUtilities({
+      '.state-layer': {
+        position: 'relative',
+        overflow: 'hidden',
+        '&.fixed': { position: 'fixed' },
+        '&.absolute': { position: 'absolute' },
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          insetBlockStart: '0',
+          insetInlineStart: '0',
+          width: '100%',
+          height: '100%',
+          zIndex: '1',
+          transition: 'background-color 75ms cubic-bezier(0.4, 0, 0.2, 1)',
+        },
+      },
+    });
+    matchUtilities(
+      { 'state-layer': value => ({ '&::after': { backgroundColor: value } }) },
+      { values: themeColors, type: 'color' }
+    );
   });
-  matchUtilities(
-    { 'state-layer': value => ({ '&::after': { backgroundColor: value } }) },
-    { values: themeColors, type: 'color' }
-  );
-});
 
 const config = {
   content: ['./src/**/*.{ts,tsx}'],
@@ -260,7 +261,7 @@ const config = {
       },
     },
   },
-  plugins: [scrollbar, animate, animationVars, customPlugin],
+  plugins: [animate, animationVars, autofillOverride, scrollbar, stateLayer],
 } satisfies Config;
 
 export default config;
