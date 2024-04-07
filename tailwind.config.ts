@@ -10,6 +10,16 @@ import toColorValue from 'tailwindcss/lib/util/toColorValue';
 
 const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
 
+const animationVars = plugin(({ matchUtilities, theme }) => {
+  matchUtilities(
+    { duration: value => ({ '--animation-duration': value }) },
+    { values: theme('transitionDuration') }
+  );
+  matchUtilities(
+    { duration: value => ({ '--animation-timing-function': value }) },
+    { values: theme('transitionTimingFunction') }
+  );
+});
 const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
   const themeColors = flattenColorPalette(theme('colors'));
 
@@ -60,17 +70,27 @@ const config = {
       screens: { '2xl': '1400px' },
     },
     extend: {
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-        'collapse-in': 'collapse-in 300ms cubic-bezier(0.2, 1, 0.4, 1)',
-        'collapse-out': 'collapse-out 300ms cubic-bezier(0.2, 1, 0.4, 1)',
-        'fade-in': 'fade-in 300ms cubic-bezier(0.2, 1, 0.4, 1)',
-        'fade-out': 'fade-out 300ms cubic-bezier(0.2, 1, 0.4, 1)',
-        'slide-in': 'slide-in 300ms cubic-bezier(0.2, 1, 0.4, 1)',
-        'slide-out': 'slide-out 300ms cubic-bezier(0.2, 1, 0.4, 1)',
-        'tooltip-in': 'tooltip-in 150ms cubic-bezier(0.2, 1, 0.4, 1)',
-        'tooltip-out': 'fade-out 150ms cubic-bezier(0.2, 1, 0.4, 1)',
+      animation: ({ theme }) => {
+        const duration = `var(
+  --animation-duration,
+  ${theme('transitionDuration.DEFAULT')}
+)`,
+          timingFunction = `var(
+  --animation-timing-function,
+  ${theme('transitionTimingFunction.DEFAULT')}
+)`;
+        return {
+          'accordion-down': 'accordion-down 0.2s ease-out',
+          'accordion-up': 'accordion-up 0.2s ease-out',
+          'collapse-in': `collapse-in ${duration} ${timingFunction}`,
+          'collapse-out': `collapse-out ${duration} ${timingFunction}`,
+          'fade-in': `fade-in ${duration} ${timingFunction}`,
+          'fade-out': `fade-out ${duration} ${timingFunction}`,
+          'slide-in': `slide-in ${duration} ${timingFunction}`,
+          'slide-out': `slide-out ${duration} ${timingFunction}`,
+          'tooltip-in': `tooltip-in 150ms ${timingFunction}`,
+          'tooltip-out': `fade-out 150ms ${timingFunction}`,
+        };
       },
       borderRadius: {
         lg: 'var(--border-radius)',
@@ -171,6 +191,7 @@ const config = {
       maxHeight: { screen: '100dvh' },
       screens: { '2xl': '1440px' },
       spacing: { em: '1em', inherit: 'inherit' },
+      transitionTimingFunction: { DEFAULT: 'cubic-bezier(0.2, 1, 0.4, 1)' },
     },
     colors: {
       inherit: 'inherit',
@@ -227,7 +248,7 @@ const config = {
       },
     },
   },
-  plugins: [scrollbar, animate, customPlugin],
+  plugins: [scrollbar, animate, animationVars, customPlugin],
 } satisfies Config;
 
 export default config;
