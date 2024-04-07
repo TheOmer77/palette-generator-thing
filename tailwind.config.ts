@@ -84,6 +84,10 @@ const config = {
           'collapse-out': `collapse-out ${duration} ${timingFunction}`,
           'fade-in': `fade-in ${duration} ${timingFunction}`,
           'fade-out': `fade-out ${duration} ${timingFunction}`,
+          'scale-x-in': `scale-x-in ${duration} ${timingFunction}`,
+          'scale-x-out': `scale-x-out ${duration} ${timingFunction}`,
+          'scale-y-in': `scale-y-in ${duration} ${timingFunction}`,
+          'scale-y-out': `scale-y-out ${duration} ${timingFunction}`,
           'slide-in': `slide-in ${duration} ${timingFunction}`,
           'slide-out': `slide-out ${duration} ${timingFunction}`,
           'tooltip-in': `tooltip-in 150ms ${timingFunction}`,
@@ -119,6 +123,22 @@ const config = {
         },
         'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
         'fade-out': { from: { opacity: '1' }, to: { opacity: '0' } },
+        'scale-x-in': {
+          from: { opacity: '0', transform: 'scaleX(0.95)' },
+          to: { opacity: '1', transform: 'scaleX(1)' },
+        },
+        'scale-x-out': {
+          from: { opacity: '1', transform: 'scaleX(1)' },
+          to: { opacity: '0', transform: 'scaleX(0.95)' },
+        },
+        'scale-y-in': {
+          from: { opacity: '0', transform: 'scaleY(0.95)' },
+          to: { opacity: '1', transform: 'scaleY(1)' },
+        },
+        'scale-y-out': {
+          from: { opacity: '1', transform: 'scaleY(1)' },
+          to: { opacity: '0', transform: 'scaleY(0.95)' },
+        },
         'slide-in': {
           from: {
             transform: `translate(
