@@ -42,6 +42,7 @@ export const ColorListItem = forwardRef<
       ref={ref}
       // Hex color has spaces so it's read correctly by screen readers
       aria-label={`${title} - ${color.split('').join(' ')}`}
+      className='data-[state=open]:bg-muted/30'
     >
       <div
         className='me-4 size-[2.25em] shrink-0 rounded-lg'
