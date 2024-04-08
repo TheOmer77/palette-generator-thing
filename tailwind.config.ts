@@ -4,55 +4,37 @@ import animate from 'tailwindcss-animate';
 import plugin from 'tailwindcss/plugin';
 //@ts-expect-error Javascript only, no type decleration
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
-//@ts-expect-error Javascript only, no type decleration
-import toColorValue from 'tailwindcss/lib/util/toColorValue';
 
 // importing '@/config/tailwind' doesn't work here
-import { animations } from './src/config/tailwind';
+import { animations, autofillOverride } from './src/config/tailwind';
 
 const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
 
-const autofillOverride = plugin(({ matchUtilities, theme }) => {
-    const themeColors = flattenColorPalette(theme('colors'));
-    matchUtilities(
-      {
-        'autofill-override': value => ({
-          '--tw-autofill-override-bg': toColorValue(value),
-          '&:-webkit-autofill': {
-            WebkitBoxShadow: `0 0 0px 1000px var(--tw-autofill-override-bg) inset,
-  var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
-  var(--tw-shadow, 0 0 #0000) !important`,
-          },
-        }),
+const stateLayer = plugin(({ addUtilities, matchUtilities, theme }) => {
+  const themeColors = flattenColorPalette(theme('colors'));
+  addUtilities({
+    '.state-layer': {
+      position: 'relative',
+      overflow: 'hidden',
+      '&.fixed': { position: 'fixed' },
+      '&.absolute': { position: 'absolute' },
+      '&::after': {
+        content: '""',
+        position: 'absolute',
+        insetBlockStart: '0',
+        insetInlineStart: '0',
+        width: '100%',
+        height: '100%',
+        zIndex: '1',
+        transition: 'background-color 75ms cubic-bezier(0.4, 0, 0.2, 1)',
       },
-      { values: themeColors, type: 'color' }
-    );
-  }),
-  stateLayer = plugin(({ addUtilities, matchUtilities, theme }) => {
-    const themeColors = flattenColorPalette(theme('colors'));
-    addUtilities({
-      '.state-layer': {
-        position: 'relative',
-        overflow: 'hidden',
-        '&.fixed': { position: 'fixed' },
-        '&.absolute': { position: 'absolute' },
-        '&::after': {
-          content: '""',
-          position: 'absolute',
-          insetBlockStart: '0',
-          insetInlineStart: '0',
-          width: '100%',
-          height: '100%',
-          zIndex: '1',
-          transition: 'background-color 75ms cubic-bezier(0.4, 0, 0.2, 1)',
-        },
-      },
-    });
-    matchUtilities(
-      { 'state-layer': value => ({ '&::after': { backgroundColor: value } }) },
-      { values: themeColors, type: 'color' }
-    );
+    },
   });
+  matchUtilities(
+    { 'state-layer': value => ({ '&::after': { backgroundColor: value } }) },
+    { values: themeColors, type: 'color' }
+  );
+});
 
 const config = {
   content: ['./src/**/*.{ts,tsx}'],
