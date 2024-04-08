@@ -1,4 +1,25 @@
 import plugin from 'tailwindcss/plugin';
+import { kebabCase } from 'change-case';
+
+const DEFAULT_TW_TRANSFORM = `translate(var(--tw-translate-x),
+var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
+skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))`;
+const getTransform = (
+  transform: {
+    translateX?: string;
+    translateY?: string;
+    rotate?: string;
+    skewX?: string;
+    skewY?: string;
+    scaleX?: string;
+    scaleY?: string;
+  } = {}
+) =>
+  Object.entries(transform).reduce(
+    (cssTransform, [key, value]) =>
+      cssTransform.replace(`var(--tw-${kebabCase(key)})`, value),
+    DEFAULT_TW_TRANSFORM
+  );
 
 export const animations = plugin(
   ({ matchUtilities, theme }) => {
@@ -16,13 +37,13 @@ export const animations = plugin(
       extend: {
         animation: ({ theme }) => {
           const duration = `var(
-    --animation-duration,
-    ${theme('transitionDuration.DEFAULT')}
-  )`,
+  --animation-duration,
+  ${theme('transitionDuration.DEFAULT')}
+)`,
             timingFunction = `var(
-    --animation-timing-function,
-    ${theme('transitionTimingFunction.DEFAULT')}
-  )`;
+  --animation-timing-function,
+  ${theme('transitionTimingFunction.DEFAULT')}
+)`;
           return {
             'collapse-in': `collapse-in ${duration} ${timingFunction}`,
             'collapse-out': `collapse-out ${duration} ${timingFunction}`,
@@ -58,79 +79,87 @@ export const animations = plugin(
           'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
           'fade-out': { from: { opacity: '1' }, to: { opacity: '0' } },
           'scale-x-in': {
-            from: { opacity: '0', transform: 'scaleX(0.95)' },
-            to: { opacity: '1', transform: 'scaleX(1)' },
+            from: {
+              opacity: '0',
+              transform: getTransform({
+                scaleX: 'calc(var(--tw-scale-x) * 0.95)',
+              }),
+            },
+            to: { opacity: '1', transform: getTransform() },
           },
           'scale-x-out': {
-            from: { opacity: '1', transform: 'scaleX(1)' },
-            to: { opacity: '0', transform: 'scaleX(0.95)' },
+            from: { opacity: '1', transform: getTransform() },
+            to: {
+              opacity: '0',
+              transform: getTransform({
+                scaleX: 'calc(var(--tw-scale-x) * 0.95)',
+              }),
+            },
           },
           'scale-y-in': {
-            from: { opacity: '0', transform: 'scaleY(0.95)' },
-            to: { opacity: '1', transform: 'scaleY(1)' },
+            from: {
+              opacity: '0',
+              transform: getTransform({
+                scaleY: 'calc(var(--tw-scale-y) * 0.95)',
+              }),
+            },
+            to: { opacity: '1', transform: getTransform() },
           },
           'scale-y-out': {
-            from: { opacity: '1', transform: 'scaleY(1)' },
-            to: { opacity: '0', transform: 'scaleY(0.95)' },
+            from: { opacity: '1', transform: getTransform() },
+            to: {
+              opacity: '0',
+              transform: getTransform({
+                scaleY: 'calc(var(--tw-scale-y) * 0.95)',
+              }),
+            },
           },
           'slide-in': {
             from: {
-              transform: `translate(
-                  var(--slide-translate-origin-x, 0%),
-                  var(--slide-translate-origin-y, 0%)
-                )`,
+              transform: getTransform({
+                translateX: 'var(--slide-translate-origin-x, 0%)',
+                translateY: 'var(--slide-translate-origin-y, 0%)',
+              }),
             },
-            to: { transform: 'translate(0%, 0%)' },
+            to: { transform: getTransform() },
           },
           'slide-out': {
-            from: { transform: 'translate(0%, 0%)' },
+            from: { transform: getTransform() },
             to: {
-              transform: `translate(
-    var(--slide-translate-origin-x, 0%),
-    var(--slide-translate-origin-y, 0%)
-  )`,
+              transform: getTransform({
+                translateX: 'var(--slide-translate-origin-x, 0%)',
+                translateY: 'var(--slide-translate-origin-y, 0%)',
+              }),
             },
           },
           'tooltip-in': {
             from: {
               opacity: '0',
-              transform: `translate(
-    var(--slide-translate-origin-x, 0%),
-    var(--slide-translate-origin-y, 0%)
-  )`,
+              transform: getTransform({
+                translateX: 'var(--slide-translate-origin-x, 0%)',
+                translateY: 'var(--slide-translate-origin-y, 0%)',
+              }),
             },
-            to: { opacity: '1', transform: 'translate(0%, 0%)' },
+            to: { opacity: '1', transform: getTransform() },
           },
           'zoom-in': {
             from: {
               opacity: '0',
-              transform: `translate(
-    var(--zoom-translate-x, 0%),
-    var(--zoom-translate-y, 0%)
-  ) scale(0.95)`,
+              transform: getTransform({
+                scaleX: 'calc(var(--tw-scale-x) * 0.95)',
+                scaleY: 'calc(var(--tw-scale-y) * 0.95)',
+              }),
             },
-            to: {
-              opacity: '1',
-              transform: `translate(
-    var(--zoom-translate-x, 0%),
-    var(--zoom-translate-y, 0%)
-  ) scale(1)`,
-            },
+            to: { opacity: '1', transform: getTransform() },
           },
           'zoom-out': {
-            from: {
-              opacity: '1',
-              transform: `translate(
-    var(--zoom-translate-x, 0%),
-    var(--zoom-translate-y, 0%)
-  ) scale(1)`,
-            },
+            from: { opacity: '1', transform: getTransform() },
             to: {
               opacity: '0',
-              transform: `translate(
-    var(--zoom-translate-x, 0%),
-    var(--zoom-translate-y, 0%)
-  ) scale(0.95)`,
+              transform: getTransform({
+                scaleX: 'calc(var(--tw-scale-x) * 0.95)',
+                scaleY: 'calc(var(--tw-scale-y) * 0.95)',
+              }),
             },
           },
         },
