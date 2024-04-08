@@ -20,9 +20,8 @@ export const PopoverContent = forwardRef<
       align={align}
       sideOffset={sideOffset}
       className={cn(
-        `z-50 w-72 rounded-md bg-popover p-4 text-popover-foreground shadow-md
-outline-none data-[side=bottom]:origin-top data-[side=left]:origin-right
-data-[side=right]:origin-left data-[side=top]:origin-bottom
+        `z-50 w-72 origin-[--radix-popover-content-transform-origin] rounded-md
+bg-popover p-4 text-popover-foreground shadow-md outline-none
 data-[state=closed]:animate-fade-out
 data-[state=open]:data-[side=bottom]:animate-scale-y-in
 data-[state=open]:data-[side=left]:animate-scale-x-in
