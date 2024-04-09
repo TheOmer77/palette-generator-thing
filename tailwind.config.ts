@@ -37,6 +37,7 @@ const config = {
     },
     colors: {
       inherit: 'inherit',
+      current: 'currentColor',
       white: '#fff',
       black: '#000',
       transparent: 'transparent',

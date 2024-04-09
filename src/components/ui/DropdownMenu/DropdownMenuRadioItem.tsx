@@ -27,7 +27,7 @@ focus:text-accent-foreground`,
   >
     <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
       <ItemIndicator>
-        <Circle className='fill-current h-2 w-2' />
+        <Circle className='fill-current text-[0.5rem]' />
       </ItemIndicator>
     </span>
     {children}
