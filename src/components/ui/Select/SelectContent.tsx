@@ -38,7 +38,7 @@ data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1`,
       <SelectScrollUpButton />
       <SelectViewport
         className={cn(
-          'p-1',
+          'p-1 space-y-px',
           position === 'popper' &&
             `h-[var(--radix-select-trigger-height)] w-full
 min-w-[var(--radix-select-trigger-width)]`
