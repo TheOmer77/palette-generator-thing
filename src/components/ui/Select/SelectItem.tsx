@@ -8,7 +8,7 @@ import {
   SelectItemIndicator,
   SelectItemText,
 } from '@radix-ui/react-select';
-import { CheckIcon } from 'lucide-react';
+import { CircleIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -33,7 +33,7 @@ active:duration-0 md:h-8 md:ps-8 md:text-sm [&>*]:z-10`,
 md:size-8'
     >
       <SelectItemIndicator>
-        <CheckIcon />
+        <CircleIcon className='fill-current text-[0.625rem] md:text-[0.5rem]' />
       </SelectItemIndicator>
     </span>
 
