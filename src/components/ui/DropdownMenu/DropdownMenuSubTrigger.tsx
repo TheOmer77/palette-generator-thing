@@ -19,15 +19,19 @@ export const DropdownMenuSubTrigger = forwardRef<
   <SubTrigger
     ref={ref}
     className={cn(
-      `flex cursor-default select-none items-center rounded-sm px-2 py-1.5
-text-sm outline-none data-[state=open]:bg-accent focus:bg-accent`,
+      `relative flex h-10 w-full cursor-default select-none items-center
+rounded-sm px-2 text-base outline-none transition-[background-color]
+duration-100 state-layer data-[disabled]:pointer-events-none
+data-[disabled]:opacity-50 focus:state-layer-muted/30 md:h-8 md:text-sm
+[&:not([data-state=open])]:active:bg-muted/30
+[&:not([data-state=open])]:active:duration-0 [&>*]:z-10`,
       inset && 'pl-8',
       className
     )}
     {...props}
   >
     {children}
-    <ChevronRight className='me-auto' />
+    <ChevronRight className='ms-auto' />
   </SubTrigger>
 ));
 DropdownMenuSubTrigger.displayName = SubTrigger.displayName;

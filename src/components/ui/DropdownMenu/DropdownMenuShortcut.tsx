@@ -10,7 +10,10 @@ export const DropdownMenuShortcut = ({
 }: ComponentPropsWithoutRef<'span'>) => {
   return (
     <span
-      className={cn('ml-auto text-xs tracking-widest opacity-60', className)}
+      className={cn(
+        'ml-auto text-sm tracking-widest text-muted-foreground md:text-xs',
+        className
+      )}
       {...props}
     />
   );
