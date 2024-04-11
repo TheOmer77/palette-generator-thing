@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { TrashIcon } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
+import { camelCase } from 'change-case';
 
 import { DebouncedColorPicker } from '@/components/layout/BaseColors';
 import { Input } from '@/components/ui/Input';
@@ -17,7 +18,6 @@ import {
 } from '@/components/layout/ColorSuggestions';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
-import { toCamelCase } from '@/lib/utils';
 import {
   generalColorSuggestionNames,
   generalColorSuggestions,
@@ -59,14 +59,14 @@ export const ExtraColorEditor = ({ index }: ExtraColorEditorProps) => {
     colorIsCustom = !generalColorSuggestionNames.includes(value);
   const nameIsReserved =
       typeof name === 'string' &&
-      BASE_COLOR_RESERVED_NAMES.includes(toCamelCase(name)),
+      BASE_COLOR_RESERVED_NAMES.includes(camelCase(name)),
     nameIsDuplicate =
       typeof name === 'string' &&
       name.length > 0 &&
       extras.filter(
         ({ name: n }) =>
           typeof n === 'string' &&
-          toCamelCase(n).toLowerCase() === toCamelCase(name).toLowerCase()
+          camelCase(n).toLowerCase() === camelCase(name).toLowerCase()
       ).length > 1;
 
   const themeValue = colorIsSuggestion
