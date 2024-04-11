@@ -6,11 +6,10 @@ import {
   type ElementRef,
 } from 'react';
 import { AlertCircleIcon } from 'lucide-react';
-import { camelCase } from 'change-case';
 
 import { ListItem, ListItemText } from '@/components/ui/List';
 import { useBaseColors } from '@/hooks/useBaseColors';
-import { BASE_COLOR_RESERVED_NAMES } from '@/constants/baseColors';
+import { nameIsDuplicate, nameIsReserved } from '@/lib/validateColorName';
 
 export type ColorListItemProps = ComponentPropsWithoutRef<typeof ListItem> & {
   color: string;
@@ -23,19 +22,6 @@ export const ColorListItem = forwardRef<
   ColorListItemProps
 >(({ color, title, extraColor, ...props }, ref) => {
   const { extras } = useBaseColors();
-
-  // TODO: Dedupe this logic
-  const nameIsReserved =
-      typeof title === 'string' &&
-      BASE_COLOR_RESERVED_NAMES.includes(camelCase(title)),
-    nameIsDuplicate =
-      typeof title === 'string' &&
-      title.length > 0 &&
-      extras.filter(
-        ({ name }) =>
-          typeof name === 'string' &&
-          camelCase(name).toLowerCase() === camelCase(title).toLowerCase()
-      ).length > 1;
 
   return (
     <ListItem
@@ -52,9 +38,10 @@ export const ColorListItem = forwardRef<
         primary={
           <>
             {title}
-            {extraColor && (nameIsReserved || nameIsDuplicate) && (
-              <AlertCircleIcon className='text-input-invalid' />
-            )}
+            {extraColor &&
+              (nameIsReserved(title) || nameIsDuplicate(title, extras)) && (
+                <AlertCircleIcon className='text-input-invalid' />
+              )}
           </>
         }
         secondary={color}

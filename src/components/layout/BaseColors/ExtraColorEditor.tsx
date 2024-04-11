@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { TrashIcon } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
-import { camelCase } from 'change-case';
 
 import { DebouncedColorPicker } from '@/components/layout/BaseColors';
 import { Input } from '@/components/ui/Input';
@@ -18,6 +17,7 @@ import {
 } from '@/components/layout/ColorSuggestions';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
+import { nameIsDuplicate, nameIsReserved } from '@/lib/validateColorName';
 import {
   generalColorSuggestionNames,
   generalColorSuggestions,
@@ -25,7 +25,6 @@ import {
 import {
   ERROR_DUPLICATE_NAME,
   ERROR_RESERVED_NAME,
-  BASE_COLOR_RESERVED_NAMES,
 } from '@/constants/baseColors';
 import {
   MODAL_BASECOLORS_EDIT,
@@ -57,17 +56,11 @@ export const ExtraColorEditor = ({ index }: ExtraColorEditorProps) => {
 
   const colorIsSuggestion = generalColorSuggestionNames.includes(value),
     colorIsCustom = !generalColorSuggestionNames.includes(value);
-  const nameIsReserved =
-      typeof name === 'string' &&
-      BASE_COLOR_RESERVED_NAMES.includes(camelCase(name)),
-    nameIsDuplicate =
-      typeof name === 'string' &&
-      name.length > 0 &&
-      extras.filter(
-        ({ name: n }) =>
-          typeof n === 'string' &&
-          camelCase(n).toLowerCase() === camelCase(name).toLowerCase()
-      ).length > 1;
+  const error = nameIsReserved(name)
+    ? ERROR_RESERVED_NAME
+    : nameIsDuplicate(name, extras)
+      ? ERROR_DUPLICATE_NAME
+      : null;
 
   const themeValue = colorIsSuggestion
     ? generalColorSuggestions[value as GeneralColorSuggestion]?.(primary)
@@ -106,14 +99,14 @@ export const ExtraColorEditor = ({ index }: ExtraColorEditorProps) => {
         label='Name'
         value={name || ''}
         onChange={e => handleRename(e.target.value)}
-        invalid={nameIsReserved || nameIsDuplicate}
+        invalid={!!error}
       />
-      {(nameIsReserved || nameIsDuplicate) && (
+      {error && (
         <div
-          className='mt-1 w-full select-none px-1 text-xs
-text-danger-600 dark:text-danger-300'
+          className='mt-1 w-full select-none px-1 text-xs text-danger-600
+dark:text-danger-300'
         >
-          {nameIsReserved ? ERROR_RESERVED_NAME : ERROR_DUPLICATE_NAME}
+          {error}
         </div>
       )}
       <Tabs
