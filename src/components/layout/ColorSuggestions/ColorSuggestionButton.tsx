@@ -24,16 +24,17 @@ export const ColorSuggestionButton = forwardRef<
       <IconButton
         {...props}
         className={cn(
-          'group aspect-square h-auto w-full text-lg md:h-auto md:w-full',
+          `aspect-square h-auto w-full text-lg md:h-auto md:w-full
+[&>svg]:pointer-events-none [&>svg]:text-lg [&>svg]:opacity-0
+[&>svg]:transition-opacity [&>svg]:[--animation-duration:300ms]
+[&>svg]:[stroke-dasharray:22.627416610717773px] [&>svg]:[stroke-dashoffset:0]
+[&>svg]:aria-checked:animate-checkbox-check [&>svg]:aria-checked:opacity-100`,
           isHexColorLight(color) ? 'text-black' : 'text-white',
           className
         )}
         style={{ backgroundColor: color }}
       >
-        <CheckIcon
-          className='opacity-0 transition-opacity duration-100
-group-aria-checked:opacity-100'
-        />
+        <CheckIcon />
       </IconButton>
     </ToggleGroupItem>
   );

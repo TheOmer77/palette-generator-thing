@@ -45,6 +45,7 @@ export const animations = plugin(
   ${theme('transitionTimingFunction.DEFAULT')}
 )`;
           return {
+            'checkbox-check': `checkbox-check ${duration} ${timingFunction} forwards`,
             'collapse-in': `collapse-in ${duration} ${timingFunction}`,
             'collapse-out': `collapse-out ${duration} ${timingFunction}`,
             'fade-in': `fade-in ${duration} ${timingFunction}`,
@@ -62,6 +63,10 @@ export const animations = plugin(
           };
         },
         keyframes: {
+          'checkbox-check': {
+            from: { strokeDashoffset: '-22.627416610717773px' },
+            to: { strokeDashoffset: '0' },
+          },
           'collapse-in': {
             from: { height: '0', overflow: 'hidden' },
             to: {
