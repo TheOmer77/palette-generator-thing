@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import { DebouncedColorPicker } from '@/components/layout/BaseColors';
+import { DebouncedColorPicker } from './DebouncedColorPicker';
 import { ListSubheader } from '@/components/ui/List';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import {

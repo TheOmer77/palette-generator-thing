@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { TrashIcon } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
-import { DebouncedColorPicker } from '@/components/layout/BaseColors';
+import { DebouncedColorPicker } from './DebouncedColorPicker';
 import { Input } from '@/components/ui/Input';
 import {
   List,
