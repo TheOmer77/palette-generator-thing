@@ -25,7 +25,7 @@ duration-100 state-layer data-[disabled]:pointer-events-none
 data-[disabled]:opacity-50 focus:state-layer-muted/30 md:h-8 md:text-sm
 [&:not([data-state=open])]:active:bg-muted/30
 [&:not([data-state=open])]:active:duration-0 [&>*]:z-10`,
-      inset && 'pl-8',
+      inset && 'ps-8',
       className
     )}
     {...props}
