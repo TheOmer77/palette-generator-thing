@@ -90,7 +90,7 @@ export const ExtraColorEditor = ({ index }: ExtraColorEditorProps) => {
       ? removeDrawerExtraColor
       : removeExtraColor;
     setTimeout(() => removeColor(index), 90);
-    window.history.back();
+    if (isDrawerEditor) window.history.back();
   }, [index, isDrawerEditor, removeDrawerExtraColor, removeExtraColor]);
 
   return (
