@@ -40,8 +40,8 @@ const MainContent = () => {
       })),
     ];
     // Return only grids with unique ids
-    return [...new Set(grids.map(({ id }) => id.toLowerCase()))].map(uid =>
-      grids.find(({ id }) => id === uid)
+    return [...new Set(grids.map(({ id }) => id.toLowerCase()))].map(
+      lowercaseId => grids.find(({ id }) => id.toLowerCase() === lowercaseId)
     ) as typeof grids;
   }, [danger, extras, neutral, primary]);
 
