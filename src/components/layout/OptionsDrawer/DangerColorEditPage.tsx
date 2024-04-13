@@ -21,10 +21,10 @@ export const DangerColorEditPage = forwardRef<
   ComponentPropsWithoutRef<'div'>
 >((props, ref) => {
   const { primary, danger: initialDanger } = useBaseColors();
-  const { danger: editedDanger } = useOptionsDrawer();
+  const { danger: drawerDanger } = useOptionsDrawer();
 
   const danger =
-    typeof editedDanger === 'undefined' ? initialDanger : editedDanger;
+    typeof drawerDanger === 'undefined' ? initialDanger : drawerDanger;
   const dangerIsAuto = danger === null,
     dangerIsSuggestion =
       typeof danger === 'string' && dangerColorSuggestionNames.includes(danger);

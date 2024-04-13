@@ -21,10 +21,10 @@ export const NeutralColorEditPage = forwardRef<
   ComponentPropsWithoutRef<'div'>
 >((props, ref) => {
   const { primary, neutral: initialNeutral } = useBaseColors();
-  const { neutral: editedNeutral } = useOptionsDrawer();
+  const { neutral: drawerNeutral } = useOptionsDrawer();
 
   const neutral =
-    typeof editedNeutral === 'undefined' ? initialNeutral : editedNeutral;
+    typeof drawerNeutral === 'undefined' ? initialNeutral : drawerNeutral;
   const neutralIsAuto = neutral === null,
     neutralIsSuggestion =
       typeof neutral === 'string' &&
