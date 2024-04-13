@@ -12,13 +12,13 @@ import { cn } from '@/lib/utils';
 
 type DebouncedColorPickerProps = Omit<ColorInputProps, 'value'> & {
   initialValue: ColorInputProps['value'];
-  focusInput?: boolean;
+  autoFocusInput?: boolean;
 };
 
 export const DebouncedColorPicker = ({
   initialValue,
   onChange,
-  focusInput,
+  autoFocusInput,
   className,
   ...props
 }: DebouncedColorPickerProps) => {
@@ -53,8 +53,8 @@ export const DebouncedColorPicker = ({
   }, [debouncedValue, initialValue, onChange]);
 
   useEffect(() => {
-    if (focusInput) ref.current?.focus();
-  }, [focusInput]);
+    if (autoFocusInput) ref.current?.focus();
+  }, [autoFocusInput]);
 
   return (
     <>
