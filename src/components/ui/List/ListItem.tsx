@@ -19,12 +19,10 @@ import { cn } from '@/lib/utils';
 
 export type ListItemProps = ScopedProps<ComponentPropsWithoutRef<'button'>> & {
   asChild?: boolean;
-  // TODO: Remove unstyled prop when no longer using accordions in sidebar
-  unstyled?: boolean;
 };
 
 export const ListItem = forwardRef<HTMLButtonElement, ListItemProps>(
-  ({ __scopeList, asChild, unstyled, className, children, ...props }, ref) => {
+  ({ __scopeList, asChild, className, children, ...props }, ref) => {
     const context = useListContext(LIST_ITEM_NAME, __scopeList);
     const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeList);
     const disabled = context.disabled || props.disabled;
@@ -37,12 +35,12 @@ export const ListItem = forwardRef<HTMLButtonElement, ListItemProps>(
         ref={ref}
         disabled={disabled}
         className={cn(
-          !unstyled &&
-            `flex min-h-12 w-full cursor-default select-none items-center
+          `flex min-h-12 w-full cursor-default select-none items-center
 rounded-lg px-4 py-2 text-start text-base outline-none
 transition-[background-color] duration-100 state-layer
-focus-visible:outline-none focus-visible:state-layer-muted/30 active:bg-muted/30
-active:duration-0 disabled:text-muted md:min-h-10 md:text-sm
+data-[state=open]:bg-muted/30 focus-visible:outline-none
+focus-visible:state-layer-muted/30 active:bg-muted/30 active:duration-0
+disabled:text-muted md:min-h-10 md:text-sm
 [&:not(:disabled)]:hover:state-layer-muted/30 [&>*]:z-10`,
           className
         )}

@@ -1,10 +1,14 @@
 'use client';
 
-import { AccordionListItem } from '@/components/ui/AccordionList';
 import { Collapsible } from '@/components/ui/Collapsible';
-import { ListItemText } from '@/components/ui/List';
-import { RadioGroup } from '@/components/ui/Radio';
-import RadioListItem from '@/components/layout/RadioListItem';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
+import { List, ListItem, ListItemText } from '@/components/ui/List';
 import { useCodeGen } from '@/store/useCodeGen';
 import { codeFormats, colorFormats } from '@/constants';
 
@@ -12,52 +16,55 @@ export const CodeGenSidebarContent = () => {
   const { format, colorFormat, setFormat, setColorFormat } = useCodeGen();
 
   return (
-    <>
-      <RadioGroup
-        asChild
-        value={format}
-        onValueChange={value => setFormat(value as typeof format)}
-      >
-        <AccordionListItem
-          title={
+    <List>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <ListItem>
             <ListItemText
               primary='Format'
               secondary={codeFormats[format].displayName}
             />
-          }
-          value='codeGen-format'
-          role='radiogroup'
-        >
-          {Object.keys(codeFormats).map(key => (
-            <RadioListItem key={key} value={key} disabled={key === 'custom'}>
-              {codeFormats[key as keyof typeof codeFormats].displayName}
-            </RadioListItem>
-          ))}
-        </AccordionListItem>
-      </RadioGroup>
+          </ListItem>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent side='right' align='start'>
+          <DropdownMenuRadioGroup
+            value={format}
+            onValueChange={value => setFormat(value as typeof format)}
+          >
+            {Object.keys(codeFormats).map(key => (
+              <DropdownMenuRadioItem key={key} value={key}>
+                {codeFormats[key as keyof typeof codeFormats].displayName}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
       <Collapsible open={!['none', 'custom'].includes(format)}>
-        <RadioGroup
-          asChild
-          value={colorFormat}
-          onValueChange={value => setColorFormat(value as typeof colorFormat)}
-        >
-          <AccordionListItem
-            title={
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <ListItem>
               <ListItemText
                 primary='Color format'
                 secondary={colorFormats[colorFormat]?.displayName || 'None'}
               />
-            }
-            value='codeGen-colorFormat'
-          >
-            {Object.keys(colorFormats).map(key => (
-              <RadioListItem key={key} value={key}>
-                {colorFormats[key as keyof typeof colorFormats].displayName}
-              </RadioListItem>
-            ))}
-          </AccordionListItem>
-        </RadioGroup>
+            </ListItem>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side='right' align='start'>
+            <DropdownMenuRadioGroup
+              value={colorFormat}
+              onValueChange={value =>
+                setColorFormat(value as typeof colorFormat)
+              }
+            >
+              {Object.keys(colorFormats).map(key => (
+                <DropdownMenuRadioItem key={key} value={key}>
+                  {colorFormats[key as keyof typeof colorFormats].displayName}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </Collapsible>
-    </>
+    </List>
   );
 };

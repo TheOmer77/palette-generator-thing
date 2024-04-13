@@ -1,2 +1,2 @@
-export * from './ColorSuggestion';
+export * from './ColorSuggestionButton';
 export * from './ColorSuggestionsBox';

@@ -6,6 +6,7 @@ import {
 } from 'react';
 import { ArrowLeftIcon } from 'lucide-react';
 
+import { PalettePreview } from '@/components/layout/BaseColors';
 import { DrawerHeader, DrawerTitle } from '@/components/ui/Drawer';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { IconButton } from '@/components/ui/IconButton';
@@ -36,18 +37,7 @@ py-0'
           </IconButton>
           <DrawerTitle className='text-xl'>{title}</DrawerTitle>
         </DrawerHeader>
-        <div
-          className='mx-4 mb-4 grid h-12 shrink-0 grid-cols-11 overflow-hidden
-rounded-lg'
-        >
-          {palette.map((backgroundColor, index) => (
-            <span
-              key={index}
-              style={{ backgroundColor }}
-              className='transition-[background-color]'
-            />
-          ))}
-        </div>
+        <PalettePreview palette={palette} />
         <ScrollArea
           className='flex-grow [&>[data-radix-scroll-area-viewport]]:px-4
 [&>[data-radix-scroll-area-viewport]]:pb-4'

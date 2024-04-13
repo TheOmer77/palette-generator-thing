@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useMemo } from 'react';
+import { camelCase } from 'change-case';
 
 import { CodeBlock } from '@/components/ui/CodeBlock';
 import { H1 } from '@/components/ui/Headings';
@@ -13,7 +14,6 @@ import {
   generateJsonCode,
   generateScssCode,
 } from '@/lib/codeGen';
-import { toCamelCase } from '@/lib/utils';
 import { codeFormats, colorFormats } from '@/constants';
 
 const MainContent = () => {
@@ -25,7 +25,7 @@ const MainContent = () => {
       (obj, { name, value }, index) => ({
         ...obj,
         [typeof name === 'string' && name.length > 0
-          ? toCamelCase(name)
+          ? camelCase(name)
           : `extra${index + 1}`]: value,
       }),
       { primary, neutral, danger }

@@ -28,7 +28,9 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
       <meta name='color-scheme' content='light dark' />
       <ThemeStyle />
     </head>
-    <body>{children}</body>
+    <body>
+      <div className='mx-auto w-full max-w-screen-2xl'>{children}</div>
+    </body>
   </html>
 );
 

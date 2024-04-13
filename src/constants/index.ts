@@ -1,4 +1,3 @@
-export * from './breakpoints';
 export * from './codeGen';
 export * from './colorSuggestions';
 export * from './fallbackColor';

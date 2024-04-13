@@ -1,13 +1,13 @@
 'use client';
 
 import { Suspense, useMemo } from 'react';
+import { camelCase } from 'change-case';
 
 import { H1, H2 } from '@/components/ui/Headings';
 import { ColorGridItem, ColorGrid } from '@/components/layout/ColorGrid';
 import { Header } from '@/components/layout/Header';
 import { useTheme } from '@/hooks/useTheme';
 import { generatePalette } from '@/lib/colorUtils';
-import { toCamelCase } from '@/lib/utils';
 import { shades } from '@/constants';
 
 const MainContent = () => {
@@ -33,15 +33,15 @@ const MainContent = () => {
       ...extras.map(({ name, value }, index) => ({
         id:
           typeof name === 'string' && name.length > 0
-            ? toCamelCase(name)
+            ? camelCase(name)
             : `extra${index + 1}`,
         title: name || `Extra ${index + 1}`,
         palette: generatePalette(value),
       })),
     ];
     // Return only grids with unique ids
-    return [...new Set(grids.map(({ id }) => id))].map(uid =>
-      grids.find(({ id }) => id === uid)
+    return [...new Set(grids.map(({ id }) => id.toLowerCase()))].map(
+      lowercaseId => grids.find(({ id }) => id.toLowerCase() === lowercaseId)
     ) as typeof grids;
   }, [danger, extras, neutral, primary]);
 
