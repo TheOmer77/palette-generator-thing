@@ -26,11 +26,9 @@ active:duration-0 md:h-8 md:text-sm [&>*]:z-10`,
     )}
     {...props}
   >
-    <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
-      <ItemIndicator>
-        <CircleIcon className='fill-current text-[0.625rem] md:text-[0.5rem]' />
-      </ItemIndicator>
-    </span>
+    <ItemIndicator className='absolute start-2.5'>
+      <CircleIcon className='fill-current text-[0.625rem] md:text-[0.5rem]' />
+    </ItemIndicator>
     <span>{children}</span>
   </RadioItem>
 ));

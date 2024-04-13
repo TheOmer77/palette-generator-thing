@@ -28,15 +28,9 @@ active:duration-0 md:h-8 md:ps-8 md:text-sm [&>*]:z-10`,
     )}
     {...props}
   >
-    <span
-      className='absolute start-0 flex size-10 items-center justify-center
-md:size-8'
-    >
-      <SelectItemIndicator>
-        <CircleIcon className='fill-current text-[0.625rem] md:text-[0.5rem]' />
-      </SelectItemIndicator>
-    </span>
-
+    <SelectItemIndicator className='absolute start-3.5'>
+      <CircleIcon className='fill-current text-[0.625rem] md:text-[0.5rem]' />
+    </SelectItemIndicator>
     <SelectItemText>{children}</SelectItemText>
   </Item>
 ));

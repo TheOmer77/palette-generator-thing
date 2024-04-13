@@ -27,11 +27,9 @@ active:duration-0 md:h-8 md:text-sm [&>*]:z-10`,
     checked={checked}
     {...props}
   >
-    <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
-      <ItemIndicator>
-        <Check />
-      </ItemIndicator>
-    </span>
+    <ItemIndicator className='absolute start-2.5'>
+      <Check />
+    </ItemIndicator>
     <span>{children}</span>
   </CheckboxItem>
 ));
