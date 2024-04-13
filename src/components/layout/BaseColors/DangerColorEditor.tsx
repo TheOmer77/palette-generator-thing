@@ -41,15 +41,12 @@ export const DangerColorEditor = () => {
       typeof danger === 'string' &&
       !dangerColorSuggestionNames.includes(danger);
 
-  const themeDanger = useMemo(
-    () =>
-      dangerIsSuggestion
-        ? dangerColorSuggestions[danger as DangerColorSuggestion]?.(primary)
-        : dangerIsAuto
-          ? getAutoDangerColor(primary)
-          : danger,
-    [danger, dangerIsAuto, dangerIsSuggestion, primary]
-  );
+  const themeDanger = useMemo(() => {
+    if (dangerIsSuggestion)
+      return dangerColorSuggestions[danger as DangerColorSuggestion]?.(primary);
+    if (dangerIsAuto) return getAutoDangerColor(primary);
+    return danger;
+  }, [danger, dangerIsAuto, dangerIsSuggestion, primary]);
 
   const handleValueChange = useCallback(
     (newValue: string) => {

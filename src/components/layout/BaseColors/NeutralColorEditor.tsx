@@ -42,15 +42,14 @@ export const NeutralColorEditor = () => {
       typeof neutral === 'string' &&
       !neutralColorSuggestionNames.includes(neutral);
 
-  const themeNeutral = useMemo(
-    () =>
-      neutralIsSuggestion
-        ? neutralColorSuggestions[neutral as NeutralColorSuggestion]?.(primary)
-        : neutralIsAuto
-          ? getAutoNeutralColor(primary)
-          : neutral,
-    [neutral, neutralIsAuto, neutralIsSuggestion, primary]
-  );
+  const themeNeutral = useMemo(() => {
+    if (neutralIsSuggestion)
+      return neutralColorSuggestions[neutral as NeutralColorSuggestion]?.(
+        primary
+      );
+    if (neutralIsAuto) return getAutoNeutralColor(primary);
+    return neutral;
+  }, [neutral, neutralIsAuto, neutralIsSuggestion, primary]);
 
   const handleValueChange = useCallback(
     (newValue: string) => {
