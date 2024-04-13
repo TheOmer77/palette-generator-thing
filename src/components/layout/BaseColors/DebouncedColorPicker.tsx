@@ -52,10 +52,6 @@ export const DebouncedColorPicker = ({
     return () => clearTimeout(timeout);
   }, [debouncedValue, initialValue, onChange]);
 
-  useEffect(() => {
-    if (autoFocusInput) ref.current?.focus();
-  }, [autoFocusInput]);
-
   return (
     <>
       <ColorPicker value={pickerValue} onChange={handlePickerChange} />
@@ -64,6 +60,8 @@ export const DebouncedColorPicker = ({
         ref={ref}
         value={pickerValue}
         onChange={handleInputChange}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus={autoFocusInput}
         withRandomBtn
         className={cn('mt-4', className)}
       />
