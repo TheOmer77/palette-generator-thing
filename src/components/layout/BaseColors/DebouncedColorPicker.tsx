@@ -1,8 +1,6 @@
 import {
-  forwardRef,
   useCallback,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
   type ElementRef,
@@ -17,15 +15,17 @@ type DebouncedColorPickerProps = Omit<ColorInputProps, 'value'> & {
   focusInput?: boolean;
 };
 
-export const DebouncedColorPicker = forwardRef<
-  ElementRef<typeof ColorInput>,
-  DebouncedColorPickerProps
->(({ initialValue, onChange, focusInput, className, ...props }, ref) => {
+export const DebouncedColorPicker = ({
+  initialValue,
+  onChange,
+  focusInput,
+  className,
+  ...props
+}: DebouncedColorPickerProps) => {
   const [pickerValue, setPickerValue] = useState(initialValue),
     [debouncedValue, setDebouncedValue] = useState(initialValue);
 
-  const innerRef = useRef<ElementRef<typeof ColorInput>>(null);
-  useImperativeHandle(ref, () => innerRef.current!, []);
+  const ref = useRef<ElementRef<typeof ColorInput>>(null);
 
   const handlePickerChange = useCallback(
     (newValue: string) => {
@@ -53,7 +53,7 @@ export const DebouncedColorPicker = forwardRef<
   }, [debouncedValue, initialValue, onChange]);
 
   useEffect(() => {
-    if (focusInput) innerRef.current?.focus();
+    if (focusInput) ref.current?.focus();
   }, [focusInput]);
 
   return (
@@ -61,7 +61,7 @@ export const DebouncedColorPicker = forwardRef<
       <ColorPicker value={pickerValue} onChange={handlePickerChange} />
       <ColorInput
         {...props}
-        ref={innerRef}
+        ref={ref}
         value={pickerValue}
         onChange={handleInputChange}
         withRandomBtn
@@ -69,5 +69,4 @@ export const DebouncedColorPicker = forwardRef<
       />
     </>
   );
-});
-DebouncedColorPicker.displayName = 'DebouncedColorPicker';
+};
