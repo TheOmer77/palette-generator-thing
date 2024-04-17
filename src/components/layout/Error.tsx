@@ -2,19 +2,17 @@ import {
   forwardRef,
   type ComponentPropsWithoutRef,
   type ElementRef,
-  type ReactNode,
 } from 'react';
+import type { ErrorProps as NextErrorProps } from 'next/error';
 
 import { cn } from '@/lib/utils';
 
-export type ErrorProps = ComponentPropsWithoutRef<'div'> & {
-  statusCode: ReactNode;
-  title: ReactNode;
-};
+export type ErrorProps = ComponentPropsWithoutRef<'div'> &
+  Omit<NextErrorProps, 'withDarkMode'>;
 
 export const Error = forwardRef<ElementRef<'div'>, ErrorProps>(
   (
-    { statusCode = 'Error', title = 'An error occurred.', children, ...props },
+    { statusCode = 500, title = 'An error occurred.', children, ...props },
     ref
   ) => (
     <div
