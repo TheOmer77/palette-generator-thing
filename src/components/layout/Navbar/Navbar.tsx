@@ -1,3 +1,4 @@
+import { NavbarActions } from './NavbarActions';
 import { NavbarHeader } from './NavbarHeader';
 
 export const Navbar = () => (
@@ -7,5 +8,6 @@ items-center bg-background md:grid-cols-[theme(spacing.80),1fr]
 md:bg-transparent [&>:first-child]:ps-4 [&>:last-child]:pe-4'
   >
     <NavbarHeader />
+    <NavbarActions />
   </nav>
 );
