@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Figtree, Fira_Code } from 'next/font/google';
 import clsx from 'clsx';
 
+import { Navbar } from '@/components/layout/Navbar';
 import { ThemeStyle } from '@/components/layout/ThemeStyle';
 import '@/styles/index.css';
 
@@ -29,6 +30,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
       <ThemeStyle />
     </head>
     <body>
+      <Navbar />
       <div className='mx-auto w-full max-w-screen-2xl'>{children}</div>
     </body>
   </html>
