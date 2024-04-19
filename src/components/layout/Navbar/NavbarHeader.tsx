@@ -1,6 +1,17 @@
-import { Header } from '../Header';
+import type { ComponentPropsWithoutRef } from 'react';
 
-export const NavbarHeader = () => (
-  // TODO: On home page, opacity-0 until scrolling down 16rem.
-  <Header className='text-2xl leading-none transition-opacity md:invisible' />
+import { Header } from '../Header';
+import { cn } from '@/lib/utils';
+
+export const NavbarHeader = ({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<typeof Header>) => (
+  <Header
+    {...props}
+    className={cn(
+      'text-2xl leading-none transition-opacity duration-300 md:invisible',
+      className
+    )}
+  />
 );
