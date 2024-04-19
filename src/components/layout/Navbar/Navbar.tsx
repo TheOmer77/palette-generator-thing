@@ -1,32 +1,18 @@
 'use client';
 
-import { useEffect, useRef, useState, type ElementRef } from 'react';
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 import { NavbarActions } from './NavbarActions';
 import { NavbarHeader } from './NavbarHeader';
-import { Header } from '@/components/layout/Header';
 import { cn } from '@/lib/utils';
+import { NavbarLargeHeader } from './NavbarLargeHeader';
 
 export const Navbar = () => {
   const pathname = usePathname(),
     pathnameIsRoot = pathname === '/';
 
   const [hideNavHeader, setHideNavHeader] = useState(true);
-  const ref = useRef<ElementRef<typeof Header>>(null);
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || !ref.current || !pathnameIsRoot)
-      return;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry) return;
-      setHideNavHeader(entry.isIntersecting);
-    });
-    observer.observe(ref.current);
-
-    return () => observer.disconnect();
-  }, [pathnameIsRoot]);
 
   return (
     <>
@@ -41,10 +27,7 @@ md:grid-cols-[theme(spacing.80),1fr] md:bg-transparent [&>:first-child]:ps-4
         />
         <NavbarActions />
       </nav>
-
-      {pathnameIsRoot && (
-        <Header ref={ref} className='mb-2 block p-4 md:hidden' />
-      )}
+      <NavbarLargeHeader onIntersectingChange={setHideNavHeader} />
     </>
   );
 };
