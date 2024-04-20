@@ -18,7 +18,7 @@ export const Navbar = () => {
     <>
       <nav
         className={cn(
-          `sticky top-0 z-10 mx-auto grid h-16 w-full max-w-screen-2xl
+          `sticky top-0 z-20 mx-auto grid h-16 w-full max-w-screen-2xl
 grid-cols-[auto,1fr] items-center bg-background transition-[background-color]
 before:absolute before:-z-10 before:size-full before:bg-gradient-to-b
 before:from-background before:via-background/90 before:via-35%
