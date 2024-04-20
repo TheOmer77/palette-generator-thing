@@ -31,6 +31,6 @@ export const NavbarLargeHeader = ({
   }, [onIntersectingChange, pathnameIsRoot]);
 
   return pathnameIsRoot ? (
-    <Header ref={ref} className='mb-2 block p-4 md:hidden' />
+    <Header ref={ref} className='relative mb-6 block p-4 pb-0 md:hidden' />
   ) : null;
 };
