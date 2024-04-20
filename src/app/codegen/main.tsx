@@ -45,15 +45,15 @@ const MainContent = () => {
 
   return (
     <main
-      className='flex max-h-[calc(100dvh-theme(spacing.16))] flex-col p-4 md:ps-[21rem] print:ps-4 [&>*]:mx-auto
+      className='flex flex-col p-4 md:ps-[21rem] print:ps-4 [&>*]:mx-auto
 [&>*]:w-full [&>*]:max-w-screen-lg'
     >
       <Header className='mb-6 hidden print:block' />
 
       <H1>{codeFormats[format].displayName} code</H1>
       <div
-        className='mb-2 grid grid-cols-1 gap-2 sm:grid-cols-2 md:hidden
-print:hidden'
+        className='sticky top-16 z-20 grid grid-cols-1 gap-2 bg-background pb-2
+sm:grid-cols-2 md:hidden print:hidden'
       >
         <Select label='Format' value={format} onValueChange={setFormat}>
           {Object.entries(codeFormats).map(([key, { displayName }]) => (
