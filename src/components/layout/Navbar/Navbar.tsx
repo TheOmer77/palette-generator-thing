@@ -26,7 +26,7 @@ before:to-transparent before:opacity-0 before:transition-opacity
 md:grid-cols-[theme(spacing.80),1fr] md:bg-transparent md:before:end-0
 md:before:w-[calc(100%-theme(spacing.80))] md:before:opacity-100 print:hidden
 [&>:first-child]:ps-4 [&>:last-child]:pe-4`,
-          hideNavHeader && 'bg-transparent before:opacity-100'
+          pathnameIsRoot && hideNavHeader && 'bg-transparent before:opacity-100'
         )}
       >
         <NavbarHeader
