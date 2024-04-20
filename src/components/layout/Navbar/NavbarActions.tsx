@@ -9,7 +9,7 @@ const REPO_URL = 'https://github.com/TheOmer77/palette-generator-thing';
 export const NavbarActions = () => (
   <div
     className='flex size-full flex-row items-center justify-end gap-px
-ps-4 md:bg-background'
+ps-4'
   >
     <Tooltip content='GitHub repo'>
       <IconButton asChild>
