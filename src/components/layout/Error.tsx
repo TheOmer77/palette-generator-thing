@@ -12,14 +12,23 @@ export type ErrorProps = ComponentPropsWithoutRef<'div'> &
 
 export const Error = forwardRef<ElementRef<'div'>, ErrorProps>(
   (
-    { statusCode = 500, title = 'An error occurred.', children, ...props },
+    {
+      statusCode = 500,
+      title = 'An error occurred.',
+      className,
+      children,
+      ...props
+    },
     ref
   ) => (
     <div
       {...props}
       ref={ref}
-      className={cn(`flex min-h-dvh w-full select-none flex-col items-center
-justify-center p-4`)}
+      className={cn(
+        `absolute start-0 top-0 flex min-h-dvh w-full select-none flex-col
+items-center justify-center p-4`,
+        className
+      )}
     >
       <h1
         className='m-0 text-9xl font-extrabold leading-none tracking-tight
