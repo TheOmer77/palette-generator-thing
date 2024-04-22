@@ -3,8 +3,7 @@ import Link from 'next/link';
 import { GithubLogo } from '../GithubLogo';
 import { IconButton } from '@/components/ui/IconButton';
 import { Tooltip } from '@/components/ui/Tooltip';
-
-const REPO_URL = 'https://github.com/TheOmer77/palette-generator-thing';
+import { REPO_URL } from '@/constants/navbar';
 
 export const NavbarActions = () => (
   <div className='flex flex-row gap-px'>

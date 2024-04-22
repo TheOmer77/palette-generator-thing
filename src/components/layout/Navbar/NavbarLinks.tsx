@@ -1,18 +1,12 @@
 'use client';
 
-import type { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
-import { CodeIcon, PaletteIcon } from 'lucide-react';
 
 import { LinkWithSearchParams } from '../LinkWithSearchParams';
 import { Button } from '@/components/ui/Button';
 import { Separator } from '@/components/ui/Separator';
-
-const TEMPORARY_PAGES_LIST_PLS_MOVE_ME_SOMEWHERE_ELSE = [
-  { href: '/', label: 'Palettes', icon: <PaletteIcon /> },
-  { href: '/codegen', label: 'Code', icon: <CodeIcon /> },
-] satisfies { href: string; label: string; icon: ReactNode }[];
+import { NAVBAR_LINKS } from '@/constants/navbar';
 
 export const NavbarLinks = () => {
   const pathname = usePathname();
@@ -23,25 +17,19 @@ export const NavbarLinks = () => {
       value={pathname}
       className='hidden flex-row items-center gap-px text-sm md:flex'
     >
-      {TEMPORARY_PAGES_LIST_PLS_MOVE_ME_SOMEWHERE_ELSE.map(
-        ({ href, icon, label }) => {
-          const Comp = pathname === href ? 'div' : LinkWithSearchParams;
-          return (
-            <ToggleGroupItem key={href} value={href} asChild>
-              <Button
-                variant='flat'
-                className='aria-checked:bg-muted/15'
-                asChild
-              >
-                <Comp href={href}>
-                  {icon}
-                  <span>{label}</span>
-                </Comp>
-              </Button>
-            </ToggleGroupItem>
-          );
-        }
-      )}
+      {NAVBAR_LINKS.map(({ href, icon, label }) => {
+        const Comp = pathname === href ? 'div' : LinkWithSearchParams;
+        return (
+          <ToggleGroupItem key={href} value={href} asChild>
+            <Button variant='flat' className='aria-checked:bg-muted/15' asChild>
+              <Comp href={href}>
+                {icon}
+                <span>{label}</span>
+              </Comp>
+            </Button>
+          </ToggleGroupItem>
+        );
+      })}
       <Separator
         orientation='vertical'
         className='data-[orientation=vertical]:mx-4
