@@ -24,16 +24,23 @@ export const NavbarLinks = () => {
       className='hidden flex-row items-center gap-px text-sm md:flex'
     >
       {TEMPORARY_PAGES_LIST_PLS_MOVE_ME_SOMEWHERE_ELSE.map(
-        ({ href, icon, label }) => (
-          <ToggleGroupItem key={href} value={href} asChild>
-            <Button variant='flat' className='aria-checked:bg-muted/15' asChild>
-              <LinkWithSearchParams href={href}>
-                {icon}
-                <span>{label}</span>
-              </LinkWithSearchParams>
-            </Button>
-          </ToggleGroupItem>
-        )
+        ({ href, icon, label }) => {
+          const Comp = pathname === href ? 'div' : LinkWithSearchParams;
+          return (
+            <ToggleGroupItem key={href} value={href} asChild>
+              <Button
+                variant='flat'
+                className='aria-checked:bg-muted/15'
+                asChild
+              >
+                <Comp href={href}>
+                  {icon}
+                  <span>{label}</span>
+                </Comp>
+              </Button>
+            </ToggleGroupItem>
+          );
+        }
       )}
       <Separator
         orientation='vertical'
