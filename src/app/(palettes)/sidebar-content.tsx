@@ -1,8 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { CodeIcon, PlusIcon } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
 
 import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import {
@@ -24,7 +22,6 @@ import { useTheme } from '@/hooks/useTheme';
 export const PalettesSidebarContent = () => {
   const { extras, addExtraColor } = useBaseColors(),
     themeColors = useTheme();
-  const searchParams = useSearchParams();
 
   return (
     <List>
@@ -90,21 +87,6 @@ export const PalettesSidebarContent = () => {
         </ListItemIcon>
         <span>Add extra color</span>
       </ListItem>
-
-      {/* Temporary until site nav is implemented */}
-      <div
-        className='absolute inset-x-0 bottom-0 z-10 flex h-14 flex-col
-        justify-center bg-card px-2'
-      >
-        <ListItem asChild>
-          <Link href={`/codegen?${searchParams.toString()}`} scroll={false}>
-            <ListItemIcon>
-              <CodeIcon />
-            </ListItemIcon>
-            <span>Export as code</span>
-          </Link>
-        </ListItem>
-      </div>
     </List>
   );
 };
