@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { NavbarActions } from './NavbarActions';
 import { NavbarHeader } from './NavbarHeader';
 import { NavbarLargeHeader } from './NavbarLargeHeader';
+import { NavbarLinks } from './NavbarLinks';
 import { cn } from '@/lib/utils';
 
 export const Navbar = () => {
@@ -32,7 +33,10 @@ md:before:w-[calc(100%-theme(spacing.80))] md:before:opacity-100 print:hidden
         <NavbarHeader
           className={cn(pathnameIsRoot && hideNavHeader && 'opacity-0')}
         />
-        <NavbarActions />
+        <div className='flex size-full flex-row items-center justify-end ps-4'>
+          <NavbarLinks />
+          <NavbarActions />
+        </div>
       </nav>
       <NavbarLargeHeader onIntersectingChange={setHideNavHeader} />
     </>
