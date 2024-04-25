@@ -145,7 +145,7 @@ export const OptionsDrawer = () => {
       direction={matchesMd ? 'right' : 'bottom'}
     >
       <DrawerTrigger asChild>
-        <Fab className='md:hidden print:hidden'>
+        <Fab className='bottom-20 md:hidden print:hidden'>
           <SlidersHorizontalIcon />
           <span>Options</span>
         </Fab>
