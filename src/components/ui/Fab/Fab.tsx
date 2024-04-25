@@ -1,35 +1,25 @@
-import {
-  forwardRef,
-  type ComponentPropsWithoutRef,
-  type ReactNode,
-} from 'react';
+import { forwardRef, type ElementRef } from 'react';
 
 import { cn } from '@/lib/utils';
+import { Button, type ButtonProps } from '../Button';
 
-export type FabProps = ComponentPropsWithoutRef<'button'> & {
-  icon?: ReactNode;
-  iconPosition?: 'start' | 'end';
-};
+type FabProps = Omit<ButtonProps, 'variant' | 'size'>;
 
-export const Fab = forwardRef<HTMLButtonElement, FabProps>(
+export const Fab = forwardRef<ElementRef<typeof Button>, FabProps>(
   ({ className, children, ...props }, ref) => (
-    <button
+    <Button
       {...props}
       ref={ref}
       className={cn(
-        `fixed bottom-4 end-4 z-20 flex h-14 min-w-14 cursor-default select-none
-items-center justify-center gap-3 self-center overflow-hidden rounded-lg
-bg-primary-50 px-4 text-base font-medium text-primary-800 shadow
-shadow-primary-800/50 transition-[color,background-color] duration-100
-state-layer hover:state-layer-primary-500/10 focus-visible:bg-primary-100
-focus-visible:outline-none active:bg-primary-100 active:duration-0 md:text-sm
-dark:bg-primary-800 dark:text-primary-200 dark:focus-visible:bg-primary-700
+        `z-20 h-14 min-w-14 gap-3 bg-primary-100 text-base text-primary-800
+shadow shadow-primary-800/50 hover:state-layer-primary-500/10
+active:bg-primary-200 md:text-sm dark:bg-primary-800 dark:text-primary-200
 dark:active:bg-primary-700 [&>*]:z-10 [&>svg]:text-lg md:[&>svg]:text-base`,
         className
       )}
     >
       {children}
-    </button>
+    </Button>
   )
 );
 Fab.displayName = 'Fab';
