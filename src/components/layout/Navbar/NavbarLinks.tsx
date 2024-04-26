@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { usePathname } from 'next/navigation';
 import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
 
@@ -8,7 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { Separator } from '@/components/ui/Separator';
 import { NAVBAR_LINKS } from '@/constants/navbar';
 
-export const NavbarLinks = () => {
+const NavbarLinksContent = () => {
   const pathname = usePathname();
 
   return (
@@ -46,3 +47,9 @@ data-[orientation=vertical]:h-6 md:block'
     </ToggleGroup>
   );
 };
+
+export const NavbarLinks = () => (
+  <Suspense>
+    <NavbarLinksContent />
+  </Suspense>
+);
