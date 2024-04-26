@@ -1,6 +1,17 @@
-/* FIXME: Broken with .dark & .light classes */
-
-:root {
+@define-mixin theme-light {
+  --color-prism-plain: #334155;
+  --color-prism-comment: #64748b;
+  --color-prism-variable: #0f172a;
+  --color-prism-hexcode: #0369a1;
+  --color-prism-keyword: #c2410c;
+  --color-prism-function: #1d4ed8;
+  --color-prism-deleted: #b91c1c;
+  --color-prism-inserted: #047857;
+  --color-prism-changed: #b45309;
+  --color-prism-selector: #a21caf;
+  --color-prism-regex: #0e7490;
+}
+@define-mixin theme-dark {
   --color-prism-plain: #cbd5e1;
   --color-prism-comment: #64748b;
   --color-prism-variable: #f1f5f9;
@@ -14,19 +25,20 @@
   --color-prism-regex: #67e8f9;
 }
 
+:root {
+  @mixin theme-dark;
+}
 @media (prefers-color-scheme: light), print {
   :root {
-    --color-prism-plain: #334155;
-    --color-prism-comment: #64748b;
-    --color-prism-variable: #0f172a;
-    --color-prism-hexcode: #0369a1;
-    --color-prism-keyword: #c2410c;
-    --color-prism-function: #1d4ed8;
-    --color-prism-deleted: #b91c1c;
-    --color-prism-inserted: #047857;
-    --color-prism-changed: #b45309;
-    --color-prism-selector: #a21caf;
-    --color-prism-regex: #0e7490;
+    @mixin theme-light;
+  }
+}
+.light .prism-code {
+  @mixin theme-light;
+}
+@media not print {
+  .dark .prism-code {
+    @mixin theme-dark;
   }
 }
 
