@@ -1,3 +1,5 @@
+/* FIXME: Broken with .dark & .light classes */
+
 :root {
   --color-prism-plain: #cbd5e1;
   --color-prism-comment: #64748b;

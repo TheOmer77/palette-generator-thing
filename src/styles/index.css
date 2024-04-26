@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  @define-mixin theme-light {
     --color-background: 255 255 255;
     --color-foreground: var(--color-neutral-900);
     --color-card: var(--color-neutral-50);
@@ -21,59 +21,58 @@
     --color-input-hover: var(--color-neutral-400);
     --color-input-invalid: var(--color-danger-600);
     --color-ring: var(--color-primary-600);
+  }
+
+  @define-mixin theme-dark {
+    --color-background: var(--color-neutral-950);
+    --color-foreground: var(--color-neutral-100);
+    --color-card: var(--color-neutral-900);
+    --color-card-foreground: var(--color-neutral-100);
+    --color-popover: var(--color-neutral-900);
+    --color-popover-foreground: var(--color-neutral-100);
+    --color-secondary: var(--color-neutral-800);
+    --color-secondary-foreground: var(--color-neutral-200);
+    --color-muted: var(--color-neutral-700);
+    --color-muted-foreground: var(--color-neutral-400);
+    --color-accent: var(--color-neutral-800);
+    --color-accent-foreground: var(--color-neutral-100);
+    --color-border: var(--color-neutral-800);
+    --color-input: var(--color-neutral-800);
+    --color-input-hover: var(--color-neutral-600);
+    --color-input-invalid: var(--color-danger-300);
+    --color-ring: var(--color-primary-300);
+  }
+
+  :root {
+    color-scheme: light dark;
 
     --border-radius: 0.5rem;
     --scrollbar-height: 0.75rem;
     --scrollbar-width: 0.75rem;
+
+    @mixin theme-light;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-background: var(--color-neutral-950);
-      --color-foreground: var(--color-neutral-100);
-      --color-card: var(--color-neutral-900);
-      --color-card-foreground: var(--color-neutral-100);
-      --color-popover: var(--color-neutral-900);
-      --color-popover-foreground: var(--color-neutral-100);
-      --color-secondary: var(--color-neutral-800);
-      --color-secondary-foreground: var(--color-neutral-200);
-      --color-muted: var(--color-neutral-700);
-      --color-muted-foreground: var(--color-neutral-400);
-      --color-accent: var(--color-neutral-800);
-      --color-accent-foreground: var(--color-neutral-100);
-      --color-border: var(--color-neutral-800);
-      --color-input: var(--color-neutral-800);
-      --color-input-hover: var(--color-neutral-600);
-      --color-input-invalid: var(--color-danger-300);
-      --color-ring: var(--color-primary-300);
-    }
-  }
-  @media print {
-    :root {
-      --color-background: 255 255 255;
-      --color-foreground: var(--color-neutral-900);
-      --color-card: var(--color-neutral-50);
-      --color-card-foreground: var(--color-neutral-900);
-      --color-popover: 255 255 255;
-      --color-popover-foreground: var(--color-neutral-900);
-      --color-secondary: var(--color-neutral-100);
-      --color-secondary-foreground: var(--color-neutral-800);
-      --color-muted: var(--color-neutral-300);
-      --color-muted-foreground: var(--color-neutral-600);
-      --color-accent: var(--color-neutral-100);
-      --color-accent-foreground: var(--color-neutral-900);
-      --color-border: var(--color-neutral-200);
-      --color-input: var(--color-neutral-200);
-      --color-input-hover: var(--color-neutral-400);
-      --color-input-invalid: var(--color-danger-600);
-      --color-ring: var(--color-primary-600);
+  @media not print {
+    @media (prefers-color-scheme: dark) {
+      :root {
+        @mixin theme-dark;
+      }
     }
   }
 }
 
-@layer base {
-  :root {
-    color-scheme: light dark;
+.light {
+  color-scheme: light;
+  @mixin theme-light;
+}
+@media not print {
+  .dark {
+    color-scheme: dark;
+    @mixin theme-dark;
   }
+}
+
+@layer base {
   * {
     @apply border-border scrollbar scrollbar-track-transparent
 scrollbar-thumb-neutral-500/30;

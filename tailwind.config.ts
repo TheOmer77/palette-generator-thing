@@ -13,6 +13,13 @@ const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
 
 const config = {
   content: ['./src/**/*.{ts,tsx}'],
+  darkMode: [
+    'variant',
+    [
+      '@media not print { @media (prefers-color-scheme: dark) { &:not(:is(.light *)) } }',
+      '@media not print { &:is(.dark *) }',
+    ],
+  ],
   theme: {
     container: {
       center: true,
