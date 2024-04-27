@@ -16,8 +16,8 @@ const config = {
   darkMode: [
     'variant',
     [
-      '@media not print { @media (prefers-color-scheme: dark) { &:not(:is(.light *)) } }',
-      '@media not print { &:is(.dark *) }',
+      "@media not print { @media (prefers-color-scheme: dark) { &:not(:is([data-theme='light'] *)) } }",
+      "@media not print { &:is([data-theme='dark'] *) }",
     ],
   ],
   theme: {

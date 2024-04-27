@@ -33,11 +33,11 @@
     @mixin theme-light;
   }
 }
-.light .prism-code {
+[data-theme='light'] .prism-code {
   @mixin theme-light;
 }
 @media not print {
-  .dark .prism-code {
+  [data-theme='dark'] .prism-code {
     @mixin theme-dark;
   }
 }

@@ -61,12 +61,12 @@
   }
 }
 
-.light {
+[data-theme='light'] {
   color-scheme: light;
   @mixin theme-light;
 }
 @media not print {
-  .dark {
+  [data-theme='dark'] {
     color-scheme: dark;
     @mixin theme-dark;
   }
