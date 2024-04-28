@@ -49,6 +49,7 @@ export const CodeBlock = forwardRef<
         >
           <Tooltip content='Copy code'>
             <IconButton
+              variant='flat'
               aria-label='Copy code'
               className='absolute end-2 top-2 print:hidden'
               onClick={copyCode}

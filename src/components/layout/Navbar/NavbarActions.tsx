@@ -10,7 +10,7 @@ export const NavbarActions = () => (
   <div className='flex flex-row gap-px'>
     <NavbarThemeMenu />
     <Tooltip content='GitHub repo'>
-      <IconButton asChild>
+      <IconButton asChild variant='flat'>
         <Link href={REPO_URL}>
           <GithubLogo className='size-em' />
         </Link>

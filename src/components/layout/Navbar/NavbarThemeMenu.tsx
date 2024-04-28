@@ -23,14 +23,14 @@ export const NavbarThemeMenu = () => {
   return (
     <DropdownMenu>
       <Tooltip content='Theme'>
-        <DropdownMenuTrigger asChild disabled={!isClient}>
-          <IconButton>
+        <IconButton asChild variant='flat' disabled={!isClient}>
+          <DropdownMenuTrigger>
             <>
               <MoonIcon className='hidden dark:block' />
               <SunIcon className='dark:hidden' />
             </>
-          </IconButton>
-        </DropdownMenuTrigger>
+          </DropdownMenuTrigger>
+        </IconButton>
       </Tooltip>
       <DropdownMenuContent align='end'>
         <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>

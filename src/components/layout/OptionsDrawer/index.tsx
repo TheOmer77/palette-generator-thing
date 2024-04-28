@@ -164,7 +164,7 @@ md:[&[vaul-drawer]]:[transition-property:transform]`,
         ref={drawerRef}
       >
         <DrawerClose asChild className='absolute end-2 top-3 hidden md:flex'>
-          <IconButton>
+          <IconButton variant='flat'>
             <XIcon />
           </IconButton>
         </DrawerClose>
