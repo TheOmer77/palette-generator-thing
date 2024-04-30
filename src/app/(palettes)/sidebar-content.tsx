@@ -1,7 +1,9 @@
 'use client';
 
+import { useIsClient } from 'usehooks-ts';
 import { PlusIcon } from 'lucide-react';
 
+import { Collapsible } from '@/components/ui/Collapsible';
 import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import {
   Popover,
@@ -22,6 +24,7 @@ import { useTheme } from '@/hooks/useTheme';
 export const PalettesSidebarContent = () => {
   const { extras, addExtraColor } = useBaseColors(),
     themeColors = useTheme();
+  const isClient = useIsClient();
 
   return (
     <List>
@@ -81,12 +84,14 @@ export const PalettesSidebarContent = () => {
           </Popover>
         );
       })}
-      <ListItem onClick={addExtraColor} className='mb-2'>
-        <ListItemIcon>
-          <PlusIcon />
-        </ListItemIcon>
-        <span>Add extra color</span>
-      </ListItem>
+      <Collapsible open={isClient}>
+        <ListItem onClick={addExtraColor} className='mb-2'>
+          <ListItemIcon>
+            <PlusIcon />
+          </ListItemIcon>
+          <span>Add extra color</span>
+        </ListItem>
+      </Collapsible>
     </List>
   );
 };

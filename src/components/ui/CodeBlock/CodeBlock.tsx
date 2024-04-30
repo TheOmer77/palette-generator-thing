@@ -3,6 +3,7 @@
 import { forwardRef, useCallback, useState, type ElementRef } from 'react';
 import type { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { Highlight, Prism } from 'prism-react-renderer';
+import { useIsClient } from 'usehooks-ts';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
 import { IconButton } from '../IconButton';
@@ -25,6 +26,7 @@ export const CodeBlock = forwardRef<
   ElementRef<typeof ScrollArea>,
   CodeBlockProps
 >(({ language = '', className, children, ...props }, ref) => {
+  const isClient = useIsClient();
   const [justCopied, setJustCopied] = useState(false);
 
   const copyCode = useCallback(() => {
@@ -47,16 +49,18 @@ export const CodeBlock = forwardRef<
           ref={ref}
           className={cn('relative grid rounded-lg bg-card', className)}
         >
-          <Tooltip content='Copy code'>
-            <IconButton
-              variant='flat'
-              aria-label='Copy code'
-              className='absolute end-2 top-2 print:hidden'
-              onClick={copyCode}
-            >
-              {justCopied ? <CheckIcon /> : <CopyIcon />}
-            </IconButton>
-          </Tooltip>
+          {isClient && (
+            <Tooltip content='Copy code'>
+              <IconButton
+                variant='flat'
+                aria-label='Copy code'
+                className='absolute end-2 top-2 print:hidden'
+                onClick={copyCode}
+              >
+                {justCopied ? <CheckIcon /> : <CopyIcon />}
+              </IconButton>
+            </Tooltip>
+          )}
           <pre className={cn('p-4 text-sm leading-relaxed', preClassname)}>
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line })}>

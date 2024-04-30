@@ -1,5 +1,7 @@
 'use client';
 
+import { useIsClient } from 'usehooks-ts';
+
 import { Collapsible } from '@/components/ui/Collapsible';
 import {
   DropdownMenu,
@@ -10,16 +12,18 @@ import {
 } from '@/components/ui/DropdownMenu';
 import { List, ListItem, ListItemText } from '@/components/ui/List';
 import { useCodeGen } from '@/store/useCodeGen';
+import { cn } from '@/lib/utils';
 import { codeFormats, colorFormats } from '@/constants';
 
 export const CodeGenSidebarContent = () => {
   const { format, colorFormat, setFormat, setColorFormat } = useCodeGen();
+  const isClient = useIsClient();
 
   return (
     <List>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <ListItem>
+          <ListItem className={cn(!isClient && 'pointer-events-none')}>
             <ListItemText
               primary='Format'
               secondary={codeFormats[format].displayName}
@@ -42,7 +46,7 @@ export const CodeGenSidebarContent = () => {
       <Collapsible open={!['none', 'custom'].includes(format)}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <ListItem>
+            <ListItem className={cn(!isClient && 'pointer-events-none')}>
               <ListItemText
                 primary='Color format'
                 secondary={colorFormats[colorFormat]?.displayName || 'None'}
