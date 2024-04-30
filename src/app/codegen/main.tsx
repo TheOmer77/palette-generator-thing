@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useMemo } from 'react';
+import { useIsClient } from 'usehooks-ts';
 import { camelCase } from 'change-case';
 
 import { CodeBlock } from '@/components/ui/CodeBlock';
@@ -19,6 +20,7 @@ import { codeFormats, colorFormats } from '@/constants';
 const MainContent = () => {
   const { primary, neutral, danger, extras } = useTheme();
   const { format, colorFormat, setFormat, setColorFormat } = useCodeGen();
+  const isClient = useIsClient();
 
   const themeCode = useMemo(() => {
     const palettes = extras.reduce(
@@ -55,7 +57,12 @@ const MainContent = () => {
         className='sticky top-16 z-20 grid grid-cols-1 gap-2 bg-background pb-2
 sm:grid-cols-2 md:hidden print:hidden'
       >
-        <Select label='Format' value={format} onValueChange={setFormat}>
+        <Select
+          label='Format'
+          value={format}
+          onValueChange={setFormat}
+          disabled={!isClient}
+        >
           {Object.entries(codeFormats).map(([key, { displayName }]) => (
             <SelectItem key={key} value={key}>
               {displayName}
@@ -66,6 +73,7 @@ sm:grid-cols-2 md:hidden print:hidden'
           label='Color format'
           value={colorFormat}
           onValueChange={setColorFormat}
+          disabled={!isClient}
         >
           {Object.entries(colorFormats).map(([key, { displayName }]) => (
             <SelectItem key={key} value={key}>
