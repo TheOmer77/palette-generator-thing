@@ -107,7 +107,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         <Tooltip content='Generate random color'>
           <IconButton
             variant='flat'
-            className='absolute bottom-1 end-1'
+            className='absolute bottom-2 end-1 md:bottom-1'
             aria-label='Generate random color'
             onClick={() => onChange?.(randomHexColor())}
           >
