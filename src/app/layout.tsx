@@ -4,6 +4,7 @@ import { Figtree, Fira_Code } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import clsx from 'clsx';
 
+import { Favicon } from '@/components/layout/Favicon';
 import { Navbar } from '@/components/layout/Navbar';
 import { ThemeStyle } from '@/components/layout/ThemeStyle';
 import '@/styles/index.css';
@@ -32,6 +33,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
   >
     <head>
       <meta name='color-scheme' content='light dark' />
+      <Favicon />
       <ThemeStyle />
     </head>
     <body>
