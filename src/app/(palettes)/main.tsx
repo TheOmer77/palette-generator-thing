@@ -46,7 +46,7 @@ const MainContent = () => {
 
   return (
     <main
-      className='p-4 md:ps-[21rem] [&>*]:mx-auto [&>*]:w-full
+      className='p-4 pb-20 md:pb-4 md:ps-[21rem] [&>*]:mx-auto [&>*]:w-full
 [&>*]:max-w-screen-lg'
     >
       <H1>Palettes</H1>
