@@ -19,7 +19,7 @@ fill='${encodeURIComponent(getPaletteColor(primary, 500))}' /%3E%3Cpath d='M16
 0-3zm-11 2c2 0 2 3 0 3s-2-3 0-3z' fill-rule='evenodd' fill='%23fff'
 /%3E%3C/svg%3E`.replaceAll('\n', ' ');
 
-  return <link rel='icon' href={dataUri} />;
+  return <link rel='icon' href={dataUri} type='image/svg+xml' />;
 };
 
 export const Favicon = () => (
