@@ -49,18 +49,19 @@ export const CodeBlock = forwardRef<
           ref={ref}
           className={cn('relative grid rounded-lg bg-card', className)}
         >
-          {isClient && (
-            <Tooltip content='Copy code'>
-              <IconButton
-                variant='flat'
-                aria-label='Copy code'
-                className='absolute end-2 top-2 print:hidden'
-                onClick={copyCode}
-              >
-                {justCopied ? <CheckIcon /> : <CopyIcon />}
-              </IconButton>
-            </Tooltip>
-          )}
+          <Tooltip content='Copy code'>
+            <IconButton
+              variant='flat'
+              aria-label='Copy code'
+              className={cn(
+                'absolute end-2 top-2 transition-opacity print:hidden',
+                !isClient && 'pointer-events-none opacity-0'
+              )}
+              onClick={copyCode}
+            >
+              {justCopied ? <CheckIcon /> : <CopyIcon />}
+            </IconButton>
+          </Tooltip>
           <pre className={cn('p-4 text-sm leading-relaxed', preClassname)}>
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line })}>
