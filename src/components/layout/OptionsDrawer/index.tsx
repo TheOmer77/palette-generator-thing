@@ -148,8 +148,9 @@ export const OptionsDrawer = () => {
       <DrawerTrigger asChild>
         <Fab
           className={cn(
-            'fixed bottom-20 end-4 md:hidden print:hidden',
-            !isClient && 'hidden'
+            `fixed bottom-20 end-4 transition-[opacity,transform]
+md:hidden print:hidden`,
+            !isClient && 'scale-90 opacity-0'
           )}
         >
           <SlidersHorizontalIcon />
