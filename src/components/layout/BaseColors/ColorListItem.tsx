@@ -5,13 +5,11 @@ import {
   type ComponentPropsWithoutRef,
   type ElementRef,
 } from 'react';
-import { useIsClient } from 'usehooks-ts';
 import { AlertCircleIcon } from 'lucide-react';
 
 import { ListItem, ListItemText } from '@/components/ui/List';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { nameIsDuplicate, nameIsReserved } from '@/lib/validateColorName';
-import { cn } from '@/lib/utils';
 
 export type ColorListItemProps = ComponentPropsWithoutRef<typeof ListItem> & {
   color: string;
@@ -22,9 +20,8 @@ export type ColorListItemProps = ComponentPropsWithoutRef<typeof ListItem> & {
 export const ColorListItem = forwardRef<
   ElementRef<typeof ListItem>,
   ColorListItemProps
->(({ color, title, extraColor, className, ...props }, ref) => {
+>(({ color, title, extraColor, ...props }, ref) => {
   const { extras } = useBaseColors();
-  const isClient = useIsClient();
 
   return (
     <ListItem
@@ -32,7 +29,6 @@ export const ColorListItem = forwardRef<
       ref={ref}
       // Hex color has spaces so it's read correctly by screen readers
       aria-label={`${title} - ${color.split('').join(' ')}`}
-      className={cn(!isClient && 'pointer-events-none', className)}
     >
       <div
         className='me-4 size-[2.25em] shrink-0 rounded-lg'

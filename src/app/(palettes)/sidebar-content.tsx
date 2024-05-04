@@ -20,6 +20,7 @@ import {
 } from '@/components/layout/BaseColors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 export const PalettesSidebarContent = () => {
   const { extras, addExtraColor } = useBaseColors(),
@@ -27,7 +28,7 @@ export const PalettesSidebarContent = () => {
   const isClient = useIsClient();
 
   return (
-    <List>
+    <List className={cn(!isClient && 'pointer-events-none')}>
       <Popover modal>
         <PopoverTrigger asChild>
           <ColorListItem color={themeColors.primary} title='Primary' />
