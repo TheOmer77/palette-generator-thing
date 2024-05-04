@@ -54,14 +54,13 @@ active:after:duration-0`,
             .join(' ')} - Copy color value`}
           onClick={copyValue}
         >
-          {isClient && (
-            <Icon
-              className={cn(
-                'absolute end-2 text-lg md:text-base print:hidden',
-                isHexColorLight(value) ? 'text-black/60' : 'text-white/60'
-              )}
-            />
-          )}
+          <Icon
+            className={cn(
+              'absolute end-2 text-lg transition-opacity md:text-base print:hidden',
+              isHexColorLight(value) ? 'text-black/60' : 'text-white/60',
+              !isClient && 'opacity-0'
+            )}
+          />
           {label && (
             <span
               className={cn(
