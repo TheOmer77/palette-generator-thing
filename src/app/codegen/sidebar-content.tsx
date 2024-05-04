@@ -20,10 +20,10 @@ export const CodeGenSidebarContent = () => {
   const isClient = useIsClient();
 
   return (
-    <List>
+    <List className={cn(!isClient && 'pointer-events-none')}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <ListItem className={cn(!isClient && 'pointer-events-none')}>
+          <ListItem>
             <ListItemText
               primary='Format'
               secondary={codeFormats[format].displayName}
@@ -46,7 +46,7 @@ export const CodeGenSidebarContent = () => {
       <Collapsible open={!['none', 'custom'].includes(format)}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <ListItem className={cn(!isClient && 'pointer-events-none')}>
+            <ListItem>
               <ListItemText
                 primary='Color format'
                 secondary={colorFormats[colorFormat]?.displayName || 'None'}
