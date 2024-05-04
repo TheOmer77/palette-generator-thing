@@ -1,5 +1,7 @@
 'use client';
 
+import { useIsClient } from 'usehooks-ts';
+
 import { Collapsible } from '@/components/ui/Collapsible';
 import {
   DropdownMenu,
@@ -10,13 +12,15 @@ import {
 } from '@/components/ui/DropdownMenu';
 import { List, ListItem, ListItemText } from '@/components/ui/List';
 import { useCodeGen } from '@/store/useCodeGen';
+import { cn } from '@/lib/utils';
 import { codeFormats, colorFormats } from '@/constants';
 
 export const CodeGenSidebarContent = () => {
   const { format, colorFormat, setFormat, setColorFormat } = useCodeGen();
+  const isClient = useIsClient();
 
   return (
-    <List>
+    <List className={cn(!isClient && 'pointer-events-none')}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <ListItem>

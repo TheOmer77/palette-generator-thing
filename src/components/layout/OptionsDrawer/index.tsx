@@ -2,7 +2,7 @@
 
 import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useEventListener, useMediaQuery } from 'usehooks-ts';
+import { useEventListener, useIsClient, useMediaQuery } from 'usehooks-ts';
 import { SlidersHorizontalIcon, XIcon } from 'lucide-react';
 import { TransitionSwitchItem } from '@theomer77/react-transition-switch';
 
@@ -22,12 +22,12 @@ import { Fab } from '@/components/ui/Fab';
 import { IconButton } from '@/components/ui/IconButton';
 import { useTheme } from '@/hooks/useTheme';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
+import { cn } from '@/lib/utils';
 import {
   MODAL_BASECOLORS_EDIT,
   MODAL_BASECOLORS_LIST,
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
-import { cn } from '@/lib/utils';
 
 export const OptionsDrawer = () => {
   const searchParams = useSearchParams();
@@ -36,6 +36,7 @@ export const OptionsDrawer = () => {
   const { extras } = useTheme();
   const { saveToSearchParams } = useOptionsDrawer();
 
+  const isClient = useIsClient();
   const matchesMd = useMediaQuery('(min-width: 768px)');
 
   const [drawerEl, setDrawerEl] = useState<HTMLDivElement>();
@@ -145,7 +146,13 @@ export const OptionsDrawer = () => {
       direction={matchesMd ? 'right' : 'bottom'}
     >
       <DrawerTrigger asChild>
-        <Fab className='md:hidden print:hidden'>
+        <Fab
+          className={cn(
+            `fixed bottom-20 end-4 transition-[opacity,transform]
+md:hidden print:hidden`,
+            !isClient && 'scale-90 opacity-0'
+          )}
+        >
           <SlidersHorizontalIcon />
           <span>Options</span>
         </Fab>
@@ -164,7 +171,7 @@ md:[&[vaul-drawer]]:[transition-property:transform]`,
         ref={drawerRef}
       >
         <DrawerClose asChild className='absolute end-2 top-3 hidden md:flex'>
-          <IconButton>
+          <IconButton variant='flat'>
             <XIcon />
           </IconButton>
         </DrawerClose>

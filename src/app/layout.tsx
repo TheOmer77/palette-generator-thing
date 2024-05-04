@@ -1,8 +1,11 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Figtree, Fira_Code } from 'next/font/google';
+import { ThemeProvider } from 'next-themes';
 import clsx from 'clsx';
 
+import { Favicon } from '@/components/layout/Favicon';
+import { Navbar } from '@/components/layout/Navbar';
 import { ThemeStyle } from '@/components/layout/ThemeStyle';
 import '@/styles/index.css';
 
@@ -23,13 +26,21 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
-  <html lang='en' className={clsx(font.variable, fontMono.variable)}>
+  <html
+    lang='en'
+    className={clsx(font.variable, fontMono.variable)}
+    suppressHydrationWarning
+  >
     <head>
       <meta name='color-scheme' content='light dark' />
+      <Favicon />
       <ThemeStyle />
     </head>
     <body>
-      <div className='mx-auto w-full max-w-screen-2xl'>{children}</div>
+      <ThemeProvider>
+        <Navbar />
+        <div className='mx-auto w-full max-w-screen-2xl'>{children}</div>
+      </ThemeProvider>
     </body>
   </html>
 );

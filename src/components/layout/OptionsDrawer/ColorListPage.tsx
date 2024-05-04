@@ -6,9 +6,8 @@ import {
   type ComponentPropsWithoutRef,
   type ElementRef,
 } from 'react';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { CodeIcon, PlusIcon } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
 
 import { ColorListItem } from '@/components/layout/BaseColors';
 import { DrawerHeader, DrawerTitle } from '@/components/ui/Drawer';
@@ -99,16 +98,6 @@ export const ColorListPage = forwardRef<
               <PlusIcon />
             </ListItemIcon>
             <span>Add extra color</span>
-          </ListItem>
-
-          {/* Temporary until site nav is implemented */}
-          <ListItem asChild>
-            <Link href={`/codegen?${searchParams.toString()}`} scroll={false}>
-              <ListItemIcon>
-                <CodeIcon />
-              </ListItemIcon>
-              <span>Export as code</span>
-            </Link>
           </ListItem>
         </List>
       </ScrollArea>

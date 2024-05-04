@@ -7,11 +7,7 @@ export const PalettesSidebar = () => {
   return (
     <Sidebar className='hidden md:flex print:hidden print:md:flex'>
       <Header className='mb-2 px-4 py-2' />
-      <ScrollArea
-        // TODO: Remove second row of classnames when removing the code gen bottom item
-        className='flex-grow pb-2 print:hidden
-[&_[data-radix-scroll-area-viewport]]:pb-[3rem] [&_[data-scroll-bar]]:z-10'
-      >
+      <ScrollArea className='flex-grow print:hidden'>
         <PalettesSidebarContent />
       </ScrollArea>
     </Sidebar>

@@ -4,6 +4,7 @@ import {
   useState,
   type ComponentPropsWithoutRef,
 } from 'react';
+import { useIsClient } from 'usehooks-ts';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
 import { Tooltip } from '@/components/ui/Tooltip';
@@ -17,6 +18,7 @@ export type ColorBlockProps = ComponentPropsWithoutRef<'button'> & {
 
 export const ColorGridItem = forwardRef<HTMLButtonElement, ColorBlockProps>(
   ({ value, label, style, ...props }, ref) => {
+    const isClient = useIsClient();
     const [justCopied, setJustCopied] = useState(false);
     const Icon = justCopied ? CheckIcon : CopyIcon;
 
@@ -43,7 +45,8 @@ overflow-hidden rounded-lg p-2 state-layer [print-color-adjust:exact]
 hover:state-layer-muted/20 focus-visible:outline-none
 focus-visible:state-layer-muted/20 active:state-layer-muted/40
 active:after:duration-0`,
-            isHexColorLight(value) ? 'text-black' : 'text-white'
+            isHexColorLight(value) ? 'text-black' : 'text-white',
+            !isClient && 'pointer-events-none'
           )}
           // Hex color has spaces so it's read correctly by screen readers
           aria-label={`${label} - ${value
@@ -53,8 +56,9 @@ active:after:duration-0`,
         >
           <Icon
             className={cn(
-              'absolute end-2 text-lg md:text-base print:hidden',
-              isHexColorLight(value) ? 'text-black/60' : 'text-white/60'
+              'absolute end-2 text-lg transition-opacity md:text-base print:hidden',
+              isHexColorLight(value) ? 'text-black/60' : 'text-white/60',
+              !isClient && 'opacity-0'
             )}
           />
           {label && (

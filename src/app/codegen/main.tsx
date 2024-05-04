@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useMemo } from 'react';
+import { useIsClient } from 'usehooks-ts';
 import { camelCase } from 'change-case';
 
 import { CodeBlock } from '@/components/ui/CodeBlock';
@@ -19,6 +20,7 @@ import { codeFormats, colorFormats } from '@/constants';
 const MainContent = () => {
   const { primary, neutral, danger, extras } = useTheme();
   const { format, colorFormat, setFormat, setColorFormat } = useCodeGen();
+  const isClient = useIsClient();
 
   const themeCode = useMemo(() => {
     const palettes = extras.reduce(
@@ -45,17 +47,22 @@ const MainContent = () => {
 
   return (
     <main
-      className='flex max-h-dvh min-h-dvh flex-col p-4 md:ps-[21rem] print:ps-4 [&>*]:mx-auto
-[&>*]:w-full [&>*]:max-w-screen-lg'
+      className='flex flex-col p-4 pb-20 md:pb-4 md:ps-[21rem] print:ps-4
+[&>*]:mx-auto [&>*]:w-full [&>*]:max-w-screen-lg'
     >
       <Header className='mb-6 hidden print:block' />
 
       <H1>{codeFormats[format].displayName} code</H1>
       <div
-        className='mb-2 grid grid-cols-1 gap-2 sm:grid-cols-2 md:hidden
-print:hidden'
+        className='sticky top-16 z-20 grid grid-cols-1 gap-2 bg-background pb-2
+sm:grid-cols-2 md:hidden print:hidden'
       >
-        <Select label='Format' value={format} onValueChange={setFormat}>
+        <Select
+          label='Format'
+          value={format}
+          onValueChange={setFormat}
+          disabled={!isClient}
+        >
           {Object.entries(codeFormats).map(([key, { displayName }]) => (
             <SelectItem key={key} value={key}>
               {displayName}
@@ -66,6 +73,7 @@ print:hidden'
           label='Color format'
           value={colorFormat}
           onValueChange={setColorFormat}
+          disabled={!isClient}
         >
           {Object.entries(colorFormats).map(([key, { displayName }]) => (
             <SelectItem key={key} value={key}>

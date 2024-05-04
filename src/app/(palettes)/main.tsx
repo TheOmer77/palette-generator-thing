@@ -5,7 +5,6 @@ import { camelCase } from 'change-case';
 
 import { H1, H2 } from '@/components/ui/Headings';
 import { ColorGridItem, ColorGrid } from '@/components/layout/ColorGrid';
-import { Header } from '@/components/layout/Header';
 import { useTheme } from '@/hooks/useTheme';
 import { generatePalette } from '@/lib/colorUtils';
 import { shades } from '@/constants';
@@ -47,11 +46,9 @@ const MainContent = () => {
 
   return (
     <main
-      className='p-4 md:ps-[21rem] [&>*]:mx-auto [&>*]:w-full
+      className='p-4 pb-20 md:pb-4 md:ps-[21rem] [&>*]:mx-auto [&>*]:w-full
 [&>*]:max-w-screen-lg'
     >
-      <Header className='mb-6 block md:hidden' />
-
       <H1>Palettes</H1>
       {colorGrids.map(({ id, title, palette }) => (
         <div key={id} className='break-inside-avoid'>

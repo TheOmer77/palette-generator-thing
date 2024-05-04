@@ -3,6 +3,7 @@
 import { forwardRef, useCallback, useState, type ElementRef } from 'react';
 import type { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { Highlight, Prism } from 'prism-react-renderer';
+import { useIsClient } from 'usehooks-ts';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
 import { IconButton } from '../IconButton';
@@ -25,6 +26,7 @@ export const CodeBlock = forwardRef<
   ElementRef<typeof ScrollArea>,
   CodeBlockProps
 >(({ language = '', className, children, ...props }, ref) => {
+  const isClient = useIsClient();
   const [justCopied, setJustCopied] = useState(false);
 
   const copyCode = useCallback(() => {
@@ -49,8 +51,12 @@ export const CodeBlock = forwardRef<
         >
           <Tooltip content='Copy code'>
             <IconButton
+              variant='flat'
               aria-label='Copy code'
-              className='absolute end-2 top-2 print:hidden'
+              className={cn(
+                'absolute end-2 top-2 transition-opacity print:hidden',
+                !isClient && 'pointer-events-none opacity-0'
+              )}
               onClick={copyCode}
             >
               {justCopied ? <CheckIcon /> : <CopyIcon />}

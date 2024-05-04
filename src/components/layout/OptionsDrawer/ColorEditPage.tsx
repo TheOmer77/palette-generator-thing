@@ -32,7 +32,11 @@ export const ColorEditPage = forwardRef<ElementRef<'div'>, ColorEditPageProps>(
           className='flex h-16 shrink-0 flex-row items-center gap-4
 py-0'
         >
-          <IconButton onClick={() => window.history.back()}>
+          <IconButton
+            variant='flat'
+            size='lg'
+            onClick={() => window.history.back()}
+          >
             <ArrowLeftIcon />
           </IconButton>
           <DrawerTitle className='text-xl'>{title}</DrawerTitle>

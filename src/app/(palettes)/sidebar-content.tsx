@@ -1,9 +1,9 @@
 'use client';
 
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { CodeIcon, PlusIcon } from 'lucide-react';
+import { useIsClient } from 'usehooks-ts';
+import { PlusIcon } from 'lucide-react';
 
+import { Collapsible } from '@/components/ui/Collapsible';
 import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import {
   Popover,
@@ -20,14 +20,15 @@ import {
 } from '@/components/layout/BaseColors';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 export const PalettesSidebarContent = () => {
   const { extras, addExtraColor } = useBaseColors(),
     themeColors = useTheme();
-  const searchParams = useSearchParams();
+  const isClient = useIsClient();
 
   return (
-    <List>
+    <List className={cn(!isClient && 'pointer-events-none')}>
       <Popover modal>
         <PopoverTrigger asChild>
           <ColorListItem color={themeColors.primary} title='Primary' />
@@ -84,27 +85,14 @@ export const PalettesSidebarContent = () => {
           </Popover>
         );
       })}
-      <ListItem onClick={addExtraColor} className='mb-2'>
-        <ListItemIcon>
-          <PlusIcon />
-        </ListItemIcon>
-        <span>Add extra color</span>
-      </ListItem>
-
-      {/* Temporary until site nav is implemented */}
-      <div
-        className='absolute inset-x-0 bottom-0 z-10 flex h-14 flex-col
-        justify-center bg-card px-2'
-      >
-        <ListItem asChild>
-          <Link href={`/codegen?${searchParams.toString()}`} scroll={false}>
-            <ListItemIcon>
-              <CodeIcon />
-            </ListItemIcon>
-            <span>Export as code</span>
-          </Link>
+      <Collapsible open={isClient}>
+        <ListItem onClick={addExtraColor} className='mb-2'>
+          <ListItemIcon>
+            <PlusIcon />
+          </ListItemIcon>
+          <span>Add extra color</span>
         </ListItem>
-      </div>
+      </Collapsible>
     </List>
   );
 };
