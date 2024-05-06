@@ -1,4 +1,3 @@
-import { getBezierCurvePointY } from '@/lib/bezierCurve';
 import { calculateSteps, getStepDifference } from '@/lib/calculateSteps';
 import type { CurveValue } from '@/types/bezierCurve';
 
@@ -21,11 +20,3 @@ export const shades = [
   ...calculateSteps(MIN_SHADE, MAX_SHADE, 11).slice(1, 10),
   MAX_SHADE - getStepDifference(MIN_SHADE, MAX_SHADE, 11) / 2,
 ];
-
-// TODO: Separate lightness value for neutral palette, using DEFAULT_CURVE
-export const shadesLightnessValues = shades.map(
-  shade =>
-    DEFAULT_MIN_LIGHTNESS +
-    getBezierCurvePointY(DEFAULT_NEUTRAL_CURVE, shade / 1000) *
-      (DEFAULT_MAX_LIGHTNESS - DEFAULT_MIN_LIGHTNESS)
-);
