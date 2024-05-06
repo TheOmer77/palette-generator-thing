@@ -7,7 +7,7 @@ import { H1, H2 } from '@/components/ui/Headings';
 import { ColorGridItem, ColorGrid } from '@/components/layout/ColorGrid';
 import { useTheme } from '@/hooks/useTheme';
 import { generatePalette } from '@/lib/colorUtils';
-import { shades } from '@/constants';
+import { DEFAULT_NEUTRAL_CURVE, shades } from '@/constants';
 
 const MainContent = () => {
   const { primary, neutral, danger, extras } = useTheme();
@@ -22,7 +22,9 @@ const MainContent = () => {
       {
         id: 'neutral',
         title: 'Neutral',
-        palette: generatePalette(neutral),
+        palette: generatePalette(neutral, {
+          lightnessCurve: DEFAULT_NEUTRAL_CURVE,
+        }),
       },
       {
         id: 'danger',

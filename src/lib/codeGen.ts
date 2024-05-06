@@ -1,5 +1,9 @@
 import { generatePalette, getTokenShades } from './colorUtils';
-import { colorFormats, shades } from '@/constants';
+import { colorFormats } from '@/constants/codeGen';
+import { DEFAULT_NEUTRAL_CURVE, shades } from '@/constants/shades';
+
+const getLightnessOptions = (baseColorKey: string) =>
+  baseColorKey === 'neutral' ? { lightnessCurve: DEFAULT_NEUTRAL_CURVE } : {};
 
 export const generateCssCode = (
   baseColors: Record<string, string>,
@@ -8,7 +12,10 @@ export const generateCssCode = (
   `:root {
 ${Object.entries(baseColors)
   .map(([baseColorKey, baseColor]) => {
-    const palette = generatePalette(baseColor),
+    const palette = generatePalette(
+        baseColor,
+        getLightnessOptions(baseColorKey)
+      ),
       tokenShades = getTokenShades(baseColor);
 
     return `  /* ${baseColorKey} */
@@ -37,7 +44,10 @@ export const generateScssCode = (
 ) =>
   `${Object.entries(baseColors)
     .map(([baseColorKey, baseColor]) => {
-      const palette = generatePalette(baseColor),
+      const palette = generatePalette(
+          baseColor,
+          getLightnessOptions(baseColorKey)
+        ),
         tokenShades = getTokenShades(baseColor);
 
       return `// ${baseColorKey}
@@ -65,7 +75,10 @@ export const generateJsonCode = (
 ) =>
   JSON.stringify(
     Object.entries(baseColors).reduce((obj, [baseColorKey, baseColor]) => {
-      const palette = generatePalette(baseColor),
+      const palette = generatePalette(
+          baseColor,
+          getLightnessOptions(baseColorKey)
+        ),
         tokenShades = getTokenShades(baseColor);
 
       return {

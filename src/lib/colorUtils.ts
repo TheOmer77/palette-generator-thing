@@ -14,6 +14,7 @@ import {
 } from 'culori/fn';
 
 import { calculateSteps } from './calculateSteps';
+import { getBezierCurvePointY } from '@/lib/bezierCurve';
 import { FALLBACK_COLOR } from '@/constants/fallbackColor';
 import {
   DEFAULT_DANGER_HUE,
@@ -39,14 +40,7 @@ import {
   MIN_MAIN_SHADE,
   shades,
 } from '@/constants/shades';
-import type { CurveValue } from '@/types/bezierCurve';
-import { getBezierCurvePointY } from '@/lib/bezierCurve';
-
-type GeneratePaletteOptions = {
-  minLightness?: number;
-  maxLightness?: number;
-  lightnessCurve?: CurveValue;
-};
+import type { GeneratePaletteOptions } from '@/types/generatePaletteOptions';
 
 const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),
