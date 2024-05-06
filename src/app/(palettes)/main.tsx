@@ -7,7 +7,7 @@ import { H1, H2 } from '@/components/ui/Headings';
 import { ColorGridItem, ColorGrid } from '@/components/layout/ColorGrid';
 import { useTheme } from '@/hooks/useTheme';
 import { generatePalette } from '@/lib/colorUtils';
-import { DEFAULT_NEUTRAL_CURVE, shades } from '@/constants';
+import { DEFAULT_NEUTRAL_CURVE, SHADES } from '@/constants';
 
 const MainContent = () => {
   const { primary, neutral, danger, extras } = useTheme();
@@ -60,7 +60,7 @@ const MainContent = () => {
               <ColorGridItem
                 key={color}
                 value={color}
-                label={shades[index].toString()}
+                label={SHADES[index].toString()}
               />
             ))}
           </ColorGrid>

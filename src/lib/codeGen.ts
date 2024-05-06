@@ -1,6 +1,6 @@
 import { generatePalette, getTokenShades } from './colorUtils';
 import { colorFormats } from '@/constants/codeGen';
-import { DEFAULT_NEUTRAL_CURVE, shades } from '@/constants/shades';
+import { DEFAULT_NEUTRAL_CURVE, SHADES } from '@/constants/shades';
 
 const getLightnessOptions = (baseColorKey: string) =>
   baseColorKey === 'neutral' ? { lightnessCurve: DEFAULT_NEUTRAL_CURVE } : {};
@@ -22,7 +22,7 @@ ${Object.entries(baseColors)
 ${palette
   .map(
     (color, index) =>
-      `  --color-${baseColorKey}-${shades[index]}: ${colorFormats[
+      `  --color-${baseColorKey}-${SHADES[index]}: ${colorFormats[
         colorFormat
       ].formatColor(color)};`
   )
@@ -54,7 +54,7 @@ export const generateScssCode = (
 ${palette
   .map(
     (color, index) =>
-      `$color-${baseColorKey}-${shades[index]}: ${colorFormats[
+      `$color-${baseColorKey}-${SHADES[index]}: ${colorFormats[
         colorFormat
       ].formatColor(color)};`
   )
@@ -87,7 +87,7 @@ export const generateJsonCode = (
           ...palette.reduce(
             (paletteObj, color, index) => ({
               ...paletteObj,
-              [shades[index]]: colorFormats[colorFormat].formatColor(color),
+              [SHADES[index]]: colorFormats[colorFormat].formatColor(color),
             }),
             {}
           ),
@@ -96,7 +96,7 @@ export const generateJsonCode = (
             (tokensObj, [tokenShadeKey, tokenShade]) => ({
               ...tokensObj,
               [tokenShadeKey]: colorFormats[colorFormat].formatColor(
-                palette[shades.findIndex(shade => shade === tokenShade)]
+                palette[SHADES.findIndex(shade => shade === tokenShade)]
               ),
             }),
             {}

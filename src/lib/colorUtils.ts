@@ -38,7 +38,7 @@ import {
   MAX_SHADE,
   MIN_ACTIVE_SHADE,
   MIN_MAIN_SHADE,
-  shades,
+  SHADES,
 } from '@/constants/shades';
 import type { GeneratePaletteOptions } from '@/types/generatePaletteOptions';
 
@@ -51,7 +51,7 @@ const getShadesLightnessValues = ({
   maxLightness = DEFAULT_MAX_LIGHTNESS,
   minLightness = DEFAULT_MIN_LIGHTNESS,
 }: GeneratePaletteOptions) =>
-  shades.map(
+  SHADES.map(
     shade =>
       minLightness +
       getBezierCurvePointY(lightnessCurve, shade / 1000) *
@@ -94,7 +94,7 @@ export const getPaletteColor = (
     parseHex(baseColor || '') ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
   const l =
-    getShadesLightnessValues(options)[shades.findIndex(sh => sh === shade)] /
+    getShadesLightnessValues(options)[SHADES.findIndex(sh => sh === shade)] /
     100;
 
   return formatHex(rgb({ mode: 'okhsl', h, s, l }));

@@ -15,7 +15,7 @@ export const DEFAULT_CURVE = [0.1, 0, 0.95, 1] satisfies CurveValue,
 export const DEFAULT_MIN_LIGHTNESS = 0,
   DEFAULT_MAX_LIGHTNESS = 100;
 
-export const shades = [
+export const SHADES = [
   MIN_SHADE + getStepDifference(MIN_SHADE, MAX_SHADE, 11) / 2,
   ...calculateSteps(MIN_SHADE, MAX_SHADE, 11).slice(1, 10),
   MAX_SHADE - getStepDifference(MIN_SHADE, MAX_SHADE, 11) / 2,
