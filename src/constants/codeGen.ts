@@ -69,7 +69,7 @@ export const colorFormats = {
       `lch(${(formatCss(lch(color)) as string)
         .slice(4, -1)
         .split(' ')
-        .map(num => Math.round(Number(num) * 100) / 100)
+        .map(num => Math.round(Number(num) * 100) / 100 || 0)
         .join(' ')})`,
   },
   lchRaw: {
@@ -78,7 +78,7 @@ export const colorFormats = {
       (formatCss(lch(color)) as string)
         .slice(4, -1)
         .split(' ')
-        .map(num => Math.round(Number(num) * 100) / 100)
+        .map(num => Math.round(Number(num) * 100) / 100 || 0)
         .join(' '),
   },
   oklab: {
@@ -105,7 +105,7 @@ export const colorFormats = {
       `oklch(${(formatCss(oklch(color)) as string)
         .slice(6, -1)
         .split(' ')
-        .map(num => Math.round(Number(num) * 100) / 100)
+        .map(num => Math.round(Number(num) * 100) / 100 || 0)
         .join(' ')})`,
   },
   oklchRaw: {
@@ -114,7 +114,7 @@ export const colorFormats = {
       (formatCss(oklch(color)) as string)
         .slice(6, -1)
         .split(' ')
-        .map(num => Math.round(Number(num) * 100) / 100)
+        .map(num => Math.round(Number(num) * 100) / 100 || 0)
         .join(' '),
   },
 } as const satisfies Record<string, ColorFormat>;
