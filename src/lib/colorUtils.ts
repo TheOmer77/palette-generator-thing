@@ -128,7 +128,7 @@ export const getClosestShade = (
         : closestShade;
 };
 
-export const getTokenShades = (hexColor: string) => {
+export const getTokenColors = (hexColor: string) => {
   const main = getClosestShade(hexColor, {
     minShade: MIN_MAIN_SHADE,
     maxShade: MAX_MAIN_SHADE,
@@ -139,8 +139,7 @@ export const getTokenShades = (hexColor: string) => {
     Math.max(main + (isMainShadeLight ? 100 : -100), MIN_ACTIVE_SHADE),
     MAX_ACTIVE_SHADE
   );
-  // TODO: Use white (shade 0?) instead of shade 50
-  const foreground = isMainShadeLight ? 950 : 50;
+  const foreground = isMainShadeLight ? 900 : '#fff';
 
   return { main, active, foreground };
 };

@@ -1,4 +1,4 @@
-import { generatePalette, getTokenShades } from './colorUtils';
+import { generatePalette, getTokenColors } from './colorUtils';
 import { colorFormats } from '@/constants/codeGen';
 import { DEFAULT_NEUTRAL_CURVE, SHADES } from '@/constants/shades';
 
@@ -16,7 +16,7 @@ ${Object.entries(baseColors)
         baseColor,
         getLightnessOptions(baseColorKey)
       ),
-      tokenShades = getTokenShades(baseColor);
+      tokenColors = getTokenColors(baseColor);
 
     return `  /* ${baseColorKey} */
 ${palette
@@ -28,10 +28,14 @@ ${palette
   )
   .join('\n')}
   
-${Object.entries(tokenShades)
+${Object.entries(tokenColors)
   .map(
-    ([tokenShadeKey, tokenShade]) =>
-      `  --color-${baseColorKey}-${tokenShadeKey}: var(--color-${baseColorKey}-${tokenShade});`
+    ([tokenKey, tokenColor]) =>
+      `  --color-${baseColorKey}-${tokenKey}: ${
+        typeof tokenColor === 'number'
+          ? `var(--color-${baseColorKey}-${tokenColor})`
+          : colorFormats[colorFormat].formatColor(tokenColor)
+      };`
   )
   .join('\n')}`;
   })
@@ -48,7 +52,7 @@ export const generateScssCode = (
           baseColor,
           getLightnessOptions(baseColorKey)
         ),
-        tokenShades = getTokenShades(baseColor);
+        tokenColor = getTokenColors(baseColor);
 
       return `// ${baseColorKey}
 ${palette
@@ -60,10 +64,14 @@ ${palette
   )
   .join('\n')}
   
-${Object.entries(tokenShades)
+${Object.entries(tokenColor)
   .map(
-    ([tokenShadeKey, tokenShade]) =>
-      `$color-${baseColorKey}-${tokenShadeKey}: $color-${baseColorKey}-${tokenShade};`
+    ([tokenKey, tokenColor]) =>
+      `$color-${baseColorKey}-${tokenKey}: ${
+        typeof tokenColor === 'number'
+          ? `$color-${baseColorKey}-${tokenColor};`
+          : colorFormats[colorFormat].formatColor(tokenColor)
+      }`
   )
   .join('\n')}`;
     })
@@ -79,7 +87,7 @@ export const generateJsonCode = (
           baseColor,
           getLightnessOptions(baseColorKey)
         ),
-        tokenShades = getTokenShades(baseColor);
+        tokenColors = getTokenColors(baseColor);
 
       return {
         ...obj,
@@ -92,11 +100,13 @@ export const generateJsonCode = (
             {}
           ),
           // JSON can't have vars referencing other vars, so duplicating them
-          ...Object.entries(tokenShades).reduce(
-            (tokensObj, [tokenShadeKey, tokenShade]) => ({
+          ...Object.entries(tokenColors).reduce(
+            (tokensObj, [tokenKey, tokenColor]) => ({
               ...tokensObj,
-              [tokenShadeKey]: colorFormats[colorFormat].formatColor(
-                palette[SHADES.findIndex(shade => shade === tokenShade)]
+              [tokenKey]: colorFormats[colorFormat].formatColor(
+                typeof tokenColor === 'number'
+                  ? palette[SHADES.findIndex(shade => shade === tokenColor)]
+                  : tokenColor
               ),
             }),
             {}
