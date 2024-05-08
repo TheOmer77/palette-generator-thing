@@ -10,7 +10,11 @@ const ThemeStyleContent = () => {
 
   const themeCss = useMemo(() => {
     if (!primary) return null;
-    return generateCssCode({ primary, neutral, danger }, 'rgbRaw');
+    return generateCssCode({ primary, neutral, danger }, 'rgbRaw', [
+      'main',
+      'active',
+      'foreground',
+    ]);
   }, [danger, neutral, primary]);
 
   return themeCss ? <style>{themeCss}</style> : null;
