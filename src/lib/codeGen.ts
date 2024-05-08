@@ -1,4 +1,4 @@
-import { generatePalette, getTokenColors } from './colorUtils';
+import { generatePalette, getTokenColors, type TokenKey } from './colorUtils';
 import { colorFormats } from '@/constants/codeGen';
 import { DEFAULT_NEUTRAL_CURVE, SHADES } from '@/constants/shades';
 
@@ -7,7 +7,8 @@ const getLightnessOptions = (baseColorKey: string) =>
 
 export const generateCssCode = (
   baseColors: Record<string, string>,
-  colorFormat: keyof typeof colorFormats = 'hex'
+  colorFormat: keyof typeof colorFormats = 'hex',
+  tokens?: TokenKey[]
 ) =>
   `:root {
 ${Object.entries(baseColors)
@@ -16,7 +17,7 @@ ${Object.entries(baseColors)
         baseColor,
         getLightnessOptions(baseColorKey)
       ),
-      tokenColors = getTokenColors(baseColor);
+      tokenColors = getTokenColors(baseColor, tokens);
 
     return `  /* ${baseColorKey} */
 ${palette
@@ -44,7 +45,8 @@ ${Object.entries(tokenColors)
 
 export const generateScssCode = (
   baseColors: Record<string, string>,
-  colorFormat: keyof typeof colorFormats = 'hex'
+  colorFormat: keyof typeof colorFormats = 'hex',
+  tokens?: TokenKey[]
 ) =>
   `${Object.entries(baseColors)
     .map(([baseColorKey, baseColor]) => {
@@ -52,7 +54,7 @@ export const generateScssCode = (
           baseColor,
           getLightnessOptions(baseColorKey)
         ),
-        tokenColor = getTokenColors(baseColor);
+        tokenColors = getTokenColors(baseColor, tokens);
 
       return `// ${baseColorKey}
 ${palette
@@ -64,7 +66,7 @@ ${palette
   )
   .join('\n')}
   
-${Object.entries(tokenColor)
+${Object.entries(tokenColors)
   .map(
     ([tokenKey, tokenColor]) =>
       `$color-${baseColorKey}-${tokenKey}: ${
@@ -79,7 +81,8 @@ ${Object.entries(tokenColor)
 
 export const generateJsonCode = (
   baseColors: Record<string, string>,
-  colorFormat: keyof typeof colorFormats = 'hex'
+  colorFormat: keyof typeof colorFormats = 'hex',
+  tokens?: TokenKey[]
 ) =>
   JSON.stringify(
     Object.entries(baseColors).reduce((obj, [baseColorKey, baseColor]) => {
@@ -87,7 +90,7 @@ export const generateJsonCode = (
           baseColor,
           getLightnessOptions(baseColorKey)
         ),
-        tokenColors = getTokenColors(baseColor);
+        tokenColors = getTokenColors(baseColor, tokens);
 
       return {
         ...obj,

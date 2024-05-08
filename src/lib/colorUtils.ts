@@ -46,6 +46,44 @@ const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),
   rgb = loadMode(modeRgb);
 
+const tokenFns = {
+  main: {
+    getValue: hexColor =>
+      getClosestShade(hexColor, {
+        minShade: MIN_MAIN_SHADE,
+        maxShade: MAX_MAIN_SHADE,
+      }),
+  },
+  active: {
+    getValue: hexColor => {
+      const main = getClosestShade(hexColor, {
+          minShade: MIN_MAIN_SHADE,
+          maxShade: MAX_MAIN_SHADE,
+        }),
+        isMainShadeLight = isHexColorLight(getPaletteColor(hexColor, main));
+      return Math.min(
+        Math.max(main + (isMainShadeLight ? 100 : -100), MIN_ACTIVE_SHADE),
+        MAX_ACTIVE_SHADE
+      );
+    },
+  },
+  foreground: {
+    getValue: hexColor => {
+      const main = getClosestShade(hexColor, {
+          minShade: MIN_MAIN_SHADE,
+          maxShade: MAX_MAIN_SHADE,
+        }),
+        isMainShadeLight = isHexColorLight(getPaletteColor(hexColor, main));
+      return isMainShadeLight ? 900 : '#fff';
+    },
+  },
+} as const satisfies Record<
+  string,
+  { getValue: (hexColor: string) => string | number }
+>;
+
+export type TokenKey = keyof typeof tokenFns;
+
 const getShadesLightnessValues = ({
   lightnessCurve = DEFAULT_CURVE,
   maxLightness = DEFAULT_MAX_LIGHTNESS,
@@ -128,21 +166,17 @@ export const getClosestShade = (
         : closestShade;
 };
 
-export const getTokenColors = (hexColor: string) => {
-  const main = getClosestShade(hexColor, {
-    minShade: MIN_MAIN_SHADE,
-    maxShade: MAX_MAIN_SHADE,
-  });
-
-  const isMainShadeLight = isHexColorLight(getPaletteColor(hexColor, main));
-  const active = Math.min(
-    Math.max(main + (isMainShadeLight ? 100 : -100), MIN_ACTIVE_SHADE),
-    MAX_ACTIVE_SHADE
+export const getTokenColors = (
+  hexColor: string,
+  tokens: TokenKey[] = ['main', 'foreground']
+) =>
+  tokens.reduce(
+    (obj, token) => ({
+      ...obj,
+      [token]: tokenFns[token].getValue(hexColor),
+    }),
+    {} as Record<TokenKey, number | string>
   );
-  const foreground = isMainShadeLight ? 900 : '#fff';
-
-  return { main, active, foreground };
-};
 
 export const getColorVariantFn =
   (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => (baseColor: string) => {
