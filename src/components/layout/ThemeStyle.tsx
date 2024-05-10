@@ -2,11 +2,11 @@
 
 import { Suspense, useMemo } from 'react';
 
-import { useTheme } from '@/hooks/useTheme';
+import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { generateCssCode } from '@/lib/codeGen';
 
 const ThemeStyleContent = () => {
-  const { primary, neutral, danger } = useTheme();
+  const { primary, neutral, danger } = useComputedBaseColors();
 
   const themeCss = useMemo(() => {
     if (!primary) return null;

@@ -17,7 +17,7 @@ import type {
   NeutralColorSuggestion,
 } from '@/types/defaultSuggestions';
 
-export const useTheme = () => {
+export const useComputedBaseColors = () => {
   const { primary, neutral, danger, extras } = useBaseColors();
 
   const selectedPrimary = primary || FALLBACK_COLOR;

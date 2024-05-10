@@ -15,7 +15,7 @@ import { List, ListItem, ListItemIcon } from '@/components/ui/List';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Separator } from '@/components/ui/Separator';
 import { useBaseColors } from '@/hooks/useBaseColors';
-import { useTheme } from '@/hooks/useTheme';
+import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import {
   MODAL_BASECOLORS_EDIT,
@@ -33,7 +33,7 @@ export const ColorListPage = forwardRef<
 >((props, ref) => {
   const searchParams = useSearchParams();
   const { addExtraColor, extras: baseExtras } = useBaseColors();
-  const { primary, neutral, danger } = useTheme();
+  const { primary, neutral, danger } = useComputedBaseColors();
   const drawerState = useOptionsDrawer();
 
   const extras = (drawerState.extras || baseExtras).map(({ name, value }) => ({

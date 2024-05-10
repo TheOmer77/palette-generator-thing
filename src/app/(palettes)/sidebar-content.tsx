@@ -19,12 +19,12 @@ import {
   PrimaryColorEditor,
 } from '@/components/layout/BaseColors';
 import { useBaseColors } from '@/hooks/useBaseColors';
-import { useTheme } from '@/hooks/useTheme';
+import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { cn } from '@/lib/utils';
 
 export const PalettesSidebarContent = () => {
   const { extras, addExtraColor } = useBaseColors(),
-    themeColors = useTheme();
+    themeColors = useComputedBaseColors();
   const isClient = useIsClient();
 
   return (
