@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/Drawer';
 import { Fab } from '@/components/ui/Fab';
 import { IconButton } from '@/components/ui/IconButton';
-import { useTheme } from '@/hooks/useTheme';
+import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { cn } from '@/lib/utils';
 import {
@@ -33,7 +33,7 @@ export const OptionsDrawer = () => {
   const searchParams = useSearchParams();
   const modalSearchParam = searchParams.get(MODAL_SEARCH_KEY);
 
-  const { extras } = useTheme();
+  const { extras } = useComputedBaseColors();
   const { saveToSearchParams } = useOptionsDrawer();
 
   const isClient = useIsClient();

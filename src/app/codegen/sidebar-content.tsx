@@ -13,7 +13,7 @@ import {
 import { List, ListItem, ListItemText } from '@/components/ui/List';
 import { useCodeGen } from '@/store/useCodeGen';
 import { cn } from '@/lib/utils';
-import { codeFormats, colorFormats } from '@/constants';
+import { codeFormats, colorFormats } from '@/constants/codeGen';
 
 export const CodeGenSidebarContent = () => {
   const { format, colorFormat, setFormat, setColorFormat } = useCodeGen();

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import type { codeFormats, colorFormats } from '@/constants';
+import type { codeFormats, colorFormats } from '@/constants/codeGen';
 
 export type CodeGenState = {
   /** Format for generated theme code. */

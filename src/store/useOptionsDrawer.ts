@@ -5,7 +5,7 @@ import {
   colorFromSearchParam,
   colorToSearchParam,
 } from '@/lib/parseSearchParams';
-import { generalColorSuggestionNames } from '@/constants';
+import { generalColorSuggestionNames } from '@/constants/colorSuggestions';
 
 export type OptionsDrawerActions = BaseColorsActions & {
   saveToSearchParams: (resetState?: boolean) => void;

@@ -8,17 +8,17 @@ import { CodeBlock } from '@/components/ui/CodeBlock';
 import { H1 } from '@/components/ui/Headings';
 import { Select, SelectItem } from '@/components/ui/Select';
 import { Header } from '@/components/layout/Header';
-import { useTheme } from '@/hooks/useTheme';
 import { useCodeGen } from '@/store/useCodeGen';
+import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import {
   generateCssCode,
   generateJsonCode,
   generateScssCode,
 } from '@/lib/codeGen';
-import { codeFormats, colorFormats } from '@/constants';
+import { codeFormats, colorFormats } from '@/constants/codeGen';
 
 const MainContent = () => {
-  const { primary, neutral, danger, extras } = useTheme();
+  const { primary, neutral, danger, extras } = useComputedBaseColors();
   const { format, colorFormat, setFormat, setColorFormat } = useCodeGen();
   const isClient = useIsClient();
 

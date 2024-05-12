@@ -1,30 +1,42 @@
-import { generatePalette, getTokenShades } from './colorUtils';
-import { colorFormats, shades } from '@/constants';
+import { generatePalette, getTokenColors, type TokenKey } from './colorUtils';
+import { colorFormats } from '@/constants/codeGen';
+import { DEFAULT_NEUTRAL_CURVE, SHADES } from '@/constants/shades';
+
+const getLightnessOptions = (baseColorKey: string) =>
+  baseColorKey === 'neutral' ? { lightnessCurve: DEFAULT_NEUTRAL_CURVE } : {};
 
 export const generateCssCode = (
   baseColors: Record<string, string>,
-  colorFormat: keyof typeof colorFormats = 'hex'
+  colorFormat: keyof typeof colorFormats = 'hex',
+  tokens?: TokenKey[]
 ) =>
   `:root {
 ${Object.entries(baseColors)
   .map(([baseColorKey, baseColor]) => {
-    const palette = generatePalette(baseColor),
-      tokenShades = getTokenShades(baseColor);
+    const palette = generatePalette(
+        baseColor,
+        getLightnessOptions(baseColorKey)
+      ),
+      tokenColors = getTokenColors(baseColor, tokens);
 
     return `  /* ${baseColorKey} */
 ${palette
   .map(
     (color, index) =>
-      `  --color-${baseColorKey}-${shades[index]}: ${colorFormats[
+      `  --color-${baseColorKey}-${SHADES[index]}: ${colorFormats[
         colorFormat
       ].formatColor(color)};`
   )
   .join('\n')}
   
-${Object.entries(tokenShades)
+${Object.entries(tokenColors)
   .map(
-    ([tokenShadeKey, tokenShade]) =>
-      `  --color-${baseColorKey}-${tokenShadeKey}: var(--color-${baseColorKey}-${tokenShade});`
+    ([tokenKey, tokenColor]) =>
+      `  --color-${baseColorKey}-${tokenKey}: ${
+        typeof tokenColor === 'number'
+          ? `var(--color-${baseColorKey}-${tokenColor})`
+          : colorFormats[colorFormat].formatColor(tokenColor)
+      };`
   )
   .join('\n')}`;
   })
@@ -33,27 +45,35 @@ ${Object.entries(tokenShades)
 
 export const generateScssCode = (
   baseColors: Record<string, string>,
-  colorFormat: keyof typeof colorFormats = 'hex'
+  colorFormat: keyof typeof colorFormats = 'hex',
+  tokens?: TokenKey[]
 ) =>
   `${Object.entries(baseColors)
     .map(([baseColorKey, baseColor]) => {
-      const palette = generatePalette(baseColor),
-        tokenShades = getTokenShades(baseColor);
+      const palette = generatePalette(
+          baseColor,
+          getLightnessOptions(baseColorKey)
+        ),
+        tokenColors = getTokenColors(baseColor, tokens);
 
       return `// ${baseColorKey}
 ${palette
   .map(
     (color, index) =>
-      `$color-${baseColorKey}-${shades[index]}: ${colorFormats[
+      `$color-${baseColorKey}-${SHADES[index]}: ${colorFormats[
         colorFormat
       ].formatColor(color)};`
   )
   .join('\n')}
   
-${Object.entries(tokenShades)
+${Object.entries(tokenColors)
   .map(
-    ([tokenShadeKey, tokenShade]) =>
-      `$color-${baseColorKey}-${tokenShadeKey}: $color-${baseColorKey}-${tokenShade};`
+    ([tokenKey, tokenColor]) =>
+      `$color-${baseColorKey}-${tokenKey}: ${
+        typeof tokenColor === 'number'
+          ? `$color-${baseColorKey}-${tokenColor};`
+          : colorFormats[colorFormat].formatColor(tokenColor)
+      }`
   )
   .join('\n')}`;
     })
@@ -61,12 +81,16 @@ ${Object.entries(tokenShades)
 
 export const generateJsonCode = (
   baseColors: Record<string, string>,
-  colorFormat: keyof typeof colorFormats = 'hex'
+  colorFormat: keyof typeof colorFormats = 'hex',
+  tokens?: TokenKey[]
 ) =>
   JSON.stringify(
     Object.entries(baseColors).reduce((obj, [baseColorKey, baseColor]) => {
-      const palette = generatePalette(baseColor),
-        tokenShades = getTokenShades(baseColor);
+      const palette = generatePalette(
+          baseColor,
+          getLightnessOptions(baseColorKey)
+        ),
+        tokenColors = getTokenColors(baseColor, tokens);
 
       return {
         ...obj,
@@ -74,16 +98,18 @@ export const generateJsonCode = (
           ...palette.reduce(
             (paletteObj, color, index) => ({
               ...paletteObj,
-              [shades[index]]: colorFormats[colorFormat].formatColor(color),
+              [SHADES[index]]: colorFormats[colorFormat].formatColor(color),
             }),
             {}
           ),
           // JSON can't have vars referencing other vars, so duplicating them
-          ...Object.entries(tokenShades).reduce(
-            (tokensObj, [tokenShadeKey, tokenShade]) => ({
+          ...Object.entries(tokenColors).reduce(
+            (tokensObj, [tokenKey, tokenColor]) => ({
               ...tokensObj,
-              [tokenShadeKey]: colorFormats[colorFormat].formatColor(
-                palette[shades.findIndex(shade => shade === tokenShade)]
+              [tokenKey]: colorFormats[colorFormat].formatColor(
+                typeof tokenColor === 'number'
+                  ? palette[SHADES.findIndex(shade => shade === tokenColor)]
+                  : tokenColor
               ),
             }),
             {}

@@ -14,6 +14,7 @@ import {
 } from 'culori/fn';
 
 import { calculateSteps } from './calculateSteps';
+import { getBezierCurvePointY } from '@/lib/bezierCurve';
 import { FALLBACK_COLOR } from '@/constants/fallbackColor';
 import {
   DEFAULT_DANGER_HUE,
@@ -29,18 +30,71 @@ import {
   REDDISH_MIN_DANGER_HUE,
 } from '@/constants/hslDefaults';
 import {
+  DEFAULT_CURVE,
+  DEFAULT_MAX_LIGHTNESS,
+  DEFAULT_MIN_LIGHTNESS,
   MAX_ACTIVE_SHADE,
   MAX_MAIN_SHADE,
   MAX_SHADE,
   MIN_ACTIVE_SHADE,
   MIN_MAIN_SHADE,
-  shades,
-  shadesLightnessValues,
+  SHADES,
 } from '@/constants/shades';
+import type { GeneratePaletteOptions } from '@/types/generatePaletteOptions';
 
 const okhsl = loadMode(modeOkhsl),
   hsl = loadMode(modeHsl),
   rgb = loadMode(modeRgb);
+
+const tokenFns = {
+  main: {
+    getValue: hexColor =>
+      getClosestShade(hexColor, {
+        minShade: MIN_MAIN_SHADE,
+        maxShade: MAX_MAIN_SHADE,
+      }),
+  },
+  active: {
+    getValue: hexColor => {
+      const main = getClosestShade(hexColor, {
+          minShade: MIN_MAIN_SHADE,
+          maxShade: MAX_MAIN_SHADE,
+        }),
+        isMainShadeLight = isHexColorLight(getPaletteColor(hexColor, main));
+      return Math.min(
+        Math.max(main + (isMainShadeLight ? 100 : -100), MIN_ACTIVE_SHADE),
+        MAX_ACTIVE_SHADE
+      );
+    },
+  },
+  foreground: {
+    getValue: hexColor => {
+      const main = getClosestShade(hexColor, {
+          minShade: MIN_MAIN_SHADE,
+          maxShade: MAX_MAIN_SHADE,
+        }),
+        isMainShadeLight = isHexColorLight(getPaletteColor(hexColor, main));
+      return isMainShadeLight ? 900 : '#fff';
+    },
+  },
+} as const satisfies Record<
+  string,
+  { getValue: (hexColor: string) => string | number }
+>;
+
+export type TokenKey = keyof typeof tokenFns;
+
+const getShadesLightnessValues = ({
+  lightnessCurve = DEFAULT_CURVE,
+  maxLightness = DEFAULT_MAX_LIGHTNESS,
+  minLightness = DEFAULT_MIN_LIGHTNESS,
+}: GeneratePaletteOptions) =>
+  SHADES.map(
+    shade =>
+      minLightness +
+      getBezierCurvePointY(lightnessCurve, shade / 1000) *
+        (maxLightness - minLightness)
+  );
 
 export const isValidHexColor = (value: string, withAlpha = false) => {
   const match = /^#?([0-9A-F]{3,8})$/i.exec(value);
@@ -69,22 +123,30 @@ export const autoAddHexHash = (value: string) =>
 
 export const randomHexColor = () => formatHex(random());
 
-export const getPaletteColor = (baseColor: string, shade: number) => {
+export const getPaletteColor = (
+  baseColor: string,
+  shade: number,
+  options: GeneratePaletteOptions = {}
+) => {
   const { h, s } = okhsl(
     parseHex(baseColor || '') ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
-  const l = shadesLightnessValues[shades.findIndex(sh => sh === shade)] / 100;
+  const l =
+    getShadesLightnessValues(options)[SHADES.findIndex(sh => sh === shade)] /
+    100;
 
   return formatHex(rgb({ mode: 'okhsl', h, s, l }));
 };
 
-export const generatePalette = (baseColor: string) => {
+export const generatePalette = (
+  baseColor: string,
+  options: GeneratePaletteOptions = {}
+) => {
   const { h, s } = okhsl(
     parseHex(baseColor || '') ? baseColor : FALLBACK_COLOR
   ) as Okhsl;
 
-  // TODO: Use DEFAULT_NEUTRAL_CURVE for neutral palette, DEFAULT_CURVE for others
-  return shadesLightnessValues.map(shade =>
+  return getShadesLightnessValues(options).map(shade =>
     formatHex(rgb({ mode: 'okhsl', h, s, l: shade / 100 }))
   );
 };
@@ -104,22 +166,17 @@ export const getClosestShade = (
         : closestShade;
 };
 
-export const getTokenShades = (hexColor: string) => {
-  const main = getClosestShade(hexColor, {
-    minShade: MIN_MAIN_SHADE,
-    maxShade: MAX_MAIN_SHADE,
-  });
-
-  const isMainShadeLight = isHexColorLight(getPaletteColor(hexColor, main));
-  const active = Math.min(
-    Math.max(main + (isMainShadeLight ? 100 : -100), MIN_ACTIVE_SHADE),
-    MAX_ACTIVE_SHADE
+export const getTokenColors = (
+  hexColor: string,
+  tokens: TokenKey[] = ['main', 'foreground']
+) =>
+  tokens.reduce(
+    (obj, token) => ({
+      ...obj,
+      [token]: tokenFns[token].getValue(hexColor),
+    }),
+    {} as Record<TokenKey, number | string>
   );
-  // TODO: Use white (shade 0?) instead of shade 50
-  const foreground = isMainShadeLight ? 950 : 50;
-
-  return { main, active, foreground };
-};
 
 export const getColorVariantFn =
   (modifyOkhsl: (okhsl: Okhsl) => Okhsl) => (baseColor: string) => {

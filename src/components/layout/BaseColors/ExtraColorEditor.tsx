@@ -21,7 +21,7 @@ import { nameIsDuplicate, nameIsReserved } from '@/lib/validateColorName';
 import {
   generalColorSuggestionNames,
   generalColorSuggestions,
-} from '@/constants';
+} from '@/constants/colorSuggestions';
 import {
   ERROR_DUPLICATE_NAME,
   ERROR_RESERVED_NAME,
