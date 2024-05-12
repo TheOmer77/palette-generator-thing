@@ -24,7 +24,7 @@ import {
 import {
   generalColorSuggestionNames,
   generalColorSuggestions,
-} from '@/constants';
+} from '@/constants/colorSuggestions';
 import type { GeneralColorSuggestion } from '@/types/defaultSuggestions';
 
 export const ColorListPage = forwardRef<

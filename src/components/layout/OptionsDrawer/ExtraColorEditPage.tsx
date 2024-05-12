@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils';
 import {
   generalColorSuggestionNames,
   generalColorSuggestions,
-} from '@/constants';
+} from '@/constants/colorSuggestions';
 import type { GeneralColorSuggestion } from '@/types/defaultSuggestions';
 
 type ExtraColorEditPageProps = ComponentPropsWithoutRef<'div'> &

@@ -7,7 +7,7 @@ import { H1, H2 } from '@/components/ui/Headings';
 import { ColorGridItem, ColorGrid } from '@/components/layout/ColorGrid';
 import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { generatePalette } from '@/lib/colorUtils';
-import { DEFAULT_NEUTRAL_CURVE, SHADES } from '@/constants';
+import { DEFAULT_NEUTRAL_CURVE, SHADES } from '@/constants/shades';
 
 const MainContent = () => {
   const { primary, neutral, danger, extras } = useComputedBaseColors();

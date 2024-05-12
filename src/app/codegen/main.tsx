@@ -15,7 +15,7 @@ import {
   generateJsonCode,
   generateScssCode,
 } from '@/lib/codeGen';
-import { codeFormats, colorFormats } from '@/constants';
+import { codeFormats, colorFormats } from '@/constants/codeGen';
 
 const MainContent = () => {
   const { primary, neutral, danger, extras } = useComputedBaseColors();
