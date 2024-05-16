@@ -64,7 +64,7 @@ export const PalettesSidebarContent = () => {
         </PopoverContent>
       </Popover>
 
-      <Separator />
+      {(extras.length > 0 || isClient) && <Separator />}
       {extras.map(({ name }, index) => {
         const id = `extra${index + 1}`,
           title = name || `Extra ${index + 1}`;
