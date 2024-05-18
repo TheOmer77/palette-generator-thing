@@ -3,17 +3,20 @@ import {
   formatHex,
   formatHsl,
   formatRgb,
+  modeLab,
   modeLch,
+  modeOklab,
   modeOklch,
   useMode as loadMode,
 } from 'culori/fn';
-import type { ColorFormat } from 'types';
+import type { ColorFormat } from '@/types/codeGen';
 
-const lch = loadMode(modeLch),
+const lab = loadMode(modeLab),
+  oklab = loadMode(modeOklab),
+  lch = loadMode(modeLch),
   oklch = loadMode(modeOklch);
 
 export const codeFormats = {
-  none: { displayName: 'None' },
   css: { displayName: 'CSS' },
   scss: { displayName: 'SCSS' },
   json: { displayName: 'JSON' },
@@ -22,60 +25,96 @@ export const codeFormats = {
 export const colorFormats = {
   hex: {
     displayName: 'Hex',
-    toString: color => formatHex(color) as string,
+    formatColor: color => formatHex(color) as string,
   },
   rgb: {
     displayName: 'RGB',
-    toString: color => (formatRgb(color) as string).replaceAll(',', ''),
+    formatColor: color => (formatRgb(color) as string).replaceAll(',', ''),
   },
   rgbRaw: {
     displayName: 'RGB (Raw)',
-    toString: color =>
+    formatColor: color =>
       (formatRgb(color) as string).replaceAll(',', '').slice(4, -1),
   },
   hsl: {
     displayName: 'HSL',
-    toString: color => (formatHsl(color) as string).replaceAll(',', ''),
+    formatColor: color => (formatHsl(color) as string).replaceAll(',', ''),
   },
   hslRaw: {
     displayName: 'HSL (Raw)',
-    toString: color =>
+    formatColor: color =>
       (formatHsl(color) as string).replaceAll(',', '').slice(4, -1),
   },
-  lch: {
-    displayName: 'LCH',
-    toString: color =>
-      `lch(${(formatCss(lch(color)) as string)
+  lab: {
+    displayName: 'LAB',
+    formatColor: color =>
+      `lab(${(formatCss(lab(color)) as string)
         .slice(4, -1)
         .split(' ')
         .map(num => Math.round(Number(num) * 100) / 100)
         .join(' ')})`,
   },
+  labRaw: {
+    displayName: 'LAB (Raw)',
+    formatColor: color =>
+      (formatCss(lab(color)) as string)
+        .slice(4, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' '),
+  },
+  lch: {
+    displayName: 'LCH',
+    formatColor: color =>
+      `lch(${(formatCss(lch(color)) as string)
+        .slice(4, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100 || 0)
+        .join(' ')})`,
+  },
   lchRaw: {
     displayName: 'LCH (Raw)',
-    toString: color =>
+    formatColor: color =>
       (formatCss(lch(color)) as string)
         .slice(4, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100 || 0)
+        .join(' '),
+  },
+  oklab: {
+    displayName: 'OKLAB',
+    formatColor: color =>
+      `oklab(${(formatCss(oklab(color)) as string)
+        .slice(6, -1)
+        .split(' ')
+        .map(num => Math.round(Number(num) * 100) / 100)
+        .join(' ')})`,
+  },
+  oklabRaw: {
+    displayName: 'OKLAB (Raw)',
+    formatColor: color =>
+      (formatCss(oklab(color)) as string)
+        .slice(6, -1)
         .split(' ')
         .map(num => Math.round(Number(num) * 100) / 100)
         .join(' '),
   },
   oklch: {
     displayName: 'OKLCH',
-    toString: color =>
+    formatColor: color =>
       `oklch(${(formatCss(oklch(color)) as string)
         .slice(6, -1)
         .split(' ')
-        .map(num => Math.round(Number(num) * 100) / 100)
+        .map(num => Math.round(Number(num) * 100) / 100 || 0)
         .join(' ')})`,
   },
   oklchRaw: {
     displayName: 'OKLCH (Raw)',
-    toString: color =>
+    formatColor: color =>
       (formatCss(oklch(color)) as string)
         .slice(6, -1)
         .split(' ')
-        .map(num => Math.round(Number(num) * 100) / 100)
+        .map(num => Math.round(Number(num) * 100) / 100 || 0)
         .join(' '),
   },
 } as const satisfies Record<string, ColorFormat>;

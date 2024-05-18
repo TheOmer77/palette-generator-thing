@@ -1,18 +1,27 @@
-import { useMemo } from 'react';
-import { createPortal } from 'react-dom';
+'use client';
 
-import { useTheme } from 'hooks';
-import { generateCssCode } from 'utils';
+import { Suspense, useMemo } from 'react';
 
-const ThemeStyle = () => {
-  const { primary, neutral, danger } = useTheme();
+import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
+import { generateCssCode } from '@/lib/codeGen';
 
-  const themeCss = useMemo(
-    () => generateCssCode({ primary, neutral, danger }, 'rgbRaw'),
-    [danger, neutral, primary]
-  );
+const ThemeStyleContent = () => {
+  const { primary, neutral, danger } = useComputedBaseColors();
 
-  return createPortal(<style>{themeCss}</style>, document.head);
+  const themeCss = useMemo(() => {
+    if (!primary) return null;
+    return generateCssCode({ primary, neutral, danger }, 'rgbRaw', [
+      'main',
+      'active',
+      'foreground',
+    ]);
+  }, [danger, neutral, primary]);
+
+  return themeCss ? <style>{themeCss}</style> : null;
 };
 
-export default ThemeStyle;
+export const ThemeStyle = () => (
+  <Suspense>
+    <ThemeStyleContent />
+  </Suspense>
+);

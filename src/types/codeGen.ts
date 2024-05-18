@@ -2,5 +2,5 @@ import type { Color } from 'culori/fn';
 
 export type ColorFormat = {
   displayName: string;
-  toString: (color: string | Color) => string;
+  formatColor: (color: string | Color) => string;
 };

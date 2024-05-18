@@ -1,117 +1,54 @@
 import type { Config } from 'tailwindcss';
 import scrollbar from 'tailwind-scrollbar';
-import plugin from 'tailwindcss/plugin';
-import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
-import toColorValue from 'tailwindcss/lib/util/toColorValue';
+import animate from 'tailwindcss-animate';
+
+// importing '@/config/tailwind' doesn't work here
+import {
+  animations,
+  autofillOverride,
+  stateLayer,
+} from './src/config/tailwind';
 
 const shades = [50, ...[...Array(9).keys()].map(key => (key + 1) * 100), 950];
 
-const customPlugin = plugin(({ addUtilities, matchUtilities, theme }) => {
-  const themeColors = flattenColorPalette(theme('colors'));
-  const colors = Object.fromEntries(
-    Object.entries(themeColors).map(([k, v]) => [k, toColorValue(v)])
-  );
-
-  matchUtilities(
-    {
-      'autofill-override': value => ({
-        '&:-webkit-autofill': {
-          WebkitBoxShadow: `0 0 0px 1000px ${toColorValue(
-            value
-          )} inset !important`,
-        },
-      }),
-    },
-    { values: colors, type: 'color' }
-  );
-
-  addUtilities({
-    '.state-layer': {
-      position: 'relative',
-      overflow: 'hidden',
-      '&.fixed': { position: 'fixed' },
-      '&.absolute': { position: 'absolute' },
-      '&::after': {
-        content: '""',
-        position: 'absolute',
-        insetBlockStart: '0',
-        insetInlineStart: '0',
-        width: '100%',
-        height: '100%',
-        zIndex: '1',
-        transition: 'background-color 100ms cubic-bezier(0.4, 0, 0.2, 1)',
-      },
-    },
-  });
-  matchUtilities(
-    { 'state-layer': value => ({ '&::after': { backgroundColor: value } }) },
-    { values: colors, type: 'color' }
-  );
-});
-
-const config: Config = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+const config = {
+  content: ['./src/**/*.{ts,tsx}'],
+  darkMode: [
+    'variant',
+    [
+      "@media not print { @media (prefers-color-scheme: dark) { &:not(:is([data-theme='light'] *)) } }",
+      "@media not print { &:is([data-theme='dark'] *) }",
+    ],
+  ],
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: { '2xl': '1400px' },
+    },
     extend: {
-      animation: {
-        fadein: 'fadein 200ms',
-        fadeout: 'fadeout 200ms',
-        'fadeout-fast': 'fadeout 150ms',
-        slidein: 'slidein 200ms',
-        slideout: 'slideout 200ms',
-        slideDown: 'slideDown 200ms',
-        slideUp: 'slideUp 200ms',
-        slideDownAndFade: 'slideDownAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
-        slideLeftAndFade: 'slideLeftAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
-        slideUpAndFade: 'slideUpAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
-        slideRightAndFade:
-          'slideRightAndFade 150ms cubic-bezier(0, 0, 0.2, 1);',
+      borderRadius: {
+        lg: 'var(--border-radius)',
+        md: 'calc(var(--border-radius) - 2px)',
+        sm: 'calc(var(--border-radius) - 4px)',
       },
       fontFamily: {
         sans: ['var(--font-family)', 'sans-serif'],
         mono: ['var(--font-family-mono)', 'monospace'],
       },
-      keyframes: {
-        fadein: { from: { opacity: '0' }, to: { opacity: '1' } },
-        fadeout: { from: { opacity: '1' }, to: { opacity: '0' } },
-        slidein: {
-          from: { transform: 'translateY(100%)' },
-          to: { transform: 'translateY(0%)' },
-        },
-        slideout: {
-          from: { transform: 'translateY(0%)' },
-          to: { transform: 'translateY(100%)' },
-        },
-        slideDown: {
-          from: { height: '0' },
-          to: { height: 'var(--radix-collapsible-content-height)' },
-        },
-        slideUp: {
-          from: { height: 'var(--radix-collapsible-content-height)' },
-          to: { height: '0' },
-        },
-        slideDownAndFade: {
-          from: { opacity: '0', transform: 'translateY(-2px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
-        },
-        slideLeftAndFade: {
-          from: { opacity: '0', transform: 'translateX(2px)' },
-          to: { opacity: '1', transform: 'translateX(0)' },
-        },
-        slideUpAndFade: {
-          from: { opacity: '0', transform: 'translateY(2px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
-        },
-        slideRightAndFade: {
-          from: { opacity: '0', transform: 'translateX(-2px)' },
-          to: { opacity: '1', transform: 'translateX(0)' },
-        },
-      },
+      height: { screen: '100dvh' },
+      maxHeight: { screen: '100dvh' },
+      screens: { '2xl': '1440px' },
+      spacing: { em: '1em', inherit: 'inherit' },
+      transitionTimingFunction: { DEFAULT: 'cubic-bezier(0.2, 1, 0.4, 1)' },
     },
     colors: {
+      inherit: 'inherit',
+      current: 'currentColor',
       white: '#fff',
       black: '#000',
       transparent: 'transparent',
+
       ...['primary', 'neutral', 'danger'].reduce(
         (obj, colorName) => ({
           ...obj,
@@ -120,14 +57,48 @@ const config: Config = {
               ...obj,
               [shade]: `rgb(var(--color-${colorName}-${shade}) / <alpha-value>)`,
             }),
-            {}
+            {
+              DEFAULT: `rgb(var(--color-${colorName}-main))`,
+              active: `rgb(var(--color-${colorName}-active))`,
+              foreground: `rgb(var(--color-${colorName}-foreground))`,
+            }
           ),
         }),
         {}
       ),
+
+      border: 'rgb(var(--color-border))',
+      ring: 'rgb(var(--color-ring))',
+      background: 'rgb(var(--color-background))',
+      foreground: 'rgb(var(--color-foreground))',
+      secondary: {
+        DEFAULT: 'rgb(var(--color-secondary))',
+        foreground: 'rgb(var(--color-secondary-foreground))',
+      },
+      muted: {
+        DEFAULT: 'rgb(var(--color-muted))',
+        foreground: 'rgb(var(--color-muted-foreground))',
+      },
+      accent: {
+        DEFAULT: 'rgb(var(--color-accent))',
+        foreground: 'rgb(var(--color-accent-foreground))',
+      },
+      popover: {
+        DEFAULT: 'rgb(var(--color-popover))',
+        foreground: 'rgb(var(--color-popover-foreground))',
+      },
+      card: {
+        DEFAULT: 'rgb(var(--color-card))',
+        foreground: 'rgb(var(--color-card-foreground))',
+      },
+      input: {
+        DEFAULT: 'rgb(var(--color-input))',
+        hover: 'rgb(var(--color-input-hover))',
+        invalid: 'rgb(var(--color-input-invalid))',
+      },
     },
   },
-  plugins: [scrollbar, customPlugin],
-};
+  plugins: [animate, animations, autofillOverride, scrollbar, stateLayer],
+} satisfies Config;
 
 export default config;

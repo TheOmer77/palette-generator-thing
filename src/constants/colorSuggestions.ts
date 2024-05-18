@@ -1,5 +1,5 @@
-import { getHueColorFn, getSaturationColorFn } from 'utils/colorUtils';
-import type { ColorSuggestions } from 'types/colorSuggestions';
+import { getHueColorFn, getSaturationColorFn } from '@/lib/colorUtils';
+import type { ColorSuggestions } from '@/types/colorSuggestions';
 
 export const generalColorSuggestions = {
   complementary: getHueColorFn(180, { addToExistingHue: true }),
