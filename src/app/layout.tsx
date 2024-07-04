@@ -28,7 +28,6 @@ const RootLayout = ({ children }: PropsWithChildren) => (
     suppressHydrationWarning
   >
     <head>
-      <meta name='color-scheme' content='light dark' />
       <Favicon />
       <ThemeStyle />
     </head>
