@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Figtree, Fira_Code } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import clsx from 'clsx';
@@ -7,6 +7,8 @@ import { Favicon } from '@/components/layout/Favicon';
 import { Navbar } from '@/components/layout/Navbar';
 import { ThemeStyle } from '@/components/layout/ThemeStyle';
 import '@/styles/index.css';
+
+export { metadata, viewport } from './metadata';
 
 const font = Figtree({
   subsets: ['latin'],
@@ -19,9 +21,7 @@ const fontMono = Fira_Code({
   fallback: ['monospace'],
 });
 
-export { metadata } from './metadata';
-
-const RootLayout = ({ children }: { children: ReactNode }) => (
+const RootLayout = ({ children }: PropsWithChildren) => (
   <html
     lang='en'
     className={clsx(font.variable, fontMono.variable)}

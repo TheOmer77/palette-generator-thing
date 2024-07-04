@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 const APP_NAME = 'Palette generator thing';
 const APP_TITLE_TEMPLATE = '%s - Palette generator thing';
@@ -23,3 +23,7 @@ export const metadata = {
     description: APP_DESCRIPTION,
   },
 } satisfies Metadata;
+
+export const viewport = {
+  themeColor: 'rgb(var(--color-background, 255 255 255))',
+} satisfies Viewport;
