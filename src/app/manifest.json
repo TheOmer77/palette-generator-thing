@@ -1,6 +1,7 @@
 {
   "name": "Palette generator thing",
   "short_name": "Palettes",
+  "description": "App to generate color palettes for user interfaces.",
   "id": "palette-generator-thing",
   "start_url": "/",
   "display": "standalone",
@@ -31,6 +32,36 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/screenshots/palettes-desktop.png",
+      "sizes": "2560x1600",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Palette generation"
+    },
+    {
+      "src": "/assets/screenshots/palettes-mobile.png",
+      "sizes": "850x1536",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Palette generation"
+    },
+    {
+      "src": "/assets/screenshots/codegen-desktop.png",
+      "sizes": "2560x1600",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Code export"
+    },
+    {
+      "src": "/assets/screenshots/codegen-mobile.png",
+      "sizes": "850x1536",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Code export"
     }
   ]
 }
