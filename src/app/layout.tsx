@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import type { Metadata } from 'next';
 import { Figtree, Fira_Code } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import clsx from 'clsx';
@@ -20,10 +19,7 @@ const fontMono = Fira_Code({
   fallback: ['monospace'],
 });
 
-export const metadata: Metadata = {
-  title: 'Palette generator thing',
-  description: 'App to generate color palettes.',
-};
+export { metadata } from './metadata';
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html
