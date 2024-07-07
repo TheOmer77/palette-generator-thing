@@ -1,17 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 
 import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { getPaletteColor } from '@/lib/colorUtils';
 
-/**
- * Updates theme theme-color meta tag in the document head according to the
- * current theme and neutral color. This needs to be placed **in the body** in
- * order to utilize the ThemeProvider's resolved theme.
- */
-export const ThemeColorMeta = () => {
+const ThemeColorMetaContent = () => {
   const { neutral } = useComputedBaseColors();
   const { resolvedTheme } = useTheme();
 
@@ -30,3 +25,14 @@ export const ThemeColorMeta = () => {
 
   return null;
 };
+
+/**
+ * Updates theme theme-color meta tag in the document head according to the
+ * current theme and neutral color. This needs to be placed **in the body** in
+ * order to utilize the ThemeProvider's resolved theme.
+ */
+export const ThemeColorMeta = () => (
+  <Suspense>
+    <ThemeColorMetaContent />
+  </Suspense>
+);
