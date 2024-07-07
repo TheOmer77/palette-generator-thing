@@ -3,6 +3,7 @@ import { Figtree, Fira_Code } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import clsx from 'clsx';
 
+import { AppleAssets } from '@/components/layout/AppleAssets';
 import { Favicon } from '@/components/layout/Favicon';
 import { Navbar } from '@/components/layout/Navbar';
 import { ThemeStyle } from '@/components/layout/ThemeStyle';
@@ -30,6 +31,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
     <head>
       <Favicon />
       <ThemeStyle />
+      <AppleAssets />
     </head>
     <body>
       <ThemeProvider>
