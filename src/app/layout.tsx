@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { AppleAssets } from '@/components/layout/AppleAssets';
 import { Favicon } from '@/components/layout/Favicon';
 import { Navbar } from '@/components/layout/Navbar';
+import { ThemeColorMeta } from '@/components/layout/ThemeColorMeta';
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { ThemeStyle } from '@/components/layout/ThemeStyle';
 import '@/styles/index.css';
@@ -31,6 +32,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
     <head>
       <Favicon />
       <ThemeStyle />
+      <ThemeColorMeta />
       <AppleAssets />
     </head>
     <body>
