@@ -5,13 +5,7 @@ import { Drawer as DrawerPrimitive } from 'vaul';
 
 export type DrawerProps = ComponentPropsWithoutRef<typeof DrawerPrimitive.Root>;
 
-export const Drawer = ({
-  shouldScaleBackground = false,
-  ...props
-}: DrawerProps) => (
-  <DrawerPrimitive.Root
-    {...props}
-    shouldScaleBackground={shouldScaleBackground}
-  />
+export const Drawer = ({ ...props }: DrawerProps) => (
+  <DrawerPrimitive.Root {...props} shouldScaleBackground={false} />
 );
 Drawer.displayName = 'Drawer';
