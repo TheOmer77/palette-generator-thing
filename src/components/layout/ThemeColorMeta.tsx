@@ -1,13 +1,26 @@
 'use client';
 
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  type ElementRef,
+} from 'react';
 
 import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { useReadonlyTheme } from '@/store/useReadonlyTheme';
+import { animateOverlayColors } from '@/lib/animateOverlayColors';
 import { getPaletteColor, overlayColors } from '@/lib/colorUtils';
+import { FALLBACK_COLOR } from '@/constants/fallbackColor';
+import type { CurveValue } from '@/types/bezierCurve';
 
-const lightBgColor = '#ffffff',
-  fallbackColor = '#000000';
+const LIGHT_BG_COLOR = '#ffffff';
+const DRAWER_TRANSITION_CURVE = [0.32, 0.72, 0, 1] satisfies CurveValue,
+  DRAWER_TRANSITION_DURATION = 500, // in milliseconds - 0.5s
+  DRAWER_OVERLAY_OPACITY = 0.5,
+  DRAWER_DRAG_CLASS = 'vaul-dragging';
 
 const nodeIsVaulOverlay = (node: Node): node is HTMLDivElement =>
   node instanceof HTMLDivElement &&
@@ -17,23 +30,56 @@ const ThemeColorMetaContent = () => {
   const { neutral } = useComputedBaseColors();
   const { resolvedTheme } = useReadonlyTheme();
 
-  const [overlayOpacity, setOverlayOpacity] = useState(0);
+  const ref = useRef<ElementRef<'meta'>>(null);
+  const lastDragOpacity = useRef<number>(0);
 
   const darkBgColor = useMemo(() => getPaletteColor(neutral, 950), [neutral]);
-  const themeColorMetaValue = useMemo(() => {
-    if (!resolvedTheme) return fallbackColor;
 
-    if (resolvedTheme === 'dark') return darkBgColor;
-    if (overlayOpacity <= 0) return lightBgColor;
-    return overlayColors(lightBgColor, darkBgColor, overlayOpacity * 0.5);
-  }, [darkBgColor, overlayOpacity, resolvedTheme]);
+  const getThemeColorValue = useCallback(
+    (overlayOpacity: number) => {
+      if (!resolvedTheme) return FALLBACK_COLOR;
+
+      if (resolvedTheme === 'dark') return darkBgColor;
+      if (overlayOpacity <= 0) return LIGHT_BG_COLOR;
+      return overlayColors(LIGHT_BG_COLOR, darkBgColor, overlayOpacity * 0.5);
+    },
+    [darkBgColor, resolvedTheme]
+  );
+
+  const animateThemeColorValue = useCallback(
+    async (targetOpacity: number) => {
+      if (resolvedTheme === 'dark') return;
+      await animateOverlayColors(
+        {
+          baseColor: LIGHT_BG_COLOR,
+          overlayColor: darkBgColor,
+          initialOpacity: lastDragOpacity.current * DRAWER_OVERLAY_OPACITY,
+          targetOpacity: targetOpacity * DRAWER_OVERLAY_OPACITY,
+          duration: DRAWER_TRANSITION_DURATION,
+          transitionCurve: DRAWER_TRANSITION_CURVE,
+        },
+        color => ref.current?.setAttribute?.('content', color)
+      );
+      lastDragOpacity.current = targetOpacity;
+    },
+    [darkBgColor, resolvedTheme]
+  );
 
   useEffect(() => {
     const overlayStyleObserver = new MutationObserver(([mutation]) => {
-      if (nodeIsVaulOverlay(mutation.target)) {
-        const opacity = Number(mutation.target.style.opacity);
-        setOverlayOpacity(opacity);
+      if (!nodeIsVaulOverlay(mutation.target)) return;
+      if (
+        !mutation.target.nextElementSibling?.classList.contains(
+          DRAWER_DRAG_CLASS
+        )
+      ) {
+        return animateThemeColorValue(+mutation.target.style.opacity);
       }
+
+      // Drawer is being dragged - no transition needed
+      const opacity = +mutation.target.style.opacity;
+      lastDragOpacity.current = opacity;
+      ref.current?.setAttribute?.('content', getThemeColorValue(opacity));
     });
 
     const overlayMountObserver = new MutationObserver(mutations => {
@@ -48,12 +94,9 @@ const ThemeColorMetaContent = () => {
         overlayStyleObserver.observe(addedOverlay, {
           attributeFilter: ['style'],
         });
-        setOverlayOpacity(1);
+        animateThemeColorValue(1);
       }
-      if (removedOverlay) {
-        overlayStyleObserver.disconnect();
-        setOverlayOpacity(0);
-      }
+      if (removedOverlay) overlayStyleObserver.disconnect();
     });
 
     overlayMountObserver.observe(document.body, { childList: true });
@@ -61,9 +104,10 @@ const ThemeColorMetaContent = () => {
       overlayMountObserver.disconnect();
       overlayStyleObserver.disconnect();
     };
-  }, []);
+  }, [animateThemeColorValue, getThemeColorValue]);
 
-  return <meta name='theme-color' content={themeColorMetaValue} />;
+  if (!resolvedTheme) return null;
+  return <meta name='theme-color' content={getThemeColorValue(0)} ref={ref} />;
 };
 
 export const ThemeColorMeta = () => (
