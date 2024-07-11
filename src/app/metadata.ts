@@ -24,4 +24,7 @@ export const metadata = {
   },
 } satisfies Metadata;
 
-export const viewport = { colorScheme: 'light dark' } satisfies Viewport;
+export const viewport = {
+  colorScheme: 'light dark',
+  userScalable: false,
+} satisfies Viewport;
