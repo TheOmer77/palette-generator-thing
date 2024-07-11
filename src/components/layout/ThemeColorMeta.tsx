@@ -13,7 +13,6 @@ import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { useReadonlyTheme } from '@/store/useReadonlyTheme';
 import { animateOverlayColors } from '@/lib/animateOverlayColors';
 import { getPaletteColor, overlayColors } from '@/lib/colorUtils';
-import { FALLBACK_COLOR } from '@/constants/fallbackColor';
 import type { CurveValue } from '@/types/bezierCurve';
 
 const LIGHT_BG_COLOR = '#ffffff';
@@ -35,13 +34,19 @@ const ThemeColorMetaContent = () => {
 
   const darkBgColor = useMemo(() => getPaletteColor(neutral, 950), [neutral]);
 
-  const getThemeColorValue = useCallback(
+  const setThemeColorValue = useCallback(
     (overlayOpacity: number) => {
-      if (!resolvedTheme) return FALLBACK_COLOR;
+      if (!resolvedTheme) return;
 
-      if (resolvedTheme === 'dark') return darkBgColor;
-      if (overlayOpacity <= 0) return LIGHT_BG_COLOR;
-      return overlayColors(LIGHT_BG_COLOR, darkBgColor, overlayOpacity * 0.5);
+      if (resolvedTheme === 'dark')
+        return ref.current?.setAttribute?.('content', darkBgColor);
+      if (overlayOpacity <= 0)
+        return ref.current?.setAttribute?.('content', LIGHT_BG_COLOR);
+
+      ref.current?.setAttribute?.(
+        'content',
+        overlayColors(LIGHT_BG_COLOR, darkBgColor, overlayOpacity * 0.5)
+      );
     },
     [darkBgColor, resolvedTheme]
   );
@@ -72,14 +77,13 @@ const ThemeColorMetaContent = () => {
         !mutation.target.nextElementSibling?.classList.contains(
           DRAWER_DRAG_CLASS
         )
-      ) {
+      )
         return animateThemeColorValue(+mutation.target.style.opacity);
-      }
 
       // Drawer is being dragged - no transition needed
       const opacity = +mutation.target.style.opacity;
       lastDragOpacity.current = opacity;
-      ref.current?.setAttribute?.('content', getThemeColorValue(opacity));
+      setThemeColorValue(opacity);
     });
 
     const overlayMountObserver = new MutationObserver(mutations => {
@@ -99,15 +103,26 @@ const ThemeColorMetaContent = () => {
       if (removedOverlay) overlayStyleObserver.disconnect();
     });
 
+    setThemeColorValue(lastDragOpacity.current);
+
     overlayMountObserver.observe(document.body, { childList: true });
     return () => {
       overlayMountObserver.disconnect();
       overlayStyleObserver.disconnect();
     };
-  }, [animateThemeColorValue, getThemeColorValue]);
+  }, [animateThemeColorValue, setThemeColorValue]);
 
-  if (!resolvedTheme) return null;
-  return <meta name='theme-color' content={getThemeColorValue(0)} ref={ref} />;
+  return (
+    <>
+      <meta
+        ref={ref}
+        name='theme-color'
+        content={LIGHT_BG_COLOR}
+        {...(!resolvedTheme && { media: '(prefers-color-scheme: light)' })}
+      />
+      {!resolvedTheme && <meta name='theme-color' content={darkBgColor} />}
+    </>
+  );
 };
 
 export const ThemeColorMeta = () => (
