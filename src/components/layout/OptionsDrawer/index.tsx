@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { useEventListener, useIsClient, useMediaQuery } from 'usehooks-ts';
 import { SlidersHorizontalIcon, XIcon } from 'lucide-react';
 import { TransitionSwitchItem } from '@theomer77/react-transition-switch';
@@ -21,6 +20,7 @@ import {
 import { Fab } from '@/components/ui/Fab';
 import { IconButton } from '@/components/ui/IconButton';
 import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
+import { useModal } from '@/hooks/useModal';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { cn } from '@/lib/utils';
 import {
@@ -30,9 +30,7 @@ import {
 } from '@/constants/modalSearchParams';
 
 export const OptionsDrawer = () => {
-  const searchParams = useSearchParams();
-  const modalSearchParam = searchParams.get(MODAL_SEARCH_KEY);
-
+  const { currentModal, openModal, closeModal } = useModal();
   const { extras } = useComputedBaseColors();
   const { saveToSearchParams } = useOptionsDrawer();
 
@@ -43,17 +41,17 @@ export const OptionsDrawer = () => {
 
   const isDrawerOpen = useMemo(
     () =>
-      typeof modalSearchParam === 'string' &&
-      (modalSearchParam === MODAL_BASECOLORS_LIST ||
-        modalSearchParam.startsWith(MODAL_BASECOLORS_EDIT)),
-    [modalSearchParam]
+      typeof currentModal === 'string' &&
+      (currentModal === MODAL_BASECOLORS_LIST ||
+        currentModal.startsWith(MODAL_BASECOLORS_EDIT)),
+    [currentModal]
   );
   const transitionSwitchValue = useMemo(
     () =>
-      modalSearchParam?.startsWith(MODAL_BASECOLORS_EDIT)
-        ? modalSearchParam.split('-')[2]
+      currentModal?.startsWith(MODAL_BASECOLORS_EDIT)
+        ? currentModal.split('-')[2]
         : 'list',
-    [modalSearchParam]
+    [currentModal]
   );
 
   const drawerRef = useCallback(
@@ -65,17 +63,10 @@ export const OptionsDrawer = () => {
     (open: boolean) => {
       if (open === isDrawerOpen) return;
 
-      if (open) {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set(MODAL_SEARCH_KEY, MODAL_BASECOLORS_LIST);
-        return window.history.pushState(null, '', `?${params.toString()}`);
-      }
-
-      if (searchParams.get(MODAL_SEARCH_KEY)?.startsWith(MODAL_BASECOLORS_EDIT))
-        return window.history.go(-2);
-      window.history.back();
+      if (open) return openModal(MODAL_BASECOLORS_LIST);
+      closeModal(currentModal?.startsWith(MODAL_BASECOLORS_EDIT) ? -2 : -1);
     },
-    [isDrawerOpen, searchParams]
+    [closeModal, currentModal, isDrawerOpen, openModal]
   );
 
   const updateDrawerHeight = useCallback(() => {
@@ -107,7 +98,7 @@ export const OptionsDrawer = () => {
 
   useEventListener('popstate', () => {
     /* Modal search param at the time this event is called,
-    NOT THE SAME as the one from useSearchParams! */
+    NOT THE SAME as the one from useModal! */
     const newModalSearchParam = new URLSearchParams(window.location.search).get(
       MODAL_SEARCH_KEY
     );
@@ -118,7 +109,7 @@ export const OptionsDrawer = () => {
   });
 
   useLayoutEffect(() => {
-    if (!drawerEl || modalSearchParam !== MODAL_BASECOLORS_LIST) return;
+    if (!drawerEl || currentModal !== MODAL_BASECOLORS_LIST) return;
 
     const resizeObserver = new ResizeObserver(updateDrawerHeight);
     resizeObserver.observe(drawerEl);
@@ -136,20 +127,19 @@ export const OptionsDrawer = () => {
       resizeObserver.disconnect();
       styleObserver.disconnect();
     };
-  }, [drawerEl, extras, modalSearchParam, updateDrawerHeight]);
+  }, [drawerEl, extras, currentModal, updateDrawerHeight]);
 
   return (
     <Drawer
       open={isDrawerOpen}
       onOpenChange={setDrawerOpen}
-      dismissible={modalSearchParam === MODAL_BASECOLORS_LIST && !matchesMd}
+      dismissible={currentModal === MODAL_BASECOLORS_LIST && !matchesMd}
       direction={matchesMd ? 'right' : 'bottom'}
     >
       <DrawerTrigger asChild>
         <Fab
           className={cn(
-            `fixed bottom-20 end-4 transition-[opacity,transform]
-md:hidden print:hidden`,
+            `fixed bottom-20 end-4 transition-[opacity,transform] md:hidden print:hidden`,
             !isClient && 'scale-90 opacity-0'
           )}
         >
@@ -164,7 +154,7 @@ md:max-h-full md:w-80 md:rounded-e-none md:rounded-s-lg print:hidden
 md:[&>[data-drawer-handle]]:hidden
 [&[vaul-drawer]]:[transition-property:transform,height,max-height,border-radius]
 md:[&[vaul-drawer]]:[transition-property:transform]`,
-          modalSearchParam?.startsWith(MODAL_BASECOLORS_EDIT) &&
+          currentModal?.startsWith(MODAL_BASECOLORS_EDIT) &&
             `h-full max-h-full rounded-none [&>[data-drawer-handle]]:mt-0
 [&>[data-drawer-handle]]:h-0`
         )}
@@ -178,7 +168,7 @@ md:[&[vaul-drawer]]:[transition-property:transform]`,
         <SharedAxisX
           value={transitionSwitchValue}
           autoAdjustHeight={
-            modalSearchParam === MODAL_BASECOLORS_LIST && !matchesMd
+            currentModal === MODAL_BASECOLORS_LIST && !matchesMd
           }
           className='h-full w-full [&>*]:w-full'
         >

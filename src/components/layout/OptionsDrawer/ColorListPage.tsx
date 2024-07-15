@@ -6,7 +6,6 @@ import {
   type ComponentPropsWithoutRef,
   type ElementRef,
 } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { PlusIcon } from 'lucide-react';
 
 import { ColorListItem } from '@/components/layout/BaseColors';
@@ -16,11 +15,9 @@ import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Separator } from '@/components/ui/Separator';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
+import { useModal } from '@/hooks/useModal';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
-import {
-  MODAL_BASECOLORS_EDIT,
-  MODAL_SEARCH_KEY,
-} from '@/constants/modalSearchParams';
+import { MODAL_BASECOLORS_EDIT } from '@/constants/modalSearchParams';
 import {
   generalColorSuggestionNames,
   generalColorSuggestions,
@@ -31,9 +28,9 @@ export const ColorListPage = forwardRef<
   ElementRef<'div'>,
   ComponentPropsWithoutRef<'div'>
 >((props, ref) => {
-  const searchParams = useSearchParams();
   const { addExtraColor, extras: baseExtras } = useBaseColors();
   const { primary, neutral, danger } = useComputedBaseColors();
+  const { openModal } = useModal();
   const drawerState = useOptionsDrawer();
 
   const extras = (drawerState.extras || baseExtras).map(({ name, value }) => ({
@@ -44,12 +41,9 @@ export const ColorListPage = forwardRef<
   }));
 
   const handleItemClick = useCallback(
-    (itemId: 'primary' | 'neutral' | 'danger' | `extra${number}`) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(MODAL_SEARCH_KEY, `${MODAL_BASECOLORS_EDIT}${itemId}`);
-      window.history.pushState(null, '', `?${params.toString()}`);
-    },
-    [searchParams]
+    (itemId: 'primary' | 'neutral' | 'danger' | `extra${number}`) =>
+      openModal(`${MODAL_BASECOLORS_EDIT}${itemId}`),
+    [openModal]
   );
 
   const handleAddExtraClick = useCallback(() => {

@@ -10,6 +10,7 @@ import { PalettePreview } from '@/components/layout/BaseColors';
 import { DrawerHeader, DrawerTitle } from '@/components/ui/Drawer';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { IconButton } from '@/components/ui/IconButton';
+import { useModal } from '@/hooks/useModal';
 import { generatePalette } from '@/lib/colorUtils';
 import { cn } from '@/lib/utils';
 
@@ -20,6 +21,7 @@ export type ColorEditPageProps = ComponentPropsWithoutRef<'div'> & {
 
 export const ColorEditPage = forwardRef<ElementRef<'div'>, ColorEditPageProps>(
   ({ title, color, className, children, ...props }, ref) => {
+    const { closeModal } = useModal();
     const palette = useMemo(() => generatePalette(color), [color]);
 
     return (
@@ -32,11 +34,8 @@ export const ColorEditPage = forwardRef<ElementRef<'div'>, ColorEditPageProps>(
           className='flex h-16 shrink-0 flex-row items-center gap-4
 py-0'
         >
-          <IconButton
-            variant='flat'
-            size='lg'
-            onClick={() => window.history.back()}
-          >
+          <IconButton variant='flat' size='lg' onClick={() => closeModal()}>
+
             <ArrowLeftIcon />
           </IconButton>
           <DrawerTitle className='text-xl'>{title}</DrawerTitle>
