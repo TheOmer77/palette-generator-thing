@@ -10,6 +10,7 @@ import {
 } from 'react';
 
 import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
+import { useModal } from '@/hooks/useModal';
 import { useReadonlyTheme } from '@/store/useReadonlyTheme';
 import { animateOverlayColors } from '@/lib/animateOverlayColors';
 import { getPaletteColor, overlayColors } from '@/lib/colorUtils';
@@ -28,6 +29,7 @@ const nodeIsVaulOverlay = (node: Node): node is HTMLDivElement =>
 const ThemeColorMetaContent = () => {
   const { neutral } = useComputedBaseColors();
   const { resolvedTheme } = useReadonlyTheme();
+  const { currentModal, closeModal } = useModal();
 
   const ref = useRef<ElementRef<'meta'>>(null);
   const lastDragOpacity = useRef<number>(0);
@@ -71,19 +73,26 @@ const ThemeColorMetaContent = () => {
   );
 
   useEffect(() => {
+    animateThemeColorValue(+(currentModal !== null));
+  }, [animateThemeColorValue, currentModal]);
+
+  useEffect(() => {
     const overlayStyleObserver = new MutationObserver(([mutation]) => {
       if (!nodeIsVaulOverlay(mutation.target)) return;
-      if (
-        !mutation.target.nextElementSibling?.classList.contains(
-          DRAWER_DRAG_CLASS
-        )
-      )
-        return animateThemeColorValue(+mutation.target.style.opacity);
 
-      // Drawer is being dragged - no transition needed
       const opacity = +mutation.target.style.opacity;
-      lastDragOpacity.current = opacity;
-      setThemeColorValue(opacity);
+      const drawerIsDragged =
+        mutation.target.nextElementSibling?.classList.contains(
+          DRAWER_DRAG_CLASS
+        );
+
+      if (drawerIsDragged) {
+        // No transition needed while dragging
+        lastDragOpacity.current = opacity;
+        return setThemeColorValue(opacity);
+      }
+      if (opacity === 0) return closeModal();
+      animateThemeColorValue(opacity);
     });
 
     const overlayMountObserver = new MutationObserver(mutations => {
@@ -94,23 +103,28 @@ const ThemeColorMetaContent = () => {
           .reduce((arr, curr) => [...arr, ...curr.removedNodes], [] as Node[])
           .find(nodeIsVaulOverlay);
 
-      if (addedOverlay) {
+      if (addedOverlay)
         overlayStyleObserver.observe(addedOverlay, {
           attributeFilter: ['style'],
         });
-        animateThemeColorValue(1);
-      }
       if (removedOverlay) overlayStyleObserver.disconnect();
     });
 
     setThemeColorValue(lastDragOpacity.current);
+    const existingOverlay = [...document.body.childNodes].find(
+      nodeIsVaulOverlay
+    );
+    if (existingOverlay)
+      overlayStyleObserver.observe(existingOverlay, {
+        attributeFilter: ['style'],
+      });
 
     overlayMountObserver.observe(document.body, { childList: true });
     return () => {
       overlayMountObserver.disconnect();
       overlayStyleObserver.disconnect();
     };
-  }, [animateThemeColorValue, setThemeColorValue]);
+  }, [animateThemeColorValue, closeModal, setThemeColorValue]);
 
   return (
     <>
