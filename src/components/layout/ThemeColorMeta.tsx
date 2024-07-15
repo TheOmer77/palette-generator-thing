@@ -97,17 +97,14 @@ const ThemeColorMetaContent = () => {
 
     const overlayMountObserver = new MutationObserver(mutations => {
       const addedOverlay = mutations
-          .reduce((arr, curr) => [...arr, ...curr.addedNodes], [] as Node[])
-          .find(nodeIsVaulOverlay),
-        removedOverlay = mutations
-          .reduce((arr, curr) => [...arr, ...curr.removedNodes], [] as Node[])
-          .find(nodeIsVaulOverlay);
+        .reduce((arr, curr) => [...arr, ...curr.addedNodes], [] as Node[])
+        .find(nodeIsVaulOverlay);
+      if (!addedOverlay) return;
 
-      if (addedOverlay)
-        overlayStyleObserver.observe(addedOverlay, {
-          attributeFilter: ['style'],
-        });
-      if (removedOverlay) overlayStyleObserver.disconnect();
+      overlayStyleObserver.observe(addedOverlay, {
+        attributeFilter: ['style'],
+      });
+      overlayMountObserver.disconnect();
     });
 
     setThemeColorValue(lastDragOpacity.current);
@@ -115,16 +112,18 @@ const ThemeColorMetaContent = () => {
       nodeIsVaulOverlay
     );
     if (existingOverlay)
+      // Overlay already exists, observe its style now
       overlayStyleObserver.observe(existingOverlay, {
         attributeFilter: ['style'],
       });
+    // Wait for overlay mount, then observe style
+    else overlayMountObserver.observe(document.body, { childList: true });
 
-    overlayMountObserver.observe(document.body, { childList: true });
     return () => {
       overlayMountObserver.disconnect();
       overlayStyleObserver.disconnect();
     };
-  }, [animateThemeColorValue, closeModal, setThemeColorValue]);
+  }, [animateThemeColorValue, closeModal, currentModal, setThemeColorValue]);
 
   return (
     <>
