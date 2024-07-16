@@ -8,12 +8,14 @@ import {
   useRef,
   type ElementRef,
 } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
 
 import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { useModal } from '@/hooks/useModal';
 import { useReadonlyTheme } from '@/store/useReadonlyTheme';
 import { animateOverlayColors } from '@/lib/animateOverlayColors';
 import { getPaletteColor, overlayColors } from '@/lib/colorUtils';
+import { FULLSCREEN_MODALS } from '@/constants/modalSearchParams';
 import type { CurveValue } from '@/types/bezierCurve';
 
 const LIGHT_BG_COLOR = '#ffffff';
@@ -29,6 +31,7 @@ const nodeIsVaulOverlay = (node: Node): node is HTMLDivElement =>
 const ThemeColorMetaContent = () => {
   const { neutral } = useComputedBaseColors();
   const { resolvedTheme } = useReadonlyTheme();
+  const matchesSm = useMediaQuery('(min-width: 640px)');
   const { currentModal, closeModal } = useModal();
 
   const ref = useRef<ElementRef<'meta'>>(null);
@@ -73,8 +76,20 @@ const ThemeColorMetaContent = () => {
   );
 
   useEffect(() => {
-    animateThemeColorValue(+(currentModal !== null));
-  }, [animateThemeColorValue, currentModal]);
+    animateThemeColorValue(
+      +(
+        currentModal !== null &&
+        !(
+          FULLSCREEN_MODALS.some(
+            modal =>
+              (modal.endsWith('-') && currentModal.startsWith(modal)) ||
+              modal === currentModal
+          ) && // Assuming no modal will ever be fullscreen above sm breakpoint
+          !matchesSm
+        )
+      )
+    );
+  }, [animateThemeColorValue, currentModal, matchesSm]);
 
   useEffect(() => {
     const overlayStyleObserver = new MutationObserver(([mutation]) => {
