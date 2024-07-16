@@ -340,7 +340,7 @@ export const AppleAssets = () => (
       href='/assets/splash-dark/apple-splash-dark-1136-640.jpg'
       media='(prefers-color-scheme: dark) and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)'
     />
-    <link rel='apple-touch-icon' href='/assets/icons/apple-icon-180.png' />
+    <link rel='apple-touch-icon' href='/assets/icons/icon-180-apple.png' />
     <meta name='apple-mobile-web-app-capable' content='yes' />
   </>
 );
