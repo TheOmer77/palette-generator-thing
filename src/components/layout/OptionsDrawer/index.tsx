@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
-import { useEventListener, useIsClient, useMediaQuery } from 'usehooks-ts';
+import { useEventListener, useIsClient } from 'usehooks-ts';
 import { SlidersHorizontalIcon, XIcon } from 'lucide-react';
 import { TransitionSwitchItem } from '@theomer77/react-transition-switch';
 
@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/Drawer';
 import { Fab } from '@/components/ui/Fab';
 import { IconButton } from '@/components/ui/IconButton';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { useModal } from '@/hooks/useModal';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
@@ -36,7 +37,7 @@ export const OptionsDrawer = () => {
   const { saveToSearchParams } = useOptionsDrawer();
 
   const isClient = useIsClient();
-  const matchesMd = useMediaQuery('(min-width: 768px)');
+  const matchesMd = useBreakpoint('md');
 
   const [drawerEl, setDrawerEl] = useState<HTMLDivElement>();
 

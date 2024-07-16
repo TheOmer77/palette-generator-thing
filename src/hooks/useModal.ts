@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useMediaQuery } from 'usehooks-ts';
 
 import {
   FULLSCREEN_MODALS,
@@ -8,6 +7,8 @@ import {
   MODAL_BASECOLORS_LIST,
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
+
+import { useBreakpoint } from './useBreakpoint';
 
 type ModalValue =
   | null
@@ -17,7 +18,7 @@ type ModalValue =
 export const useModal = () => {
   const searchParams = useSearchParams(),
     currentModal = searchParams.get(MODAL_SEARCH_KEY) as ModalValue;
-  const matchesSm = useMediaQuery('(min-width: 640px)');
+  const matchesSm = useBreakpoint('sm');
 
   const [lastModal, setLastModal] = useState(currentModal);
 
