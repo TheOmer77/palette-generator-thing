@@ -16,7 +16,7 @@ const NavbarLinksContent = () => {
     <ToggleGroup
       type='single'
       value={pathname}
-      className='fixed inset-x-0 bottom-0 z-20 flex h-[calc(theme(spacing.16)+env(safe-area-inset-bottom))] w-full flex-row items-center gap-px bg-card p-1 pb-[calc(theme(spacing.1)+env(safe-area-inset-bottom))] text-card-foreground shadow-md md:static md:inset-x-auto md:size-auto md:bg-transparent md:pb-1 md:shadow-none [&>*]:size-full md:[&>*]:h-10 md:[&>*]:w-auto'
+      className='fixed inset-x-0 bottom-0 z-20 flex h-[calc(theme(spacing.16)+env(safe-area-inset-bottom))] w-full flex-row items-center gap-px bg-card px-1 pb-[calc(theme(spacing.1)+env(safe-area-inset-bottom))] pt-1 text-card-foreground shadow-md md:static md:inset-x-auto md:size-auto md:bg-transparent md:pb-1 md:shadow-none [&>*]:size-full md:[&>*]:h-10 md:[&>*]:w-auto'
     >
       {NAVBAR_LINKS.map(({ href, icon, label }) => {
         const Comp = pathname === href ? 'div' : LinkWithSearchParams;
