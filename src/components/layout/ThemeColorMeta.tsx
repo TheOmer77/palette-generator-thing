@@ -125,6 +125,8 @@ const ThemeColorMetaContent = () => {
     };
   }, [animateThemeColorValue, closeModal, currentModal, setThemeColorValue]);
 
+  if (resolvedTheme === 'dark')
+    return <meta name='theme-color' content={darkBgColor} />;
   return (
     <>
       <meta
