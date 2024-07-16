@@ -5,12 +5,6 @@ import { useEventListener, useIsClient, useMediaQuery } from 'usehooks-ts';
 import { SlidersHorizontalIcon, XIcon } from 'lucide-react';
 import { TransitionSwitchItem } from '@theomer77/react-transition-switch';
 
-import { ColorListPage } from './ColorListPage';
-import { PrimaryColorEditPage } from './PrimaryColorEditPage';
-import { NeutralColorEditPage } from './NeutralColorEditPage';
-import { DangerColorEditPage } from './DangerColorEditPage';
-import { ExtraColorEditPage } from './ExtraColorEditPage';
-import SharedAxisX from '../SharedAxisX';
 import {
   Drawer,
   DrawerClose,
@@ -29,8 +23,15 @@ import {
   MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
 
+import { ColorListPage } from './ColorListPage';
+import { PrimaryColorEditPage } from './PrimaryColorEditPage';
+import { NeutralColorEditPage } from './NeutralColorEditPage';
+import { DangerColorEditPage } from './DangerColorEditPage';
+import { ExtraColorEditPage } from './ExtraColorEditPage';
+import SharedAxisX from '../SharedAxisX';
+
 export const OptionsDrawer = () => {
-  const { currentModal, openModal, closeModal } = useModal();
+  const { currentModal, isModalFullHeight, openModal, closeModal } = useModal();
   const { extras } = useComputedBaseColors();
   const { saveToSearchParams } = useOptionsDrawer();
 
@@ -154,7 +155,7 @@ md:max-h-full md:w-80 md:rounded-e-none md:rounded-s-lg print:hidden
 md:[&>[data-drawer-handle]]:hidden
 [&[vaul-drawer]]:[transition-property:transform,height,max-height,border-radius]
 md:[&[vaul-drawer]]:[transition-property:transform]`,
-          currentModal?.startsWith(MODAL_BASECOLORS_EDIT) &&
+          isModalFullHeight &&
             `h-full max-h-full rounded-none sm:rounded-t-lg
 [&>[data-drawer-handle]]:mt-0 [&>[data-drawer-handle]]:h-0`
         )}

@@ -25,14 +25,14 @@ export const useModal = () => {
     if (currentModal !== null) setLastModal(currentModal);
   }, [currentModal]);
 
-  const isModalFullscreen =
-    !matchesSm &&
-    typeof currentModal === 'string' &&
-    FULLSCREEN_MODALS.some(
-      modal =>
-        (modal.endsWith('-') && currentModal.startsWith(modal)) ||
-        modal === currentModal
-    );
+  const isModalFullHeight =
+      typeof currentModal === 'string' &&
+      FULLSCREEN_MODALS.some(
+        modal =>
+          (modal.endsWith('-') && currentModal.startsWith(modal)) ||
+          modal === currentModal
+      ),
+    isModalFullscreen = isModalFullHeight && !matchesSm;
 
   const openModal = (modal: ModalValue) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -43,5 +43,12 @@ export const useModal = () => {
 
   const closeModal = (delta = -1) => window.history.go(delta);
 
-  return { currentModal, lastModal, isModalFullscreen, openModal, closeModal };
+  return {
+    currentModal,
+    lastModal,
+    isModalFullHeight,
+    isModalFullscreen,
+    openModal,
+    closeModal,
+  };
 };
