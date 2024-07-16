@@ -155,8 +155,8 @@ md:[&>[data-drawer-handle]]:hidden
 [&[vaul-drawer]]:[transition-property:transform,height,max-height,border-radius]
 md:[&[vaul-drawer]]:[transition-property:transform]`,
           currentModal?.startsWith(MODAL_BASECOLORS_EDIT) &&
-            `h-full max-h-full rounded-none [&>[data-drawer-handle]]:mt-0
-[&>[data-drawer-handle]]:h-0`
+            `h-full max-h-full rounded-none sm:rounded-t-lg
+[&>[data-drawer-handle]]:mt-0 [&>[data-drawer-handle]]:h-0`
         )}
         ref={drawerRef}
       >
