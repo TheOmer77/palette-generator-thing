@@ -11,9 +11,10 @@ yarn-error.log*
 /.next/
 /out/
 
-# PWA service worker
-/public/sw.js*
-/public/workbox-*.js*
+# PWA
+**/public/sw.js*
+**/public/workbox-*.js*
+**/public/fallback-*.js*
 
 # Typescript
 *.tsbuildinfo
