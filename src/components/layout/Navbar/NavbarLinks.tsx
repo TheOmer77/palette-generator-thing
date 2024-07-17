@@ -24,7 +24,7 @@ const NavbarLinksContent = () => {
           <ToggleGroupItem key={href} value={href} asChild>
             <Button
               variant='flat'
-              className='flex-col gap-1 aria-checked:bg-muted/15 md:flex-row md:gap-2'
+              className='flex-col gap-1 [-webkit-touch-callout:none] aria-checked:bg-muted/15 md:flex-row md:gap-2'
               asChild
             >
               <Comp href={href}>
