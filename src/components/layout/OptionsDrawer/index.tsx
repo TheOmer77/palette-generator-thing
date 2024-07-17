@@ -141,7 +141,7 @@ export const OptionsDrawer = () => {
       <DrawerTrigger asChild>
         <Fab
           className={cn(
-            `fixed bottom-20 end-4 transition-[opacity,transform] md:hidden print:hidden`,
+            `fixed bottom-[calc(theme(spacing.20)+env(safe-area-inset-bottom))] end-4 transition-[opacity,transform] md:hidden print:hidden`,
             !isClient && 'scale-90 opacity-0'
           )}
         >
@@ -151,8 +151,9 @@ export const OptionsDrawer = () => {
       </DrawerTrigger>
       <DrawerContent
         className={cn(
-          `h-[--children-height] max-h-[--children-height] md:me-0 md:h-full
-md:max-h-full md:w-80 md:rounded-e-none md:rounded-s-lg print:hidden
+          `h-[calc(var(--children-height)+env(safe-area-inset-bottom))]
+max-h-[calc(var(--children-height)+env(safe-area-inset-bottom))] md:me-0
+md:h-full md:max-h-full md:w-80 md:rounded-e-none md:rounded-s-lg print:hidden
 md:[&>[data-drawer-handle]]:hidden
 [&[vaul-drawer]]:[transition-property:transform,height,max-height,border-radius]
 md:[&[vaul-drawer]]:[transition-property:transform]`,
