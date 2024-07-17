@@ -27,4 +27,5 @@ export const metadata = {
 export const viewport = {
   colorScheme: 'light dark',
   userScalable: false,
+  viewportFit: 'cover',
 } satisfies Viewport;
