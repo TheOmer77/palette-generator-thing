@@ -16,6 +16,7 @@ import { IconButton } from '@/components/ui/IconButton';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useComputedBaseColors } from '@/hooks/useComputedBaseColors';
 import { useModal } from '@/hooks/useModal';
+import { useVirtualKeyboardOpen } from '@/hooks/useVirtualKeyboardOpen';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { cn } from '@/lib/utils';
 import {
@@ -35,6 +36,7 @@ export const OptionsDrawer = () => {
   const { currentModal, isModalFullHeight, openModal, closeModal } = useModal();
   const { extras } = useComputedBaseColors();
   const { saveToSearchParams } = useOptionsDrawer();
+  const virtualKeyboardOpen = useVirtualKeyboardOpen();
 
   const isClient = useIsClient();
   const matchesMd = useBreakpoint('md');
@@ -157,7 +159,7 @@ export const OptionsDrawer = () => {
         <Fab
           className={cn(
             `fixed bottom-[calc(theme(spacing.20)+env(safe-area-inset-bottom))]
-end-4 transition-[opacity,transform] md:hidden print:hidden`,
+            end-4 transition-[opacity,transform] md:hidden print:hidden`,
             !isClient && 'scale-90 opacity-0'
           )}
         >
@@ -175,7 +177,8 @@ md:[&>[data-drawer-handle]]:hidden
 md:[&[vaul-drawer]]:[transition-property:transform]`,
           isModalFullHeight &&
             `h-full max-h-full rounded-none sm:rounded-t-lg
-[&>[data-drawer-handle]]:mt-0 [&>[data-drawer-handle]]:h-0`
+[&>[data-drawer-handle]]:mt-0 [&>[data-drawer-handle]]:h-0`,
+          virtualKeyboardOpen && 'pb-0'
         )}
         ref={drawerRef}
       >

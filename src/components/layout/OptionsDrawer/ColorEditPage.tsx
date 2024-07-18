@@ -12,6 +12,7 @@ import { ScrollArea } from '@/components/ui/ScrollArea';
 import { IconButton } from '@/components/ui/IconButton';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useModal } from '@/hooks/useModal';
+import { useVirtualKeyboardOpen } from '@/hooks/useVirtualKeyboardOpen';
 import { generatePalette } from '@/lib/colorUtils';
 import { cn } from '@/lib/utils';
 
@@ -23,7 +24,8 @@ export type ColorEditPageProps = ComponentPropsWithoutRef<'div'> & {
 export const ColorEditPage = forwardRef<ElementRef<'div'>, ColorEditPageProps>(
   ({ title, color, className, children, ...props }, ref) => {
     const { closeModal } = useModal();
-    const matchesMd = useBreakpoint('md')
+    const matchesMd = useBreakpoint('md');
+    const virtualKeyboardOpen = useVirtualKeyboardOpen();
 
     const palette = useMemo(() => generatePalette(color), [color]);
 
@@ -48,8 +50,10 @@ py-0'
         </DrawerHeader>
         <PalettePreview palette={palette} />
         <ScrollArea
-          className='flex-grow [&>[data-radix-scroll-area-viewport]]:px-4
-[&>[data-radix-scroll-area-viewport]]:pb-4'
+          className={cn(
+            '[&>[data-radix-scroll-area-viewport]]:px-4 [&>[data-radix-scroll-area-viewport]]:pb-4',
+            virtualKeyboardOpen ? 'mt-auto' : 'flex-grow'
+          )}
         >
           {children}
         </ScrollArea>

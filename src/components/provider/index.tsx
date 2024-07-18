@@ -3,7 +3,10 @@
 import type { PropsWithChildren } from 'react';
 
 import { ThemeProvider } from './ThemeProvider';
+import { VirtualKeyboardProvider } from './VirtualKeyboardProvider';
 
 export const Provider = ({ children }: PropsWithChildren) => (
-  <ThemeProvider>{children}</ThemeProvider>
+  <ThemeProvider>
+    <VirtualKeyboardProvider>{children}</VirtualKeyboardProvider>
+  </ThemeProvider>
 );
