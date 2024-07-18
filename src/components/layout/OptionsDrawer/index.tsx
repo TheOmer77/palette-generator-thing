@@ -111,7 +111,7 @@ export const OptionsDrawer = () => {
   });
 
   useLayoutEffect(() => {
-    if (!drawerEl || currentModal !== MODAL_BASECOLORS_LIST) return;
+    if (!drawerEl) return;
 
     const resizeObserver = new ResizeObserver(updateDrawerHeight);
     resizeObserver.observe(drawerEl);
@@ -119,8 +119,23 @@ export const OptionsDrawer = () => {
     const styleObserver = new MutationObserver(mutations =>
       mutations.forEach(mutation => {
         if (!mutation.target || mutation.attributeName !== 'style') return;
-        if (!drawerEl.style.transition.startsWith('none'))
-          drawerEl.style.removeProperty('transition');
+
+        const mutationEl = mutation.target as HTMLDivElement;
+        if (!mutationEl.style.transition.startsWith('none'))
+          mutationEl.style.removeProperty('transition');
+
+        /* Make sure virtual keyboard behavior is consistent between Android
+        Chrome and iOS Safari */
+        if (mutationEl.style.height) mutationEl.style.removeProperty('height');
+        if (mutationEl.style.bottom) {
+          const keyboardHeight = visualViewport
+            ? window.innerHeight - visualViewport.height
+            : 0;
+
+          if (!visualViewport || visualViewport.height === window.innerHeight)
+            mutationEl.style.removeProperty('bottom');
+          else mutationEl.style.setProperty('bottom', `${keyboardHeight}px`);
+        }
       })
     );
     styleObserver.observe(drawerEl, { attributeFilter: ['style'] });
@@ -141,7 +156,8 @@ export const OptionsDrawer = () => {
       <DrawerTrigger asChild>
         <Fab
           className={cn(
-            `fixed bottom-[calc(theme(spacing.20)+env(safe-area-inset-bottom))] end-4 transition-[opacity,transform] md:hidden print:hidden`,
+            `fixed bottom-[calc(theme(spacing.20)+env(safe-area-inset-bottom))]
+end-4 transition-[opacity,transform] md:hidden print:hidden`,
             !isClient && 'scale-90 opacity-0'
           )}
         >
