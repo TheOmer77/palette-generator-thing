@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, type PropsWithChildren } from 'react';
 import { ThemeProvider as NextThemesProvider, useTheme } from 'next-themes';
 
