@@ -33,15 +33,20 @@ const ThemeColorMetaContent = () => {
 
   const ref = useRef<ElementRef<'meta'>>(null);
   const lastDragOpacity = useRef<number>(0);
+  const lastModalFullscreen = useRef(isModalFullscreen);
 
-  const darkBgColor = useMemo(() => getPaletteColor(neutral, 950), [neutral]);
+  const darkBgColor = useMemo(() => getPaletteColor(neutral, 950), [neutral]),
+    darkCardColor = useMemo(() => getPaletteColor(neutral, 900), [neutral]);
 
   const setThemeColorValue = useCallback(
     (overlayOpacity: number) => {
       if (!resolvedTheme) return;
 
       if (resolvedTheme === 'dark')
-        return ref.current?.setAttribute?.('content', darkBgColor);
+        return ref.current?.setAttribute?.(
+          'content',
+          isModalFullscreen ? darkCardColor : darkBgColor
+        );
       if (overlayOpacity <= 0)
         return ref.current?.setAttribute?.('content', LIGHT_BG_COLOR);
 
@@ -50,12 +55,27 @@ const ThemeColorMetaContent = () => {
         overlayColors(LIGHT_BG_COLOR, darkBgColor, overlayOpacity * 0.5)
       );
     },
-    [darkBgColor, resolvedTheme]
+    [darkBgColor, darkCardColor, isModalFullscreen, resolvedTheme]
   );
 
   const animateThemeColorValue = useCallback(
     async (targetOpacity: number) => {
-      if (resolvedTheme === 'dark') return;
+      if (resolvedTheme === 'dark') {
+        const initialOpacity = +lastModalFullscreen.current;
+        lastModalFullscreen.current = isModalFullscreen;
+        return await animateOverlayColors(
+          {
+            baseColor: darkBgColor,
+            overlayColor: darkCardColor,
+            initialOpacity,
+            targetOpacity,
+            duration: DRAWER_TRANSITION_DURATION,
+            transitionCurve: DRAWER_TRANSITION_CURVE,
+          },
+          color => ref.current?.setAttribute?.('content', color)
+        );
+      }
+
       await animateOverlayColors(
         {
           baseColor: LIGHT_BG_COLOR,
@@ -69,14 +89,22 @@ const ThemeColorMetaContent = () => {
       );
       lastDragOpacity.current = targetOpacity;
     },
-    [darkBgColor, resolvedTheme]
+    [darkBgColor, darkCardColor, isModalFullscreen, resolvedTheme]
   );
 
   useEffect(() => {
-    animateThemeColorValue(+(currentModal !== null && !isModalFullscreen));
-  }, [animateThemeColorValue, currentModal, isModalFullscreen]);
+    animateThemeColorValue(
+      +(resolvedTheme === 'dark'
+        ? isModalFullscreen
+        : currentModal !== null && !isModalFullscreen)
+    );
+  }, [animateThemeColorValue, currentModal, isModalFullscreen, resolvedTheme]);
 
+  // Overlay stuff
   useEffect(() => {
+    // Overlay & dark BG are the same color so they don't affect each other
+    if (resolvedTheme === 'dark') return;
+
     const overlayStyleObserver = new MutationObserver(([mutation]) => {
       if (!nodeIsVaulOverlay(mutation.target)) return;
 
@@ -123,21 +151,27 @@ const ThemeColorMetaContent = () => {
       overlayMountObserver.disconnect();
       overlayStyleObserver.disconnect();
     };
-  }, [animateThemeColorValue, closeModal, currentModal, setThemeColorValue]);
+  }, [
+    animateThemeColorValue,
+    closeModal,
+    currentModal,
+    resolvedTheme,
+    setThemeColorValue,
+  ]);
 
-  if (resolvedTheme === 'dark')
-    return <meta name='theme-color' content={darkBgColor} />;
-  return (
-    <>
-      <meta
-        ref={ref}
-        name='theme-color'
-        content={LIGHT_BG_COLOR}
-        {...(!resolvedTheme && { media: '(prefers-color-scheme: light)' })}
-      />
-      {!resolvedTheme && <meta name='theme-color' content={darkBgColor} />}
-    </>
-  );
+  // On server, assume system theme is used
+  if (!resolvedTheme)
+    return (
+      <>
+        <meta
+          name='theme-color'
+          content={LIGHT_BG_COLOR}
+          media='(prefers-color-scheme: light)'
+        />
+        <meta name='theme-color' content={darkBgColor} />
+      </>
+    );
+  return <meta ref={ref} name='theme-color' content={LIGHT_BG_COLOR} />;
 };
 
 export const ThemeColorMeta = () => (
