@@ -51,7 +51,8 @@ py-0'
         <PalettePreview palette={palette} />
         <ScrollArea
           className={cn(
-            '[&>[data-radix-scroll-area-viewport]]:px-4 [&>[data-radix-scroll-area-viewport]]:pb-4',
+            `md:mt-0 md:flex-grow [&>[data-radix-scroll-area-viewport]]:px-4
+[&>[data-radix-scroll-area-viewport]]:pb-4`,
             virtualKeyboardOpen ? 'mt-auto' : 'flex-grow'
           )}
         >

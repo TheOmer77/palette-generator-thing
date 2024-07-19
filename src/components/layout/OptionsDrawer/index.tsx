@@ -126,6 +126,8 @@ export const OptionsDrawer = () => {
         if (!mutationEl.style.transition.startsWith('none'))
           mutationEl.style.removeProperty('transition');
 
+        // Disable the below so avoid weirdness on tablets
+        if (matchesMd) return;
         /* Make sure virtual keyboard behavior is consistent between Android
         Chrome and iOS Safari */
         if (mutationEl.style.height) mutationEl.style.removeProperty('height');
