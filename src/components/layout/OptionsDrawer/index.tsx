@@ -148,7 +148,7 @@ export const OptionsDrawer = () => {
       resizeObserver.disconnect();
       styleObserver.disconnect();
     };
-  }, [drawerEl, extras, currentModal, updateDrawerHeight]);
+  }, [drawerEl, extras, currentModal, updateDrawerHeight, matchesMd]);
 
   return (
     <Drawer
