@@ -1,6 +1,3 @@
-import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
-
 import { isValidHexColor, randomHexColor } from './colorUtils';
 import {
   dangerColorSuggestionNames,
@@ -46,12 +43,11 @@ const validateExtraColorParam = (
  * Check validity of base colors URL search params. If some are invalid,
  * redirect to the same pathname but with any invalid params removed.
  *
- * **This function should be used in server components.**
- *
  * @param searchParams Search params to validate.
+ * @returns Whether or not the given searchParams are valid, and the valid
+ * search string.
  */
 export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
-  const pathname = headers().get('x-pathname');
   const paramsTuples = Object.entries(searchParams).reduce(
     (acc: [string, string][], [key, value]) => {
       if (typeof value === 'undefined') return acc;
@@ -108,6 +104,8 @@ export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
       sortedValidParamsTuples
     ).toString();
 
-  if (sortedParamsStr !== sortedValidParamsStr)
-    redirect(`${pathname}?${validParamsStr}`);
+  return {
+    isValid: sortedParamsStr === sortedValidParamsStr,
+    validSearch: validParamsStr,
+  };
 };
