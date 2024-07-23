@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 
-const APP_NAME = 'Palette generator thing';
-const APP_TITLE_TEMPLATE = '%s - Palette generator thing';
-const APP_DESCRIPTION = 'App to generate color palettes for user interfaces.';
+import manifest from './manifest.json';
+
+const APP_NAME = manifest.name;
+const APP_TITLE_TEMPLATE = `%s - ${manifest.name}`;
+const APP_DESCRIPTION = manifest.description;
 
 export const metadata = {
   applicationName: APP_NAME,
