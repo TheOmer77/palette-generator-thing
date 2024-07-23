@@ -1,4 +1,10 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+import withSerwistInit from '@serwist/next';
 
-export default nextConfig;
+const withSerwist = withSerwistInit({
+  swSrc: 'src/sw.ts',
+  swDest: 'public/sw.js',
+});
+
+/** @type {import('next').NextConfig} */
+const config = withSerwist();
+export default config;

@@ -5,7 +5,7 @@
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "es2022"],
+    "lib": ["dom", "dom.iterable", "es2022", "webworker"],
     "module": "esnext",
     "moduleDetection": "force",
     "moduleResolution": "bundler",
@@ -16,8 +16,9 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
+    "types": ["@serwist/next/typings"],
     "verbatimModuleSyntax": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "public/sw.js"]
 }
