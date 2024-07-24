@@ -47,8 +47,18 @@ const validateExtraColorParam = (
  * @returns Whether or not the given searchParams are valid, and the valid
  * search string.
  */
-export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
-  const paramsTuples = Object.entries(searchParams).reduce(
+export const validateSearchParams = (
+  searchParams: BaseColorsSearchParams | URLSearchParams
+) => {
+  const searchParamsObj =
+    searchParams instanceof URLSearchParams
+      ? [...searchParams.entries()].reduce(
+          (obj, [key, value]) => ({ ...obj, [key]: value }),
+          {} as BaseColorsSearchParams
+        )
+      : searchParams;
+
+  const paramsTuples = Object.entries(searchParamsObj).reduce(
     (acc: [string, string][], [key, value]) => {
       if (typeof value === 'undefined') return acc;
       return [
@@ -64,25 +74,25 @@ export const validateSearchParams = (searchParams: BaseColorsSearchParams) => {
   const validParamsTuples = [
     [
       'primary',
-      validateColorParam(searchParams.primary, {
+      validateColorParam(searchParamsObj.primary, {
         fallback: randomHexColor().slice(1),
       }),
     ],
     [
       'neutral',
-      validateColorParam(searchParams.neutral, {
+      validateColorParam(searchParamsObj.neutral, {
         extraAllowedValues: neutralColorSuggestionNames,
       }),
     ],
     [
       'danger',
-      validateColorParam(searchParams.danger, {
+      validateColorParam(searchParamsObj.danger, {
         extraAllowedValues: dangerColorSuggestionNames,
       }),
     ],
-    ...(Array.isArray(searchParams.extra)
-      ? searchParams.extra
-      : [searchParams.extra]
+    ...(Array.isArray(searchParamsObj.extra)
+      ? searchParamsObj.extra
+      : [searchParamsObj.extra]
     ).map(value => [
       'extra',
       validateExtraColorParam(value, {
