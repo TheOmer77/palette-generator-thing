@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import {
@@ -20,12 +19,6 @@ export const useModal = () => {
     currentModal = searchParams.get(MODAL_SEARCH_KEY) as ModalValue;
   const matchesSm = useBreakpoint('sm');
 
-  const [lastModal, setLastModal] = useState(currentModal);
-
-  useEffect(() => {
-    if (currentModal !== null) setLastModal(currentModal);
-  }, [currentModal]);
-
   const isModalFullHeight =
       typeof currentModal === 'string' &&
       FULLSCREEN_MODALS.some(
@@ -46,7 +39,6 @@ export const useModal = () => {
 
   return {
     currentModal,
-    lastModal,
     isModalFullHeight,
     isModalFullscreen,
     openModal,
