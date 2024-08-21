@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 import { DebouncedColorPicker } from './DebouncedColorPicker';
 import { ListSubheader } from '@/components/ui/List';
@@ -9,6 +8,7 @@ import {
   ColorSuggestionsBox,
 } from '@/components/layout/ColorSuggestions';
 import { useBaseColors } from '@/hooks/useBaseColors';
+import { useModal } from '@/hooks/useModal';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
 import { getAutoDangerColor } from '@/lib/colorUtils';
 import {
@@ -18,7 +18,6 @@ import {
 import {
   MODAL_BASECOLORS_EDIT,
   MODAL_BASECOLORS_LIST,
-  MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
 import type { DangerColorSuggestion } from '@/types/defaultSuggestions';
 
@@ -27,10 +26,10 @@ export const DangerColorEditor = () => {
   const { danger: drawerDanger, setDanger: setDrawerDanger } =
     useOptionsDrawer();
 
-  const searchParams = useSearchParams(),
+  const { currentModal } = useModal(),
     isDrawerEditor =
-      searchParams.get(MODAL_SEARCH_KEY) === MODAL_BASECOLORS_LIST ||
-      searchParams.get(MODAL_SEARCH_KEY)?.startsWith(MODAL_BASECOLORS_EDIT);
+      currentModal === MODAL_BASECOLORS_LIST ||
+      currentModal?.startsWith(MODAL_BASECOLORS_EDIT);
 
   const danger =
     typeof drawerDanger === 'undefined' ? initialDanger : drawerDanger;

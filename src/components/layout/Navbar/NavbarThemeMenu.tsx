@@ -13,8 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import { Tooltip } from '@/components/ui/Tooltip';
-
-const THEMES = { system: 'System', light: 'Light', dark: 'Dark' } as const;
+import { THEMES } from '@/constants/themes';
 
 export const NavbarThemeMenu = () => {
   const { setTheme, theme } = useTheme();

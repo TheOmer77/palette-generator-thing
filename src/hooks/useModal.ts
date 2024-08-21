@@ -1,0 +1,47 @@
+import { useSearchParams } from 'next/navigation';
+
+import {
+  FULLSCREEN_MODALS,
+  MODAL_BASECOLORS_EDIT,
+  MODAL_BASECOLORS_LIST,
+  MODAL_SEARCH_KEY,
+} from '@/constants/modalSearchParams';
+
+import { useBreakpoint } from './useBreakpoint';
+
+type ModalValue =
+  | null
+  | typeof MODAL_BASECOLORS_LIST
+  | `${typeof MODAL_BASECOLORS_EDIT}${string}`;
+
+export const useModal = () => {
+  const searchParams = useSearchParams(),
+    currentModal = searchParams.get(MODAL_SEARCH_KEY) as ModalValue;
+  const matchesSm = useBreakpoint('sm');
+
+  const isModalFullHeight =
+      typeof currentModal === 'string' &&
+      FULLSCREEN_MODALS.some(
+        modal =>
+          (modal.endsWith('-') && currentModal.startsWith(modal)) ||
+          modal === currentModal
+      ),
+    isModalFullscreen = isModalFullHeight && !matchesSm;
+
+  const openModal = (modal: ModalValue) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (modal === null) params.delete(MODAL_SEARCH_KEY);
+    else params.set(MODAL_SEARCH_KEY, modal);
+    return window.history.pushState(null, '', `?${params.toString()}`);
+  };
+
+  const closeModal = (delta = -1) => window.history.go(delta);
+
+  return {
+    currentModal,
+    isModalFullHeight,
+    isModalFullscreen,
+    openModal,
+    closeModal,
+  };
+};

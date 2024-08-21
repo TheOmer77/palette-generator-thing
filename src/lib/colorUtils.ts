@@ -123,6 +123,25 @@ export const autoAddHexHash = (value: string) =>
 
 export const randomHexColor = () => formatHex(random());
 
+export const overlayColors = (
+  baseColor: string,
+  overlayColor: string,
+  opacity: number
+) => {
+  const base = rgb(baseColor);
+  const overlay = rgb(overlayColor);
+  if (!base || !overlay) return baseColor;
+
+  const result = {
+    mode: 'rgb',
+    r: base.r * (1 - opacity) + overlay.r * opacity,
+    g: base.g * (1 - opacity) + overlay.g * opacity,
+    b: base.b * (1 - opacity) + overlay.b * opacity,
+  } satisfies Rgb;
+
+  return formatHex(result);
+};
+
 export const getPaletteColor = (
   baseColor: string,
   shade: number,

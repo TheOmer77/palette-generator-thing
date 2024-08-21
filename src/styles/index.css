@@ -75,7 +75,7 @@
 @layer base {
   * {
     @apply border-border scrollbar scrollbar-track-transparent
-scrollbar-thumb-neutral-500/30;
+scrollbar-thumb-neutral-500/30 [-webkit-tap-highlight-color:transparent];
   }
 
   body {

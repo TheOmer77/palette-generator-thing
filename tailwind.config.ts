@@ -6,6 +6,7 @@ import animate from 'tailwindcss-animate';
 import {
   animations,
   autofillOverride,
+  screens,
   stateLayer,
 } from './src/config/tailwind';
 
@@ -26,6 +27,7 @@ const config = {
       padding: '2rem',
       screens: { '2xl': '1400px' },
     },
+    screens,
     extend: {
       borderRadius: {
         lg: 'var(--border-radius)',

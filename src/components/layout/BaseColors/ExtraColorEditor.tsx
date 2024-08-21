@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { TrashIcon } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
 
 import { DebouncedColorPicker } from './DebouncedColorPicker';
 import { Input } from '@/components/ui/Input';
@@ -17,6 +16,7 @@ import {
 } from '@/components/layout/ColorSuggestions';
 import { useBaseColors } from '@/hooks/useBaseColors';
 import { useOptionsDrawer } from '@/store/useOptionsDrawer';
+import { useModal } from '@/hooks/useModal';
 import { nameIsDuplicate, nameIsReserved } from '@/lib/validateColorName';
 import {
   generalColorSuggestionNames,
@@ -29,7 +29,6 @@ import {
 import {
   MODAL_BASECOLORS_EDIT,
   MODAL_BASECOLORS_LIST,
-  MODAL_SEARCH_KEY,
 } from '@/constants/modalSearchParams';
 import type { GeneralColorSuggestion } from '@/types/defaultSuggestions';
 
@@ -49,10 +48,10 @@ export const ExtraColorEditor = ({ index }: ExtraColorEditorProps) => {
 
   const { name, value } = drawerExtras?.[index] || extras[index];
 
-  const searchParams = useSearchParams(),
+  const { currentModal } = useModal(),
     isDrawerEditor =
-      searchParams.get(MODAL_SEARCH_KEY) === MODAL_BASECOLORS_LIST ||
-      searchParams.get(MODAL_SEARCH_KEY)?.startsWith(MODAL_BASECOLORS_EDIT);
+      currentModal === MODAL_BASECOLORS_LIST ||
+      currentModal?.startsWith(MODAL_BASECOLORS_EDIT);
 
   const colorIsSuggestion = generalColorSuggestionNames.includes(value),
     colorIsCustom = !generalColorSuggestionNames.includes(value);

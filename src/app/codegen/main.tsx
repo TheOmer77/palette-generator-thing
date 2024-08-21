@@ -47,9 +47,10 @@ const MainContent = () => {
 
   return (
     <main
-      className='flex flex-col p-4 pb-20 md:pb-4 md:ps-[21rem] print:ps-4
-[&>*]:mx-auto [&>*]:w-full [&>*]:max-w-screen-lg'
-    >
+      className='flex flex-col p-4
+pb-[calc(theme(spacing.20)+env(safe-area-inset-bottom))]
+md:pb-4 md:ps-[21rem] print:ps-4 [&>*]:mx-auto [&>*]:w-full
+[&>*]:max-w-screen-lg'>
       <Header className='mb-6 hidden print:block' />
 
       <H1>{codeFormats[format].displayName} code</H1>

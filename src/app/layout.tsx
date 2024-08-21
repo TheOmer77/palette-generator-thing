@@ -1,13 +1,16 @@
-import type { ReactNode } from 'react';
-import type { Metadata } from 'next';
+import type { PropsWithChildren } from 'react';
 import { Figtree, Fira_Code } from 'next/font/google';
-import { ThemeProvider } from 'next-themes';
 import clsx from 'clsx';
 
+import { AppleAssets } from '@/components/layout/AppleAssets';
 import { Favicon } from '@/components/layout/Favicon';
 import { Navbar } from '@/components/layout/Navbar';
+import { ThemeColorMeta } from '@/components/layout/ThemeColorMeta';
 import { ThemeStyle } from '@/components/layout/ThemeStyle';
+import { Provider } from '@/components/provider';
 import '@/styles/index.css';
+
+export { metadata, viewport } from './metadata';
 
 const font = Figtree({
   subsets: ['latin'],
@@ -20,27 +23,23 @@ const fontMono = Fira_Code({
   fallback: ['monospace'],
 });
 
-export const metadata: Metadata = {
-  title: 'Palette generator thing',
-  description: 'App to generate color palettes.',
-};
-
-const RootLayout = ({ children }: { children: ReactNode }) => (
+const RootLayout = ({ children }: PropsWithChildren) => (
   <html
     lang='en'
     className={clsx(font.variable, fontMono.variable)}
     suppressHydrationWarning
   >
     <head>
-      <meta name='color-scheme' content='light dark' />
       <Favicon />
       <ThemeStyle />
+      <ThemeColorMeta />
+      <AppleAssets />
     </head>
     <body>
-      <ThemeProvider>
+      <Provider>
         <Navbar />
         <div className='mx-auto w-full max-w-screen-2xl'>{children}</div>
-      </ThemeProvider>
+      </Provider>
     </body>
   </html>
 );
